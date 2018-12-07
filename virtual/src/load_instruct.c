@@ -3,9 +3,13 @@
 void 	remove_carriage(t_cell *cell, unsigned id)
 {
 	if (cell->sum_acts == 0)
+	{
 		cell->bot_id = get_id_of_bot(id);
+	}
 	else
+	{
 		cell->sum_acts--;
+	}
 }
 
 void 	place_carriage(t_cell *cell, unsigned id)
@@ -52,7 +56,8 @@ ssize_t 		get_dir(t_cell *cell, t_bot *bot, int handicap, int bytes)
 	temp_bytes = bytes;
 	while (temp_bytes--)
 	{
-		temp = ft_multjoinfr(3, NULL, temp, (char *)cell[bot->carriage->cur_pos + handicap].hex);
+		temp = ft_multjoinfr(3,NULL, temp,
+				(char *)cell[bot->carriage->cur_pos + handicap].hex);
 		handicap++;
 	}
 	if (bytes == 1) // define ONE_BYTE etc..
@@ -74,19 +79,23 @@ int 	load_instruct(t_cell *cell, t_bot *bot) // label size == 4
 	int 	t_reg;
 
 	step = 1;
+	t_reg = 0;
 	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument, (T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
+	if (check_instruction_args(argument,
+			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
 		return (ERROR);
-
-	t_reg = get_argument(cell, bot, step + FOUR_BYTES); // there is shit huidu
 
 	if (GET_FIRST_ARGUMENT(argument) == T_DIR)
 	{
-		bot->carriage->registers[t_reg] = (unsigned)get_arg_dir(cell, bot, &step, FOUR_BYTES);
+		t_reg = get_argument(cell, bot, step + FOUR_BYTES);
+		bot->carriage->registers[t_reg] =
+							(unsigned)get_arg_dir(cell, bot, &step, FOUR_BYTES);
 	}
 	else if (GET_FIRST_ARGUMENT(argument) == GET_THIRD_ARGUMENT(T_IND))
 	{
-		bot->carriage->registers[t_reg] = (unsigned)get_arg_ind(cell, bot, &step, IDX_MOD_ON);
+		t_reg = get_argument(cell, bot, step + TWO_BYTES);
+		bot->carriage->registers[t_reg] =
+							(unsigned)get_arg_ind(cell, bot, &step, IDX_MOD_ON);
 	}
 	step++;
 	change_carry_if_need(bot, t_reg);
