@@ -78,7 +78,8 @@ int 			choose_instruction(t_cell *cell, t_bot *bot)
 		return(aff_instruct(cell, bot));
 	}
 	else
-		return (NO_INSTRUCTION);
+		move_carriage(cell, bot, 1);
+	return (0);
 }
 
 
