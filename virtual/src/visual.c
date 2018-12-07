@@ -356,3 +356,82 @@ int				vs_init(t_corewar *core)
 	fill_memory_space(core->bots, core->cell, core->qua_bots);
 	return (0);
 }
+
+
+/*
+ * #include <stdio.h>
+#include "./ncurses.h"
+
+void	inf_loop()
+{
+
+
+	printw("Hello");
+	while (1)
+	{
+		int c = getch();
+		printw("%d", c);
+	}
+}
+
+void	cursor()
+{
+	int x = getch();
+	int y = getch();
+	// move cursor
+	move (y, x);
+
+	// mvprintw(x, y, Hello");
+	// clear(); - clear screen
+}
+
+void	window()
+{
+	int height, width, start_y, start_x;
+	WINDOW *win;
+
+	height = 10;
+	width = 50;
+	start_y = 0;
+	start_x = 0;
+
+
+	win = newwin(height, width, start_y, start_x);
+	refresh(); // must have
+
+	box(win, 0, 0);
+	box(win, 'l','T');
+	wborder(win, 'l', 'r', 't', 'b', '1', '2', '3', '4');
+
+
+	mvwprintw(win, 1, 1, "Corewar");
+	wrefresh(win);
+}
+
+void	helpful()
+{
+	// default
+	cbreak();
+
+	// off the ^C exit
+	// raw();
+
+	// do not print pressed buttons
+	//noecho();
+}
+
+
+int		main(int argc, char **argv)
+{
+	initscr();
+
+
+	window();
+	helpful();
+
+	refresh();
+	getch();
+	endwin();
+	return (0);
+}
+ */
