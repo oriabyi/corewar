@@ -3,7 +3,8 @@
 
 int 	 get_argument(t_cell *cell, t_bot *bot, int num_of_argument)
 {
-	return (ft_ahtoi((char *)cell[bot->carriage->cur_pos + num_of_argument].hex));
+	return (ft_ahtoi((char *)cell[bot->carriage->cur_pos
+													+ num_of_argument].hex));
 }
 
 #include "../../libft/int_to_char_hex.c"
@@ -43,30 +44,6 @@ ssize_t 		correction_coordinates(ssize_t coordinate)
 	return (coordinate);
 }
 
-int 		get_any_argument(t_cell *cell, t_bot *bot, int *step, int byte)
-{
-	int 	position;
-
-	position = 0;
-	if (byte == (T_REG | T_DIR | T_IND))
-		return (0);
-	else if (byte & 1)
-	{
-		position = (unsigned char)get_arg_reg(cell, bot, step);
-	}
-	else if (byte & 2)
-	{
-		position = (short)get_arg_dir(cell, bot, step, TWO_BYTES);
-	}
-	else if (byte & 4)
-	{
-		position = (unsigned)get_arg_ind(cell, bot, step, IDX_MOD_ON);
-	}
-	return (0);
-}
-
-
-
 int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 {
 	int 	argument;
@@ -79,8 +56,10 @@ int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 	step = 1;
 	position = 0;
 	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument, T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
+	if (check_instruction_args(argument,
+			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
 		return (ERROR);
+
 	step += 1; // for skip first argument
 
 	if (GET_SECOND_ARGUMENT(argument) == T_REG)

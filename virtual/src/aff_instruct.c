@@ -8,7 +8,8 @@ int 	aff_instruct(t_cell *cell, t_bot *bot)
 
 	step = 1;
 	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument, T_REG, NONE_ARG, NONE_ARG) == ERROR)
+	if (check_instruction_args(argument,
+			T_REG, NONE_ARG, NONE_ARG) == ERROR)
 		return (ERROR);
 
 	t_reg = get_arg_reg(cell, bot, &step);

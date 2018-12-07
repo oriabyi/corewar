@@ -36,8 +36,8 @@ void			game(t_corewar *core) // delete flag
 			flag = 1;
 		if (core->flags.visual)
 			reveal_memory_space(core, i);
-		else if (flag)
-			dog_nail_vs(core);
+//		else if (flag)
+//			dog_nail_vs(core);
 		flag = do_process(core, core->qua_bots);
 		bigmother++;
 		i++;

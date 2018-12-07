@@ -21,10 +21,6 @@ unsigned		which_instruction(char *command)
 			instruction[0] = '1';
 			instruction[1] = '0';
 		}
-		else if (instruction[0] == '1')
-			return (code_instruction);
-		else
-			return (NO_INSTRUCTION);
 		code_instruction++;
 	}
 	return (code_instruction);
@@ -95,6 +91,8 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 	quant_carriages = bot->quant_carriages;
 	head = bot->carriage;
+	if (bigmother == 699945)
+		write(0, 0, 0);
 	while (bot->carriage && quant_carriages--)
 	{
 		if (bot->carriage->command == 0)
@@ -106,7 +104,7 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 		if (bot->carriage->cycles == 0)// || bot->quant_carriages == 1) // delete second condition
 		{
-			if (bot->carriage->command)
+			if (bot->carriage->command <= 16)
 			{
 				if (bigmother == 812)
 					write(0, 0, 0);
@@ -116,7 +114,10 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 			}
 			else
+			{
 				move_carriage(cell, bot, 1);
+				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
+			}
 			bot->carriage->command = 0;
 			bot->carriage->cycles = 0; // BIG DOG_NAIL
 			flag++;

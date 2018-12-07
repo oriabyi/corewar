@@ -38,7 +38,8 @@ int 	load_index_instruct(t_cell *cell, t_bot *bot) // label size == 2
 	step = 1;
 
 	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
+	if (check_instruction_args(argument,
+			(T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
 		return (ERROR);
 
 	if (GET_FIRST_ARGUMENT(argument) == T_REG)
@@ -61,7 +62,8 @@ int 	load_index_instruct(t_cell *cell, t_bot *bot) // label size == 2
 
 
 	num_of_reg = (unsigned char)get_dir(cell, bot, step, ONE_BYTE);
-	bot->carriage->registers[num_of_reg] = (unsigned)rename_me(cell, bot, (int)(position), FOUR_BYTES);
+	bot->carriage->registers[num_of_reg] =
+			(unsigned)rename_me(cell, bot, (int)(position), FOUR_BYTES);
 
 	if (bot->carriage->command == CW_LLDI)
 		change_carry_if_need(bot, num_of_reg);

@@ -11,7 +11,6 @@ t_carriage		*copy_carrieage(t_carriage *src, int id)
 	dst->carry = src->carry;
 	dst->flag = src->flag;
 	dst->alive = src->alive;
-//	dst->command = src->command;
 	dst->command = 0;
 	dst->cycles = 0;
 	while (counter < 16)
@@ -40,9 +39,11 @@ int 	fork_instruct(t_cell *cell, t_bot *bot)
 
 
 	if (cell[temp->cur_pos].hex[0] == '0' && cell[temp->cur_pos].hex[1] == '1')
-		cell[temp->cur_pos].bot_id = get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_ALIVE;
+		cell[temp->cur_pos].bot_id =
+				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_ALIVE;
 	else
-		cell[temp->cur_pos].bot_id = get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_CARRIAGE;
+		cell[temp->cur_pos].bot_id =
+				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_CARRIAGE;
 
 
 	while (head && head->next)
