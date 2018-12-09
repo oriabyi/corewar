@@ -5,6 +5,7 @@
 #include "../../op/op.h"
 #include "ncurses.h"
 #include "stdio.h"
+#include <time.h>
 
 /* 0-4		simple colors
  * 5-9		carriages
@@ -114,8 +115,6 @@
 # define CR_CL_RED_BLACK			4
 # define CR_CL_CYAN_BLACK			5
 
-
-
 # define CR_CL_BLACK_WHITE			6
 # define CR_CL_BLACK_GREEN			7
 # define CR_CL_BLACK_BLUE			8
@@ -126,6 +125,12 @@
 # define CR_CL_WHITE_BLUE			13
 # define CR_CL_WHITE_RED			14
 # define CR_CL_WHITE_CYAN			15
+
+# define PAUSE						' '
+# define SPEED_PLUS					'e'
+# define SPEED_MINUS				'q'
+# define VISUAL_OFF					27
+
 
 # define CR_IS_VIEW_SANE(x)			(x >= 0 && x <= 4)
 # define CR_IS_VIEW_CARRIAGE(x)		(x >= 5 && x <= 9)
@@ -260,6 +265,9 @@ typedef struct 		s_carriage_cell t_carriage_cell;
 typedef struct			s_ncurses
 {
 	int 				i;
+	int		 			draw_speed;
+	int 				pressed_button;
+	unsigned 			pause:1;
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
 }						t_ncurses;
@@ -341,6 +349,7 @@ int 	vs_init(t_corewar *core);
 int 	vs_end(t_corewar *core);
 
 //my visio
+int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
 
@@ -406,7 +415,6 @@ unsigned int 		get_t_dir_four(t_cell *cell, t_bot *bot);
 // some trash
 int 			do_process(t_corewar *core, int qua_bots);
 void 			vs_start(t_corewar *core);
-//int				reveal_memory_space(t_corewar *core);
 void 			dog_nail_vs(t_corewar *core);
 int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap this with get_t_dir_four
 
@@ -423,10 +431,10 @@ t_carriage 				*create_carriage(int id);
 int 			get_cycles(t_bot *bot);
 
 //print
-void		simple_print(int id);
-void 		carriage_print(int id);
-void 		alive_view(int id);
-void 		altered_view(int id);
+void		simple_print(WINDOW *win, int id);
+void 		carriage_print(WINDOW *win, int id);
+void 		alive_view(WINDOW *win, int id);
+void 		altered_view(WINDOW *win, int id);
 
 //
 ssize_t 		get_dir(t_cell *cell, t_bot *bot, int handicap, int bytes);

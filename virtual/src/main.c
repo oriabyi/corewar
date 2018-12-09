@@ -32,14 +32,22 @@ void			game(t_corewar *core) // delete flag
 	i = 1;
 	while (i)
 	{
-		if (bigmother == 50)
-			flag = 1;
+//		if (bigmother == 50)
+//			flag = 1;
 		if (core->flags.visual)
-			reveal_memory_space(core, i);
+		{
+			draw(core, i);
+			if (!core->flags.visual) // TODO: clean_all && exit?
+				vs_end(core);
+		}
 
-		flag = do_process(core, core->qua_bots);
-		bigmother++;
-		i++;
+
+		if (!core->ncur.pause)
+		{
+			flag = do_process(core, core->qua_bots);
+			bigmother++;
+			i++;
+		}
 //		oversight_key(core);
 	}
 	if (core->flags.visual)
