@@ -257,6 +257,13 @@ typedef struct			s_bot
 
 typedef struct 		s_carriage_cell t_carriage_cell;
 
+typedef struct			s_ncurses
+{
+	int 				i;
+	WINDOW				*memory_window;
+	WINDOW				*score_window;
+}						t_ncurses;
+
 struct 			s_carriage_cell
 {
 	unsigned			bot_id;
@@ -275,7 +282,7 @@ typedef struct			s_cell
 typedef struct			s_corewar
 {
 	t_cell				*cell;
-
+	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
 	short 				qua_bots;
@@ -335,6 +342,8 @@ int 	vs_end(t_corewar *core);
 
 //my visio
 int 			create_memory_space(t_corewar *core);
+void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
+
 
 /*
 ** Math

@@ -3,48 +3,6 @@
 int			vs_counter = 0;
 unsigned	usleep_count = 30001;
 
-void 			fill_colors(void)
-{
-	//simple colours
-	init_pair(CR_CL_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
-
-	init_pair(CR_CL_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
-	init_pair(CR_CL_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
-	init_pair(CR_CL_RED_BLACK, COLOR_RED, COLOR_BLACK);
-	init_pair(CR_CL_CYAN_BLACK, COLOR_CYAN, COLOR_BLACK);
-
-
-	init_pair(48, COLOR_WHITE, -1);
-	//
-
-	init_pair(44, COLOR_BLACK, COLOR_BLACK);
-
-	//carriage colours
-	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
-
-	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
-	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
-	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
-	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
-
-	//light colours
-	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
-
-	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
-	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
-	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
-	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
-
-	//alive colours
-	init_pair(CR_CL_WHITE_GREEN, COLOR_WHITE, COLOR_GREEN);
-	init_pair(CR_CL_WHITE_BLUE, COLOR_WHITE, COLOR_BLUE);
-	init_pair(CR_CL_WHITE_RED, COLOR_WHITE, COLOR_RED);
-	init_pair(CR_CL_WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
-
-
-}
-
-
 void 			dog_nail_vs(t_corewar *core)
 {
 	unsigned i;
@@ -126,6 +84,51 @@ void 			dog_nail_vs(t_corewar *core)
 
 }
 
+
+
+void 			fill_colors(void)
+{
+	//simple colours
+	init_pair(CR_CL_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
+
+	init_pair(CR_CL_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
+	init_pair(CR_CL_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
+	init_pair(CR_CL_RED_BLACK, COLOR_RED, COLOR_BLACK);
+	init_pair(CR_CL_CYAN_BLACK, COLOR_CYAN, COLOR_BLACK);
+
+
+	init_pair(48, COLOR_WHITE, -1);
+	//
+
+	init_pair(44, COLOR_BLACK, COLOR_BLACK);
+
+	//carriage colours
+	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
+
+	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
+	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
+	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
+	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
+
+	//light colours
+	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
+
+	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
+	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
+	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
+	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
+
+	//alive colours
+	init_pair(CR_CL_WHITE_GREEN, COLOR_WHITE, COLOR_GREEN);
+	init_pair(CR_CL_WHITE_BLUE, COLOR_WHITE, COLOR_BLUE);
+	init_pair(CR_CL_WHITE_RED, COLOR_WHITE, COLOR_RED);
+	init_pair(CR_CL_WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
+
+
+}
+
+
+
 unsigned 			get_id_of_bot(unsigned num)
 {
 	return ((num < 5) ? num : get_id_of_bot(num - 5)); // define 5
@@ -143,8 +146,8 @@ void 			vs_start(t_corewar *core)
 	cbreak();
 //	timeout(0);
 }
-
-
+//
+//
 int				reveal_memory_space(t_corewar *core, int cycle)
 {
 	unsigned i;
@@ -161,34 +164,6 @@ int				reveal_memory_space(t_corewar *core, int cycle)
 		c = ' ';
 
 	mvwprintw(stdscr, 0, 0, "Cycles: %d", cycle);
-	if (bigmother == 3300)
-	{
-		while (1)
-		{
-			c = wgetch(stdscr);
-			if (c == ' ')
-			{
-				c = '\0';
-				break ;
-			} else 	if (c == 'w' && usleep_count - 5000 > 0)
-				usleep_count -= 5000;
-			else if (c == 'e')
-				usleep_count += 5000;
-			else if (c == 'q')
-			{
-				if  (usleep_count < 50000)
-					usleep_count = 1;
-				else
-					usleep_count -= 50000;
-				mvwprintw(stdscr, 0, 67, "speed: %u", usleep_count);
-			}
-			else if (c == 'r')
-				usleep_count += 50000;
-			else if (c == ESC)
-				exit_message(core, 2, "Vse horosho, prosto esc!\n");
-//				mvwprintw(stdscr, 0, 80, "PAUSE");
-		}
-	}
 //	mvwprintw(stdscr, 0, 40, "speed: %u", usleep_count);
 	while (i < MEM_SIZE)
 	{
@@ -269,50 +244,76 @@ int				reveal_memory_space(t_corewar *core, int cycle)
 	wrefresh(stdscr);
 	return (0);
 }
-
-
-
-
-void				fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots)
+/*int				reveal_memory_space(t_corewar *core, int cycle)
 {
-	unsigned 		counter;
-	unsigned 		bot_counter;
-	unsigned 		num_of_bot;
-	unsigned char	*seq;
+	int 		i;
+	unsigned	id;
 
-	counter = 0;
-	num_of_bot = 0;
-	bot_counter = 0;
-	seq = (unsigned char *)"0123456789abcdef";
-	while (num_of_bot < qua_bots)
+//	sleep(1);
+	i = 0;
+
+//	werase(core->ncur.memory_window);
+	erase();
+//	box(core->ncur.memory_window, 0, 0);
+
+	move(1, 2);
+	while (i < MEM_SIZE)
 	{
-		if (counter && counter % (MEM_SIZE / qua_bots) == 0)
-		{
-			num_of_bot++;
-			bot_counter = 0;
-		}
-		if (num_of_bot == qua_bots)
-			break ;
-		cell[counter].val = bots[num_of_bot].exec_code[bot_counter];
+		if (i % 64 == 0)
+//			wprintw(core->ncur.memory_window, "\n");
+			printw("\n");
 
-		if (counter < bots[num_of_bot].size + (MEM_SIZE / qua_bots) * num_of_bot)
+		id = get_id_of_bot(core->cell[i].bot_id);
+		if (CR_IS_VIEW_SANE(core->cell[i].bot_id))
 		{
-			cell[counter].bot_id = num_of_bot + COUNTING_FROM_ONE;
-			cell[counter].hex[0] = seq[bots[num_of_bot].exec_code[bot_counter] / 16];
-			cell[counter].hex[1] = seq[bots[num_of_bot].exec_code[bot_counter] % 16];
+			simple_print(id);
 		}
-		if ((bots[num_of_bot].carriage->cur_pos == NOT_EXPOSED && num_of_bot)
-			|| (counter == 0 && num_of_bot == 0))
+		else if (CR_IS_VIEW_CARRIAGE(core->cell[i].bot_id)) // carriage
 		{
-			bots[num_of_bot].carriage->cur_pos = counter;
-			cell[counter].bot_id = num_of_bot + COUNTING_FROM_ONE + DENOTE_CARRIAGE;
+			carriage_print(id);
 		}
-		bot_counter++;
-		counter++;
+		else  if (CR_IS_VIEW_ALTERED(core->cell[i].bot_id))	// changed
+		{
+			altered_view(id);
+			if (core->cell[i].time == 0)
+				core->cell[i].bot_id = id;
+			else
+				(core->cell[i].time)--;
+		}
+		else  if (CR_IS_VIEW_ALIVE(core->cell[i].bot_id))	//alive
+		{
+			alive_view(id);
+//			if (core->cell[i].time == 0)
+//				core->cell[i].bot_id = id;
+//			else
+//				(core->cell[i].time)--;
+		}
+
+		if (i % 64 == 0)
+			move((i / 64) + 1, 1);
+
+
+
+
+
+		attron(COLOR_PAIR(CR_CL_WHITE_BLACK));
+
+//		wprintw(core->ncur.memory_window, "%s", core->cell[i].hex);
+
+		printw("%s", core->cell[i].hex);
+
+
+		attroff(A_BOLD);
+//		wprintw(core->ncur.memory_window, " ");
+		printw(" ");
+
+		i++;
 	}
+//	wrefresh(core->ncur.memory_window);
+	refresh();
+	return (0);
 }
-
-
+*/
 void 			fill_rank(t_cell *cell, int cur_qua, int qua_inrank)
 {
 	if (cur_qua == qua_inrank)
@@ -334,6 +335,23 @@ int 			create_memory_space(t_corewar *core)
 	fill_rank(core->cell, 0, MEM_SIZE);
 	return (0);
 }
+/*
+void 			vs_start(t_corewar *core)
+{
+	initscr();			// Start curses mode
+	start_color();
+	fill_colors();
+	noecho();				//+
+	curs_set(0); 			//+ switch off cursor
+	keypad(stdscr, TRUE);
+	nodelay(stdscr, TRUE);
+	cbreak();
+
+//	core->ncur.memory_window = newwin(66, 193, 0, 0);
+//	refresh();
+//	core->ncur.memory_window = newwin(66, 30, 0, 68);
+//	refresh();
+}*/
 
 int				vs_end(t_corewar *core)
 {
@@ -356,82 +374,3 @@ int				vs_init(t_corewar *core)
 	fill_memory_space(core->bots, core->cell, core->qua_bots);
 	return (0);
 }
-
-
-/*
- * #include <stdio.h>
-#include "./ncurses.h"
-
-void	inf_loop()
-{
-
-
-	printw("Hello");
-	while (1)
-	{
-		int c = getch();
-		printw("%d", c);
-	}
-}
-
-void	cursor()
-{
-	int x = getch();
-	int y = getch();
-	// move cursor
-	move (y, x);
-
-	// mvprintw(x, y, Hello");
-	// clear(); - clear screen
-}
-
-void	window()
-{
-	int height, width, start_y, start_x;
-	WINDOW *win;
-
-	height = 10;
-	width = 50;
-	start_y = 0;
-	start_x = 0;
-
-
-	win = newwin(height, width, start_y, start_x);
-	refresh(); // must have
-
-	box(win, 0, 0);
-	box(win, 'l','T');
-	wborder(win, 'l', 'r', 't', 'b', '1', '2', '3', '4');
-
-
-	mvwprintw(win, 1, 1, "Corewar");
-	wrefresh(win);
-}
-
-void	helpful()
-{
-	// default
-	cbreak();
-
-	// off the ^C exit
-	// raw();
-
-	// do not print pressed buttons
-	//noecho();
-}
-
-
-int		main(int argc, char **argv)
-{
-	initscr();
-
-
-	window();
-	helpful();
-
-	refresh();
-	getch();
-	endwin();
-	return (0);
-}
- */
