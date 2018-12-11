@@ -5,22 +5,41 @@
 
 int				reveal_memory_space(t_corewar *core, int cycle);
 
-static void			oversight_key(t_corewar *core)
+
+void	remove_dead_processes(t_carriage **begin_list)
 {
-	uint64_t		key_code;
+	t_carriage	*to_free;
 
-	key_code = 0;
-	read(1, &key_code, 8);
-
-	if (key_code == ESC)
-		exit_message(core, EXIT_COMMAND, "Corewar is closed!\n");
-	// bonuses need to do
+	if (*begin_list)
+	{
+		if ((*begin_list)->alive == FALSE)
+		{
+			to_free = *begin_list;
+			*begin_list = (*begin_list)->next;
+			free(to_free);
+			remove_dead_processes(begin_list);
+		}
+		else
+			remove_dead_processes(&(*begin_list)->next);
+	}
 }
 
+void 			check_cycle_to_die(t_corewar *core)
+{
+
+	int 		counter;
+
+	counter = 0;
+	while (counter < core->qua_bots)
+	{
+		remove_dead_processes(&core->bots[counter].carriage);
+		counter++;
+	}
+}
 
 void			game(t_corewar *core) // delete flag
 {
-	int 		i;
+	unsigned 		i;
 	int 		flag = 0;
 
 	vs_init(core);
@@ -32,15 +51,18 @@ void			game(t_corewar *core) // delete flag
 	i = 1;
 	while (i)
 	{
-		if (bigmother == 50)
+		if (bigmother > 3000)
 			flag = 1;
 		if (core->flags.visual)
 			reveal_memory_space(core, i);
 //		else if (flag)
 //			dog_nail_vs(core);
 		flag = do_process(core, core->qua_bots);
+		if (i % CYCLE_TO_DIE == 0)
+			check_cycle_to_die(core);
 		bigmother++;
 		i++;
+//		printf("%d\n", i);
 //		oversight_key(core);
 	}
 	if (core->flags.visual)

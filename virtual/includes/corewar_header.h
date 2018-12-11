@@ -174,6 +174,8 @@
 
 
 
+# define NUMBER_OF_REGISTERS		16
+
 
 
 /*
@@ -255,14 +257,6 @@ typedef struct			s_bot
 	t_carriage			*carriage;
 }						t_bot;
 
-typedef struct 		s_carriage_cell t_carriage_cell;
-
-struct 			s_carriage_cell
-{
-	unsigned			bot_id;
-	t_carriage_cell		*next;
-};
-
 typedef struct			s_cell
 {
 	char 				val;
@@ -278,7 +272,7 @@ typedef struct			s_corewar
 
 	t_bot				*bots;
 	t_flags				flags;
-	short 				qua_bots;
+	unsigned 			qua_bots;
 }						t_corewar;
 
 

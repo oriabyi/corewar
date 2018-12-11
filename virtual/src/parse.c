@@ -25,30 +25,18 @@ t_carriage 				*create_carriage(int id)
 
 	if (!(carriage = (t_carriage *)malloc(sizeof(t_carriage))))
 		return (NULL);
-	*carriage = (t_carriage){0, 0, 0, 0, {0, (unsigned)(-id), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, NULL};
+	*carriage = (t_carriage){0, 0, 0, 0, {0, (unsigned)(-id), 0, 0, 0, 0, 0,
+									   	0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, NULL};
 	return (carriage);
 }
 
 
 int 				fill_bot(t_corewar *core)
 {
-	int 			i;
-
-	i = 0;
 	core->bots[core->qua_bots] = (t_bot){NULL, NULL, NULL, 0, 0, 0, 0, NULL};
-
 	core->bots[core->qua_bots].carriage = create_carriage(core->qua_bots + 1);
-//	if (!(core->bots[core->qua_bots].carriage = (t_carriage *)malloc(sizeof(t_carriage))))
-//		return (MEMORY_ERROR);
-//	*(core->bots[core->qua_bots].carriage) = (t_carriage){0, 0, 0, 0, 0, 0, 0};
-	core->bots[core->qua_bots].fd = open("/Users/ariabyi/CLionProjects/Corewar/test.txt", O_WRONLY);
-//	while (i < 16) // do i need this
-//	{
-//		core->bots[core->qua_bots].carriage->registers[i] = (unsigned long)(4294967295 - core->qua_bots);
-//		core->bots[core->qua_bots].carriage->registers[i] = (unsigned long)(0 - core->qua_bots);
-//		core->bots[core->qua_bots].carriage->registers[i] = 0;
-//		i++;
-//	}
+	core->bots[core->qua_bots].fd =
+			open("/Users/ariabyi/CLionProjects/Corewar/test.txt", O_WRONLY);
 	core->bots[core->qua_bots].quant_carriages++;
 	return (0);
 }
@@ -71,11 +59,8 @@ int					get_bots(t_corewar *core, char **av)
 		if (*(av[counter]) == '-')
 			return (WRONG_PLACE_FOR_FLAGS);
 		fill_bot(core);
-//		core->bots[core->qua_bots] = (t_bot){NULL, NULL, NULL, 0, 0, NULL};
-//		if (!(core->bots[core->qua_bots].carriage = (t_carriage *)malloc(sizeof(t_carriage))))
-//			return (MEMORY_ERROR);
-//		*(core->bots[core->qua_bots].carriage) = (t_carriage){0, 0, 0, 0, 0, 0, 0};
-		check_code = get_bot(&(core->bots[core->qua_bots]), av[counter++], core->qua_bots++);
+		check_code = get_bot(&(core->bots[core->qua_bots]),
+				av[counter++], core->qua_bots++);
 	}
 	return (check_code);
 }
