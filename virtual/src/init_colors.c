@@ -1,0 +1,48 @@
+#include "../includes/corewar_header.h"
+
+void 			init_colors(void)
+{
+	//simple colours
+
+	init_color(COLOR_ORANGE, 1000, 700, 0);
+	init_color(COLOR_WWHITE, 1000, 1000, 1000);
+	init_pair(CR_CL_WWHITE_BLACK, COLOR_WWHITE, COLOR_BLACK);
+	init_pair(CR_CL_ORANGE_BLACK, COLOR_ORANGE, COLOR_BLACK);
+
+
+	init_pair(CR_CL_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
+	init_pair(CR_CL_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
+	init_pair(CR_CL_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
+	init_pair(CR_CL_RED_BLACK, COLOR_RED, COLOR_BLACK);
+	init_pair(CR_CL_CYAN_BLACK, COLOR_CYAN, COLOR_BLACK);
+
+
+	init_pair(48, COLOR_WHITE, -1);
+	//
+
+	init_pair(44, COLOR_BLACK, COLOR_BLACK);
+
+	//carriage colours
+	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
+
+	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
+	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
+	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
+	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
+
+	//light colours
+	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
+
+	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
+	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
+	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
+	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
+
+	//alive colours
+	init_pair(CR_CL_WHITE_GREEN, COLOR_WHITE, COLOR_GREEN);
+	init_pair(CR_CL_WHITE_BLUE, COLOR_WHITE, COLOR_BLUE);
+	init_pair(CR_CL_WHITE_RED, COLOR_WHITE, COLOR_RED);
+	init_pair(CR_CL_WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
+
+
+}

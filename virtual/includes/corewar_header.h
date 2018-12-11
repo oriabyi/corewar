@@ -109,6 +109,9 @@
 **	Define colors
 */
 
+# define COLOR_ORANGE				123
+# define COLOR_WWHITE				124
+
 # define CR_CL_WHITE_BLACK			1
 # define CR_CL_GREEN_BLACK			2
 # define CR_CL_BLUE_BLACK			3
@@ -125,6 +128,9 @@
 # define CR_CL_WHITE_BLUE			13
 # define CR_CL_WHITE_RED			14
 # define CR_CL_WHITE_CYAN			15
+
+# define CR_CL_ORANGE_BLACK			16
+# define CR_CL_WWHITE_BLACK			17
 
 # define PAUSE						' '
 # define SPEED_PLUS					'e'
@@ -344,11 +350,10 @@ void 	check_correctness(t_corewar *core, int check_code);
 ** Visualization
 */
 
-int 	vs_init(t_corewar *core);
+void 			init_colors(void);
+int 			vs_init(t_corewar *core);
 //int 	vs_refresh(t_corewar *core);
 int 	vs_end(t_corewar *core);
-
-//my visio
 int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);

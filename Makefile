@@ -35,6 +35,7 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)load_index_instruct.c 		\
 				$(SRCDIRVIR)load_instruct.c 			\
 				$(SRCDIRVIR)long_fork_instruct.c 		\
+				$(SRCDIRVIR)init_colors.c 		\
 				$(SRCDIRVIR)long_load_instruct.c 		\
 				$(SRCDIRVIR)store_index_instruct.c 		\
 				$(SRCDIRVIR)store_instruct.c 			\

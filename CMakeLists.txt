@@ -32,6 +32,6 @@ add_executable(corewar
         virtual/src/trash.c
         virtual/src/getters_args.c
         virtual/src/print_map.c
-        virtual/src/logical_operations.c virtual/src/add_sub_instructions.c virtual/src/fill_memory_space.c)
+        virtual/src/logical_operations.c virtual/src/add_sub_instructions.c virtual/src/fill_memory_space.c virtual/src/init_colors.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(corewar ${LIBFT})

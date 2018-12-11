@@ -84,48 +84,6 @@ unsigned	usleep_count = 30001;
 //
 //}
 
-
-void 			fill_colors(void)
-{
-	//simple colours
-	init_pair(CR_CL_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
-
-	init_pair(CR_CL_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
-	init_pair(CR_CL_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
-	init_pair(CR_CL_RED_BLACK, COLOR_RED, COLOR_BLACK);
-	init_pair(CR_CL_CYAN_BLACK, COLOR_CYAN, COLOR_BLACK);
-
-
-	init_pair(48, COLOR_WHITE, -1);
-	//
-
-	init_pair(44, COLOR_BLACK, COLOR_BLACK);
-
-	//carriage colours
-	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
-
-	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
-	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
-	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
-	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
-
-	//light colours
-	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
-
-	init_pair(CR_CL_BLACK_GREEN, COLOR_BLACK, COLOR_GREEN);
-	init_pair(CR_CL_BLACK_BLUE, COLOR_BLACK, COLOR_BLUE);
-	init_pair(CR_CL_BLACK_RED, COLOR_BLACK, COLOR_RED);
-	init_pair(CR_CL_BLACK_CYAN, COLOR_BLACK, COLOR_CYAN);
-
-	//alive colours
-	init_pair(CR_CL_WHITE_GREEN, COLOR_WHITE, COLOR_GREEN);
-	init_pair(CR_CL_WHITE_BLUE, COLOR_WHITE, COLOR_BLUE);
-	init_pair(CR_CL_WHITE_RED, COLOR_WHITE, COLOR_RED);
-	init_pair(CR_CL_WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
-
-
-}
-
 unsigned 			get_id_of_bot(unsigned num)
 {
 	return ((num < 5) ? num : get_id_of_bot(num - 5)); // define 5
@@ -170,6 +128,10 @@ void 			fill_memory_window(t_corewar *core)
 		wprintw(core->ncur.memory_window, " ");
 		i++;
 	}
+	if (!core->ncur.pause)
+		wattron(core->ncur.memory_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+	else
+		wattron(core->ncur.memory_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 	box(core->ncur.memory_window, 0, 0);
 	wrefresh(core->ncur.memory_window);
 }
@@ -200,17 +162,29 @@ void 			fill_score_window(t_corewar *core, int cycle)
 {
 	int 		i;
 
-	i = 0;
-
 	werase(core->ncur.score_window);
-	mvwprintw(core->ncur.score_window, 1, 1, "Cycles: %d", cycle);
+
+
 	if (core->ncur.pause)
-		mvwprintw(core->ncur.score_window, 2, getmaxx(core->ncur.score_window) / 2, "Pause");
+	{
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
+		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause**********");
+		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
+
+	}
 	else
-		mvwprintw(core->ncur.score_window, 2, getmaxx(core->ncur.score_window) / 2, "Playing");
+	{
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
+		mvwprintw(core->ncur.score_window, 1, 1, "**********Playing**********");
+		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
+	}
+
+	wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+	mvwprintw(core->ncur.score_window, 2, 1, "Cycles: %d", cycle);
 
 
 	mvwprintw(core->ncur.score_window, 3, 1, "Speed: [");
+	i = 0;
 	while (i < 20)
 	{
 		if (i < core->ncur.draw_speed / 5)
@@ -226,6 +200,21 @@ void 			fill_score_window(t_corewar *core, int cycle)
 		mvwprintw(core->ncur.score_window, 4, 1, "Pressed button: \"%c\" code: %d", core->ncur.pressed_button, core->ncur.pressed_button);
 
 
+	i = 0;
+	while(i < core->qua_bots)
+	{
+		mvwprintw(core->ncur.score_window, 5 + i + (i * 6), 1, "Player%d: ", i);
+		simple_print(core->ncur.score_window, i + 1);
+		wprintw(core->ncur.score_window, "%s\n", core->bots[i].name);
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+		wprintw(core->ncur.score_window, "   Last live : 0\n");
+		wprintw(core->ncur.score_window, "   Lives in current period : 0\n");
+
+		i++;
+	}
+
+	if (core->ncur.pause)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 	box(core->ncur.score_window, 0, 0);
 	wrefresh(core->ncur.score_window);
 }
@@ -240,12 +229,18 @@ int				draw(t_corewar *core, int cycle)
 	tend.tv_nsec = 0;
 	tend.tv_sec = 0;
 	clock_gettime(CLOCK_MONOTONIC, &tstart);
+	if (cycle == 1)
+	{
+		fill_memory_window(core);
+		fill_score_window(core, cycle);
+		return (0);
+	}
+
 	while (1)
 	{
 		get_button(core);
 		fill_score_window(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &tend);
-		wrefresh(core->ncur.score_window);
 		if (((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 			((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))
 		{
@@ -290,7 +285,7 @@ void 			vs_start(t_corewar *core)
 {
 	initscr();			// Start curses mode
 	start_color();
-	fill_colors();
+	init_colors();
 	noecho();				//+
 	curs_set(0); 			//+ switch off cursor
 	keypad(stdscr, TRUE);
@@ -317,7 +312,7 @@ int				vs_init(t_corewar *core)
 
 	core->ncur.pause = 0;
 	core->ncur.pressed_button = 0;
-	core->ncur.draw_speed = 10;
+	core->ncur.draw_speed = 0;
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);
