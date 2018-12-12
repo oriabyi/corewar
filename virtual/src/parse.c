@@ -113,7 +113,7 @@ void 				sort_bots(t_bot **bot, int qua_bots)
 
 	head = *bot;
 	counter = 0;
-	while (counter < qua_bots)
+	while (counter + 1 < qua_bots)
 	{
 		if (head[counter].id > head[counter + 1].id)
 		{
@@ -175,7 +175,9 @@ int					get_bots(t_corewar *core, char **av)
 	}
 
 	fill_bots(&core->bots, core->qua_bots);
+
 	sort_bots(&core->bots, core->qua_bots);
+
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
