@@ -223,6 +223,7 @@ int 			display_windows(t_corewar *core, int cycle)
 {
 	fill_score_window(core, cycle);
 	fill_memory_window(core);
+	return (0);
 }
 
 int				draw(t_corewar *core, int cycle)
