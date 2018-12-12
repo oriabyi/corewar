@@ -8,6 +8,10 @@ ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command)
 		return (a | b);
 	else if (command == CW_XOR)
 		return (a ^ b);
+	else if (command == CW_ADD)
+		return (a + b);
+	else if (command == CW_SUB)
+		return (a - b);
 	return (0);
 }
 
