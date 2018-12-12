@@ -51,18 +51,25 @@ void			game(t_corewar *core) // delete flag
 	i = 1;
 	while (i)
 	{
-		if (bigmother > 3000)
-			flag = 1;
-		if (core->flags.visual)
-			reveal_memory_space(core, i);
-//		else if (flag)
-//			dog_nail_vs(core);
-		flag = do_process(core, core->qua_bots);
 		if (i % CYCLE_TO_DIE == 0)
 			check_cycle_to_die(core);
-		bigmother++;
-		i++;
-//		printf("%d\n", i);
+		if (bigmother == 50)
+			flag = 1;
+		if (core->flags.visual)
+		{
+			draw(core, i);
+			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika?
+									// kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim???
+				vs_end(core);
+		}
+
+
+		if (!core->ncur.pause)
+		{
+			flag = do_process(core, core->qua_bots);
+			bigmother++;
+			i++;
+		}
 //		oversight_key(core);
 	}
 	if (core->flags.visual)
