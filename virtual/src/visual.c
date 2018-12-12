@@ -307,9 +307,21 @@ int				vs_end(t_corewar *core)
 }
 
 
+void 			print_names(t_bot *bots, int qua_bots)
+{
+	int counter = 0;
+
+	while (counter < qua_bots)
+	{
+		ft_putendl(bots[counter].name);
+		counter++;
+	}
+}
+
 int				vs_init(t_corewar *core)
 {
 	int 	check_code;
+
 
 	core->ncur.pause = 1;
 	core->ncur.pressed_button = 0;
@@ -317,6 +329,7 @@ int				vs_init(t_corewar *core)
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);
+
 
 	fill_memory_space(core->bots, core->cell, core->qua_bots);
 	return (0);
