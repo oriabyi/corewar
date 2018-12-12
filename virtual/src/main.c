@@ -30,6 +30,8 @@ void			game(t_corewar *core) // delete flag
 		vs_start(core);
 	}
 	i = 1;
+	if (core->flags.visual)
+		display_windows(core, 1);
 	while (i)
 	{
 //		if (bigmother == 50)

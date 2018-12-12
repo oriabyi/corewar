@@ -219,6 +219,12 @@ void 			fill_score_window(t_corewar *core, int cycle)
 	wrefresh(core->ncur.score_window);
 }
 
+int 			display_windows(t_corewar *core, int cycle)
+{
+	fill_score_window(core, cycle);
+	fill_memory_window(core);
+}
+
 int				draw(t_corewar *core, int cycle)
 {
 	struct timespec tstart, tend;
@@ -229,13 +235,6 @@ int				draw(t_corewar *core, int cycle)
 	tend.tv_nsec = 0;
 	tend.tv_sec = 0;
 	clock_gettime(CLOCK_MONOTONIC, &tstart);
-	if (cycle == 1)
-	{
-		fill_memory_window(core);
-		fill_score_window(core, cycle);
-		return (0);
-	}
-
 	while (1)
 	{
 		get_button(core);
@@ -310,7 +309,7 @@ int				vs_init(t_corewar *core)
 {
 	int 	check_code;
 
-	core->ncur.pause = 0;
+	core->ncur.pause = 1;
 	core->ncur.pressed_button = 0;
 	core->ncur.draw_speed = 0;
 	check_code = create_memory_space(core);
