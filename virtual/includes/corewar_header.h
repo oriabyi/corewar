@@ -356,6 +356,7 @@ void 			init_colors(void);
 int 			vs_init(t_corewar *core);
 //int 	vs_refresh(t_corewar *core);
 int 	vs_end(t_corewar *core);
+int 			display_windows(t_corewar *core, int cycle);
 int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
