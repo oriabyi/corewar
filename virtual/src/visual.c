@@ -1,7 +1,8 @@
 #include "../includes/corewar_header.h"
 
 int			vs_counter = 0;
-unsigned	usleep_count = 30001;
+
+// NORM VISUZUAL
 
 void 			dog_nail_vs(t_corewar *core)
 {
