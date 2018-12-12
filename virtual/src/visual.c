@@ -270,9 +270,6 @@ int				reveal_memory_space(t_corewar *core, int cycle)
 	return (0);
 }
 
-
-
-
 void				fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots)
 {
 	unsigned 		counter;
