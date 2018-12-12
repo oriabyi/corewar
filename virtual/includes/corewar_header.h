@@ -235,7 +235,7 @@ int 				bigmother;
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
-	unsigned			h_visual:1;// Рыба
+	unsigned			dump;// Рыба
 	unsigned			a_visual:5;// Рыба
 	unsigned			o_visual:1;// Рыба
 	unsigned			s_visual:1;// Рыба

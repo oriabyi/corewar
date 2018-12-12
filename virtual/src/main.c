@@ -22,7 +22,7 @@ void	remove_dead_processes(t_carriage **begin_list, int *alive_processes)
 	}
 }
 
-void 			check_cycle_to_die(t_corewar *core)
+int 			check_cycle_to_die(t_corewar *core)
 {
 	int 			counter;
 	int 			alive_processes;
@@ -33,7 +33,7 @@ void 			check_cycle_to_die(t_corewar *core)
 	{
 		max_checks = 0;
 		cycle_to_die = CYCLE_TO_DIE;
-		return ;
+		return (0);
 	}
 	counter = 0;
 	alive_processes = 0;
@@ -43,13 +43,9 @@ void 			check_cycle_to_die(t_corewar *core)
 		counter++;
 	}
 	if (alive_processes > 21)
-	{
 		cycle_to_die -= CYCLE_DELTA;
-	}
 	else
-	{
 		max_checks++;
-	}
 
 	if (max_checks == MAX_CHECKS)
 	{
@@ -57,6 +53,7 @@ void 			check_cycle_to_die(t_corewar *core)
 		cycle_to_die -= CYCLE_DELTA;
 	}
 	cycle_to_die *= (cycle_to_die < 0) ? 0 : 1;
+	return (cycle_to_die);
 }
 
 void			game(t_corewar *core) // delete flag
@@ -77,8 +74,13 @@ void			game(t_corewar *core) // delete flag
 	i = 0;
 	while (i < 1000000)
 	{
-		if (i && i % cycle_to_die == 0)
-			check_cycle_to_die(core);
+		if (i == core->flags.dump)
+		{
+			//print_memory();
+			exit_message(core, 0, "Dump");
+		}
+		if (i && cycle_to_die && i % cycle_to_die == 0)
+			cycle_to_die = check_cycle_to_die(core);
 		if (bigmother == 50)
 			flag = 1;
 		if (core->flags.visual)

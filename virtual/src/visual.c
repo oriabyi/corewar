@@ -154,7 +154,7 @@ void 			get_button(t_corewar *core)
 		core->ncur.draw_speed += 5;
 	else if (c == SPEED_MINUS && core->ncur.draw_speed > 0)
 		core->ncur.draw_speed -= 5;
-	else if (c == VISUAL_OFF)
+	else if (c == VISUAL_OFF)			//??????????/
 		core->flags.visual = 0;
 }
 
