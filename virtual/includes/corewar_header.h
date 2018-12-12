@@ -421,6 +421,7 @@ unsigned int 		get_t_dir_four(t_cell *cell, t_bot *bot);
 
 
 // some trash
+void 			print_names(t_bot *bots, int qua_bots);
 int 			do_process(t_corewar *core, int qua_bots);
 void 			vs_start(t_corewar *core);
 void 			dog_nail_vs(t_corewar *core);

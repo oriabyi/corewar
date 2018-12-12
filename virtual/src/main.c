@@ -100,7 +100,6 @@ void			game(t_corewar *core) // delete flag
 			bigmother++;
 			i++;
 //		}
-		ft_putnbr_fd(i, 2);
 	}
 	if (core->flags.visual)
 		vs_end(core);
