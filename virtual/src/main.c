@@ -1,12 +1,7 @@
 #include "../includes/corewar_header.h"
 #include "stdio.h"
 
-//codage - считываем ли мы первое число после команды
-
-int				reveal_memory_space(t_corewar *core, int cycle);
-
-
-void	remove_dead_processes(t_carriage **begin_list)
+void	remove_dead_processes(t_carriage **begin_list, int *alive_processes)
 {
 	t_carriage	*to_free;
 
@@ -17,51 +12,83 @@ void	remove_dead_processes(t_carriage **begin_list)
 			to_free = *begin_list;
 			*begin_list = (*begin_list)->next;
 			free(to_free);
-			remove_dead_processes(begin_list);
+			remove_dead_processes(begin_list, alive_processes);
 		}
 		else
-			remove_dead_processes(&(*begin_list)->next);
+		{
+			remove_dead_processes(&(*begin_list)->next, alive_processes);
+			(*alive_processes)++;
+		}
 	}
 }
 
 void 			check_cycle_to_die(t_corewar *core)
 {
+	int 			counter;
+	int 			alive_processes;
+	static int 		cycle_to_die;
+	static int 		max_checks;
 
-	int 		counter;
-
+	if (core == NULL)
+	{
+		max_checks = 0;
+		cycle_to_die = CYCLE_TO_DIE;
+		return ;
+	}
 	counter = 0;
+	alive_processes = 0;
 	while (counter < core->qua_bots)
 	{
-		remove_dead_processes(&core->bots[counter].carriage);
+		remove_dead_processes(&core->bots[counter].carriage, &alive_processes);
 		counter++;
 	}
+	if (alive_processes > 21)
+	{
+		cycle_to_die -= CYCLE_DELTA;
+	}
+	else
+	{
+		max_checks++;
+	}
+
+	if (max_checks == MAX_CHECKS)
+	{
+		max_checks = 0;
+		cycle_to_die -= CYCLE_DELTA;
+	}
+	cycle_to_die *= (cycle_to_die < 0) ? 0 : 1;
 }
 
 void			game(t_corewar *core) // delete flag
 {
 	unsigned 		i;
 	int 		flag = 0;
+	int 		cycle_to_die;
 
+
+	check_cycle_to_die(NULL);
+	cycle_to_die = CYCLE_TO_DIE;
 	vs_init(core);
 	if (core->flags.visual)
 	{
 		ft_putstr_fd("VISUAL ON!\n", 2);
 		vs_start(core);
 	}
-	i = 1;
-	while (i)
+	i = 0;
+	while (i < 1000000)
 	{
-		if (i % CYCLE_TO_DIE == 0)
+		if (i && i % cycle_to_die == 0)
 			check_cycle_to_die(core);
 		if (bigmother == 50)
 			flag = 1;
 		if (core->flags.visual)
 		{
 			draw(core, i);
-			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika?
-									// kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim???
+			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika? kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim???
 				vs_end(core);
 		}
+//		else
+//			dog_nail_vs(core);
 
 
 		if (!core->ncur.pause)

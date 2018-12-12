@@ -38,7 +38,7 @@ void 	move_carriage(t_cell *cell, t_bot *bot, int step)
 
 void 	change_carry_if_need(t_bot *bot, int position)
 {
-	if (bot->carriage->registers[position] == FALSE)
+	if (bot->carriage->registers[position] == 0)
 		bot->carriage->carry = TRUE;
 	else
 		bot->carriage->carry = FALSE;

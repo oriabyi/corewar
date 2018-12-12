@@ -99,6 +99,8 @@ int 			get_command(t_cell *cell, t_bot *bot)
 		}
 
 
+		bot->carriage->cycles--;
+
 		if (bot->carriage->cycles == 0)
 		{
 			if (bot->carriage->command <= 16)
@@ -118,10 +120,6 @@ int 			get_command(t_cell *cell, t_bot *bot)
 			bot->carriage->command = 0;
 			bot->carriage->cycles = 0; // BIG DOG_NAIL
 			flag++;
-		}
-		else
-		{
-			bot->carriage->cycles--;
 		}
 		bot->carriage = bot->carriage->next;
 

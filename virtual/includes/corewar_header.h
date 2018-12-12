@@ -5,6 +5,7 @@
 #include "../../op/op.h"
 #include "ncurses.h"
 #include "stdio.h"
+#include <time.h>
 
 /* 0-4		simple colors
  * 5-9		carriages
