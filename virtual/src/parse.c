@@ -45,7 +45,9 @@ int					get_bots(t_corewar *core, char **av)
 {
 	int				check_code;
 	int				counter;
+	int				bots;
 
+	bots = 0;
 	counter = 1;
 	check_code = 0;
 	while (av[counter] && *(av[counter]) == '-')
@@ -54,7 +56,7 @@ int					get_bots(t_corewar *core, char **av)
 		return (BAD_ARGUMENTS);
 	if (!(core->bots = (t_bot *)malloc(sizeof(t_bot) * O_BOTS)))
 		return (MEMORY_ERROR);
-	while (av[counter] && check_code == 0)
+	while (av[counter] && check_code == 0 && ++bots <= O_BOTS)
 	{
 		if (*(av[counter]) == '-')
 			return (WRONG_PLACE_FOR_FLAGS);
@@ -62,6 +64,8 @@ int					get_bots(t_corewar *core, char **av)
 		check_code = get_bot(&(core->bots[core->qua_bots]),
 				av[counter++], core->qua_bots++);
 	}
+	if (av[counter])
+		return (BAD_ARGUMENTS);
 	return (check_code);
 }
 
