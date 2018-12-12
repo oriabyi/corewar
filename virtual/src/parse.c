@@ -31,16 +31,6 @@ t_carriage 				*create_carriage(int id)
 }
 
 
-int 				fill_bot(t_corewar *core, int id)
-{
-	core->bots[id] = (t_bot){NULL, NULL, NULL, 0, 0, 0, 0, NULL};
-	core->bots[id].carriage = create_carriage(core->qua_bots + 1);
-	core->bots[id].fd =
-			open("/Users/ariabyi/CLionProjects/Corewar/test.txt", O_WRONLY);
-	core->bots[id].quant_carriages++;
-	return (0);
-}
-
 int 				create_bots(t_bot **bots)
 {
 	int 			counter;
@@ -105,26 +95,60 @@ void 				fill_bots(t_bot **bot, int qua_bots)
 	}
 }
 
+void 				swap_bots_id(t_bot *first, t_bot *second)
+{
+	t_bot			temp;
+
+	temp = *first;
+	*first = *second;
+	*second = temp;
+}
+
+void 				swap_bots(t_bot *first, t_bot *second)
+{
+	t_bot			temp;
+
+	temp = *first;
+	*first = *second;
+	*second = temp;
+}
+
+
+void 				reverse_bots(t_bot **bot, int qua_bots)
+{
+
+	if (qua_bots == 1)
+		return ;
+	else if (qua_bots == 2)
+	{
+		swap_bots(&((*bot)[0]), &((*bot)[1]));
+	}
+	else if (qua_bots == 3)
+	{
+		swap_bots(&((*bot)[0]), &((*bot)[2]));
+	}
+	else if (qua_bots == 4)
+	{
+		swap_bots(&((*bot)[0]), &((*bot)[3]));
+		swap_bots(&((*bot)[1]), &((*bot)[2]));
+	}
+}
+
+
 void 				sort_bots(t_bot **bot, int qua_bots)
 {
 	int 			counter;
-	t_bot			*head;
-	t_bot			temp;
 
-	head = *bot;
 	counter = 0;
 	while (counter + 1 < qua_bots)
 	{
-		if (head[counter].id > head[counter + 1].id)
+		if ((*bot)[counter].id > (*bot)[counter + 1].id)
 		{
-			temp = head[counter];
-			head[counter] = head[counter + 1];
-			head[counter + 1] = temp;
+			swap_bots(&((*bot)[counter]), &((*bot)[counter + 1]));
 			counter = 0;
 		}
 		else
 			counter++;
-
 	}
 }
 
@@ -177,6 +201,8 @@ int					get_bots(t_corewar *core, char **av)
 	fill_bots(&core->bots, core->qua_bots);
 
 	sort_bots(&core->bots, core->qua_bots);
+
+//	reverse_bots(&core->bots, core->qua_bots);
 
 	if (av[counter])
 		return (BAD_ARGUMENTS);
