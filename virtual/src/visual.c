@@ -1,7 +1,8 @@
 #include "../includes/corewar_header.h"
 
 int			vs_counter = 0;
-unsigned	usleep_count = 30001;
+
+// NORM VISUZUAL
 
 void 			dog_nail_vs(t_corewar *core)
 {
@@ -137,7 +138,7 @@ void 			fill_memory_window(t_corewar *core)
 }
 
 
-void 			get_button(t_corewar *core)
+void 			get_button(t_corewar *core, int cycle)
 {
 	int 		c;
 
@@ -156,6 +157,9 @@ void 			get_button(t_corewar *core)
 		core->ncur.draw_speed -= 5;
 	else if (c == VISUAL_OFF)			//??????????/
 		core->flags.visual = 0;
+	else
+		return;
+	display_windows(core, cycle);
 }
 
 void 			fill_score_window(t_corewar *core, int cycle)
@@ -221,8 +225,8 @@ void 			fill_score_window(t_corewar *core, int cycle)
 
 int 			display_windows(t_corewar *core, int cycle)
 {
-	fill_score_window(core, cycle);
 	fill_memory_window(core);
+	fill_score_window(core, cycle);
 	return (0);
 }
 
@@ -238,16 +242,17 @@ int				draw(t_corewar *core, int cycle)
 	clock_gettime(CLOCK_MONOTONIC, &tstart);
 	while (1)
 	{
-		get_button(core);
+		get_button(core, cycle);
 		fill_score_window(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &tend);
 		if (((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 			((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))
 		{
 			fill_memory_window(core);
-			break;
+			if (!core->ncur.pause)
+				break;
 		}
-		mvwprintw(core->ncur.score_window, 10, 3, "one way preparing took about %.5f seconds\n",
+		mvwprintw(core->ncur.score_window, 40, 3, "one way preparing took about %.5f seconds\n",
 				  ((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 				  ((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec));
 	}
