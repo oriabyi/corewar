@@ -437,6 +437,7 @@ t_carriage 				*create_carriage(int id);
 
 
 //cycles
+int 			check_cycle_to_die(t_corewar *core);
 int 			get_cycles(t_bot *bot);
 
 //print

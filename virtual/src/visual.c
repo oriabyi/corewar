@@ -184,10 +184,10 @@ void 			fill_score_window(t_corewar *core, int cycle)
 	}
 
 	wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
-	mvwprintw(core->ncur.score_window, 2, 1, "Cycles: %d", cycle);
+	mvwprintw(core->ncur.score_window, 5, 1, "Cycles: %d", cycle);
 
 
-	mvwprintw(core->ncur.score_window, 3, 1, "Speed: [");
+	mvwprintw(core->ncur.score_window, 8, 1, "Speed: [");
 	i = 0;
 	while (i < 20)
 	{
@@ -201,13 +201,13 @@ void 			fill_score_window(t_corewar *core, int cycle)
 
 
 	if (core->ncur.pressed_button > 0)
-		mvwprintw(core->ncur.score_window, 4, 1, "Pressed button: \"%c\" code: %d", core->ncur.pressed_button, core->ncur.pressed_button);
+		mvwprintw(core->ncur.score_window, 10, 1, "Pressed button: \"%c\" code: %d", core->ncur.pressed_button, core->ncur.pressed_button);
 
 
 	i = 0;
 	while(i < core->qua_bots)
 	{
-		mvwprintw(core->ncur.score_window, 5 + i + (i * 6), 1, "Player%d: ", i);
+		mvwprintw(core->ncur.score_window, 12 + i + (i * 6), 1, "Player%d: ", i);
 		simple_print(core->ncur.score_window, i + 1);
 		wprintw(core->ncur.score_window, "%s\n", core->bots[i].name);
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
@@ -216,6 +216,12 @@ void 			fill_score_window(t_corewar *core, int cycle)
 
 		i++;
 	}
+
+	mvwprintw(core->ncur.score_window, i + 40, 0, "   CYCLE_TO_DIE : %d", check_cycle_to_die(core));
+	mvwprintw(core->ncur.score_window, i + 41, 0, "   CYCLE_DELTA : %d", CYCLE_DELTA);
+	mvwprintw(core->ncur.score_window, i + 42, 0, "   NBR_LIVE : ?");
+	mvwprintw(core->ncur.score_window, i + 43, 0, "   MAX_CHECKS : %d", MAX_CHECKS);
+
 
 	if (core->ncur.pause)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
