@@ -13,7 +13,7 @@ t_carriage		*copy_carrieage(t_carriage *src, int id)
 	dst->alive = src->alive;
 	dst->command = 0;
 	dst->cycles = 0;
-	while (counter < 16)
+	while (counter < NUMBER_OF_REGISTERS)
 	{
 		dst->registers[counter] = src->registers[counter];
 		counter++;

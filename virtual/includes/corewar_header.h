@@ -118,6 +118,8 @@
 # define CR_CL_RED_BLACK			4
 # define CR_CL_CYAN_BLACK			5
 
+
+
 # define CR_CL_BLACK_WHITE			6
 # define CR_CL_BLACK_GREEN			7
 # define CR_CL_BLACK_BLUE			8
@@ -184,6 +186,8 @@
 
 
 
+
+# define NUMBER_OF_REGISTERS		16
 
 
 
@@ -266,8 +270,6 @@ typedef struct			s_bot
 	t_carriage			*carriage;
 }						t_bot;
 
-typedef struct 		s_carriage_cell t_carriage_cell;
-
 typedef struct			s_ncurses
 {
 	int 				i;
@@ -277,6 +279,8 @@ typedef struct			s_ncurses
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
 }						t_ncurses;
+
+typedef struct 		s_carriage_cell t_carriage_cell;
 
 struct 			s_carriage_cell
 {
@@ -299,7 +303,7 @@ typedef struct			s_corewar
 	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
-	short 				qua_bots;
+	unsigned 			qua_bots;
 }						t_corewar;
 
 

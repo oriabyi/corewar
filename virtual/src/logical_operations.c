@@ -8,15 +8,12 @@ ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command)
 		return (a | b);
 	else if (command == CW_XOR)
 		return (a ^ b);
-	else if (command == CW_ADD)
-		return (a + b);
-	else if (command == CW_SUB)
-		return (a - b);
 	return (0);
 }
 
 //rename first_agg
-int 	get_args_log_operations(t_cell *cell, t_bot *bot, int *step, ssize_t *first_agg)
+int 	get_args_log_operations(t_cell *cell, t_bot *bot,
+												int *step, ssize_t *first_agg)
 {
 	int argument;
 
@@ -25,7 +22,7 @@ int 	get_args_log_operations(t_cell *cell, t_bot *bot, int *step, ssize_t *first
 	argument = get_argument(cell, bot, (*step)++);
 	if (check_instruction_args(argument,
 			(T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
-		return (ERROR); // look at way of error
+		return (ERROR);
 
 	if (GET_FIRST_ARGUMENT(argument) == T_REG)
 	{

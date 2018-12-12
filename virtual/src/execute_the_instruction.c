@@ -77,8 +77,6 @@ int 			choose_instruction(t_cell *cell, t_bot *bot)
 	{
 		return(aff_instruct(cell, bot));
 	}
-	else
-		move_carriage(cell, bot, 1);
 	return (0);
 }
 
@@ -92,8 +90,6 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 	quant_carriages = bot->quant_carriages;
 	head = bot->carriage;
-	if (bigmother == 699945)
-		write(0, 0, 0);
 	while (bot->carriage && quant_carriages--)
 	{
 		if (bot->carriage->command == 0)
@@ -103,7 +99,7 @@ int 			get_command(t_cell *cell, t_bot *bot)
 		}
 
 
-		if (bot->carriage->cycles == 0)// || bot->quant_carriages == 1) // delete second condition
+		if (bot->carriage->cycles == 0)
 		{
 			if (bot->carriage->command <= 16)
 			{
