@@ -65,6 +65,8 @@ void			game(t_corewar *core) // delete flag
 
 //	check_cycle_to_die(NULL);
 	cycle_to_die = CYCLE_TO_DIE;
+
+
 	vs_init(core);
 
 	if (core->flags.visual)
@@ -76,20 +78,20 @@ void			game(t_corewar *core) // delete flag
 	i = 1;
 	while (i < 20000)
 	{
-		if (i == core->flags.dump)
-		{
-			//print_memory();
-			exit_message(core, 0, "Dump");
-		}
-		if (i && cycle_to_die && i % cycle_to_die == 0)
-			cycle_to_die = check_cycle_to_die(core);
-		if (bigmother == 50)
-			flag = 1;
+//		if (i == core->flags.dump)
+//		{
+//			print_memory();
+//			exit_message(core, 0, "Dump");
+//		}
+//		if (i && cycle_to_die && i % cycle_to_die == 0)
+//			cycle_to_die = check_cycle_to_die(core);
+//		if (bigmother == 50)
+//			flag = 1;
 		if (core->flags.visual)
 		{
 			draw(core, i);
-			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika? kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim???
-				vs_end(core);
+//			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika? kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim??? PIDOR posmotri vnutri DRAW
+//				vs_end(core);
 		}
 //		else
 //			dog_nail_vs(core);

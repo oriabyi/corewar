@@ -217,7 +217,7 @@ void 			fill_score_window(t_corewar *core, int cycle)
 		i++;
 	}
 
-	mvwprintw(core->ncur.score_window, i + 40, 0, "   CYCLE_TO_DIE : %d", check_cycle_to_die(core));
+	mvwprintw(core->ncur.score_window, i + 40, 0, "   CYCLE_TO_DIE : %d", 0);
 	mvwprintw(core->ncur.score_window, i + 41, 0, "   CYCLE_DELTA : %d", CYCLE_DELTA);
 	mvwprintw(core->ncur.score_window, i + 42, 0, "   NBR_LIVE : ?");
 	mvwprintw(core->ncur.score_window, i + 43, 0, "   MAX_CHECKS : %d", MAX_CHECKS);
@@ -250,11 +250,12 @@ int				draw(t_corewar *core, int cycle)
 	{
 		get_button(core, cycle);
 		fill_score_window(core, cycle);
+		fill_memory_window(core);
+
 		clock_gettime(CLOCK_MONOTONIC, &tend);
 		if (((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 			((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))
 		{
-			fill_memory_window(core);
 			if (!core->ncur.pause)
 				break;
 		}
@@ -335,7 +336,7 @@ int				vs_init(t_corewar *core)
 
 	core->ncur.pause = 1;
 	core->ncur.pressed_button = 0;
-	core->ncur.draw_speed = 0;
+	core->ncur.draw_speed = 100;
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);
