@@ -151,14 +151,14 @@ void 			get_button(t_corewar *core, int cycle)
 		core->ncur.pause = 0;
 	else if (c == PAUSE && !core->ncur.pause)
 		core->ncur.pause = 1;
-	else if (c == SPEED_PLUS && core->ncur.draw_speed < 100)
+	else if (SPEED_PLUS(c) && core->ncur.draw_speed < 100)
 		core->ncur.draw_speed += 5;
-	else if (c == SPEED_MINUS && core->ncur.draw_speed > 0)
+	else if (SPEED_MINUS(c) && core->ncur.draw_speed > 0)
 		core->ncur.draw_speed -= 5;
-	else if (c == VISUAL_OFF)			//??????????/
+	else if (c == VISUAL_OFF)			//??????????
 		core->flags.visual = 0;
 	else
-		return;
+		return ;
 	display_windows(core, cycle);
 }
 
@@ -172,7 +172,7 @@ void 			fill_score_window(t_corewar *core, int cycle)
 	if (core->ncur.pause)
 	{
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
-		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause**********");
+		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause************");
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 
 	}

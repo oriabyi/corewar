@@ -22,7 +22,8 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg)
 	while (str[counter])
 	{
 		ft_strncpy((char *)cell[position].hex, str[counter], 2);
-		cell[position].bot_id = get_id_of_bot(bot->id) + DENOTE_ALTERED;
+		if (!(CR_IS_VIEW_CARRIAGE(cell[position].bot_id))) // denote color
+			cell[position].bot_id = get_id_of_bot(bot->id) + DENOTE_ALTERED;
 		cell[position].time = SHOW_CHANGED_CYCLES;
 		position++;
 		counter++;
@@ -51,8 +52,6 @@ int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 	ssize_t 	position;
 	ssize_t 	t_reg;
 
-	if (bigmother > 2800)
-		write(0, 0, 0);
 	step = 1;
 	position = 0;
 	argument = get_argument(cell, bot, step++);

@@ -78,6 +78,7 @@ int 			choose_instruction(t_cell *cell, t_bot *bot)
 		return(aff_instruct(cell, bot));
 	}
 	return (0);
+//	return (NO_MATCH_INSTRUCTION);
 }
 
 
@@ -101,7 +102,7 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 		bot->carriage->cycles--;
 
-		if (bot->carriage->cycles == 0)
+		if (bot->carriage->cycles <= 0)
 		{
 			if (bot->carriage->command <= 16)
 			{

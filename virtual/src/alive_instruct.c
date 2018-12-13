@@ -6,10 +6,7 @@ int 	alive_instruct(t_cell *cell, t_bot *bot)
 	int 		step;
 	unsigned 	t_dir;
 
-	argument = get_argument(cell, bot, 1);
-	if (check_instruction_args(argument, T_DIR, NONE_ARG, NONE_ARG) == ERROR)
-		return (ERROR);
-
+	step = 1;
 	t_dir = (unsigned)get_arg_dir(cell, bot, &step, FOUR_BYTES);
 
 	cell[bot->carriage->cur_pos].bot_id =

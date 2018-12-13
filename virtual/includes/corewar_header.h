@@ -133,8 +133,8 @@
 # define CR_CL_WWHITE_BLACK			17
 
 # define PAUSE						' '
-# define SPEED_PLUS					'e'
-# define SPEED_MINUS				'q'
+# define SPEED_PLUS(x)				(x == 'e' || x == 259)
+# define SPEED_MINUS(x)				(x == 'q' || x == 258)
 # define VISUAL_OFF					27
 
 
