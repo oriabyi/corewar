@@ -78,13 +78,13 @@ void			game(t_corewar *core) // delete flag
 	i = 1;
 	while (i < 100000)
 	{
-//		if (i == core->flags.dump)
-//		{
+		if (i == core->flags.dump)
+		{
 //			print_memory();
-//			exit_message(core, 0, "Dump");
-//		}
-//		if (i && cycle_to_die && i % cycle_to_die == 0)
-//			cycle_to_die = check_cycle_to_die(core);
+			exit_message(core, 0, "Dump");
+		}
+		if (i && cycle_to_die && i % cycle_to_die == 0)
+			cycle_to_die = check_cycle_to_die(core);
 //		if (bigmother == 50)
 //			flag = 1;
 		if (core->flags.visual)

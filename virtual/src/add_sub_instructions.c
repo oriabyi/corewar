@@ -1,10 +1,10 @@
 # include "../includes/corewar_header.h"
 
-int 	add_sub_instructs(t_cell *cell, t_bot *bot)
+int				add_sub_instructs(t_cell *cell, t_bot *bot)
 {
-	int 	argument;
-	int 	step;
-	int 	pos_in_reg;
+	int			argument;
+	int			step;
+	int			pos_in_reg;
 
 	step = 1;
 	argument = get_argument(cell, bot, step);

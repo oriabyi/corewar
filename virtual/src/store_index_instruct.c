@@ -52,12 +52,17 @@ int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 	ssize_t 	position;
 	ssize_t 	t_reg;
 
+	if (bot->carriage->cur_pos == 69)
+		write(0,0,0);
 	step = 1;
 	position = 0;
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
+	{
+		move_carriage(cell, bot, 8); // WHAT A DOG NAIL delete this and write something normal
 		return (ERROR);
+	}
 
 	step += 1; // for skip first argument
 

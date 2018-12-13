@@ -19,8 +19,14 @@ int 	check_instruction_args(int argument, int first, int second, int third)
 
 	check_code = check_instruction_arg(GET_FIRST_ARGUMENT(argument), first);
 	if (check_code == 0)
-		check_code = check_instruction_arg(GET_SECOND_ARGUMENT(argument), second);
-	if (check_code == 0)
-		check_code = check_instruction_arg(GET_THIRD_ARGUMENT(argument), third);
+	{
+		check_code =
+				check_instruction_arg(GET_SECOND_ARGUMENT(argument), second);
+		if (check_code == 0)
+		{
+			check_code =
+					check_instruction_arg(GET_THIRD_ARGUMENT(argument), third);
+		}
+	}
 	return (check_code);
 }
