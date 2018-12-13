@@ -74,7 +74,7 @@ void			game(t_corewar *core) // delete flag
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 30)
+	while (i < 100000)
 	{
 		if (i == core->flags.dump)
 		{
