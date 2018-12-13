@@ -9,7 +9,7 @@ void				exit_message(t_corewar *core,
 	clean_all(core);
 	if (core->flags.visual)
 		vs_end(core);
-	system("leaks -q corewar");
+//	system("leaks -q corewar");
 	exit(error_code);
 }
 

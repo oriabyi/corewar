@@ -275,9 +275,11 @@ typedef struct			s_ncurses
 	int 				i;
 	int		 			draw_speed;
 	int 				pressed_button;
+	int 				where_pause;
 	unsigned 			pause:1;
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
+
 }						t_ncurses;
 
 struct 			s_carriage_cell

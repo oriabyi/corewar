@@ -149,7 +149,7 @@ void 			get_button(t_corewar *core, int cycle)
 
 	if (c == PAUSE && core->ncur.pause)
 		core->ncur.pause = 0;
-	else if (c == PAUSE && !core->ncur.pause)
+	else if ((cycle == core->ncur.where_pause  || c == PAUSE) && !core->ncur.pause)
 		core->ncur.pause = 1;
 	else if (SPEED_PLUS(c) && core->ncur.draw_speed < 100)
 		core->ncur.draw_speed += 5;
@@ -337,6 +337,7 @@ int				vs_init(t_corewar *core)
 	core->ncur.pause = 1;
 	core->ncur.pressed_button = 0;
 	core->ncur.draw_speed = 100;
+	core->ncur.where_pause = 0;
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);

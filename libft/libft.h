@@ -125,6 +125,7 @@ char				*ft_multjoinfr(int field, ...);
 int					free_str_return_int(char **str, int ret);
 int					are_nums(char *s);
 int					lgnl(int fd, char **line, size_t length);
+char				*append_char(char **s, char c);
 unsigned			ft_ahtoi(const char *string);
 int					raise_to_power(int num, int power);
 char				get_num_in_hex(int num);
