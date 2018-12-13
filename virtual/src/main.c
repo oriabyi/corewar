@@ -74,7 +74,7 @@ void			game(t_corewar *core) // delete flag
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 20000)
+	while (i < 30)
 	{
 		if (i == core->flags.dump)
 		{
@@ -91,8 +91,8 @@ void			game(t_corewar *core) // delete flag
 			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika? kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim???
 				vs_end(core);
 		}
-//		else
-//			dog_nail_vs(core);
+		else
+			dog_nail_vs(core);
 
 
 //		if (!core->ncur.pause)

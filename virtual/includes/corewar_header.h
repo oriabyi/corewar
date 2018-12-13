@@ -81,8 +81,8 @@
 
 # define ERROR	1
 
-
-
+# define SWAP_ID 1
+# define DO_NOT_SWAP_ID 0
 
 # define IDX_MOD_ON		1
 # define IDX_MOD_OFF	0
