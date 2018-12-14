@@ -25,6 +25,10 @@
 # define RIGHT	0x435B1B
 # define DEL	0x7E335B1B
 
+
+# define NOT_OWN	0
+# define OWN		1
+
 /////////////////////////////////////
 
 /*
@@ -270,8 +274,6 @@ typedef struct			s_bot
 	t_carriage			*carriage;
 }						t_bot;
 
-typedef struct 		s_carriage_cell t_carriage_cell;
-
 typedef struct			s_ncurses
 {
 	int 				i;
@@ -283,12 +285,6 @@ typedef struct			s_ncurses
 	WINDOW				*score_window;
 }						t_ncurses;
 
-struct 			s_carriage_cell
-{
-	unsigned			bot_id;
-	t_carriage_cell		*next;
-};
-
 typedef struct			s_cell
 {
 	char 				val;
@@ -296,6 +292,8 @@ typedef struct			s_cell
 	unsigned			bot_id:5;
 	unsigned			sum_acts:5;
 	unsigned			time;
+	unsigned			is_owned;
+	unsigned			last_owner;
 }						t_cell;
 
 typedef struct			s_corewar
@@ -408,7 +406,7 @@ void 	change_carry_if_need(t_bot *bot, int position);
 **	Move Carriage
 */
 
-void 	move_carriage(t_cell *cell, t_bot *bot, int step);
+void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
 
 /*
 ** Check args of instruction
@@ -416,17 +414,7 @@ void 	move_carriage(t_cell *cell, t_bot *bot, int step);
 
 int 	check_instruction_args(int argument, int first, int second, int third);
 
-/*
-** Get_T_DiRS
-*/
-
-unsigned char 		get_t_dir_one(t_cell *cell, t_bot *bot);
-short 				get_t_dir_two(t_cell *cell, t_bot *bot);
-unsigned int 		get_t_dir_four(t_cell *cell, t_bot *bot);
-
-
 // some trash
-void 			print_names(t_bot *bots, int qua_bots);
 int 			do_process(t_corewar *core, int qua_bots);
 void 			vs_start(t_corewar *core);
 void 			dog_nail_vs(t_corewar *core);

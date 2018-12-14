@@ -41,7 +41,7 @@ int 	load_index_instruct(t_cell *cell, t_bot *bot) // label size == 2
 	if (check_instruction_args(argument,
 			(T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 3, TWO_BYTES) + step);
+		move_carriage(cell, bot, fishka(argument, 3, TWO_BYTES) + step, NOT_OWN);
 		return (ERROR);
 	}
 
@@ -70,6 +70,6 @@ int 	load_index_instruct(t_cell *cell, t_bot *bot) // label size == 2
 
 	if (bot->carriage->command == CW_LLDI)
 		change_carry_if_need(bot, num_of_reg);
-	move_carriage(cell, bot, ++step);
+	move_carriage(cell, bot, ++step, NOT_OWN);
 	return (0);
 }

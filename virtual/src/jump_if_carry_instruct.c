@@ -8,7 +8,7 @@ int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function 
 
 	if (bot->carriage->carry == 0)
 	{
-		move_carriage(cell, bot, 3);
+		move_carriage(cell, bot, 3, NOT_OWN);
 		return (0);
 	}
 

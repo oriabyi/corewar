@@ -26,7 +26,7 @@ int					get_args_log_operations(t_cell *cell, t_bot *bot,
 	if (check_instruction_args(argument,
 			(T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + *step);
+		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + *step, NOT_OWN);
 		return (ERROR);
 	}
 	if (GET_FIRST_ARGUMENT(argument) == T_REG)
@@ -58,7 +58,7 @@ int					logical_operations(t_cell *cell, t_bot *bot)
 	t_reg = (unsigned char)get_dir(cell, bot, step, ONE_BYTE);
 	step += ONE_BYTE;
 	bot->carriage->registers[t_reg] = (unsigned)vessel;
-	move_carriage(cell, bot, step);
+	move_carriage(cell, bot, step, NOT_OWN);
 	change_carry_if_need(bot, t_reg);
 	return (0);
 }

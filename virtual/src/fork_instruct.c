@@ -50,6 +50,6 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 		head = head->next;
 	if (head && ++bot->quant_carriages)
 		head->next = temp;
-	move_carriage(cell, bot, 3);
+	move_carriage(cell, bot, 3, NOT_OWN);
 	return (0);
 }
