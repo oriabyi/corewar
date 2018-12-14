@@ -138,7 +138,7 @@ void 			fill_memory_window(t_corewar *core)
 }
 
 
-void 			get_button(t_corewar *core, int cycle)
+int 			get_button(t_corewar *core, int cycle)
 {
 	int 		c;
 
@@ -146,6 +146,8 @@ void 			get_button(t_corewar *core, int cycle)
 
 	if (c != -1)
 		core->ncur.pressed_button = c;
+	else
+		return (0);
 
 	if (c == PAUSE && core->ncur.pause)
 		core->ncur.pause = 0;
@@ -160,9 +162,9 @@ void 			get_button(t_corewar *core, int cycle)
 		core->flags.visual = 0;
 		exit_message(core, 3, "ESCAPE!");
 	}
-	else
-		return ;
-	display_windows(core, cycle);
+
+//	display_windows(core, cycle);
+	return (c);
 }
 
 void 			fill_score_window(t_corewar *core, int cycle)
@@ -251,10 +253,9 @@ int				draw(t_corewar *core, int cycle)
 	clock_gettime(CLOCK_MONOTONIC, &tstart);
 	while (1)
 	{
-		get_button(core, cycle);
-		fill_score_window(core, cycle);
-		fill_memory_window(core);
-
+		if (get_button(core, cycle) == NEXT_CYCLE)
+			break ;
+		display_windows(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &tend);
 		if (((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 			((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))

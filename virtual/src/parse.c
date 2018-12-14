@@ -207,8 +207,8 @@ int					get_bots(t_corewar *core, char **av)
 		return (check_code);
 	get_bots_info(core, av, &counter);
 	fill_bots(&core->bots, core->qua_bots);
-	sort_bots(&core->bots, core->qua_bots);
-	reverse_bots(&core->bots, core->qua_bots);
+//	sort_bots(&core->bots, core->qua_bots);
+//	reverse_bots(&core->bots, core->qua_bots);
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
