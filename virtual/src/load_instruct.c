@@ -32,7 +32,8 @@ void 	place_carriage(t_cell *cell, unsigned id)
 void 	move_carriage(t_cell *cell, t_bot *bot, int step)
 {
 	remove_carriage(&cell[bot->carriage->cur_pos], bot->id);
-	bot->carriage->cur_pos += step;
+	bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos + step);
+//	bot->carriage->cur_pos += step;
 	place_carriage(&cell[bot->carriage->cur_pos], bot->id);
 }
 

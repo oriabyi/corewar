@@ -61,6 +61,7 @@ int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
 	{
 		move_carriage(cell, bot, 8); // WHAT A DOG NAIL delete this and write something normal
+
 		return (ERROR);
 	}
 

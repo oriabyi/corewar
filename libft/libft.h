@@ -132,6 +132,7 @@ char				get_num_in_hex(int num);
 char				*get_hex_by_int_byte(size_t num, size_t len);
 char				**int_to_char_hex(size_t num, size_t len);
 void				free_char_matrix(char **str);
+char				*ft_multcat(int field, char *dest, ...);
 
 
 #endif

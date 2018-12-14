@@ -56,52 +56,30 @@ int 			check_cycle_to_die(t_corewar *core)
 	return (cycle_to_die);
 }
 
-char	*ft_multcat(int field, char *dest, ...)
-{
-	unsigned i;
-	char *temp;
-	va_list		ap;
-
-
-	i = 0;
-	va_start(ap, dest);
-	while (dest[i] != '\0')
-		i++;
-	while (field--)
-	{
-		temp = va_arg(ap, char *);
-		while (*temp)
-		{
-			dest[i++] = *temp;
-			temp++;
-		}
-	}
-	return (dest);
-}
-
-#include "../../libft/ft_multjoinfr.c"
-
 void 			print_memory(t_corewar *core)
 {
-	char *temp;
-	char temp_memory_line[128];
-	size_t i = 0;
-	unsigned  j = 0;
+	char			*temp;
+	char			temp_memory_line[192];
+	size_t			i = 0;
+	unsigned		j = 0;
 
 	temp_memory_line[0] = '\0';
 	temp = ft_memalloc(1);
-	while (i < 123123)
+	while (i < MEM_SIZE)
 	{
 		j = 0;
-		temp = ft_multjoinfr(6, NULL, temp, "0x", get_hex_by_int_byte(i, 4), " : ", temp_memory_line);
-		ft_bzero(temp_memory_line, 128);
+		ft_bzero(temp_memory_line, 192);
 		while (j == 0 || j % 64 != 0)
 		{
 			ft_multcat(2, temp_memory_line, (char *)core->cell[i].hex, " ");
 			i++;
 			j++;
 		}
+		temp = ft_multjoinfr(7, NULL, temp, "0x",
+			get_hex_by_int_byte((i - 64), 4), " : ", temp_memory_line, "\n");
 	}
+	write(1, temp, ft_strlen(temp));
+	free(temp);
 }
 
 void			game(t_corewar *core) // delete flag
