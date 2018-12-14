@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 15:21:59 by ariabyi           #+#    #+#              #
-#    Updated: 2018/11/30 10:17:54 by ariabyi          ###   ########.fr        #
+#    Updated: 2018/12/14 19:50:26 by obaranni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)treatment_arguments.c		\
 				$(SRCDIRVIR)visual.c 					\
 				$(SRCDIRVIR)execute_the_instruction.c 	\
-				$(SRCDIRVIR)get_t_dirs.c				\
 				$(SRCDIRVIR)instructions.c				\
 				$(SRCDIRVIR)aff_instruct.c 				\
 				$(SRCDIRVIR)alive_instruct.c 			\
