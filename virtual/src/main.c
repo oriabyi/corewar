@@ -49,6 +49,24 @@ int 			check_cycle_to_die(t_corewar *core)
 	return (core->cycle_to_die);
 }
 
+char			*pull_out_champs_info(t_corewar *core)
+{
+	char 		*temp;
+	int 		counter;
+
+	counter = 0;
+	temp = ft_strdup("Introducing contestants...\n");
+	while (counter < core->qua_bots)
+	{
+		temp = ft_multjoinfr(13, NULL, temp, "* Player ", NULL,
+				ft_itoa(counter + 1), ", weighing ", NULL,
+				ft_itoa(core->bots[counter].size), " bytes, \"",
+				core->bots[counter].name, "\" (\"",
+				core->bots[counter].comment, "\") !\n");
+		counter++;
+	}
+	return (temp);
+}
 
 void 			print_memory(t_corewar *core)
 {
@@ -58,7 +76,7 @@ void 			print_memory(t_corewar *core)
 	unsigned		j = 0;
 
 	temp_memory_line[0] = '\0';
-	temp = ft_memalloc(1);
+	temp = pull_out_champs_info(core);
 	while (i < MEM_SIZE)
 	{
 		j = 0;
@@ -75,8 +93,6 @@ void 			print_memory(t_corewar *core)
 	write(1, temp, ft_strlen(temp));
 	free(temp);
 }
-
-
 
 void			game(t_corewar *core) // delete flag
 {
@@ -99,7 +115,7 @@ void			game(t_corewar *core) // delete flag
 		if (i == core->flags.dump)
 		{
 			print_memory(core);
-			exit_message(core, 0, "Dump");
+			exit_message(core, 0, NULL);
 		}
 		if (i && core->cycle_to_die && i % core->cycle_to_die == 0)
 			core->cycle_to_die = check_cycle_to_die(core);

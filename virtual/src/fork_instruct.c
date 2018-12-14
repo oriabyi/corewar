@@ -28,7 +28,9 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 	t_carriage			*head;
 
 	head = bot->carriage;
-	temp_t_dir = get_t_dir_two(cell, bot);
+
+	int step = 1;
+	temp_t_dir = (short)get_arg_dir(cell, bot, &step, TWO_BYTES);
 	temp = copy_carrieage(head, bot->id);
 	if (temp == NULL)
 		return (ERROR);

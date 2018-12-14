@@ -17,7 +17,6 @@ add_executable(corewar
         virtual/src/visual.c
         virtual/src/execute_the_instruction.c
         virtual/src/instructions.c
-        virtual/src/get_t_dirs.c
         virtual/src/aff_instruct.c
         virtual/src/alive_instruct.c
         virtual/src/fork_instruct.c
