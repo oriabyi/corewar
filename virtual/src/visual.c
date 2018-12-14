@@ -156,7 +156,10 @@ void 			get_button(t_corewar *core, int cycle)
 	else if (SPEED_MINUS(c) && core->ncur.draw_speed > 0)
 		core->ncur.draw_speed -= 5;
 	else if (c == VISUAL_OFF)			//??????????
+	{
 		core->flags.visual = 0;
+		exit_message(core, 3, "ESCAPE!");
+	}
 	else
 		return ;
 	display_windows(core, cycle);

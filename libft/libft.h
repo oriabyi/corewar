@@ -129,8 +129,8 @@ char				*append_char(char **s, char c);
 unsigned			ft_ahtoi(const char *string);
 int					raise_to_power(int num, int power);
 char				get_num_in_hex(int num);
-char				*get_hex_by_int_byte(size_t num);
-char				**int_to_char_hex(size_t num);
+char				*get_hex_by_int_byte(size_t num, size_t len);
+char				**int_to_char_hex(size_t num, size_t len);
 void				free_char_matrix(char **str);
 
 

@@ -16,7 +16,7 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg)
 	int 	counter;
 
 	counter = 0;
-	str = int_to_char_hex(bot->carriage->registers[t_reg]);
+	str = int_to_char_hex(bot->carriage->registers[t_reg], 4); //define 5
 	if (!str)
 		return (ERROR); // return an ERROR
 	while (str[counter])
