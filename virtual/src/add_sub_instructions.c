@@ -9,7 +9,10 @@ int				add_sub_instructs(t_cell *cell, t_bot *bot)
 	step = 1;
 	argument = get_argument(cell, bot, step);
 	if (check_instruction_args(argument, T_REG, T_REG, T_REG) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + step + 1); //mb check and change
 		return (ERROR);
+	}
 
 	pos_in_reg = get_argument(cell, bot, (step + 3));
 	bot->carriage->registers[pos_in_reg] =

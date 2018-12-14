@@ -13,6 +13,7 @@ t_carriage				*copy_carrieage(t_carriage *src, int id)
 	dst->alive = src->alive;
 	dst->command = 0;
 	dst->cycles = 0;
+	dst->number = src->number + 1;
 	while (counter < NUMBER_OF_REGISTERS)
 	{
 		dst->registers[counter] = src->registers[counter];
@@ -38,6 +39,7 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 		temp->cur_pos = head->cur_pos + (temp_t_dir % IDX_MOD);
 	else if (bot->carriage->command == CW_LFORK)
 		temp->cur_pos = head->cur_pos + (temp_t_dir);
+	temp->cur_pos = (int)correction_coordinates(temp->cur_pos);
 	if (cell[temp->cur_pos].hex[0] == '0' && cell[temp->cur_pos].hex[1] == '1')
 		cell[temp->cur_pos].bot_id =
 				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_ALIVE;

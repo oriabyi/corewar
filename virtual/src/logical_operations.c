@@ -25,7 +25,10 @@ int					get_args_log_operations(t_cell *cell, t_bot *bot,
 	argument = get_argument(cell, bot, (*step)++);
 	if (check_instruction_args(argument,
 			(T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + *step);
 		return (ERROR);
+	}
 	if (GET_FIRST_ARGUMENT(argument) == T_REG)
 		*vessel = get_arg_reg(cell, bot, step);
 	else if (GET_FIRST_ARGUMENT(argument) == T_DIR)

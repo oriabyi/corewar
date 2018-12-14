@@ -11,7 +11,10 @@ int					long_load_instruct(t_cell *cell, t_bot *bot) // label_size == 4, the sam
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 2, TWO_BYTES) + step);
 		return (ERROR);
+	}
 
 
 	if (GET_FIRST_ARGUMENT(argument) == T_DIR)

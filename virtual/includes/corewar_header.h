@@ -252,6 +252,7 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:5;
 	int 				cycles;
+	int 				number;
 
 	struct s_carriage	*next;
 }						t_carriage;
@@ -464,6 +465,9 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg);
 
 //add sub
 ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command);
+
+int 	fishka(int argument, int count_arguments, int bytes);
+
 #endif
 
 // 4 magic value

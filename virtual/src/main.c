@@ -27,7 +27,6 @@ int 			check_cycle_to_die(t_corewar *core)
 	int 			counter;
 	int 			alive_processes;
 
-
 	counter = 0;
 	alive_processes = 0;
 	while (counter < core->qua_bots)
@@ -75,7 +74,6 @@ void 			print_memory(t_corewar *core)
 	size_t			i = 0;
 	unsigned		j = 0;
 
-	temp_memory_line[0] = '\0';
 	temp = pull_out_champs_info(core);
 	while (i < MEM_SIZE)
 	{
@@ -94,7 +92,7 @@ void 			print_memory(t_corewar *core)
 	free(temp);
 }
 
-void			game(t_corewar *core) // delete flag
+void			game(t_corewar *core)
 {
 	unsigned 		i;
 	core->cycle_to_die = CYCLE_TO_DIE;
@@ -103,12 +101,11 @@ void			game(t_corewar *core) // delete flag
 	vs_init(core);
 	if (core->flags.visual)
 	{
-		ft_putstr_fd("VISUAL ON!\n", 2);
 		vs_start(core);
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 100000)
+	while (i < 15000)
 	{
 		if (i == 50)
 			write(0,0,0);
@@ -133,11 +130,10 @@ void			game(t_corewar *core) // delete flag
 
 }
 
+
 int				main(int ac, char **av)
 {
 	t_corewar	core;
-
-
 
 	bigmother = 0;
 	core = (t_corewar){NULL, 0};

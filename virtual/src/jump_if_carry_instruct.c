@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function !!!
+int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function !!! label = 2
 {
 	int 	jump;
 	int step = 1;

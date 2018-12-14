@@ -11,7 +11,10 @@ int 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			(T_REG), (T_REG | T_IND), (NONE_ARG)) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step);
 		return (ERROR);
+	}
 
 	t_reg_num = get_argument(cell, bot, step++);
 	if (GET_SECOND_ARGUMENT(argument) == T_REG)
