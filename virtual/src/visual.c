@@ -342,6 +342,7 @@ int				vs_init(t_corewar *core)
 	core->ncur.pressed_button = 0;
 	core->ncur.draw_speed = 100;
 	core->ncur.where_pause = 0;
+
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);

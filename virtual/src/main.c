@@ -26,15 +26,8 @@ int 			check_cycle_to_die(t_corewar *core)
 {
 	int 			counter;
 	int 			alive_processes;
-	static int 		cycle_to_die;
-	static int 		max_checks;
 
-	if (core == NULL)
-	{
-		max_checks = 0;
-		cycle_to_die = CYCLE_TO_DIE;
-		return (0);
-	}
+
 	counter = 0;
 	alive_processes = 0;
 	while (counter < core->qua_bots)
@@ -43,18 +36,19 @@ int 			check_cycle_to_die(t_corewar *core)
 		counter++;
 	}
 	if (alive_processes > 21)
-		cycle_to_die -= CYCLE_DELTA;
+		core->cycle_to_die -= CYCLE_DELTA;
 	else
-		max_checks++;
+		core->max_checks++;
 
-	if (max_checks == MAX_CHECKS)
+	if (core->max_checks == MAX_CHECKS)
 	{
-		max_checks = 0;
-		cycle_to_die -= CYCLE_DELTA;
+		core->max_checks = 0;
+		core->cycle_to_die -= CYCLE_DELTA;
 	}
-	cycle_to_die *= (cycle_to_die < 0) ? 0 : 1;
-	return (cycle_to_die);
+	core->cycle_to_die *= (core->cycle_to_die < 0) ? 0 : 1;
+	return (core->cycle_to_die);
 }
+
 
 void 			print_memory(t_corewar *core)
 {
@@ -82,19 +76,15 @@ void 			print_memory(t_corewar *core)
 	free(temp);
 }
 
+
+
 void			game(t_corewar *core) // delete flag
 {
 	unsigned 		i;
-	int 		flag = 0;
-	int 		cycle_to_die;
-
-
-//	check_cycle_to_die(NULL);
-	cycle_to_die = CYCLE_TO_DIE;
-
+	core->cycle_to_die = CYCLE_TO_DIE;
+	core->max_checks = 0;
 
 	vs_init(core);
-
 	if (core->flags.visual)
 	{
 		ft_putstr_fd("VISUAL ON!\n", 2);
@@ -111,26 +101,16 @@ void			game(t_corewar *core) // delete flag
 			print_memory(core);
 			exit_message(core, 0, "Dump");
 		}
-		if (i && cycle_to_die && i % cycle_to_die == 0)
-			cycle_to_die = check_cycle_to_die(core);
-//		if (bigmother == 50)
-//			flag = 1;
-		if (core->flags.visual)
+		if (i && core->cycle_to_die && i % core->cycle_to_die == 0)
+			core->cycle_to_die = check_cycle_to_die(core);
+		if (i >= core->flags.dump && core->flags.visual)
 		{
 			draw(core, i);
-//			if (!core->flags.visual)
-//				vs_end(core);
 		}
-//		else
-//			dog_nail_vs(core);
 
-
-//		if (!core->ncur.pause)
-//		{
-			flag = do_process(core, core->qua_bots);
-			bigmother++;
-			i++;
-//		}
+		do_process(core, core->qua_bots);
+		bigmother++;
+		i++;
 	}
 	if (core->flags.visual)
 		vs_end(core);

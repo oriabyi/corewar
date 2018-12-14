@@ -236,7 +236,7 @@ int 				bigmother;
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
-	unsigned			dump;// Рыба
+	unsigned			dump;
 	unsigned			a_visual:5;// Рыба
 	unsigned			o_visual:1;// Рыба
 	unsigned			s_visual:1;// Рыба
@@ -280,7 +280,6 @@ typedef struct			s_ncurses
 	unsigned 			pause:1;
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
-
 }						t_ncurses;
 
 struct 			s_carriage_cell
@@ -304,6 +303,8 @@ typedef struct			s_corewar
 	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
+	int 			cycle_to_die;
+	int 			max_checks;
 	unsigned 			qua_bots;
 }						t_corewar;
 
