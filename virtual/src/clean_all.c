@@ -8,7 +8,7 @@ void				clean_carriages(t_carriage *carriage)
 }
 
 
-void				clean_bots(t_bot *bots, short quantity)
+void				clean_bots(t_bot *bots, unsigned quantity)
 {
 	int				counter;
 

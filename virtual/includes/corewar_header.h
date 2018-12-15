@@ -81,8 +81,8 @@
 
 # define ERROR	1
 
-
-
+# define SWAP_ID 1
+# define DO_NOT_SWAP_ID 0
 
 # define IDX_MOD_ON		1
 # define IDX_MOD_OFF	0
@@ -133,8 +133,9 @@
 # define CR_CL_WWHITE_BLACK			17
 
 # define PAUSE						' '
-# define SPEED_PLUS					'e'
-# define SPEED_MINUS				'q'
+# define NEXT_CYCLE					's'
+# define SPEED_PLUS(x)				(x == 'e' || x == 259)
+# define SPEED_MINUS(x)				(x == 'q' || x == 258)
 # define VISUAL_OFF					27
 
 
@@ -235,7 +236,7 @@ int 				bigmother;
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
-	unsigned			dump;// Рыба
+	unsigned			dump;
 	unsigned			a_visual:5;// Рыба
 	unsigned			o_visual:1;// Рыба
 	unsigned			s_visual:1;// Рыба
@@ -251,6 +252,7 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:5;
 	int 				cycles;
+	int 				number;
 
 	struct s_carriage	*next;
 }						t_carriage;
@@ -275,6 +277,7 @@ typedef struct			s_ncurses
 	int 				i;
 	int		 			draw_speed;
 	int 				pressed_button;
+	int 				where_pause;
 	unsigned 			pause:1;
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
@@ -301,6 +304,8 @@ typedef struct			s_corewar
 	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
+	int 			cycle_to_die;
+	int 			max_checks;
 	unsigned 			qua_bots;
 }						t_corewar;
 
@@ -337,9 +342,10 @@ int 	get_old_young_numbers(int num, int base, int *power);
 int 				ft_module(int i);
 
 /*
-** Clean all
+** Clean functions
 */
 
+void	clean_carriages(t_carriage *carriage);
 void 	clean_all(t_corewar *core);
 
 /*
@@ -460,6 +466,9 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg);
 
 //add sub
 ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command);
+
+int 	fishka(int argument, int count_arguments, int bytes);
+
 #endif
 
 // 4 magic value

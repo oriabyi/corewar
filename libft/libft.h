@@ -125,12 +125,14 @@ char				*ft_multjoinfr(int field, ...);
 int					free_str_return_int(char **str, int ret);
 int					are_nums(char *s);
 int					lgnl(int fd, char **line, size_t length);
+char				*append_char(char **s, char c);
 unsigned			ft_ahtoi(const char *string);
 int					raise_to_power(int num, int power);
 char				get_num_in_hex(int num);
-char				*get_hex_by_int_byte(size_t num);
-char				**int_to_char_hex(size_t num);
+char				*get_hex_by_int_byte(size_t num, size_t len);
+char				**int_to_char_hex(size_t num, size_t len);
 void				free_char_matrix(char **str);
+char				*ft_multcat(int field, char *dest, ...);
 
 
 #endif

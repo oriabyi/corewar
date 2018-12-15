@@ -138,7 +138,7 @@ void 			fill_memory_window(t_corewar *core)
 }
 
 
-void 			get_button(t_corewar *core, int cycle)
+int 			get_button(t_corewar *core, int cycle)
 {
 	int 		c;
 
@@ -146,20 +146,25 @@ void 			get_button(t_corewar *core, int cycle)
 
 	if (c != -1)
 		core->ncur.pressed_button = c;
+	else
+		return (0);
 
 	if (c == PAUSE && core->ncur.pause)
 		core->ncur.pause = 0;
-	else if (c == PAUSE && !core->ncur.pause)
+	else if ((cycle == core->ncur.where_pause  || c == PAUSE) && !core->ncur.pause)
 		core->ncur.pause = 1;
-	else if (c == SPEED_PLUS && core->ncur.draw_speed < 100)
+	else if (SPEED_PLUS(c) && core->ncur.draw_speed < 100)
 		core->ncur.draw_speed += 5;
-	else if (c == SPEED_MINUS && core->ncur.draw_speed > 0)
+	else if (SPEED_MINUS(c) && core->ncur.draw_speed > 0)
 		core->ncur.draw_speed -= 5;
-	else if (c == VISUAL_OFF)			//??????????/
+	else if (c == VISUAL_OFF)			//??????????
+	{
 		core->flags.visual = 0;
-	else
-		return;
-	display_windows(core, cycle);
+		exit_message(core, 3, "ESCAPE!");
+	}
+
+//	display_windows(core, cycle);
+	return (c);
 }
 
 void 			fill_score_window(t_corewar *core, int cycle)
@@ -172,7 +177,7 @@ void 			fill_score_window(t_corewar *core, int cycle)
 	if (core->ncur.pause)
 	{
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
-		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause**********");
+		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause************");
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 
 	}
@@ -236,6 +241,24 @@ int 			display_windows(t_corewar *core, int cycle)
 	return (0);
 }
 
+//void 			fishka(t_corewar *core, int cycle)
+//{
+//	int 		counter;
+//
+//	counter = 0;
+//	while (counter < core->qua_bots)
+//	{
+//		clean_carriages(core->bots[counter].carriage);
+//		core->bots[counter].carriage = create_carriage(core->bots[counter].id);
+//		counter++;
+//	}
+//	free(core->cell);
+//	create_memory_space(core);
+//	fill_memory_space(core->bots, core->cell, core->qua_bots);
+//	core->max_checks = 0;
+//	core->cycle_to_die = CYCLE_TO_DIE;
+//}
+
 int				draw(t_corewar *core, int cycle)
 {
 	struct timespec tstart, tend;
@@ -248,10 +271,9 @@ int				draw(t_corewar *core, int cycle)
 	clock_gettime(CLOCK_MONOTONIC, &tstart);
 	while (1)
 	{
-		get_button(core, cycle);
-		fill_score_window(core, cycle);
-		fill_memory_window(core);
-
+		if (get_button(core, cycle) == NEXT_CYCLE)
+			break ;
+		display_windows(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &tend);
 		if (((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -
 			((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))
@@ -325,6 +347,8 @@ int				vs_init(t_corewar *core)
 	core->ncur.pause = 1;
 	core->ncur.pressed_button = 0;
 	core->ncur.draw_speed = 100;
+	core->ncur.where_pause = 0;
+
 	check_code = create_memory_space(core);
 	if (check_code)
 		check_correctness(core, check_code);

@@ -40,7 +40,10 @@ int 	load_index_instruct(t_cell *cell, t_bot *bot) // label size == 2
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			(T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 3, TWO_BYTES) + step);
 		return (ERROR);
+	}
 
 	if (GET_FIRST_ARGUMENT(argument) == T_REG)
 		position = (unsigned long)get_arg_reg(cell, bot, &step);

@@ -32,7 +32,8 @@ void 	place_carriage(t_cell *cell, unsigned id)
 void 	move_carriage(t_cell *cell, t_bot *bot, int step)
 {
 	remove_carriage(&cell[bot->carriage->cur_pos], bot->id);
-	bot->carriage->cur_pos += step;
+	bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos + step);
+//	bot->carriage->cur_pos += step;
 	place_carriage(&cell[bot->carriage->cur_pos], bot->id);
 }
 
@@ -83,7 +84,10 @@ int 	load_instruct(t_cell *cell, t_bot *bot) // label size == 4
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step);
 		return (ERROR);
+	}
 
 	if (GET_FIRST_ARGUMENT(argument) == T_DIR)
 	{

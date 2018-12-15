@@ -16,13 +16,14 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg)
 	int 	counter;
 
 	counter = 0;
-	str = int_to_char_hex(bot->carriage->registers[t_reg]);
+	str = int_to_char_hex(bot->carriage->registers[t_reg], 4); //define 5
 	if (!str)
 		return (ERROR); // return an ERROR
 	while (str[counter])
 	{
 		ft_strncpy((char *)cell[position].hex, str[counter], 2);
-		cell[position].bot_id = get_id_of_bot(bot->id) + DENOTE_ALTERED;
+		if (!(CR_IS_VIEW_CARRIAGE(cell[position].bot_id))) // denote color
+			cell[position].bot_id = get_id_of_bot(bot->id) + DENOTE_ALTERED;
 		cell[position].time = SHOW_CHANGED_CYCLES;
 		position++;
 		counter++;
@@ -51,17 +52,19 @@ int 	store_index_instruct(t_cell *cell, t_bot *bot)	//label size == 2
 	ssize_t 	position;
 	ssize_t 	t_reg;
 
-	if (bigmother > 2800)
-		write(0, 0, 0);
+	if (bigmother > 4500)
+		write(0,0,0);
 	step = 1;
 	position = 0;
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
+	{
+		move_carriage(cell, bot, fishka(argument, 3, TWO_BYTES) + step);
 		return (ERROR);
+	}
 
 	step += 1; // for skip first argument
-
 	if (GET_SECOND_ARGUMENT(argument) == T_REG)
 		position = get_arg_reg(cell, bot, &step);
 	else if (GET_SECOND_ARGUMENT(argument) == T_DIR)

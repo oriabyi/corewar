@@ -26,15 +26,7 @@ int 			check_cycle_to_die(t_corewar *core)
 {
 	int 			counter;
 	int 			alive_processes;
-	static int 		cycle_to_die;
-	static int 		max_checks;
 
-	if (core == NULL)
-	{
-		max_checks = 0;
-		cycle_to_die = CYCLE_TO_DIE;
-		return (0);
-	}
 	counter = 0;
 	alive_processes = 0;
 	while (counter < core->qua_bots)
@@ -43,71 +35,101 @@ int 			check_cycle_to_die(t_corewar *core)
 		counter++;
 	}
 	if (alive_processes > 21)
-		cycle_to_die -= CYCLE_DELTA;
+		core->cycle_to_die -= CYCLE_DELTA;
 	else
-		max_checks++;
+		core->max_checks++;
 
-	if (max_checks == MAX_CHECKS)
+	if (core->max_checks == MAX_CHECKS)
 	{
-		max_checks = 0;
-		cycle_to_die -= CYCLE_DELTA;
+		core->max_checks = 0;
+		core->cycle_to_die -= CYCLE_DELTA;
 	}
-	cycle_to_die *= (cycle_to_die < 0) ? 0 : 1;
-	return (cycle_to_die);
+	core->cycle_to_die *= (core->cycle_to_die < 0) ? 0 : 1;
+	return (core->cycle_to_die);
 }
 
-void			game(t_corewar *core) // delete flag
+char			*pull_out_champs_info(t_corewar *core)
+{
+	char 		*temp;
+	int 		counter;
+
+	counter = 0;
+	temp = ft_strdup("Introducing contestants...\n");
+	while (counter < core->qua_bots)
+	{
+		temp = ft_multjoinfr(13, NULL, temp, "* Player ", NULL,
+				ft_itoa(counter + 1), ", weighing ", NULL,
+				ft_itoa(core->bots[counter].size), " bytes, \"",
+				core->bots[counter].name, "\" (\"",
+				core->bots[counter].comment, "\") !\n");
+		counter++;
+	}
+	return (temp);
+}
+
+void 			print_memory(t_corewar *core)
+{
+	char			*temp;
+	char			temp_memory_line[192];
+	size_t			i = 0;
+	unsigned		j = 0;
+
+	temp = pull_out_champs_info(core);
+	while (i < MEM_SIZE)
+	{
+		j = 0;
+		ft_bzero(temp_memory_line, 192);
+		while (j == 0 || j % 64 != 0)
+		{
+			ft_multcat(2, temp_memory_line, (char *)core->cell[i].hex, " ");
+			i++;
+			j++;
+		}
+		temp = ft_multjoinfr(7, NULL, temp, "0x",
+			get_hex_by_int_byte((i - 64), 4), " : ", temp_memory_line, "\n");
+	}
+	write(1, temp, ft_strlen(temp));
+	free(temp);
+}
+
+void			game(t_corewar *core)
 {
 	unsigned 		i;
-	int 		flag = 0;
-	int 		cycle_to_die;
-
-
-//	check_cycle_to_die(NULL);
-	cycle_to_die = CYCLE_TO_DIE;
-
+	core->cycle_to_die = CYCLE_TO_DIE;
+	core->max_checks = 0;
 
 	vs_init(core);
-
 	if (core->flags.visual)
 	{
-		ft_putstr_fd("VISUAL ON!\n", 2);
 		vs_start(core);
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 20000)
+	while (i < 15000)
 	{
-//		if (i == core->flags.dump)
-//		{
-//			print_memory();
-//			exit_message(core, 0, "Dump");
-//		}
-//		if (i && cycle_to_die && i % cycle_to_die == 0)
-//			cycle_to_die = check_cycle_to_die(core);
-//		if (bigmother == 50)
-//			flag = 1;
-		if (core->flags.visual)
+		if (i == 50)
+			write(0,0,0);
+		if (i == core->flags.dump)
+		{
+			print_memory(core);
+			exit_message(core, 0, NULL);
+		}
+		if (i && core->cycle_to_die && i % core->cycle_to_die == 0)
+			core->cycle_to_die = check_cycle_to_die(core);
+		if (i >= core->flags.dump && core->flags.visual)
 		{
 			draw(core, i);
-//			if (!core->flags.visual) // TODO: clean_all && exit? gde blyat logika? kak ono syda zaidet esli vuwe if s ysloviem protivlopolojnim??? PIDOR posmotri vnutri DRAW
-//				vs_end(core);
 		}
-//		else
-//			dog_nail_vs(core);
 
-
-//		if (!core->ncur.pause)
-//		{
-			flag = do_process(core, core->qua_bots);
-			bigmother++;
-			i++;
-//		}
+		do_process(core, core->qua_bots);
+		bigmother++;
+		i++;
 	}
 	if (core->flags.visual)
 		vs_end(core);
 
 }
+
 
 int				main(int ac, char **av)
 {

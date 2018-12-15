@@ -36,7 +36,7 @@ SRC= ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c\
 		ft_iswsps.c ft_pmult_fd.c ft_setnum.c ft_check_iarr.c ft_are_nums.c\
 		free_str_return_int.c ft_multjoinfr.c lgnl.c ft_ahtoi.c raise_to_power.c\
 		get_num_in_hex.c get_hex_by_int_byte.c int_to_char_hex.c free_char_matrix.c \
-
+		append_char.c ft_multcat.c
 all: $(NAME)
 
 $(NAME):

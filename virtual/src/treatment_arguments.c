@@ -66,7 +66,7 @@ int				check_arguments(t_flags *flags, int ac, char **av)
 				"champion 4] ", 2);
 		exit (WRONG_ARGUMENTS);
 	}
-	*flags = (t_flags){0, (unsigned)-1, 0, 0, 0};
+	*flags = (t_flags){0, 0, 0, 0, 0};
 	if (av[1] && av[1][0] == '-')
 	{
 		get_flags(flags, (av + 1));

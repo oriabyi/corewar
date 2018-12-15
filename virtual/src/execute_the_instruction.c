@@ -78,6 +78,7 @@ int 			choose_instruction(t_cell *cell, t_bot *bot)
 		return(aff_instruct(cell, bot));
 	}
 	return (0);
+//	return (NO_MATCH_INSTRUCTION);
 }
 
 
@@ -101,11 +102,11 @@ int 			get_command(t_cell *cell, t_bot *bot)
 
 		bot->carriage->cycles--;
 
-		if (bot->carriage->cycles == 0)
+		if (bot->carriage->cycles <= 0)
 		{
 			if (bot->carriage->command <= 16)
 			{
-				if (bigmother == 812)
+				if (bigmother > 7975)
 					write(0, 0, 0);
 				dprintf(bot->fd, "i = %d\nCommand: %d\n\n", bigmother, bot->carriage->command);
 				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
@@ -122,7 +123,6 @@ int 			get_command(t_cell *cell, t_bot *bot)
 			flag++;
 		}
 		bot->carriage = bot->carriage->next;
-
 	}
 
 
