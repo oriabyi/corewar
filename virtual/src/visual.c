@@ -317,18 +317,6 @@ int				vs_end(t_corewar *core)
 	return (0);
 }
 
-
-void 			print_names(t_bot *bots, int qua_bots)
-{
-	int counter = 0;
-
-	while (counter < qua_bots)
-	{
-		ft_putendl(bots[counter].name);
-		counter++;
-	}
-}
-
 int				vs_init(t_corewar *core)
 {
 	int 	check_code;
