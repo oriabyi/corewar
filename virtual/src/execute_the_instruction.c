@@ -113,7 +113,7 @@ int 			get_command(t_cell *cell, t_bot *bot)
 			}
 			else
 			{
-				move_carriage(cell, bot, 1, NOT_OWN);
+				move_carriage(cell, bot, 1, OWN);
 				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
 			}
 			bot->carriage->command = 0;

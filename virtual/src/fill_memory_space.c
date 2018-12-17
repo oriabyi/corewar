@@ -24,6 +24,7 @@ void				fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots)
 		if (counter < bots[num_of_bot].size + (MEM_SIZE / qua_bots) * num_of_bot)
 		{
 			cell[counter].bot_id = num_of_bot + COUNTING_FROM_ONE;
+			cell[counter].last_owner = cell[counter].bot_id;
 			cell[counter].hex[0] = seq[bots[num_of_bot].exec_code[bot_counter] / 16];
 			cell[counter].hex[1] = seq[bots[num_of_bot].exec_code[bot_counter] % 16];
 		}

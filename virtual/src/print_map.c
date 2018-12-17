@@ -60,7 +60,6 @@ void 		altered_view(WINDOW *win, int id)
 void 		alive_view(WINDOW *win, int id)
 {
 	wattron(win, A_BOLD);
-
 	if (id == FIRST_BOT)
 	{
 		wattron(win, COLOR_PAIR(CR_CL_WHITE_GREEN));

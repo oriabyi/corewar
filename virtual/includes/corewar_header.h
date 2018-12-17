@@ -10,7 +10,7 @@
 /* 0-4		simple colors
  * 5-9		carriages
  * 10-14	alive
- * 15-19	new moves
+ * 15-19	altered
 */
 
 
@@ -60,6 +60,9 @@
 # define ARGUMENT_OF_PROCESS(x) (x + 1)
 
 #define ignat(x, y, z) if (y == 1 && z == 1) return
+
+
+# define CHECK_REG(x) (x >= 0 && x <= 15)
 
 /*
 ** Get arguments // check defines
@@ -257,6 +260,7 @@ typedef struct			s_carriage
 	unsigned 			command:5;
 	int 				cycles;
 	int 				number;
+	int 				invalid_reg:1;
 
 	struct s_carriage	*next;
 }						t_carriage;
@@ -292,7 +296,6 @@ typedef struct			s_cell
 	unsigned			bot_id:5;
 	unsigned			sum_acts:5;
 	unsigned			time;
-	unsigned			is_owned;
 	unsigned			last_owner;
 }						t_cell;
 
@@ -302,8 +305,8 @@ typedef struct			s_corewar
 	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
-	int 			cycle_to_die;
-	int 			max_checks;
+	int 				cycle_to_die;
+	int 				max_checks;
 	unsigned 			qua_bots;
 }						t_corewar;
 
@@ -406,7 +409,8 @@ void 	change_carry_if_need(t_bot *bot, int position);
 **	Move Carriage
 */
 
-void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
+int 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
+
 
 /*
 ** Check args of instruction
@@ -417,6 +421,7 @@ int 	check_instruction_args(int argument, int first, int second, int third);
 // some trash
 int 			do_process(t_corewar *core, int qua_bots);
 void 			vs_start(t_corewar *core);
+int 		check_reg(t_bot *bot, int reg);
 void 			dog_nail_vs(t_corewar *core);
 int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap this with get_t_dir_four
 

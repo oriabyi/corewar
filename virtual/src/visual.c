@@ -276,7 +276,6 @@ void 			fill_rank(t_cell *cell, int cur_qua, int qua_inrank)
 	cell[cur_qua].bot_id = NOT_EXPOSED;
 	cell[cur_qua].sum_acts = 0;
 	cell[cur_qua].time = 0;
-	cell[cur_qua].is_owned = 0;
 	cell[cur_qua].last_owner = 0;
 	cell[cur_qua].hex[0] = '0';
 	cell[cur_qua].hex[1] = '0';
@@ -298,8 +297,8 @@ void 			vs_start(t_corewar *core)
 	init_colors();
 	noecho();				//+
 	curs_set(0); 			//+ switch off cursor
-	keypad(stdscr, TRUE);
-	nodelay(stdscr, TRUE);
+	keypad(stdscr, true);
+	nodelay(stdscr, true);
 	cbreak();
 	core->ncur.memory_window = newwin(66, 194, 0, 0);
 	core->ncur.score_window = newwin(66, 70, 0, 195);
