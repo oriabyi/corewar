@@ -42,6 +42,7 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)check_instruction_args.c	\
 				$(SRCDIRVIR)getters_args.c              \
 				$(SRCDIRVIR)print_map.c                 \
+				$(SRCDIRVIR)init_time.c                 \
 				$(SRCDIRVIR)logical_operations.c        \
 				$(SRCDIRVIR)fill_memory_space.c		\
 				$(SRCDIRVIR)trash.c
