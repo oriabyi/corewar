@@ -10,7 +10,7 @@ int				add_sub_instructs(t_cell *cell, t_bot *bot)
 	argument = get_argument(cell, bot, step);
 	if (check_instruction_args(argument, T_REG, T_REG, T_REG) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + step + 1); //mb check and change
+		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + step + 1, NOT_OWN); //mb check and change
 		return (ERROR);
 	}
 
@@ -24,6 +24,6 @@ int				add_sub_instructs(t_cell *cell, t_bot *bot)
 					bot->carriage->command);
 	step += 3;
 	change_carry_if_need(bot, pos_in_reg);
-	move_carriage(cell, bot, step + 1);
+	move_carriage(cell, bot, step + 1, NOT_OWN);
 	return (0);
 }

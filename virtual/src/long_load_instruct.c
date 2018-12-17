@@ -12,7 +12,7 @@ int					long_load_instruct(t_cell *cell, t_bot *bot) // label_size == 4, the sam
 	if (check_instruction_args(argument,
 			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 2, TWO_BYTES) + step);
+		move_carriage(cell, bot, fishka(argument, 2, TWO_BYTES) + step, NOT_OWN);
 		return (ERROR);
 	}
 
@@ -34,6 +34,6 @@ int					long_load_instruct(t_cell *cell, t_bot *bot) // label_size == 4, the sam
 		return (ERROR);
 //	change_carry_if_need(bot, ft_ahtoi((const char *)(cell[bot->carriage->cur_pos + 6].hex)));
 	change_carry_if_need(bot, get_argument(cell, bot, 6));
-	move_carriage(cell, bot, step);
+	move_carriage(cell, bot, step, NOT_OWN);
 	return (0);
 }

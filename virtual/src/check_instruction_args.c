@@ -4,11 +4,11 @@ int 	check_instruction_arg(int argument, int byte) // rename byte
 {
 	if (byte == (T_REG | T_DIR | T_IND))
 		return (0);
-	if (argument == T_REG && (byte & 1) == FALSE)
+	if (argument == T_REG && (byte & 1) == false)
 		return (T_REG);
-	if (argument == T_DIR && (byte & 2) == FALSE)
+	if (argument == T_DIR && (byte & 2) == false)
 		return (T_DIR);
-	if (argument == GET_T_IND_ARG(T_IND) && (byte & 4) == FALSE)
+	if (argument == GET_T_IND_ARG(T_IND) && (byte & 4) == false)
 		return (T_IND);
 	return (0);
 }

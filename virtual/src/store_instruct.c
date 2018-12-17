@@ -12,7 +12,7 @@ int 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
 	if (check_instruction_args(argument,
 			(T_REG), (T_REG | T_IND), (NONE_ARG)) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step);
+		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step, NOT_OWN);
 		return (ERROR);
 	}
 
@@ -32,6 +32,6 @@ int 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
 		write_in_cell(cell, (int)position, bot, t_reg_num);
 	}
 
-	move_carriage(cell, bot, step);
+	move_carriage(cell, bot, step, NOT_OWN);
 	return (0);
 }

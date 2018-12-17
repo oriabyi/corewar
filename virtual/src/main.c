@@ -7,7 +7,7 @@ void	remove_dead_processes(t_carriage **begin_list, int *alive_processes)
 
 	if (*begin_list)
 	{
-		if ((*begin_list)->alive == FALSE)
+		if ((*begin_list)->alive == false)
 		{
 			to_free = *begin_list;
 			*begin_list = (*begin_list)->next;
