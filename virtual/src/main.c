@@ -121,14 +121,20 @@ void			game(t_corewar *core)
 		}
 		if (i && core->cycle_to_die && i % core->cycle_to_die == 0)
 			core->cycle_to_die = check_cycle_to_die(core);
-		if (i >= core->flags.dump && core->flags.visual)
-		{
-			draw(core, i);
-		}
 
+
+//		if (i >= core->flags.dump && core->flags.visual)
+//		{
+//			i = (unsigned)draw(core, i);
+//		}
+//		else
+//		{
+//			mvwprintw(core->ncur.score_window, 56, 0, "Debug zalupa: %d", core->flags.dump);
+//			wrefresh(core->ncur.score_window);
+			i++;
+//		}
 		do_process(core, core->qua_bots);
 		bigmother++;
-		i++;
 	}
 	if (core->flags.visual)
 		vs_end(core);

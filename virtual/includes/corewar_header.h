@@ -139,10 +139,16 @@
 # define CR_CL_ORANGE_BLACK			16
 # define CR_CL_WWHITE_BLACK			17
 
-# define PAUSE						' '
-# define NEXT_CYCLE					's'
-# define SPEED_PLUS(x)				(x == 'e' || x == 259)
-# define SPEED_MINUS(x)				(x == 'q' || x == 258)
+
+# define MAX_SPEED					100
+# define MIN_SPEED					0
+# define SPEED_STEP					5
+# define PAUSE_BUTTON				' '
+# define NEXT_CYCLE_BUTTON			's'
+# define DELETE_BUTTON				127
+# define ENTER_BUTTON				10
+# define SPEED_PLUS_BUTTONS(x)		(x == 'e' || x == 259)
+# define SPEED_MINUS_BUTTONS(x)		(x == 'q' || x == 258)
 # define VISUAL_OFF					27
 
 
@@ -281,10 +287,13 @@ typedef struct			s_bot
 typedef struct			s_ncurses
 {
 	int 				i;
+	struct timespec 	tstart;
+	struct timespec		tend;
 	int		 			draw_speed;
 	int 				pressed_button;
 	int 				where_pause;
 	unsigned 			pause:1;
+	char				cycle_to_go[7];
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
 }						t_ncurses;
@@ -359,6 +368,7 @@ void 	check_correctness(t_corewar *core, int check_code);
 ** Visualization
 */
 
+void 			init_time(t_corewar *core);
 void 			init_colors(void);
 int 			vs_init(t_corewar *core);
 //int 	vs_refresh(t_corewar *core);
