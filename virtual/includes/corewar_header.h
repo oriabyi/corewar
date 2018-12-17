@@ -343,9 +343,10 @@ int 	get_old_young_numbers(int num, int base, int *power);
 int 				ft_module(int i);
 
 /*
-** Clean all
+** Clean functions
 */
 
+void	clean_carriages(t_carriage *carriage);
 void 	clean_all(t_corewar *core);
 
 /*
