@@ -40,12 +40,16 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 	else if (bot->carriage->command == CW_LFORK)
 		temp->cur_pos = head->cur_pos + (temp_t_dir);
 	temp->cur_pos = (int)correction_coordinates(temp->cur_pos);
+
+
 	if (cell[temp->cur_pos].hex[0] == '0' && cell[temp->cur_pos].hex[1] == '1')
 		cell[temp->cur_pos].bot_id =
 				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_ALIVE;
 	else
 		cell[temp->cur_pos].bot_id =
 				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_CARRIAGE;
+
+
 	while (head && head->next)
 		head = head->next;
 	if (head && ++bot->quant_carriages)

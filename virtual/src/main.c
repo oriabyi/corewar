@@ -1,7 +1,8 @@
 #include "../includes/corewar_header.h"
 #include "stdio.h"
 
-void	remove_dead_processes(t_carriage **begin_list, int *alive_processes)
+void	remove_dead_processes(t_carriage **begin_list, int *alive_processes,
+							  unsigned *quant_carriages)
 {
 	t_carriage	*to_free;
 
@@ -12,11 +13,12 @@ void	remove_dead_processes(t_carriage **begin_list, int *alive_processes)
 			to_free = *begin_list;
 			*begin_list = (*begin_list)->next;
 			free(to_free);
-			remove_dead_processes(begin_list, alive_processes);
+			(*quant_carriages)--;
+			remove_dead_processes(begin_list, alive_processes, quant_carriages);
 		}
 		else
 		{
-			remove_dead_processes(&(*begin_list)->next, alive_processes);
+			remove_dead_processes(&(*begin_list)->next, alive_processes, quant_carriages);
 			(*alive_processes)++;
 		}
 	}
@@ -31,7 +33,8 @@ int 			check_cycle_to_die(t_corewar *core)
 	alive_processes = 0;
 	while (counter < core->qua_bots)
 	{
-		remove_dead_processes(&core->bots[counter].carriage, &alive_processes);
+		remove_dead_processes(&core->bots[counter].carriage,
+				&alive_processes, &core->bots[counter].quant_carriages);
 		counter++;
 	}
 	if (alive_processes > 21)
@@ -67,10 +70,12 @@ char			*pull_out_champs_info(t_corewar *core)
 	return (temp);
 }
 
+# define LINE_SIZE 188
+
 void 			print_memory(t_corewar *core)
 {
 	char			*temp;
-	char			temp_memory_line[192];
+	char			temp_memory_line[LINE_SIZE];
 	size_t			i = 0;
 	unsigned		j = 0;
 
@@ -78,13 +83,15 @@ void 			print_memory(t_corewar *core)
 	while (i < MEM_SIZE)
 	{
 		j = 0;
-		ft_bzero(temp_memory_line, 192);
-		while (j == 0 || j % 64 != 0)
+		ft_bzero(temp_memory_line, LINE_SIZE);
+		while (j == 0 || j % 62 != 0)
 		{
 			ft_multcat(2, temp_memory_line, (char *)core->cell[i].hex, " ");
 			i++;
 			j++;
 		}
+		ft_strcat(temp_memory_line, (char *)core->cell[i++].hex);
+		i++;
 		temp = ft_multjoinfr(7, NULL, temp, "0x",
 			get_hex_by_int_byte((i - 64), 4), " : ", temp_memory_line, "\n");
 	}
@@ -107,8 +114,6 @@ void			game(t_corewar *core)
 	i = 1;
 	while (i < 15000)
 	{
-		if (i == 50)
-			write(0,0,0);
 		if (i == core->flags.dump)
 		{
 			print_memory(core);

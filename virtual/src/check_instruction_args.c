@@ -56,3 +56,21 @@ int 	fishka(int argument, int count_arguments, int bytes)
 	}
 	return (step);
 }
+
+int 		check_reg(t_bot *bot, int reg)
+{
+	if (CHECK_REG(reg) == false)
+	{
+		bot->carriage->invalid_reg = true;
+		return (1);
+	}
+	return (0);
+}
+
+int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg)
+{
+	*t_reg = (unsigned char)get_argument(cell, bot, step + 1);
+	if (check_reg(bot, (int)*t_reg))
+		return (1);
+	return (0);
+}

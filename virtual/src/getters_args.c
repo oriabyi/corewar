@@ -1,16 +1,21 @@
 #include "../includes/corewar_header.h"
 
 
-ssize_t		get_arg_reg(t_cell *cell, t_bot *bot, int *step)
+ssize_t		get_arg_reg(t_cell *cell, t_bot *bot, int *step, ssize_t *get)
 {
 	int 		t_reg;
 	ssize_t 	first_agg;
 
 	t_reg = (unsigned char)get_dir(cell, bot, *step, ONE_BYTE);
-	first_agg = (int)bot->carriage->registers[t_reg];
+	if (check_reg(bot, t_reg))
+	{
+		bot->carriage->invalid_reg = true;
+		return (1);
+	}
+	first_agg = bot->carriage->registers[t_reg];
 	*step += ONE_BYTE;
-
-	return (first_agg);
+	*get = (unsigned)first_agg; // find type
+	return (0);
 }
 
 ssize_t		get_arg_dir(t_cell *cell, t_bot *bot, int *step, int bytes)

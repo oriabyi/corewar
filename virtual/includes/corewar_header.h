@@ -422,7 +422,8 @@ int 	check_instruction_args(int argument, int first, int second, int third);
 // some trash
 int 			do_process(t_corewar *core, int qua_bots);
 void 			vs_start(t_corewar *core);
-int 		check_reg(t_bot *bot, int reg);
+int 			check_reg(t_bot *bot, int reg);
+int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg);
 void 			dog_nail_vs(t_corewar *core);
 int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap this with get_t_dir_four
 
@@ -449,7 +450,7 @@ void 		altered_view(WINDOW *win, int id);
 ssize_t 		get_dir(t_cell *cell, t_bot *bot, int handicap, int bytes);
 
 //getters args
-ssize_t		get_arg_reg(t_cell *cell, t_bot *bot, int *step);
+ssize_t		get_arg_reg(t_cell *cell, t_bot *bot, int *step, ssize_t *get);
 ssize_t		get_arg_dir(t_cell *cell, t_bot *bot, int *step, int bytes);
 ssize_t		get_arg_ind(t_cell *cell, t_bot *bot, int *step, int code);
 

@@ -19,16 +19,11 @@ int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function 
 
 
 	cell[bot->carriage->cur_pos].bot_id =
-			get_id_of_bot(cell[bot->carriage->cur_pos].bot_id);
+			get_id_of_bot(cell[bot->carriage->cur_pos].bot_id); // change previous
 
-
-	if (bot->carriage->cur_pos + jump >= MEM_SIZE)
-		bot->carriage->cur_pos += jump - MEM_SIZE;
-	else
-		bot->carriage->cur_pos += jump;
 
 	bot->carriage->cur_pos =
-			(int)correction_coordinates(bot->carriage->cur_pos);
+			(int)correction_coordinates(bot->carriage->cur_pos + jump);
 
 	if (cell[bot->carriage->cur_pos].hex[0] == '0' &&
 		cell[bot->carriage->cur_pos].hex[1] == '1')

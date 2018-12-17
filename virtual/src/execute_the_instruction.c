@@ -32,11 +32,11 @@ int 			choose_instruction(t_cell *cell, t_bot *bot)
 	{
 		return(alive_instruct(cell, bot));
 	}
-	else if (bot->carriage->command == CW_LD)
+	else if (bot->carriage->command == CW_LD) //well
 	{
 		return(load_instruct(cell, bot));
 	}
-	else if (bot->carriage->command == CW_ST)
+	else if (bot->carriage->command == CW_ST)	// checked coordinates && t_reg
 	{
 		return(store_instruct(cell, bot));
 	}
@@ -106,8 +106,9 @@ int 			get_command(t_cell *cell, t_bot *bot)
 		{
 			if (bot->carriage->command <= 16)
 			{
-				dprintf(bot->fd, "i = %d\nCommand: %d\n\n", bigmother, bot->carriage->command);
 				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
+				if (bigmother > 10560)
+					write (0, 0, 0);
 				choose_instruction(cell, bot); // do i need bot
 
 			}

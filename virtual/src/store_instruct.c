@@ -9,23 +9,24 @@ int 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
 
 	step = 1;
 	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument,
+	t_reg_num = get_argument(cell, bot, step++);
+	if (check_reg(bot, t_reg_num) || check_instruction_args(argument,
 			(T_REG), (T_REG | T_IND), (NONE_ARG)) == ERROR)
 	{
 		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step, NOT_OWN);
 		return (ERROR);
 	}
 
-	t_reg_num = get_argument(cell, bot, step++);
 	if (GET_SECOND_ARGUMENT(argument) == T_REG)
 	{
 		position = get_argument(cell, bot, step++);
 		bot->carriage->registers[position] =
 											bot->carriage->registers[t_reg_num];
+		if (check_reg(bot, (int)position))
+			return (move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step, NOT_OWN));
 	}
 	else if (GET_SECOND_ARGUMENT(argument) == GET_T_IND_ARG(T_IND))
 	{
-		//delete (unsigned) in all cases like this
 		position = correction_coordinates(
 				(get_arg_dir(cell, bot, &step, TWO_BYTES) % IDX_MOD) +
 														bot->carriage->cur_pos);
