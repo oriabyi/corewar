@@ -24,7 +24,6 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)math_help_for_gets.c		\
 				$(SRCDIRVIR)parse.c						\
 				$(SRCDIRVIR)treatment_arguments.c		\
-				$(SRCDIRVIR)visual.c 					\
 				$(SRCDIRVIR)execute_the_instruction.c 	\
 				$(SRCDIRVIR)instructions.c				\
 				$(SRCDIRVIR)aff_instruct.c 				\
@@ -34,18 +33,27 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)load_index_instruct.c 		\
 				$(SRCDIRVIR)load_instruct.c 			\
 				$(SRCDIRVIR)long_fork_instruct.c 		\
-				$(SRCDIRVIR)init_colors.c 		\
 				$(SRCDIRVIR)long_load_instruct.c 		\
 				$(SRCDIRVIR)store_index_instruct.c 		\
 				$(SRCDIRVIR)store_instruct.c 			\
 				$(SRCDIRVIR)add_sub_instructions.c      \
 				$(SRCDIRVIR)check_instruction_args.c	\
 				$(SRCDIRVIR)getters_args.c              \
-				$(SRCDIRVIR)print_map.c                 \
-				$(SRCDIRVIR)init_time.c                 \
 				$(SRCDIRVIR)logical_operations.c        \
 				$(SRCDIRVIR)fill_memory_space.c		\
 				$(SRCDIRVIR)carriages_move.c		\
+				$(SRCDIRVIR)create_memory_space.c		\
+				$(SRCDIRVIR)visual_draw_main_function.c		\
+				$(SRCDIRVIR)visual_set_memory_print_attr.c	\
+				$(SRCDIRVIR)visual_init_time.c			\
+				$(SRCDIRVIR)visual_start_end_functions.c	\
+				$(SRCDIRVIR)visual_draw_memory_window.c		\
+				$(SRCDIRVIR)visual_draw_score_window.c		\
+				$(SRCDIRVIR)visual_event_handler.c		\
+				$(SRCDIRVIR)visual_init.c			\
+				$(SRCDIRVIR)visual_init_colors.c 		\
+				$(SRCDIRVIR)visual_input_field_functions.c	\
+				$(SRCDIRVIR)visual_reset_event.c		\
 				$(SRCDIRVIR)trash.c
 
 

@@ -147,8 +147,10 @@
 # define NEXT_CYCLE_BUTTON			's'
 # define DELETE_BUTTON				127
 # define ENTER_BUTTON				10
-# define SPEED_PLUS_BUTTONS(x)		(x == 'e' || x == 259)
-# define SPEED_MINUS_BUTTONS(x)		(x == 'q' || x == 258)
+# define SPEED_PLUS_BUTTONS(x)		(x == 'e' || x == 261)
+# define SPEED_MINUS_BUTTONS(x)		(x == 'q' || x == 260)
+# define MENU_DOWN_BUTTON			259
+# define MENU_UP_BUTTON				258
 # define VISUAL_OFF					27
 
 
@@ -293,7 +295,12 @@ typedef struct			s_ncurses
 	int 				pressed_button;
 	int 				where_pause;
 	unsigned 			pause:1;
+
 	char				cycle_to_go[7];
+	char				bot_id[7];
+	char				carriage_id[7];
+	char 				*current_field;
+
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
 }						t_ncurses;
@@ -368,11 +375,20 @@ void 	check_correctness(t_corewar *core, int check_code);
 ** Visualization
 */
 
+void 			reset_game(t_corewar *core);
+void			fill_input_field_with_zeros(char *field);
+int 			uppend_input_field(char *field, char n);
+int 			delete_last_letter_from_iput_field(char *field);
+void 			set_next_field(t_corewar *core);
+void 			set_prev_field(t_corewar *core);
+int 			get_button(t_corewar *core, int cycle);
+void 			draw_score_window(t_corewar *core, int cycle);
+void 			draw_memory_window(t_corewar *core);
 void 			init_time(t_corewar *core);
 void 			init_colors(void);
-int 			vs_init(t_corewar *core);
-//int 	vs_refresh(t_corewar *core);
-int 	vs_end(t_corewar *core);
+int 			visual_init(t_corewar *core);
+void 			visual_start(t_corewar *core);
+int 			visual_end(t_corewar *core);
 int 			display_windows(t_corewar *core, int cycle);
 int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
@@ -431,7 +447,6 @@ int 	check_instruction_args(int argument, int first, int second, int third);
 
 // some trash
 int 			do_process(t_corewar *core, int qua_bots);
-void 			vs_start(t_corewar *core);
 int 			check_reg(t_bot *bot, int reg);
 int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg);
 void 			dog_nail_vs(t_corewar *core);
