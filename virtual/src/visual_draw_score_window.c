@@ -116,25 +116,18 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 			/// is valid carriage id in input field
 
-			if (carriage_id)
+			if (carriage_id >= 0)
 			{
-				t_carriage *carr_to_print;
 				t_carriage *tmp_carr;
 
-
 				/// finding carriage by id
-				tmp_carr = core->bots[bot_id].carriage;
-				carr_to_print = NULL;
-				while (tmp_carr)
-				{
-					if (tmp_carr->number == carriage_id)
-						carr_to_print = core->bots[bot_id].carriage;
+				tmp_carr = core->bots[bot_id - 1].carriage;
+				while (tmp_carr && tmp_carr->id != carriage_id)
 					tmp_carr = tmp_carr->next;
-				}
 
 				/// whether carriage found
 
-				if (carr_to_print)
+				if (tmp_carr)
 				{
 					/// printing carriage id
 					mvwprintw(core->ncur.score_window, i + 50, 3, "Carriage with id: %d", carriage_id);
@@ -147,12 +140,20 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 					while (r < 16)
 					{
-						wprintw(core->ncur.score_window, "[%u]", carr_to_print->registers[r]);
+						if (r < 3)
+						wprintw(core->ncur.score_window, "%d |[%u]\t", r, tmp_carr->registers[r]);
+						else
+						wprintw(core->ncur.score_window, "   %d |[%u]\t", r, tmp_carr->registers[r]);
+
 						r++;
+						if (r % 3 == 0)
+							wprintw(core->ncur.score_window, "\n");
 					}
 				}
 				else
+				{
 					mvwprintw(core->ncur.score_window, i + 50, 3, "Bad carriage id!");
+				}
 
 			}
 			else
@@ -162,7 +163,6 @@ void 			draw_score_window(t_corewar *core, int cycle)
 			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d bots!", core->qua_bots);
 	else
 		mvwprintw(core->ncur.score_window, i + 49, 3, "Type bot id!");
-
 
 
 

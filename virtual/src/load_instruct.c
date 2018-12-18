@@ -39,6 +39,7 @@ int			load_instruct(t_cell *cell, t_bot *bot) // label size == 4
 
 	step = 1;
 	t_reg = 0;
+	reg_value = 0; //delete
 	argument = get_argument(cell, bot, step++);
 	if (check_instruction_args(argument,
 			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)

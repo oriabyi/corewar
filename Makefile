@@ -54,6 +54,8 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)visual_init_colors.c 		\
 				$(SRCDIRVIR)visual_input_field_functions.c	\
 				$(SRCDIRVIR)visual_reset_event.c		\
+				$(SRCDIRVIR)check_cycle_to_die.c		\
+				$(SRCDIRVIR)dump.c		\
 				$(SRCDIRVIR)trash.c
 
 

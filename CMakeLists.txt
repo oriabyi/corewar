@@ -36,6 +36,17 @@ add_executable(corewar
         virtual/src/add_sub_instructions.c
         virtual/src/fill_memory_space.c
         virtual/src/visual_init_colors.c
-        virtual/src/carriages_move.c virtual/src/visual_draw_memory_window.c virtual/src/visual_draw_score_window.c virtual/src/visual_event_handler.c virtual/src/visual_input_field_functions.c virtual/src/visual_init.c virtual/src/visual_start_end_functions.c virtual/src/visual_reset_event.c virtual/src/create_memory_space.c)
+        virtual/src/carriages_move.c
+        virtual/src/visual_draw_memory_window.c
+        virtual/src/visual_draw_score_window.c
+        virtual/src/visual_event_handler.c
+        virtual/src/visual_input_field_functions.c
+        virtual/src/visual_init.c
+        virtual/src/visual_start_end_functions.c
+        virtual/src/visual_reset_event.c
+        virtual/src/create_memory_space.c
+        virtual/src/dump.c
+        virtual/src/check_cycle_to_die.c)
+
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(corewar ${LIBFT})

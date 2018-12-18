@@ -96,6 +96,7 @@
 
 
 // colors for delete
+# define LINE_SIZE 188
 
 
 # define RESET			"\x1b[0m"
@@ -267,7 +268,7 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:5;
 	int 				cycles;
-	int 				number;
+	int 				id;
 	int 				invalid_reg:1;
 
 	struct s_carriage	*next;
@@ -487,6 +488,12 @@ int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg);
 ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command);
 
 int 	fishka(int argument, int count_arguments, int bytes);
+
+//dump
+void 			print_memory(t_corewar *core);
+
+//check cycle_to_die
+int 			check_cycle_to_die(t_corewar *core);
 
 #endif
 

@@ -1,7 +1,6 @@
 #include "../includes/corewar_header.h"
 
-void
-simple_print(WINDOW *win, int id)
+void simple_print(WINDOW *win, int id)
 {
 	if (id == NOONE)
 	{
