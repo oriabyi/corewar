@@ -32,8 +32,17 @@ void			game(t_corewar *core)
 		{
 			i++;
 		}
+
 		do_process(core, core->qua_bots);
+
 		bigmother++;
+		if (core->flags.a_visual)
+		{
+			write(1, "It is now cycle ", 16);
+			ft_putnbr_fd(i, 1);
+			write(1, "\n", 1);
+		}
+
 	}
 	if (core->flags.visual)
 		visual_end(core);
@@ -50,10 +59,7 @@ int				main(int ac, char **av)
 	check_arguments(&core.flags, ac, av);
 
 	parse(&core, av);
-//	if (core.flags.visual)
-		game(&core);
-//	else
-//		printf("novs\n");
+	game(&core);
 	clean_all(&core);
     return (0);
 }

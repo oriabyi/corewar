@@ -13,7 +13,7 @@ int				get_flags_help(t_flags *flags, char *av)
 		else if (*av == 'a')
 			flags->a_visual = 1;// Рыба
 		else if (*av == 'o')
-			flags->o_visual = 1;// Рыба
+			flags->output = 1;// Рыба
 		else if (*av == 's')
 			flags->s_visual = 1;// Рыба
 		else if (*av == 'n')
@@ -41,7 +41,7 @@ int				get_flags(t_flags *flags, char **av)
 		else if (ft_strcmp(av[counter], "-a") == 0)// Рыба
 			flags->a_visual = 1;
 		else if (ft_strcmp(av[counter], "-o") == 0)// Рыба
-			flags->o_visual = 1;
+			flags->output = 1;
 		else if (ft_strcmp(av[counter], "-s") == 0)// Рыба
 			flags->s_visual = 1;
 		else if (ft_strcmp(av[counter], "-n") == 0)// Рыба

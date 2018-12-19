@@ -3,36 +3,33 @@
 int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function !!! label = 2
 {
 	int 	jump;
-	int step = 1;
 
 
-	if (bot->carriage->carry == 0)
+	if (CARRY == 0)
 	{
-		move_carriage(cell, bot, 3, NOT_OWN);
-		return (0);
+//		bot->carriage->flag
+		return (1);
 	}
 
 	if (IDX_MOD)
 	{
-		jump = (short)get_arg_dir(cell, bot, &step, TWO_BYTES);
+		jump = (short)get_arguments(cell, bot, 0x80, FIRST_ARG);
 	}
 
 
-	cell[bot->carriage->cur_pos].bot_id =
-			get_id_of_bot(cell[bot->carriage->cur_pos].bot_id); // change previous
+	cell[CUR_POS].bot_id = cell[CUR_POS].last_owner;
 
 
-	bot->carriage->cur_pos =
-			(int)correction_coordinates(bot->carriage->cur_pos + jump);
+	CUR_POS = (int)correction_coordinates(CUR_POS + jump);
 
-	if (cell[bot->carriage->cur_pos].hex[0] == '0' &&
-		cell[bot->carriage->cur_pos].hex[1] == '1')
+	if (cell[CUR_POS].hex[0] == '0' &&
+		cell[CUR_POS].hex[1] == '1')
 	{
-		cell[bot->carriage->cur_pos].bot_id = bot->id + DENOTE_ALIVE;
+		cell[CUR_POS].bot_id = bot->id + DENOTE_ALIVE;
 	}
 	else
 	{
-		cell[bot->carriage->cur_pos].bot_id = bot->id + DENOTE_CARRIAGE;
+		cell[CUR_POS].bot_id = bot->id + DENOTE_CARRIAGE;
 	}
 	return (0);
 }

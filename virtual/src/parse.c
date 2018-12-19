@@ -23,9 +23,9 @@ t_carriage 				*create_carriage(int id)
 {
 	t_carriage			*carriage;
 
-	if (!(carriage = (t_carriage *)malloc(sizeof(t_carriage))))
+	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
-	*carriage = (t_carriage){0, 0, 0, 0, {0, (unsigned)(-id), 0, 0, 0, 0, 0, 0,
+	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
 									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, 0, NULL};
 	return (carriage);
 }
@@ -205,7 +205,8 @@ int					get_bots(t_corewar *core, char **av)
 		return (BAD_ARGUMENTS);
 	if ((check_code = create_bots(&core->bots)) != 0)
 		return (check_code);
-	get_bots_info(core, av, &counter);
+	if (get_bots_info(core, av, &counter) != 0)
+		return (1);
 	fill_bots(&core->bots, core->qua_bots);
 	sort_bots(&core->bots, core->qua_bots);
 	reverse_bots(&core->bots, core->qua_bots);

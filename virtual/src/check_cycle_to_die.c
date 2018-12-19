@@ -11,7 +11,8 @@ void	remove_dead_processes(t_carriage **begin_list, int *alive_processes,
 		{
 			to_free = *begin_list;
 			*begin_list = (*begin_list)->next;
-			(*begin_list)->next->id = (*begin_list)->id;
+			if (*begin_list)
+				(*begin_list)->next->id = (*begin_list)->id;
 			(*quant_carriages)--;
 			free(to_free);
 			remove_dead_processes(begin_list, alive_processes, quant_carriages);

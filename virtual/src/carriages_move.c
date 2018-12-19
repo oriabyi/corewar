@@ -35,24 +35,24 @@ void 	place_carriage(t_cell *cell, unsigned id, int is_owned)
 	}
 }
 
-int 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned)
+void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned)
 {
-	remove_carriage(&cell[bot->carriage->cur_pos], bot->id, is_owned);
-	bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos + step);
-	place_carriage(&cell[bot->carriage->cur_pos], bot->id, is_owned);
+	remove_carriage(&cell[CUR_POS], bot->id, is_owned);
+	CUR_POS = (int)correction_coordinates(CUR_POS + step);
+	place_carriage(&cell[CUR_POS], bot->id, is_owned);
+
+	CUR_POS = (unsigned)correction_coordinates(CUR_POS);
 	if (bot->carriage->invalid_reg == true)
 	{
 		bot->carriage->invalid_reg = false;
-		return (1);
 	}
-	return (0);
 }
 
 
 void 	change_carry_if_need(t_bot *bot, int position)
 {
-	if (bot->carriage->registers[position] == 0)
-		bot->carriage->carry = true;
+	if (REG[position] == 0)
+		CARRY = true;
 	else
-		bot->carriage->carry = false;
+		CARRY = false;
 }

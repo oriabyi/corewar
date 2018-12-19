@@ -15,11 +15,11 @@ int 	t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap) // swap thi
 {
 	char 		*temp;
 
-	temp = ft_multjoin(4, (char *)cell[bot->carriage->cur_pos + (handicap + 0)].hex,
-					   (char *)cell[bot->carriage->cur_pos + (handicap + 1)].hex,
-					   (char *)cell[bot->carriage->cur_pos + (handicap + 2)].hex,
-					   (char *)cell[bot->carriage->cur_pos + (handicap + 3)].hex);
-	bot->carriage->registers[t_reg] = ft_ahtoi(temp);
+	temp = ft_multjoin(4, (char *)cell[CUR_POS + (handicap + 0)].hex,
+					   (char *)cell[CUR_POS + (handicap + 1)].hex,
+					   (char *)cell[CUR_POS + (handicap + 2)].hex,
+					   (char *)cell[CUR_POS + (handicap + 3)].hex);
+	REG[t_reg] = ft_ahtoi(temp);
 	free(temp);
 	return (5);
 }

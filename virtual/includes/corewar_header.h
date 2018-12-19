@@ -14,6 +14,7 @@
 */
 
 
+
 /* select defines */
 # define ENTER	0xA
 # define ESC	0x1B
@@ -25,9 +26,17 @@
 # define RIGHT	0x435B1B
 # define DEL	0x7E335B1B
 
+#define CUR_POS	(bot->carriage->cur_pos)
+#define REG		(bot->carriage->registers)
+#define COMMAND	(bot->carriage->command)
+#define CARRY	(bot->carriage->carry)
+#define ALIVE	(bot->carriage->alive)
+
 
 # define NOT_OWN	0
 # define OWN		1
+
+# define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
 /////////////////////////////////////
 
@@ -62,7 +71,7 @@
 #define ignat(x, y, z) if (y == 1 && z == 1) return
 
 
-# define CHECK_REG(x) (x >= 0 && x <= 15)
+# define CHECK_REG(x) (x >= 1 && x <= 16)
 
 /*
 ** Get arguments // check defines
@@ -204,7 +213,9 @@
 
 # define NUMBER_OF_REGISTERS		16
 
-
+#define FIRST_ARG	0
+#define SECOND_ARG	1
+#define THIRD_ARG	2
 
 /*
 **	Instructions
@@ -249,12 +260,21 @@
 # define CW_AFF_CYCLES				2
 
 int 				bigmother;
+
+typedef struct			s_arguments
+{
+	unsigned char		t_reg;
+	short 				t_int;
+	short	 			t_dir;
+	unsigned 			ut_dir;
+}						t_arguments;
+
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
 	unsigned			dump;
 	unsigned			a_visual:5;// Рыба
-	unsigned			o_visual:1;// Рыба
+	unsigned			output:1;// Рыба
 	unsigned			s_visual:1;// Рыба
 }						t_flags;
 
@@ -266,7 +286,7 @@ typedef struct			s_carriage
 	unsigned			flag:1;
 	unsigned 			alive:1;
 	unsigned 			registers[16];
-	unsigned 			command:5;
+	unsigned 			command:8;
 	int 				cycles;
 	int 				id;
 	int 				invalid_reg:1;
@@ -276,6 +296,7 @@ typedef struct			s_carriage
 
 typedef struct			s_bot
 {
+
 	char 				*name;
 	char 				*comment;
 	unsigned char		*exec_code;
@@ -283,6 +304,7 @@ typedef struct			s_bot
 	unsigned			size;
 	unsigned 			quant_carriages;
 	int 				fd;
+//	t_arguments			arg;
 
 	t_carriage			*carriage;
 }						t_bot;
@@ -404,28 +426,28 @@ void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
 ** Instructions
 */
 
-int 	alive_instruct(t_cell *cell, t_bot *bot);
-int 	load_instruct(t_cell *cell, t_bot *bot);
-int 	store_instruct(t_cell *cell, t_bot *bot);
+void 	alive_instruct(t_cell *cell, t_bot *bot);
+void 	load_instruct(t_cell *cell, t_bot *bot);
+void 	store_instruct(t_cell *cell, t_bot *bot);
 
 // add and sub operations here
-int 	add_sub_instructs(t_cell *cell, t_bot *bot);
+void 	add_sub_instructs(t_cell *cell, t_bot *bot);
 
 // all logical operations here
-int 	logical_operations(t_cell *cell, t_bot *bot);
+void 	logical_operations(t_cell *cell, t_bot *bot);
 
 int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot);
 
 //	LLDI in LDI
-int 	load_index_instruct(t_cell *cell, t_bot *bot);
+void 	load_index_instruct(t_cell *cell, t_bot *bot);
 
-int 	store_index_instruct(t_cell *cell, t_bot *bot);
+void 	store_index_instruct(t_cell *cell, t_bot *bot);
 
 //  long fork in fork
-int 	fork_instruct(t_cell *cell, t_bot *bot);
+void 	fork_instruct(t_cell *cell, t_bot *bot);
 
-int 	long_load_instruct(t_cell *cell, t_bot *bot);
-int 	aff_instruct(t_cell *cell, t_bot *bot);
+void 	long_load_instruct(t_cell *cell, t_bot *bot);
+void 	aff_instruct(t_cell *cell, t_bot *bot);
 
 /*
 ** Check carry
@@ -437,7 +459,7 @@ void 	change_carry_if_need(t_bot *bot, int position);
 **	Move Carriage
 */
 
-int 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
+void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
 
 
 /*
@@ -445,10 +467,14 @@ int 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
 */
 
 int 	check_instruction_args(int argument, int first, int second, int third);
+int 	help_fishka(int argument, int bytes);
+int 	check_instruction_arg(int argument, int byte);
+int 			get_dir_bytes(unsigned command);
+int			get_codage(unsigned command);
 
 // some trash
-int 			do_process(t_corewar *core, int qua_bots);
-int 			check_reg(t_bot *bot, int reg);
+void 			do_process(t_corewar *core, int qua_bots);
+int 			check_reg(int reg);
 int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg);
 void 			dog_nail_vs(t_corewar *core);
 int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap this with get_t_dir_four
@@ -456,7 +482,7 @@ int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap 
 ssize_t 		correction_coordinates(ssize_t coordinate);
 
 unsigned 			get_id_of_bot(unsigned num);
-int 	get_argument(t_cell *cell, t_bot *bot, int num_of_argument);
+unsigned char 	get_argument(t_cell *cell, t_bot *bot, int num_of_argument);
 
 // carriage
 t_carriage 				*create_carriage(int id);
@@ -485,7 +511,7 @@ ssize_t		get_arg_ind(t_cell *cell, t_bot *bot, int *step, int code);
 int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg);
 
 //add sub
-ssize_t 	which_operation_needs(ssize_t a, ssize_t b, int command);
+unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
 
 int 	fishka(int argument, int count_arguments, int bytes);
 
@@ -494,6 +520,13 @@ void 			print_memory(t_corewar *core);
 
 //check cycle_to_die
 int 			check_cycle_to_die(t_corewar *core);
+
+//
+int 		check_mult_regs(int field, ...);
+int 					check_type_arguments(int argument, int type, int num, ...);
+int 					get_part_argument(int argument, int position);
+// new way
+ssize_t			get_arguments(t_cell *cell, t_bot *bot, int argument, int number);
 
 #endif
 

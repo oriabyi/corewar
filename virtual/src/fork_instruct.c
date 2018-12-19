@@ -22,7 +22,7 @@ t_carriage				*copy_carrieage(t_carriage *src, int id)
 	return (dst);
 }
 
-int						fork_instruct(t_cell *cell, t_bot *bot)
+void					fork_instruct(t_cell *cell, t_bot *bot)
 {
 	short				temp_t_dir;
 	t_carriage			*temp;
@@ -34,11 +34,17 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 	temp_t_dir = (short)get_arg_dir(cell, bot, &step, TWO_BYTES);
 	temp = copy_carrieage(head, bot->id);
 	if (temp == NULL)
-		return (ERROR);
-	if (bot->carriage->command == CW_FORK)
+	{
+		return ;
+	}
+	if (COMMAND == CW_FORK)
+	{
 		temp->cur_pos = head->cur_pos + (temp_t_dir % IDX_MOD);
-	else if (bot->carriage->command == CW_LFORK)
+	}
+	else if (COMMAND == CW_LFORK)
+	{
 		temp->cur_pos = head->cur_pos + (temp_t_dir);
+	}
 	temp->cur_pos = (int)correction_coordinates(temp->cur_pos);
 
 
@@ -54,6 +60,4 @@ int						fork_instruct(t_cell *cell, t_bot *bot)
 		head = head->next;
 	if (head && ++bot->quant_carriages)
 		head->next = temp;
-	move_carriage(cell, bot, 3, NOT_OWN);
-	return (0);
 }

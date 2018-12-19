@@ -1,38 +1,34 @@
 #include "../includes/corewar_header.h"
 
-int 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
+void 	store_instruct(t_cell *cell, t_bot *bot) // label size == 4
 {
-	int 	argument;
-	int 	t_reg_num;
-	int 	step;
+	int 		argument;
+	int 		t_reg;
 	ssize_t 	position;
+	ssize_t 	second_arg;
 
-	step = 1;
-	argument = get_argument(cell, bot, step++);
-	t_reg_num = get_argument(cell, bot, step++);
-	if (check_reg(bot, t_reg_num) || check_instruction_args(argument,
+	argument = get_argument(cell, bot, 1);
+	
+	
+	t_reg = (unsigned char)get_arguments(cell, bot, argument, FIRST_ARG);
+	second_arg = (unsigned)get_arguments(cell, bot, argument, SECOND_ARG);
+
+	if (check_reg(t_reg) || check_instruction_args(argument,
 			(T_REG), (T_REG | T_IND), (NONE_ARG)) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step, NOT_OWN);
-		return (ERROR);
+		return ;
 	}
 
 	if (GET_SECOND_ARGUMENT(argument) == T_REG)
 	{
-		position = get_argument(cell, bot, step++);
-		bot->carriage->registers[position] =
-											bot->carriage->registers[t_reg_num];
-		if (check_reg(bot, (int)position))
-			return (move_carriage(cell, bot, fishka(argument, 2, FOUR_BYTES) + step, NOT_OWN));
+		if (check_reg(t_reg) == 0)
+			REG[second_arg] = REG[t_reg];
 	}
-	else if (GET_SECOND_ARGUMENT(argument) == GET_T_IND_ARG(T_IND))
+	else
 	{
-		position = correction_coordinates(
-				(get_arg_dir(cell, bot, &step, TWO_BYTES) % IDX_MOD) +
-														bot->carriage->cur_pos);
-		write_in_cell(cell, (int)position, bot, t_reg_num);
-	}
+		position = (short)get_dir(cell, bot, 2 + fishka(argument, SECOND_ARG, 4), TWO_BYTES);
 
-	move_carriage(cell, bot, step, NOT_OWN);
-	return (0);
+		write_in_cell(cell, (int)(position + CUR_POS), bot, t_reg);
+//		write_in_cell(cell, (int)(second_arg % IDX_MOD + CUR_POS), bot, t_reg); it looks rightly
+	}
 }

@@ -17,12 +17,15 @@ int 	check_instruction_args(int argument, int first, int second, int third)
 {
 	int 		check_code;
 
+	if (argument  <= 3)
+		return (1);
 	check_code = check_instruction_arg(GET_FIRST_ARGUMENT(argument), first);
 	if (check_code == 0)
 	{
-		check_code =
-				check_instruction_arg(GET_SECOND_ARGUMENT(argument), second);
-		if (check_code == 0)
+		if (second != NONE_ARG)
+			check_code =
+					check_instruction_arg(GET_SECOND_ARGUMENT(argument), second);
+		if (check_code == 0 && third != NONE_ARG)
 		{
 			check_code =
 					check_instruction_arg(GET_THIRD_ARGUMENT(argument), third);
@@ -39,6 +42,7 @@ int 	help_fishka(int argument, int bytes)
 		return (bytes);
 	else if (argument == T_IND)
 		return (2);
+
 	return (0);
 }
 
@@ -47,30 +51,24 @@ int 	fishka(int argument, int count_arguments, int bytes)
 	int 	step;
 
 	step = 0;
-	step += help_fishka(check_instruction_arg(GET_FIRST_ARGUMENT(argument), NONE_ARG), bytes);
-	if (count_arguments >= 2)
+	if (count_arguments >= 1)
 	{
-		step += help_fishka(check_instruction_arg(GET_SECOND_ARGUMENT(argument), NONE_ARG), bytes);
-		if (count_arguments == 3)
-			step += help_fishka(check_instruction_arg(GET_THIRD_ARGUMENT(argument), NONE_ARG), bytes);
+		step += help_fishka(check_instruction_arg(GET_FIRST_ARGUMENT(argument), NONE_ARG), bytes);
+		if (count_arguments >= 2)
+		{
+			step += help_fishka(check_instruction_arg(GET_SECOND_ARGUMENT(argument), NONE_ARG), bytes);
+			if (count_arguments == 3)
+				step += help_fishka(check_instruction_arg(GET_THIRD_ARGUMENT(argument), NONE_ARG), bytes);
+		}
 	}
 	return (step);
 }
 
-int 		check_reg(t_bot *bot, int reg)
+int 		check_reg(int reg)
 {
 	if (CHECK_REG(reg) == false)
 	{
-		bot->carriage->invalid_reg = true;
 		return (1);
 	}
-	return (0);
-}
-
-int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg)
-{
-	*t_reg = (unsigned char)get_argument(cell, bot, step + 1);
-	if (check_reg(bot, (int)*t_reg))
-		return (1);
 	return (0);
 }

@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-ssize_t				which_operation_needs(ssize_t a, ssize_t b, int command)
+unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command)
 {
 	if (command == CW_AND)
 		return (a & b);
@@ -15,76 +15,67 @@ ssize_t				which_operation_needs(ssize_t a, ssize_t b, int command)
 	return (0);
 }
 
-static				int check_regs(t_cell *cell, t_bot *bot, int step, int argument)
-{
-	ssize_t 	temp;
 
-	temp = 0;
-	if ((GET_FIRST_ARGUMENT(argument) == T_REG && get_arg_reg(cell, bot, &step, &temp)) ||
-	(GET_SECOND_ARGUMENT(argument) == T_REG && get_arg_reg(cell, bot, &step, &temp)) ||
-	(GET_FIRST_ARGUMENT(argument) == T_REG && get_arg_reg(cell, bot, &step, &temp)))
+int 					get_part_argument(int argument, int position)
+{
+	if (position == FIRST_ARG)
 	{
-		return (ERROR);
+		return (argument >> 6);
 	}
-	return (0);
+	else if (position == SECOND_ARG)
+	{
+		return ((argument >> 4) & 3);
+	}
+	else if (position == THIRD_ARG)
+	{
+		return ((argument >> 2) & 3);
+	}
+	return (-1);
 }
 
-
-int					get_args_log_operations(t_cell *cell, t_bot *bot,
-													int *step, ssize_t *vessel)
+int 					check_type_arguments(int argument, int type, int num, ...)
 {
-	int				argument;
-	ssize_t		temp;
+	int 				check_code;
+	va_list 			ap;
+	int 				temp_reg;
+	int 				position;
 
-	*step = 1;
-	*vessel = 0;
-	argument = get_argument(cell, bot, (*step)++);
-	if (check_instruction_args(argument,
-			(T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR ||
-							check_regs(cell, bot, *step, argument) == ERROR)
+	check_code = 0;
+	va_start(ap, num);
+	while (num)
 	{
-		move_carriage(cell, bot, fishka(argument, 3, FOUR_BYTES) + *step, NOT_OWN);
-		return (ERROR);
+		position = va_arg(ap, int);
+		temp_reg = va_arg(ap, int);
+		if (check_instruction_arg(get_part_argument(argument, position), type) == 0)
+		{
+			if (check_reg(temp_reg))
+				check_code = 1;
+		}
+		num--;
 	}
-
-
-	if (GET_FIRST_ARGUMENT(argument) == T_REG)
-	{
-		get_arg_reg(cell, bot, step, vessel);
-	}
-	else if (GET_FIRST_ARGUMENT(argument) == T_DIR)
-		*vessel = get_arg_dir(cell, bot, step, FOUR_BYTES);
-	else if (GET_FIRST_ARGUMENT(argument) == GET_T_IND_ARG(T_IND))
-		*vessel = get_arg_ind(cell, bot, step, IDX_MOD_ON);
-
-	if (GET_SECOND_ARGUMENT(argument) == T_REG)
-	{
-		get_arg_reg(cell, bot, step, &temp);
-		*vessel = which_operation_needs(*vessel,
-			(temp), bot->carriage->command);
-	}
-
-	else if (GET_SECOND_ARGUMENT(argument) == T_DIR)
-		*vessel = which_operation_needs(*vessel,
-			(get_arg_dir(cell, bot, step, FOUR_BYTES)), bot->carriage->command);
-	else if (GET_SECOND_ARGUMENT(argument) == GET_T_IND_ARG(T_IND))
-		*vessel = which_operation_needs(*vessel,
-			(get_arg_ind(cell, bot, step, IDX_MOD_ON)), bot->carriage->command);
-	return (0);
+	va_end(ap);
+	return (check_code);
 }
 
-int					logical_operations(t_cell *cell, t_bot *bot)
+void					logical_operations(t_cell *cell, t_bot *bot)
 {
-	int				t_reg;
-	int				step;
-	ssize_t			vessel;
+	int 			argument;
+	unsigned 		first_arg;
+	unsigned 		second_arg;
+	unsigned 		third_arg;
 
-	if (get_args_log_operations(cell, bot, &step, &vessel) == ERROR)
-		return (ERROR);
-	t_reg = (unsigned char)get_dir(cell, bot, step, ONE_BYTE); // check this
-	step += ONE_BYTE;
-	bot->carriage->registers[t_reg] = (unsigned)vessel;
-	move_carriage(cell, bot, step, NOT_OWN);
-	change_carry_if_need(bot, t_reg);
-	return (0);
+	argument = get_argument(cell, bot, 1);
+	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
+	{
+		return ;
+	}
+	first_arg = (unsigned)get_arguments(cell, bot, argument, FIRST_ARG);
+	second_arg = (unsigned)get_arguments(cell, bot, argument, SECOND_ARG);
+	third_arg = (unsigned)get_arguments(cell, bot, argument, THIRD_ARG);
+
+	if (check_type_arguments(argument, T_REG, 3, 0, first_arg, 1, second_arg, 2, third_arg) == 1)
+		return ;
+
+	REG[third_arg] = which_operation_needs(first_arg, second_arg, COMMAND);
+	change_carry_if_need(bot, third_arg);
 }

@@ -1,30 +1,27 @@
 # include "../includes/corewar_header.h"
 
-int				add_sub_instructs(t_cell *cell, t_bot *bot)
+void					add_sub_instructs(t_cell *cell, t_bot *bot)
 {
-	int			step;
-	unsigned char			third;
+	unsigned char		third;
 	unsigned char 		second;
-	unsigned char	first;
+	unsigned char		first;
+	unsigned char		argument;
 
-	step = 1;
-	first = (unsigned char)get_argument(cell, bot, step);
+	argument = get_argument(cell, bot, 1);
 
-	if (check_instruction_args(first, T_REG, T_REG, T_REG) == ERROR ||
-			check_t_regs(bot, cell, (step + 1), &first) ||
-			check_t_regs(bot, cell, (step + 2), &second) ||
-			check_t_regs(bot, cell, (step + 3), &third))
+	if (check_instruction_args(argument, T_REG, T_REG, T_REG) == ERROR)
 	{
-		move_carriage(cell, bot, fishka(first, 3, FOUR_BYTES) + step + 1, NOT_OWN); //mb check and change
-		return (ERROR);
+		return ;
 	}
-	bot->carriage->registers[third] =
-			(unsigned)which_operation_needs(
-					(ssize_t)bot->carriage->registers[first],
-					(ssize_t)bot->carriage->registers[second],
-					bot->carriage->command);
-	step += 3;
+	first = (unsigned char)get_arguments(cell, bot, argument, FIRST_ARG);
+	second = (unsigned char)get_arguments(cell, bot, argument, SECOND_ARG);
+	third = (unsigned char)get_arguments(cell, bot, argument, THIRD_ARG);
+
+	if (check_type_arguments(argument, T_REG, 3, 0, first, 1, second, 2, third) == 1)
+	{
+		return ;
+	}
+
+	REG[third] = which_operation_needs(REG[first], REG[second], COMMAND);
 	change_carry_if_need(bot, third);
-	move_carriage(cell, bot, step + 1, NOT_OWN);
-	return (0);
 }

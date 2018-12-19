@@ -26,113 +26,115 @@ unsigned		which_instruction(char *command)
 	return (code_instruction);
 }
 
-int 			choose_instruction(t_cell *cell, t_bot *bot)
+void 			choose_instruction(t_cell *cell, t_bot *bot)
 {
-	if (bot->carriage->command == CW_LIVE)
+	int 		argument;
+	int 		check_jump;
+
+	if (IS_VALID_COMMAND(COMMAND) == false)
 	{
-		return(alive_instruct(cell, bot));
+		move_carriage(cell, bot, 1, OWN);
+		return ;
 	}
-	else if (bot->carriage->command == CW_LD) //well
+	else
 	{
-		return(load_instruct(cell, bot));
+		argument = (get_codage(COMMAND)) ? get_argument(cell, bot, 1) : 0x80;
 	}
-	else if (bot->carriage->command == CW_ST)	// checked coordinates && t_reg
+
+
+	if (COMMAND == CW_LIVE)
 	{
-		return(store_instruct(cell, bot));
+		alive_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_ADD ||
-			bot->carriage->command == CW_SUB)
+	else if (COMMAND == CW_LD) //well
 	{
-		return(add_sub_instructs(cell, bot));
+		load_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_OR ||
-			bot->carriage->command == CW_XOR ||
-			bot->carriage->command == CW_AND)
+	else if (COMMAND == CW_ST)	// checked coordinates && t_reg
 	{
-		return(logical_operations(cell, bot));
+		store_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_ZJMP)
+	else if (COMMAND == CW_ADD ||
+			COMMAND == CW_SUB)
 	{
-		return(jump_if_carry_instruct(cell, bot));
+		add_sub_instructs(cell, bot);
 	}
-	else if (bot->carriage->command == CW_LDI ||
-			bot->carriage->command == CW_LLDI)
+	else if (COMMAND == CW_OR ||
+			COMMAND == CW_XOR ||
+			COMMAND == CW_AND)
 	{
-		return(load_index_instruct(cell, bot));
+		logical_operations(cell, bot);
 	}
-	else if (bot->carriage->command == CW_STI)
+	else if (COMMAND == CW_ZJMP)
 	{
-		return(store_index_instruct(cell, bot));
+		check_jump = jump_if_carry_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_FORK ||
-			bot->carriage->command == CW_LFORK)
+	else if (COMMAND == CW_LDI ||
+			COMMAND == CW_LLDI)
 	{
-		return(fork_instruct(cell, bot));
+		load_index_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_LLD)
+	else if (COMMAND == CW_STI)
 	{
-		return(long_load_instruct(cell, bot));
+		store_index_instruct(cell, bot);
 	}
-	else if (bot->carriage->command == CW_AFF)
+	else if (COMMAND == CW_FORK ||
+			COMMAND == CW_LFORK)
 	{
-		return(aff_instruct(cell, bot));
+		fork_instruct(cell, bot);
 	}
-	return (0);
-//	return (NO_MATCH_INSTRUCTION);
+	else if (COMMAND == CW_LLD)
+	{
+		long_load_instruct(cell, bot);
+	}
+	else if (COMMAND == CW_AFF)
+	{
+		aff_instruct(cell, bot);
+	}
+	if (COMMAND != CW_ZJMP || check_jump == 1)
+	{
+		move_carriage(cell, bot, (1 + fishka(argument, 3, get_dir_bytes(COMMAND)) + get_codage(COMMAND)), NOT_OWN);
+	}
 }
 
 
-int 			get_command(t_cell *cell, t_bot *bot)
+void 			get_command(t_cell *cell, t_bot *bot)
 {
 	int 		quant_carriages;
 	t_carriage	*head;
-	int 		flag = 0;
 
 
 	quant_carriages = bot->quant_carriages;
 	head = bot->carriage;
 	while (bot->carriage && quant_carriages--)
 	{
-		if (bot->carriage->command == 0)
+
+		if (COMMAND == 0)
 		{
-			bot->carriage->command = which_instruction((char *) cell[bot->carriage->cur_pos].hex);
-			bot->carriage->cycles = get_cycles(bot);
+			COMMAND = which_instruction((char *) cell[CUR_POS].hex);
+			if (IS_VALID_COMMAND(COMMAND) == true)
+				bot->carriage->cycles = get_cycles(bot);
+
 		}
-
-
 		bot->carriage->cycles--;
-
 		if (bot->carriage->cycles <= 0)
 		{
-			if (bot->carriage->command <= 16)
-			{
-				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
-				if (bigmother > 10560)
-					write (0, 0, 0);
-				choose_instruction(cell, bot); // do i need bot
-
-			}
-			else
-			{
-				move_carriage(cell, bot, 1, OWN);
-				bot->carriage->cur_pos = (int)correction_coordinates(bot->carriage->cur_pos);
-			}
-			bot->carriage->command = 0;
-			bot->carriage->cycles = 0; // BIG DOG_NAIL
-			flag++;
+			choose_instruction(cell, bot); // do i need bot
+			COMMAND = 0;
+			bot->carriage->cycles = 0;
 		}
 		bot->carriage = bot->carriage->next;
 	}
 
-
 	bot->carriage = head;
-	return (flag);
 }
 
-int 			do_process(t_corewar *core, int qua_bots)
+void 			do_process(t_corewar *core, int qua_bots)
 {
-	if (qua_bots-- == 0)
-		return (0);
-	do_process(core, (qua_bots));
-	return (get_command(core->cell, &(core->bots[qua_bots])));
+	if (qua_bots > 0)
+	{
+		qua_bots--;
+		do_process(core, (qua_bots));
+		get_command(core->cell, &(core->bots[qua_bots]));
+	}
 }
