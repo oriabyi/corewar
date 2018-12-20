@@ -262,6 +262,12 @@ CMakeFiles/corwar.dir/src/asm.c.o
  ../includes/libft.h
  ../includes/op.h
  /Users/akondaur/Documents/corwar/src/asm.c
+CMakeFiles/corwar.dir/src/asm_adders.c.o
+ ../includes/asm.h
+ ../includes/get_next_line.h
+ ../includes/libft.h
+ ../includes/op.h
+ /Users/akondaur/Documents/corwar/src/asm_adders.c
 CMakeFiles/corwar.dir/src/asm_getters.c.o
  ../includes/asm.h
  ../includes/get_next_line.h

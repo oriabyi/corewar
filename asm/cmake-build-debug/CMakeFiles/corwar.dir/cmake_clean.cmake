@@ -90,6 +90,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/corwar.dir/src/asm_stuff.c.o"
   "CMakeFiles/corwar.dir/src/get_next_line.c.o"
   "CMakeFiles/corwar.dir/src/asm_print.c.o"
+  "CMakeFiles/corwar.dir/src/asm_adders.c.o"
   "corwar.pdb"
   "corwar"
 )
