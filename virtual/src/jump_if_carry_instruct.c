@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function !!! label = 2
+int 	jump_if_carry_instruct(t_field *field, t_bot *bot) // refactor this function !!! label = 2
 {
 	int 	jump;
 
@@ -13,23 +13,23 @@ int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot) // refactor this function 
 
 	if (IDX_MOD)
 	{
-		jump = (short)get_arguments(cell, bot, 0x80, FIRST_ARG);
+		jump = (short)get_arguments(field, bot, 0x80, FIRST_ARG);
 	}
 
 
-	cell[CUR_POS].bot_id = cell[CUR_POS].last_owner;
+	field[CUR_COORD].bot_id = field[CUR_COORD].old_owner;
 
 
-	CUR_POS = (int)correction_coordinates(CUR_POS + jump);
+	CUR_COORD = (int)correction_coordinates(CUR_COORD + jump);
 
-	if (cell[CUR_POS].hex[0] == '0' &&
-		cell[CUR_POS].hex[1] == '1')
+	if (field[CUR_COORD].hex[0] == '0' &&
+		field[CUR_COORD].hex[1] == '1')
 	{
-		cell[CUR_POS].bot_id = bot->id + DENOTE_ALIVE;
+		field[CUR_COORD].bot_id = bot->id + DENOTE_ALIVE;
 	}
 	else
 	{
-		cell[CUR_POS].bot_id = bot->id + DENOTE_CARRIAGE;
+		field[CUR_COORD].bot_id = bot->id + DENOTE_CARRIAGE;
 	}
 	return (0);
 }

@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-t_carriage				*copy_carrieage(t_carriage *src, int id)
+t_carriage				*copy_carriage(t_carriage *src, int id)
 {
 	int					counter;
 	t_carriage			*dst;
@@ -13,7 +13,7 @@ t_carriage				*copy_carrieage(t_carriage *src, int id)
 	dst->alive = src->alive;
 	dst->command = 0;
 	dst->cycles = 0;
-	dst->id = src->id + 1;
+	dst->id = id;
 	while (counter < NUMBER_OF_REGISTERS)
 	{
 		dst->registers[counter] = src->registers[counter];
@@ -22,42 +22,36 @@ t_carriage				*copy_carrieage(t_carriage *src, int id)
 	return (dst);
 }
 
-void					fork_instruct(t_cell *cell, t_bot *bot)
+
+void					fork_instruct(t_field *field, t_bot *bot)
 {
-	short				temp_t_dir;
-	t_carriage			*temp;
+	short				first_arg;
+	t_carriage			*new_carriage;
 	t_carriage			*head;
 
 	head = bot->carriage;
 
-	int step = 1;
-	temp_t_dir = (short)get_arg_dir(cell, bot, &step, TWO_BYTES);
-	temp = copy_carrieage(head, bot->id);
-	if (temp == NULL)
+	first_arg = (short)get_arguments(field, bot, 0x80, FIRST_ARG);
+	new_carriage = copy_carriage(head, bot->quant_carriages);
+	if (new_carriage == NULL)
 	{
 		return ;
 	}
+
 	if (COMMAND == CW_FORK)
 	{
-		temp->cur_pos = head->cur_pos + (temp_t_dir % IDX_MOD);
+		new_carriage->cur_coord = head->cur_coord + (first_arg % IDX_MOD);
 	}
 	else if (COMMAND == CW_LFORK)
 	{
-		temp->cur_pos = head->cur_pos + (temp_t_dir);
+		new_carriage->cur_coord = head->cur_coord + (first_arg);
 	}
-	temp->cur_pos = (int)correction_coordinates(temp->cur_pos);
+	new_carriage->cur_coord = (int)correction_coordinates(new_carriage->cur_coord);
 
-
-	if (cell[temp->cur_pos].hex[0] == '0' && cell[temp->cur_pos].hex[1] == '1')
-		cell[temp->cur_pos].bot_id =
-				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_ALIVE;
-	else
-		cell[temp->cur_pos].bot_id =
-				get_id_of_bot(cell[temp->cur_pos].bot_id) + DENOTE_CARRIAGE;
-
+	denote_field(field, new_carriage->cur_coord);
 
 	while (head && head->next)
 		head = head->next;
 	if (head && ++bot->quant_carriages)
-		head->next = temp;
+		head->next = new_carriage;
 }

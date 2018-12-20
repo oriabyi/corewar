@@ -1,18 +1,17 @@
 #include "../includes/corewar_header.h"
 
-void 	aff_instruct(t_cell *cell, t_bot *bot) // label size == 4
+void 	aff_instruct(t_field *field, t_bot *bot) // label size == 4
 {
-	int			argument;
-	int 		step;
-	ssize_t		t_reg;
+	int				argument;
+	unsigned char	t_reg;
 
-	step = 1;
-	argument = get_argument(cell, bot, step++);
-	if (check_instruction_args(argument, T_REG, NONE_ARG, NONE_ARG) == ERROR ||
-								get_arg_reg(cell, bot, &step, &t_reg) == ERROR)
+	t_reg = (unsigned char)get_arguments(field, bot, 0x40, FIRST_ARG);
+	argument = get_argument(field, bot, 1);
+
+	if (check_instruction_args(argument, T_REG, NONE_ARG, NONE_ARG) == ERROR)
 	{
 		return ;
 	}
 
-	write(1, (const void *)((ssize_t)(t_reg % 256)), 1);
+	write(1, (const void *)((ssize_t)(REG[t_reg] % 256)), 1);
 }

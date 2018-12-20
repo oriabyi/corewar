@@ -33,11 +33,11 @@ void 			print_memory(t_corewar *core)
 		ft_bzero(temp_memory_line, LINE_SIZE);
 		while (j == 0 || j % 62 != 0)
 		{
-			ft_multcat(2, temp_memory_line, (char *)core->cell[i].hex, " ");
+			ft_multcat(2, temp_memory_line, (char *)core->field[i].hex, " ");
 			i++;
 			j++;
 		}
-		ft_strcat(temp_memory_line, (char *)core->cell[i++].hex);
+		ft_strcat(temp_memory_line, (char *)core->field[i++].hex);
 		i++;
 		temp = ft_multjoinfr(7, NULL, temp, "0x",
 							 get_hex_by_int_byte((i - 64), 4), " : ", temp_memory_line, "\n");

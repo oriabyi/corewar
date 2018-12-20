@@ -70,3 +70,22 @@ int			get_codage(unsigned command)
 		return (2);
 	}
 }
+
+
+
+void					fill_old_owner(t_field *field, int coord)
+{
+	field[coord].old_owner = field[coord].bot_id;
+}
+
+void 					 denote_field(t_field *field, int coord)
+{
+	fill_old_owner(field, coord);
+	if (field[coord].hex[0] == '0' && field[coord].hex[1] == '1')
+		field[coord].bot_id =
+				get_id_of_bot(field[coord].bot_id) + DENOTE_ALIVE;
+	else
+		field[coord].bot_id =
+				get_id_of_bot(field[coord].bot_id) + DENOTE_CARRIAGE;
+}
+

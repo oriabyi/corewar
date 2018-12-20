@@ -25,7 +25,6 @@ add_executable(corewar
         virtual/src/load_index_instruct.c
         virtual/src/load_instruct.c
         virtual/src/long_fork_instruct.c
-        virtual/src/long_load_instruct.c
         virtual/src/store_index_instruct.c
         virtual/src/store_instruct.c
         virtual/src/check_instruction_args.c

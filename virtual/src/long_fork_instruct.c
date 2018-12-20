@@ -1,7 +1,7 @@
 #include "../includes/corewar_header.h"
 
-int 	long_fork_instruct(t_cell *cell, t_bot *bot)
+int 	long_fork_instruct(t_field *field, t_bot *bot)
 {
-	fork_instruct(cell, bot);
+	fork_instruct(field, bot);
 	return (0);
 }

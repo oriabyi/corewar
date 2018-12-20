@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 15:21:59 by ariabyi           #+#    #+#              #
-#    Updated: 2018/11/30 10:17:54 by ariabyi          ###   ########.fr        #
+#    Updated: 2018/12/20 16:26:17 by ariabyi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)load_index_instruct.c 		\
 				$(SRCDIRVIR)load_instruct.c 			\
 				$(SRCDIRVIR)long_fork_instruct.c 		\
-				$(SRCDIRVIR)long_load_instruct.c 		\
 				$(SRCDIRVIR)store_index_instruct.c 		\
 				$(SRCDIRVIR)store_instruct.c 			\
 				$(SRCDIRVIR)add_sub_instructions.c      \

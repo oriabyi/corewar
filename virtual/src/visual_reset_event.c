@@ -11,9 +11,9 @@ void 			reset_game(t_corewar *core)
 		core->bots[counter].carriage = create_carriage(core->bots[counter].id);
 		counter++;
 	}
-	free(core->cell);
+	free(core->field);
 	create_memory_space(core);
-	fill_memory_space(core->bots, core->cell, core->qua_bots);
+	fill_memory_space(core->bots, core->field, core->qua_bots);
 	core->max_checks = 0;
 	core->cycle_to_die = CYCLE_TO_DIE;
 }

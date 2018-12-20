@@ -21,6 +21,6 @@ int				visual_init(t_corewar *core)
 		check_correctness(core, check_code);
 
 
-	fill_memory_space(core->bots, core->cell, core->qua_bots);
+	fill_memory_space(core->bots, core->field, core->qua_bots);
 	return (0);
 }

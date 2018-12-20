@@ -15,8 +15,8 @@ void 			dog_nail_vs(t_corewar *core)
 		printf(RESET);
 		if (i % 64 == 0)
 			printf("\n  ");
-		id = get_id_of_bot(core->cell[i].bot_id);
-		if (CR_IS_VIEW_SANE(core->cell[i].bot_id))
+		id = get_id_of_bot(core->field[i].bot_id);
+		if (CR_IS_VIEW_SANE(core->field[i].bot_id))
 		{
 			if (id == NOONE)
 				printf(RESET);
@@ -29,7 +29,7 @@ void 			dog_nail_vs(t_corewar *core)
 			else if (id == FOURTH_BOT)
 				printf(CYAN);
 		}
-		else if (CR_IS_VIEW_CARRIAGE(core->cell[i].bot_id)) // carriage
+		else if (CR_IS_VIEW_CARRIAGE(core->field[i].bot_id)) // carriage
 		{
 			if (id == NOONE)
 				printf(RESET);
@@ -42,7 +42,7 @@ void 			dog_nail_vs(t_corewar *core)
 			else if (id == FOURTH_BOT)
 				printf(L_CYAN);
 		}
-		else  if (CR_IS_VIEW_ALTERED(core->cell[i].bot_id))	//
+		else  if (CR_IS_VIEW_ALTERED(core->field[i].bot_id))	//
 		{
 			if (id == NOONE)
 				printf(RESET);
@@ -55,9 +55,9 @@ void 			dog_nail_vs(t_corewar *core)
 			else if (id == FOURTH_BOT)
 				printf(RED);
 
-			core->cell[i].bot_id -= DENOTE_ALTERED;
+			core->field[i].bot_id -= DENOTE_ALTERED;
 		}
-		else  if (CR_IS_VIEW_ALIVE(core->cell[i].bot_id))
+		else  if (CR_IS_VIEW_ALIVE(core->field[i].bot_id))
 		{
 			if (id == NOONE)
 				printf(RESET);
@@ -70,7 +70,7 @@ void 			dog_nail_vs(t_corewar *core)
 			else if (id == FOURTH_BOT)
 				printf(RED);
 		}
-		printf("%s ", core->cell[i].hex);
+		printf("%s ", core->field[i].hex);
 		i++;
 	}
 	printf("\n\n");

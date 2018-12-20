@@ -141,9 +141,9 @@ void 			draw_score_window(t_corewar *core, int cycle)
 					while (r < 16)
 					{
 						if (r == 0)
-							wprintw(core->ncur.score_window, "0 |[%. 8x]", r, tmp_carr->registers[r]);
+							wprintw(core->ncur.score_window, "1 |[%. 8x]", r, tmp_carr->registers[r]);
 						else
-							wprintw(core->ncur.score_window, "   %. -1x |[%. 8x]", r, tmp_carr->registers[r]);
+							wprintw(core->ncur.score_window, "   %. -1x |[%. 8x]", r + 1, tmp_carr->registers[r]);
 
 						r++;
 						if (r % 3 == 0)

@@ -1,47 +1,43 @@
 #include "../includes/corewar_header.h"
 
-void 	remove_carriage(t_cell *cell, unsigned id, int is_owned)
+void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 {
 	if (is_owned == OWN)
 	{
-		cell->bot_id = cell->last_owner;
+		field->bot_id = field->old_owner;
 		return;
 	}
-	if (cell->sum_acts == 0)
+	if (field->sum_acts == 0)
 	{
-		cell->bot_id = get_id_of_bot(id);
-		cell->last_owner = cell->bot_id;
+		field->bot_id = get_id_of_bot(id);
+		field->old_owner = field->bot_id;
 	}
 	else
 	{
-		cell->sum_acts--;
+		field->sum_acts--;
 	}
 }
 
-void 	place_carriage(t_cell *cell, unsigned id, int is_owned)
+void 	place_carriage(t_field *field, unsigned id, int is_owned)
 {
-	if (CR_IS_VIEW_CARRIAGE(cell->bot_id))
+	if (CR_IS_VIEW_CARRIAGE(field->bot_id))
 	{
-		cell->sum_acts++;
+		field->sum_acts++;
 	}
 	else
 	{
-		cell->last_owner = cell->bot_id;
-		cell->bot_id = get_id_of_bot(id);
-		if (cell->hex[0] == '0' && cell->hex[1] == '1')
-			cell->bot_id += DENOTE_ALIVE;
-		else
-			cell->bot_id += DENOTE_CARRIAGE;
+		field->old_owner = field->bot_id;
+		denote_field(field, 0);
 	}
 }
 
-void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned)
+void 	move_carriage(t_field *field, t_bot *bot, int step, int is_owned)
 {
-	remove_carriage(&cell[CUR_POS], bot->id, is_owned);
-	CUR_POS = (int)correction_coordinates(CUR_POS + step);
-	place_carriage(&cell[CUR_POS], bot->id, is_owned);
+	remove_carriage(&field[CUR_COORD], bot->id, is_owned);
+	CUR_COORD = (int)correction_coordinates(CUR_COORD + step);
+	place_carriage(&field[CUR_COORD], bot->id, is_owned);
 
-	CUR_POS = (unsigned)correction_coordinates(CUR_POS);
+	CUR_COORD = (unsigned)correction_coordinates(CUR_COORD);
 	if (bot->carriage->invalid_reg == true)
 	{
 		bot->carriage->invalid_reg = false;
@@ -49,9 +45,9 @@ void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned)
 }
 
 
-void 	change_carry_if_need(t_bot *bot, int position)
+void 	change_carry_if_need(t_bot *bot, int coord)
 {
-	if (REG[position] == 0)
+	if (REG[coord] == 0)
 		CARRY = true;
 	else
 		CARRY = false;

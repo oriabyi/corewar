@@ -11,14 +11,14 @@
 //	return (num);
 //}
 
-int 	t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap) // swap this with get_t_dir_four
+int 	t_load_instr(t_field *field, t_bot *bot, int t_reg, int handicap) // swap this with get_t_dir_four
 {
 	char 		*temp;
 
-	temp = ft_multjoin(4, (char *)cell[CUR_POS + (handicap + 0)].hex,
-					   (char *)cell[CUR_POS + (handicap + 1)].hex,
-					   (char *)cell[CUR_POS + (handicap + 2)].hex,
-					   (char *)cell[CUR_POS + (handicap + 3)].hex);
+	temp = ft_multjoin(4, (char *)field[CUR_COORD + (handicap + 0)].hex,
+					   (char *)field[CUR_COORD + (handicap + 1)].hex,
+					   (char *)field[CUR_COORD + (handicap + 2)].hex,
+					   (char *)field[CUR_COORD + (handicap + 3)].hex);
 	REG[t_reg] = ft_ahtoi(temp);
 	free(temp);
 	return (5);

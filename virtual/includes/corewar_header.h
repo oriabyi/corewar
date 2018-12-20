@@ -26,11 +26,11 @@
 # define RIGHT	0x435B1B
 # define DEL	0x7E335B1B
 
-#define CUR_POS	(bot->carriage->cur_pos)
-#define REG		(bot->carriage->registers)
-#define COMMAND	(bot->carriage->command)
-#define CARRY	(bot->carriage->carry)
-#define ALIVE	(bot->carriage->alive)
+#define CUR_COORD	(bot->carriage->cur_coord)
+#define REG			(bot->carriage->registers)
+#define COMMAND		(bot->carriage->command)
+#define CARRY		(bot->carriage->carry)
+#define ALIVE		(bot->carriage->alive)
 
 
 # define NOT_OWN	0
@@ -192,25 +192,6 @@
 # define THIRD_BOT					3
 # define FOURTH_BOT					4
 
-# define NOONE_CARRIAGE				5
-# define FIRST_BOT_CARRIAGE			6
-# define SECOND_BOT_CARRIAGE		7
-# define THIRD_BOT_CARRIAGE			8
-# define FOURTH_BOT_CARRIAGE		9
-
-# define FIRST_BOT_REVERSE			11
-# define SECOND_BOT_REVERSE			12
-# define THIRD_BOT_REVERSE			13
-# define FOURTH_BOT_REVERSE			14
-
-# define FIRST_BOT_BOLD				16
-# define SECOND_BOT_BOLD			17
-# define THIRD_BOT_BOLD				18
-# define FOURTH_BOT_BOLD			19
-
-
-
-
 # define NUMBER_OF_REGISTERS		16
 
 #define FIRST_ARG	0
@@ -281,7 +262,7 @@ typedef	struct			s_flags
 
 typedef struct			s_carriage
 {
-	int 				cur_pos;
+	int 				cur_coord;
 	unsigned 			carry:1;
 	unsigned			flag:1;
 	unsigned 			alive:1;
@@ -328,19 +309,19 @@ typedef struct			s_ncurses
 	WINDOW				*score_window;
 }						t_ncurses;
 
-typedef struct			s_cell
+typedef struct			s_battlefield
 {
 	char 				val;
 	unsigned char		hex[3];
 	unsigned			bot_id:5;
 	unsigned			sum_acts:5;
 	unsigned			time;
-	unsigned			last_owner;
-}						t_cell;
+	unsigned			old_owner;
+}						t_field;
 
 typedef struct			s_corewar
 {
-	t_cell				*cell;
+	t_field				*field;
 	t_ncurses			ncur;
 	t_bot				*bots;
 	t_flags				flags;
@@ -415,7 +396,7 @@ int 			visual_end(t_corewar *core);
 int 			display_windows(t_corewar *core, int cycle);
 int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
-void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
+void			fill_memory_space(t_bot *bots, t_field *field, int qua_bots);
 
 
 /*
@@ -426,28 +407,28 @@ void			fill_memory_space(t_bot *bots, t_cell *cell, int qua_bots);
 ** Instructions
 */
 
-void 	alive_instruct(t_cell *cell, t_bot *bot);
-void 	load_instruct(t_cell *cell, t_bot *bot);
-void 	store_instruct(t_cell *cell, t_bot *bot);
+void 	alive_instruct(t_field *field, t_bot *bot);
+void 	load_instruct(t_field *field, t_bot *bot);
+void 	store_instruct(t_field *field, t_bot *bot);
 
 // add and sub operations here
-void 	add_sub_instructs(t_cell *cell, t_bot *bot);
+void 	add_sub_instructs(t_field *field, t_bot *bot);
 
 // all logical operations here
-void 	logical_operations(t_cell *cell, t_bot *bot);
+void 	logical_operations(t_field *field, t_bot *bot);
 
-int 	jump_if_carry_instruct(t_cell *cell, t_bot *bot);
+int 	jump_if_carry_instruct(t_field *field, t_bot *bot);
 
 //	LLDI in LDI
-void 	load_index_instruct(t_cell *cell, t_bot *bot);
+void 	load_index_instruct(t_field *field, t_bot *bot);
 
-void 	store_index_instruct(t_cell *cell, t_bot *bot);
+void 	store_index_instruct(t_field *field, t_bot *bot);
 
 //  long fork in fork
-void 	fork_instruct(t_cell *cell, t_bot *bot);
+void 	fork_instruct(t_field *field, t_bot *bot);
 
-void 	long_load_instruct(t_cell *cell, t_bot *bot);
-void 	aff_instruct(t_cell *cell, t_bot *bot);
+void 	long_load_instruct(t_field *field, t_bot *bot);
+void 	aff_instruct(t_field *field, t_bot *bot);
 
 /*
 ** Check carry
@@ -459,7 +440,7 @@ void 	change_carry_if_need(t_bot *bot, int position);
 **	Move Carriage
 */
 
-void 	move_carriage(t_cell *cell, t_bot *bot, int step, int is_owned);
+void 	move_carriage(t_field *field, t_bot *bot, int step, int is_owned);
 
 
 /*
@@ -475,14 +456,11 @@ int			get_codage(unsigned command);
 // some trash
 void 			do_process(t_corewar *core, int qua_bots);
 int 			check_reg(int reg);
-int 			check_t_regs(t_bot *bot, t_cell *cell, int step, unsigned char *t_reg);
-void 			dog_nail_vs(t_corewar *core);
-int 			t_load_instr(t_cell *cell, t_bot *bot, int t_reg, int handicap); // swap this with get_t_dir_four
 
 ssize_t 		correction_coordinates(ssize_t coordinate);
 
 unsigned 			get_id_of_bot(unsigned num);
-unsigned char 	get_argument(t_cell *cell, t_bot *bot, int num_of_argument);
+unsigned char 	get_argument(t_field *field, t_bot *bot, int num_of_argument);
 
 // carriage
 t_carriage 				*create_carriage(int id);
@@ -499,16 +477,14 @@ void 		alive_view(WINDOW *win, int id);
 void 		altered_view(WINDOW *win, int id);
 
 //
-ssize_t 		get_dir(t_cell *cell, t_bot *bot, int handicap, int bytes);
+ssize_t 		get_dir(t_field *field, t_bot *bot, int handicap, int bytes);
 
 //getters args
-ssize_t		get_arg_reg(t_cell *cell, t_bot *bot, int *step, ssize_t *get);
-ssize_t		get_arg_dir(t_cell *cell, t_bot *bot, int *step, int bytes);
-ssize_t		get_arg_ind(t_cell *cell, t_bot *bot, int *step, int code);
+ssize_t		get_arg_reg(t_field *field, t_bot *bot, int *step, ssize_t *get);
 
 
-//write in cell
-int 	write_in_cell(t_cell *cell, int position, t_bot *bot, int t_reg);
+//write in field
+int 	write_in_field(t_field *field, int position, t_bot *bot, int t_reg);
 
 //add sub
 unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
@@ -526,8 +502,13 @@ int 		check_mult_regs(int field, ...);
 int 					check_type_arguments(int argument, int type, int num, ...);
 int 					get_part_argument(int argument, int position);
 // new way
-ssize_t			get_arguments(t_cell *cell, t_bot *bot, int argument, int number);
+ssize_t			get_arguments(t_field *field, t_bot *bot, int argument, int number);
 
+void					fill_old_owner(t_field *field, int coord);
+void 					 denote_field(t_field *field, int coord);
+
+
+int 					get_regs_value(int argument, t_bot *bot, int type, int num, ...);
 #endif
 
 // 4 magic value

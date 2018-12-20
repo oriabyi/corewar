@@ -28,6 +28,6 @@ void				clean_bots(t_bot *bots, unsigned quantity)
 void				clean_all(t_corewar *core)
 {
 //	clean_bots((core->bots), core->qua_bots);
-//	if (core->cell)
-//		free(core->cell);
+//	if (core->field)
+//		free(core->field);
 }

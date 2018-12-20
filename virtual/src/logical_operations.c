@@ -16,17 +16,17 @@ unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command)
 }
 
 
-int 					get_part_argument(int argument, int position)
+int 					get_part_argument(int argument, int coord)
 {
-	if (position == FIRST_ARG)
+	if (coord == FIRST_ARG)
 	{
 		return (argument >> 6);
 	}
-	else if (position == SECOND_ARG)
+	else if (coord == SECOND_ARG)
 	{
 		return ((argument >> 4) & 3);
 	}
-	else if (position == THIRD_ARG)
+	else if (coord == THIRD_ARG)
 	{
 		return ((argument >> 2) & 3);
 	}
@@ -38,15 +38,15 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 	int 				check_code;
 	va_list 			ap;
 	int 				temp_reg;
-	int 				position;
+	int 				coord;
 
 	check_code = 0;
 	va_start(ap, num);
 	while (num)
 	{
-		position = va_arg(ap, int);
+		coord = va_arg(ap, int);
 		temp_reg = va_arg(ap, int);
-		if (check_instruction_arg(get_part_argument(argument, position), type) == 0)
+		if (check_instruction_arg(get_part_argument(argument, coord), type) == 0)
 		{
 			if (check_reg(temp_reg))
 				check_code = 1;
@@ -57,21 +57,21 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 	return (check_code);
 }
 
-void					logical_operations(t_cell *cell, t_bot *bot)
+void					logical_operations(t_field *field, t_bot *bot)
 {
 	int 			argument;
 	unsigned 		first_arg;
 	unsigned 		second_arg;
 	unsigned 		third_arg;
 
-	argument = get_argument(cell, bot, 1);
+	argument = get_argument(field, bot, 1);
 	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
 	{
 		return ;
 	}
-	first_arg = (unsigned)get_arguments(cell, bot, argument, FIRST_ARG);
-	second_arg = (unsigned)get_arguments(cell, bot, argument, SECOND_ARG);
-	third_arg = (unsigned)get_arguments(cell, bot, argument, THIRD_ARG);
+	first_arg = (unsigned)get_arguments(field, bot, argument, FIRST_ARG);
+	second_arg = (unsigned)get_arguments(field, bot, argument, SECOND_ARG);
+	third_arg = (unsigned)get_arguments(field, bot, argument, THIRD_ARG);
 
 	if (check_type_arguments(argument, T_REG, 3, 0, first_arg, 1, second_arg, 2, third_arg) == 1)
 		return ;

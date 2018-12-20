@@ -934,7 +934,7 @@ extern NCURSES_EXPORT(int) wgetscrreg (const WINDOW *, int *, int *); /* generat
 #ifndef NCURSES_NOMACROS
 
 /*
- * These miscellaneous pseudo functions are provided for compatibility:
+ * These misfieldaneous pseudo functions are provided for compatibility:
  */
 
 #define wgetstr(w, s)		wgetnstr(w, s, -1)
@@ -1667,7 +1667,7 @@ extern NCURSES_EXPORT(const char *) _nc_viswibuf(const wint_t *);
 typedef struct
 {
     short id;		/* ID to distinguish multiple devices */
-    int x, y, z;	/* event coordinates (character-cell) */
+    int x, y, z;	/* event coordinates (character-field) */
     mmask_t bstate;	/* button state bits */
 }
 MEVENT;
