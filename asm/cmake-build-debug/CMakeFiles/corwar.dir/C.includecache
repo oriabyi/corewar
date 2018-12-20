@@ -56,7 +56,27 @@ limits.h
 
 ../includes/op.h
 
+/Users/akondaur/Documents/corwar/src/asm.c
+asm.h
+/Users/akondaur/Documents/corwar/src/asm.h
+
+/Users/akondaur/Documents/corwar/src/asm_adders.c
+asm.h
+/Users/akondaur/Documents/corwar/src/asm.h
+
+/Users/akondaur/Documents/corwar/src/asm_getters.c
+asm.h
+/Users/akondaur/Documents/corwar/src/asm.h
+
 /Users/akondaur/Documents/corwar/src/asm_operate.c
+asm.h
+/Users/akondaur/Documents/corwar/src/asm.h
+
+/Users/akondaur/Documents/corwar/src/asm_print.c
+asm.h
+/Users/akondaur/Documents/corwar/src/asm.h
+
+/Users/akondaur/Documents/corwar/src/asm_stuff.c
 asm.h
 /Users/akondaur/Documents/corwar/src/asm.h
 
