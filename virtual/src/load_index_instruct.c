@@ -28,25 +28,25 @@ ssize_t 		write_from_field(t_field *field, int handicap, int bytes)
 
 
 
-void 	load_index_instruct(t_field *field, t_bot *bot) // label size == 2
+void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument) // label size == 2
 {
-	int 		argument;
+//	int 		argument;
 	ssize_t 	coord;
 	ssize_t 	first_arg;
 	ssize_t 	second_arg;
 	ssize_t 	third_arg;
 
 	coord = 0;
-	argument = get_argument(field, bot, 1);
+//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument,
 					(T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
 	{
 		return ;
 	}
 
-	first_arg = get_arguments(field, bot, argument, FIRST_ARG);
-	second_arg = get_arguments(field, bot, argument, SECOND_ARG);
-	third_arg = get_arguments(field, bot, argument, THIRD_ARG);
+	first_arg = get_arguments(field, argument, FIRST_ARG, carriage);
+	second_arg = get_arguments(field, argument, SECOND_ARG, carriage);
+	third_arg = get_arguments(field, argument, THIRD_ARG, carriage);
 
 	if (check_type_arguments(argument, T_REG, 3, 0, first_arg, 1, second_arg, 2, third_arg) == 1)
 		return ;
@@ -66,5 +66,5 @@ void 	load_index_instruct(t_field *field, t_bot *bot) // label size == 2
 	REG[third_arg] = (unsigned)write_from_field(field, (int)(coord), FOUR_BYTES);
 
 	if (COMMAND == CW_LLDI)
-		change_carry_if_need(bot, (int)third_arg);
+		change_carry_if_need((int)third_arg, carriage);
 }

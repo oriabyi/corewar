@@ -8,11 +8,20 @@
 #include <time.h>
 
 
-#define CUR_COORD	(bot->carriage->cur_coord)
-#define REG			(bot->carriage->registers)
-#define COMMAND		(bot->carriage->command)
-#define CARRY		(bot->carriage->carry)
-#define ALIVE		(bot->carriage->alive)
+#define F_VISUAL core->flags.visual
+#define F_DUMP core->flags.dump
+
+#define CUR_COORD		 carriage->cur_coord
+
+#define REG			 carriage->registers
+
+#define CHAMP_COMMAND		(champ->carriage->command)
+#define COMMAND		 carriage->command
+
+#define CARRY			carriage->carry
+#define CYCLES			carriage->cycles
+
+#define ALIVE			 carriage->alive
 
 
 # define NOT_OWN	0
@@ -236,12 +245,11 @@ typedef struct			s_carriage
 	unsigned 			command:8;
 	int 				cycles;
 	int 				id;
-	int 				invalid_reg:1;
 
 	struct s_carriage	*next;
 }						t_carriage;
 
-typedef struct			s_bot
+typedef struct			s_champ
 {
 
 	char 				*name;
@@ -254,7 +262,7 @@ typedef struct			s_bot
 //	t_arguments			arg;
 
 	t_carriage			*carriage;
-}						t_bot;
+}						t_champ;
 
 typedef struct			s_ncurses
 {
@@ -267,7 +275,7 @@ typedef struct			s_ncurses
 	unsigned 			pause:1;
 
 	char				cycle_to_go[7];
-	char				bot_id[7];
+	char				champ_id[7];
 	char				carriage_id[7];
 	char 				*current_field;
 
@@ -279,7 +287,7 @@ typedef struct			s_battlefield
 {
 	char 				val;
 	unsigned char		hex[3];
-	unsigned			bot_id:5;
+	unsigned			champ_id:5;
 	unsigned			sum_acts:5;
 	unsigned			time;
 	unsigned			old_owner;
@@ -289,11 +297,11 @@ typedef struct			s_corewar
 {
 	t_field				*field;
 	t_ncurses			ncur;
-	t_bot				*bots;
+	t_champ				*champs;
 	t_flags				flags;
 	int 				cycle_to_die;
 	int 				max_checks;
-	unsigned 			qua_bots;
+	unsigned 			qua_champs;
 }						t_corewar;
 
 
@@ -362,7 +370,7 @@ int 			visual_end(t_corewar *core);
 int 			display_windows(t_corewar *core, int cycle);
 int				draw(t_corewar *core, int cycle);
 int 			create_memory_space(t_corewar *core);
-void			fill_memory_space(t_bot *bots, t_field *field, int qua_bots);
+void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 
 
 /*
@@ -373,40 +381,40 @@ void			fill_memory_space(t_bot *bots, t_field *field, int qua_bots);
 ** Instructions
 */
 
-void 	alive_instruct(t_field *field, t_bot *bot);
-void 	load_instruct(t_field *field, t_bot *bot);
-void 	store_instruct(t_field *field, t_bot *bot);
+void 	alive_instruct(t_field *field, t_carriage *carriage);
+void 	load_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 
 // add and sub operations here
-void 	add_sub_instructs(t_field *field, t_bot *bot);
+void 	add_sub_instructs(t_field *field, t_carriage *carriage, unsigned  char argument);
 
 // all logical operations here
-void 	logical_operations(t_field *field, t_bot *bot);
+void 	logical_operations(t_field *field, t_carriage *carriage, unsigned  char argument);
 
-int 	jump_if_carry_instruct(t_field *field, t_bot *bot);
+int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, unsigned id);
 
 //	LLDI in LDI
-void 	load_index_instruct(t_field *field, t_bot *bot);
+void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 
-void 	store_index_instruct(t_field *field, t_bot *bot);
+void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 
 //  long fork in fork
-void 	fork_instruct(t_field *field, t_bot *bot);
+void					fork_instruct(t_field *field, t_carriage *carriage,
+									  unsigned *quant_carriages);
 
-void 	long_load_instruct(t_field *field, t_bot *bot);
-void 	aff_instruct(t_field *field, t_bot *bot);
+void 	aff_instruct(t_field *field, t_carriage *carriage);
 
 /*
 ** Check carry
 */
 
-void 	change_carry_if_need(t_bot *bot, int position);
+void 	change_carry_if_need(int coord, t_carriage *carriage);
 
 /*
 **	Move Carriage
 */
 
-void 	move_carriage(t_field *field, t_bot *bot, int step, int is_owned);
+void 	move_carriage(t_field *field, unsigned id, int step, int is_owned, t_carriage *carriage);
 
 
 /*
@@ -420,13 +428,13 @@ int 			get_dir_bytes(unsigned command);
 int			get_codage(unsigned command);
 
 // some trash
-void 			do_process(t_corewar *core, int qua_bots);
+void 			do_process(t_corewar *core, int qua_champs);
 int 			check_reg(int reg);
 
 ssize_t 		correction_coordinates(ssize_t coordinate);
 
-unsigned 			get_id_of_bot(unsigned num);
-unsigned char 	get_argument(t_field *field, t_bot *bot, int num_of_argument);
+unsigned 			get_id_of_champ(unsigned num);
+unsigned char 	get_argument(t_field *field, int coord);
 
 // carriage
 t_carriage 				*create_carriage(int id);
@@ -434,7 +442,7 @@ t_carriage 				*create_carriage(int id);
 
 //cycles
 int 			check_cycle_to_die(t_corewar *core);
-int 			get_cycles(t_bot *bot);
+int 			get_cycles(t_carriage *carriage);
 
 //print
 void		simple_print(WINDOW *win, int id);
@@ -443,14 +451,14 @@ void 		alive_view(WINDOW *win, int id);
 void 		altered_view(WINDOW *win, int id);
 
 //
-ssize_t 		get_dir(t_field *field, t_bot *bot, int handicap, int bytes);
+ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);
 
 //getters args
-ssize_t		get_arg_reg(t_field *field, t_bot *bot, int *step, ssize_t *get);
+ssize_t		get_arg_reg(t_field *field, t_champ *champ, int *step, ssize_t *get);
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, t_bot *bot, int t_reg);
+int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriage);
 
 //add sub
 unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
@@ -468,13 +476,13 @@ int 		check_mult_regs(int field, ...);
 int 					check_type_arguments(int argument, int type, int num, ...);
 int 					get_part_argument(int argument, int position);
 // new way
-ssize_t			get_arguments(t_field *field, t_bot *bot, int argument, int number);
+ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
 
 void					fill_old_owner(t_field *field, int coord);
 void 					 denote_field(t_field *field, int coord);
 
 
-int 					get_regs_value(int argument, t_bot *bot, int type, int num, ...);
+int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...);
 
 void					get_old_owner(t_field *field, int coord);
 
@@ -483,6 +491,6 @@ void					get_old_owner(t_field *field, int coord);
 // 4 magic value
 // 128 bytes - name
 // 4 null
-// 4 bot size
+// 4 champ size
 // 2048 comment
 // 4 null

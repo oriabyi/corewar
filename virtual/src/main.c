@@ -1,13 +1,13 @@
 #include "../includes/corewar_header.h"
 
-void			game(t_corewar *core)
+void			war(t_corewar *core)
 {
 	unsigned 		i;
 	core->cycle_to_die = CYCLE_TO_DIE;
 	core->max_checks = 0;
 
 	visual_init(core);
-	if (core->flags.visual)
+	if (F_VISUAL)
 	{
 		visual_start(core);
 		display_windows(core, 1);
@@ -15,7 +15,7 @@ void			game(t_corewar *core)
 	i = 1;
 	while (i < 15000 && core->cycle_to_die > 0)
 	{
-		if (!core->flags.visual && i == core->flags.dump)
+		if (F_VISUAL == false && i == F_DUMP)
 		{
 			print_memory(core);
 			break ;
@@ -24,7 +24,7 @@ void			game(t_corewar *core)
 			core->cycle_to_die = check_cycle_to_die(core);
 
 
-		if (i >= core->flags.dump && core->flags.visual)
+		if (i >= F_DUMP && F_VISUAL)
 		{
 			i = (unsigned)draw(core, i);
 		}
@@ -33,18 +33,11 @@ void			game(t_corewar *core)
 			i++;
 		}
 
-		do_process(core, core->qua_bots);
+		do_process(core, core->qua_champs);
 
 		bigmother++;
-		if (core->flags.a_visual)
-		{
-			write(1, "It is now cycle ", 16);
-			ft_putnbr_fd(i, 1);
-			write(1, "\n", 1);
-		}
-
 	}
-	if (core->flags.visual)
+	if (F_VISUAL)
 		visual_end(core);
 
 }
@@ -59,7 +52,7 @@ int				main(int ac, char **av)
 	check_arguments(&core.flags, ac, av);
 
 	parse(&core, av);
-	game(&core);
+	war(&core);
 	clean_all(&core);
 //	system("leaks -q corewar");
 	return (0);

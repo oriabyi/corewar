@@ -6,7 +6,7 @@ void 			fill_rank(t_field *field, int cur_qua, int qua_inrank)
 		return ;
 	else
 		fill_rank(field, (++cur_qua), qua_inrank);
-	field[cur_qua].bot_id = NOT_EXPOSED;
+	field[cur_qua].champ_id = NOT_EXPOSED;
 	field[cur_qua].sum_acts = 0;
 	field[cur_qua].time = 0;
 	field[cur_qua].old_owner = 0;

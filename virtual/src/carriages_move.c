@@ -4,13 +4,13 @@ void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 {
 	if (is_owned == OWN)
 	{
-		field->bot_id = get_id_of_bot(field->old_owner);
+		field->champ_id = get_id_of_champ(field->old_owner);
 		return;
 	}
 //	if (field->sum_acts == 0)
 //	{
-		field->bot_id = get_id_of_bot(id);
-		field->old_owner = field->bot_id;
+		field->champ_id = get_id_of_champ(id);
+		field->old_owner = field->champ_id;
 //	}
 //	else
 //	{
@@ -20,27 +20,30 @@ void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 
 void 	place_carriage(t_field *field, unsigned id, int is_owned)
 {
-	if (CR_IS_VIEW_CARRIAGE(field->bot_id))
+	if (CR_IS_VIEW_CARRIAGE(field->champ_id))
 	{
 		field->sum_acts++;
 	}
 	else
 	{
-		field->old_owner = field->bot_id;
+		field->old_owner = field->champ_id;
 		denote_field(field, 0);
 	}
 }
 
-void 	move_carriage(t_field *field, t_bot *bot, int step, int is_owned)
+void 	move_carriage(t_field *field, unsigned id, int step, int is_owned, t_carriage *carriage)
 {
-	remove_carriage(&field[CUR_COORD], bot->id, is_owned);
+	remove_carriage(&field[CUR_COORD], id, is_owned);
+
 	CUR_COORD = (int)correction_coordinates(CUR_COORD + step);
-	place_carriage(&field[CUR_COORD], bot->id, is_owned);
+
+	place_carriage(&field[CUR_COORD], id, is_owned);
+
 	CUR_COORD = (int)correction_coordinates(CUR_COORD);
 }
 
 
-void 	change_carry_if_need(t_bot *bot, int coord)
+void 	change_carry_if_need(int coord, t_carriage *carriage)
 {
 	if (REG[coord] == 0)
 		CARRY = true;

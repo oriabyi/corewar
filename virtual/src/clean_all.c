@@ -8,25 +8,25 @@ void				clean_carriages(t_carriage *carriage)
 }
 
 
-void				clean_bots(t_bot *bots, unsigned quantity)
+void				clean_champs(t_champ *champs, unsigned quantity)
 {
 	int				counter;
 
 	counter = 0;
 	while (counter != quantity)
 	{
-		free(bots[counter].name);
-		free(bots[counter].comment);
-		free(bots[counter].exec_code);
-		clean_carriages(bots[counter].carriage);
+		free(champs[counter].name);
+		free(champs[counter].comment);
+		free(champs[counter].exec_code);
+		clean_carriages(champs[counter].carriage);
 		counter++;
 	}
-	free(bots);
+	free(champs);
 }
 
 void				clean_all(t_corewar *core)
 {
-	clean_bots((core->bots), core->qua_bots);
+	clean_champs((core->champs), core->qua_champs);
 	if (core->field)
 		free(core->field);
 }

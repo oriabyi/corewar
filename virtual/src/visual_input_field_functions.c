@@ -45,8 +45,8 @@ int 			delete_last_letter_from_iput_field(char *field)
 void 			set_next_field(t_corewar *core)
 {
 	if (core->ncur.current_field == core->ncur.cycle_to_go)
-		core->ncur.current_field = core->ncur.bot_id;
-	else if (core->ncur.current_field == core->ncur.bot_id)
+		core->ncur.current_field = core->ncur.champ_id;
+	else if (core->ncur.current_field == core->ncur.champ_id)
 		core->ncur.current_field = core->ncur.carriage_id;
 	else if (core->ncur.current_field == core->ncur.carriage_id)
 		core->ncur.current_field = core->ncur.cycle_to_go;
@@ -56,8 +56,8 @@ void 			set_prev_field(t_corewar *core)
 {
 	if (core->ncur.current_field == core->ncur.cycle_to_go)
 		core->ncur.current_field = core->ncur.carriage_id;
-	else if (core->ncur.current_field == core->ncur.bot_id)
+	else if (core->ncur.current_field == core->ncur.champ_id)
 		core->ncur.current_field = core->ncur.cycle_to_go;
 	else if (core->ncur.current_field == core->ncur.carriage_id)
-		core->ncur.current_field = core->ncur.bot_id;
+		core->ncur.current_field = core->ncur.champ_id;
 }

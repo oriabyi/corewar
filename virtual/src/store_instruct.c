@@ -1,17 +1,17 @@
 #include "../includes/corewar_header.h"
 
-void 	store_instruct(t_field *field, t_bot *bot) // label size == 4
+void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argument) // label size == 4
 {
-	int 		argument;
+//	int 		argument;
 	int 		t_reg;
 	ssize_t 	coord;
 	ssize_t 	second_arg;
 
-	argument = get_argument(field, bot, 1);
+//	argument = get_argument(field, CUR_COORD + 1);
 	
 	
-	t_reg = (unsigned char)get_arguments(field, bot, argument, FIRST_ARG);
-	second_arg = (unsigned)get_arguments(field, bot, argument, SECOND_ARG);
+	t_reg = (unsigned char)get_arguments(field, argument, FIRST_ARG, carriage);
+	second_arg = (unsigned)get_arguments(field, argument, SECOND_ARG, carriage);
 
 	if (check_reg(t_reg) || check_instruction_args(argument,
 			(T_REG), (T_REG | T_IND), (NONE_ARG)) == ERROR)
@@ -26,9 +26,9 @@ void 	store_instruct(t_field *field, t_bot *bot) // label size == 4
 	}
 	else
 	{
-		coord = (short)get_dir(field, bot, 2 + fishka(argument, SECOND_ARG, 4), TWO_BYTES);
+		coord = (short)get_dir(field, 2 + fishka(argument, SECOND_ARG, 4), TWO_BYTES, carriage);
 
-		write_in_field(field, (int)(coord + CUR_COORD), bot, t_reg);
-//		write_in_field(field, (int)(second_arg % IDX_MOD + CUR_COORD), bot, t_reg); it looks rightly
+		write_in_field(field, (int)(coord + CUR_COORD), t_reg, carriage);
+//		write_in_field(field, (int)(second_arg % IDX_MOD + CUR_COORD), champ, t_reg); it looks rightly
 	}
 }

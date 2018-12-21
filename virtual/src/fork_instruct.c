@@ -23,16 +23,17 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 }
 
 
-void					fork_instruct(t_field *field, t_bot *bot)
+void					fork_instruct(t_field *field, t_carriage *carriage,
+									 unsigned *quant_carriages)
 {
 	short				first_arg;
 	t_carriage			*new_carriage;
 	t_carriage			*head;
 
-	head = bot->carriage;
+	head = carriage;
 
-	first_arg = (short)get_arguments(field, bot, 0x80, FIRST_ARG);
-	new_carriage = copy_carriage(head, bot->quant_carriages);
+	first_arg = (short)get_arguments(field, 0x80, FIRST_ARG, head);
+	new_carriage = copy_carriage(head, *quant_carriages);
 	if (new_carriage == NULL)
 	{
 		return ;
@@ -52,6 +53,6 @@ void					fork_instruct(t_field *field, t_bot *bot)
 
 	while (head && head->next)
 		head = head->next;
-	if (head && ++bot->quant_carriages)
+	if (head && ++(*quant_carriages)) // move it upper (++)
 		head->next = new_carriage;
 }

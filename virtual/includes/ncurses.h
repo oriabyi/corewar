@@ -275,7 +275,7 @@ extern NCURSES_EXPORT_VAR(chtype) acs_map[];
 
 /*
  * Line drawing ACS names are of the form ACS_trbl, where t is the top, r
- * is the right, b is the bottom, and l is the left.  t, r, b, and l might
+ * is the right, b is the champtom, and l is the left.  t, r, b, and l might
  * be B (blank), S (single), D (double), or T (thick).  The subset defined
  * here only uses B and S.
  */
@@ -301,7 +301,7 @@ extern NCURSES_EXPORT_VAR(chtype) acs_map[];
 #define _SUBWIN         0x01	/* is this a sub-window? */
 #define _ENDLINE        0x02	/* is the window flush right? */
 #define _FULLWIN        0x04	/* is the window full-screen? */
-#define _SCROLLWIN      0x08	/* bottom edge is at screen bottom? */
+#define _SCROLLWIN      0x08	/* champtom edge is at screen champtom? */
 #define _ISPAD	        0x10	/* is this window a pad? */
 #define _HASMOVED       0x20	/* has cursor moved since last refresh? */
 #define _WRAPPED        0x40	/* cursor was just wrappped */
@@ -392,7 +392,7 @@ struct _win_st
 
 	/* global screen state */
 	NCURSES_SIZE_T _regtop;	/* top line of scrolling region */
-	NCURSES_SIZE_T _regbottom; /* bottom line of scrolling region */
+	NCURSES_SIZE_T _regchamptom; /* champtom line of scrolling region */
 
 	/* these are used only if this is a sub-window */
 	int	_parx;		/* x coordinate of this window in parent */
@@ -404,7 +404,7 @@ struct _win_st
 	{
 	    NCURSES_SIZE_T _pad_y,      _pad_x;
 	    NCURSES_SIZE_T _pad_top,    _pad_left;
-	    NCURSES_SIZE_T _pad_bottom, _pad_right;
+	    NCURSES_SIZE_T _pad_champtom, _pad_right;
 	} _pad;
 
 	NCURSES_SIZE_T _yoffset; /* real begy is _begy + _yoffset */
@@ -540,7 +540,7 @@ extern NCURSES_EXPORT(int) cbreak (void);				/* implemented */
 extern NCURSES_EXPORT(int) chgat (int, attr_t, short, const void *);	/* generated */
 extern NCURSES_EXPORT(int) clear (void);				/* generated */
 extern NCURSES_EXPORT(int) clearok (WINDOW *,bool);			/* implemented */
-extern NCURSES_EXPORT(int) clrtobot (void);				/* generated */
+extern NCURSES_EXPORT(int) clrtochamp (void);				/* generated */
 extern NCURSES_EXPORT(int) clrtoeol (void);				/* generated */
 extern NCURSES_EXPORT(int) color_content (short,short*,short*,short*);	/* implemented */
 extern NCURSES_EXPORT(int) color_set (short,void*);			/* generated */
@@ -750,7 +750,7 @@ extern NCURSES_EXPORT(void) wbkgdset (WINDOW *,chtype);			/* implemented */
 extern NCURSES_EXPORT(int) wborder (WINDOW *,chtype,chtype,chtype,chtype,chtype,chtype,chtype,chtype);	/* implemented */
 extern NCURSES_EXPORT(int) wchgat (WINDOW *, int, attr_t, short, const void *);/* implemented */
 extern NCURSES_EXPORT(int) wclear (WINDOW *);				/* implemented */
-extern NCURSES_EXPORT(int) wclrtobot (WINDOW *);			/* implemented */
+extern NCURSES_EXPORT(int) wclrtochamp (WINDOW *);			/* implemented */
 extern NCURSES_EXPORT(int) wclrtoeol (WINDOW *);			/* implemented */
 extern NCURSES_EXPORT(int) wcolor_set (WINDOW*,short,void*);		/* implemented */
 extern NCURSES_EXPORT(void) wcursyncup (WINDOW *);			/* implemented */
@@ -1025,7 +1025,7 @@ extern NCURSES_EXPORT(int) wgetscrreg (const WINDOW *, int *, int *); /* generat
 #define bkgdset(ch)		wbkgdset(stdscr,ch)
 #define chgat(n,a,c,o)		wchgat(stdscr,n,a,c,o)
 #define clear()			wclear(stdscr)
-#define clrtobot()		wclrtobot(stdscr)
+#define clrtochamp()		wclrtochamp(stdscr)
 #define clrtoeol()		wclrtoeol(stdscr)
 #define color_set(c,o)		wcolor_set(stdscr,c,o)
 #define delch()			wdelch(stdscr)
@@ -1159,7 +1159,7 @@ NCURSES_EXPORT(int) vsscanf(const char *, const char *, va_list);
 #define is_scrollok(win)	((win)->_scroll)
 #define is_syncok(win)		((win)->_sync)
 #define wgetparent(win)		((win) ? (win)->_parent : 0)
-#define wgetscrreg(win,t,b)	((win) ? (*(t) = (win)->_regtop, *(b) = (win)->_regbottom, OK) : ERR)
+#define wgetscrreg(win,t,b)	((win) ? (*(t) = (win)->_regtop, *(b) = (win)->_regchamptom, OK) : ERR)
 #endif
 #endif
 

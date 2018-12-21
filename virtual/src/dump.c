@@ -7,13 +7,13 @@ char			*pull_out_champs_info(t_corewar *core)
 
 	counter = 0;
 	temp = ft_strdup("Introducing contestants...\n");
-	while (counter < core->qua_bots)
+	while (counter < core->qua_champs)
 	{
 		temp = ft_multjoinfr(13, NULL, temp, "* Player ", NULL,
 							 ft_itoa(counter + 1), ", weighing ", NULL,
-							 ft_itoa(core->bots[counter].size), " bytes, \"",
-							 core->bots[counter].name, "\" (\"",
-							 core->bots[counter].comment, "\") !\n");
+							 ft_itoa(core->champs[counter].size), " bytes, \"",
+							 core->champs[counter].name, "\" (\"",
+							 core->champs[counter].comment, "\") !\n");
 		counter++;
 	}
 	return (temp);

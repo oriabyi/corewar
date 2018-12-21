@@ -57,25 +57,25 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 	return (check_code);
 }
 
-void					logical_operations(t_field *field, t_bot *bot)
+void					logical_operations(t_field *field, t_carriage *carriage, unsigned char argument)
 {
-	int 			argument;
+//	int 			argument;
 	unsigned 		first_arg;
 	unsigned 		second_arg;
 	unsigned 		third_arg;
 
-	argument = get_argument(field, bot, 1);
+//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
 	{
 		return ;
 	}
-	first_arg = (unsigned)get_arguments(field, bot, argument, FIRST_ARG);
-	second_arg = (unsigned)get_arguments(field, bot, argument, SECOND_ARG);
-	third_arg = (unsigned)get_arguments(field, bot, argument, THIRD_ARG);
+	first_arg = (unsigned)get_arguments(field, argument, FIRST_ARG, carriage);
+	second_arg = (unsigned)get_arguments(field, argument, SECOND_ARG, carriage);
+	third_arg = (unsigned)get_arguments(field, argument, THIRD_ARG, carriage);
 
 	if (check_type_arguments(argument, T_REG, 3, 0, first_arg, 1, second_arg, 2, third_arg) == 1)
 		return ;
 
 	REG[third_arg] = which_operation_needs(first_arg, second_arg, COMMAND);
-	change_carry_if_need(bot, third_arg);
+	change_carry_if_need(third_arg, carriage);
 }

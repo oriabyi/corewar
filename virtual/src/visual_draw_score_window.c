@@ -43,11 +43,11 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 
 	i = 0;
-	while(i < core->qua_bots)
+	while(i < core->qua_champs)
 	{
 		mvwprintw(core->ncur.score_window, 12 + i + (i * 6), 1, "Player%d: ", i);
 		simple_print(core->ncur.score_window, i + 1);
-		wprintw(core->ncur.score_window, "%s\n", core->bots[i].name);
+		wprintw(core->ncur.score_window, "%s\n", core->champs[i].name);
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 		wprintw(core->ncur.score_window, "   Last live : 0\n");
 		wprintw(core->ncur.score_window, "   Lives in current period : 0\n");
@@ -70,10 +70,10 @@ void 			draw_score_window(t_corewar *core, int cycle)
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 
 	/// Bot id field
-	if (core->ncur.current_field ==  core->ncur.bot_id)
+	if (core->ncur.current_field ==  core->ncur.champ_id)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
-	mvwprintw(core->ncur.score_window, i + 46, 3, "Type bot id : %s", core->ncur.bot_id);
-	if (core->ncur.current_field ==  core->ncur.bot_id)
+	mvwprintw(core->ncur.score_window, i + 46, 3, "Type champ id : %s", core->ncur.champ_id);
+	if (core->ncur.current_field ==  core->ncur.champ_id)
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 
 	/// Carriage field
@@ -85,29 +85,29 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 
 
-	// TODO:	Start the game
+	// TODO:	Start the war
 
-	// TODO:	Hello Oriabyi, let's play the game.
+	// TODO:	Hello Oriabyi, let's play the war.
 	//  		Here you can see the code, it's amazing isn't it?
 	//			Your task is to fix the cycle of printing registers
 	// 			goto:    /// printing registers
 	//			And print your fucking carriages in the right format!
-	//			ps: check by the way whether I choose the carriage from the bot
+	//			ps: check by the way whether I choose the carriage from the champ
 
-	/// getting bot id from input field
+	/// getting champ id from input field
 
-	int bot_id = ft_atoi(core->ncur.bot_id);
+	int champ_id = ft_atoi(core->ncur.champ_id);
 
-	if (bot_id)
+	if (champ_id)
 
-		/// is valid bot
+		/// is valid champ
 
-		if (bot_id <= core->qua_bots)
+		if (champ_id <= core->qua_champs)
 		{
-			/// printing bot id and bot name
-			mvwprintw(core->ncur.score_window, i + 49, 3, "bot %d with name: ", bot_id);
-			simple_print(core->ncur.score_window, bot_id);
-			wprintw(core->ncur.score_window, "%s", core->bots[bot_id - 1].name);
+			/// printing champ id and champ name
+			mvwprintw(core->ncur.score_window, i + 49, 3, "champ %d with name: ", champ_id);
+			simple_print(core->ncur.score_window, champ_id);
+			wprintw(core->ncur.score_window, "%s", core->champs[champ_id - 1].name);
 			wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WHITE_BLACK));
 
 			/// getting carriage id from input field
@@ -121,7 +121,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 				t_carriage *tmp_carr;
 
 				/// finding carriage by id
-				tmp_carr = core->bots[bot_id - 1].carriage;
+				tmp_carr = core->champs[champ_id - 1].carriage;
 				while (tmp_carr && tmp_carr->id != carriage_id)
 					tmp_carr = tmp_carr->next;
 
@@ -160,9 +160,9 @@ void 			draw_score_window(t_corewar *core, int cycle)
 				mvwprintw(core->ncur.score_window, i + 50, 3, "Type carriage id!");
 		}
 		else
-			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d bots!", core->qua_bots);
+			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d champs!", core->qua_champs);
 	else
-		mvwprintw(core->ncur.score_window, i + 49, 3, "Type bot id!");
+		mvwprintw(core->ncur.score_window, i + 49, 3, "Type champ id!");
 
 
 

@@ -1,6 +1,7 @@
 #include "../includes/corewar_header.h"
 
-int 	jump_if_carry_instruct(t_field *field, t_bot *bot)
+int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage,
+							  unsigned id)
 {
 	int 	jump;
 
@@ -8,8 +9,8 @@ int 	jump_if_carry_instruct(t_field *field, t_bot *bot)
 	{
 		return (1);
 	}
-	jump = (short)get_arguments(field, bot, 0x80, FIRST_ARG);
-	move_carriage(field, bot, jump, NOT_OWN);
+	jump = (short)get_arguments(field, 0x80, FIRST_ARG, carriage);
+	move_carriage(field, id, jump, NOT_OWN, carriage);
 	denote_field(field, CUR_COORD);
 	return (0);
 }

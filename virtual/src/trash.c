@@ -1,7 +1,7 @@
 #include "../includes/corewar_header.h"
 
 
-int 			get_cycles(t_bot *bot)
+int 			get_cycles(t_carriage *carriage)
 {
 	if (COMMAND == CW_LIVE)
 		return (CW_LIVE_CYCLES);
@@ -62,23 +62,23 @@ int			get_codage(unsigned command)
 
 void					get_old_owner(t_field *field, int coord)
 {
-	field[coord].bot_id = field[coord].old_owner;
+	field[coord].champ_id = field[coord].old_owner;
 }
 
 
 void					fill_old_owner(t_field *field, int coord)
 {
-	field[coord].old_owner = field[coord].bot_id;
+	field[coord].old_owner = field[coord].champ_id;
 }
 
 void 					 denote_field(t_field *field, int coord)
 {
 	fill_old_owner(field, coord);
 	if (field[coord].hex[0] == '0' && field[coord].hex[1] == '1')
-		field[coord].bot_id =
-				get_id_of_bot(field[coord].bot_id) + DENOTE_ALIVE;
+		field[coord].champ_id =
+				get_id_of_champ(field[coord].champ_id) + DENOTE_ALIVE;
 	else
-		field[coord].bot_id =
-				get_id_of_bot(field[coord].bot_id) + DENOTE_CARRIAGE;
+		field[coord].champ_id =
+				get_id_of_champ(field[coord].champ_id) + DENOTE_CARRIAGE;
 }
 

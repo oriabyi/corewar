@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-ssize_t			get_arguments(t_field *field, t_bot *bot, int argument, int number)
+ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage)
 {
 	ssize_t 	parameter;
 	int			bytes;
@@ -21,21 +21,21 @@ ssize_t			get_arguments(t_field *field, t_bot *bot, int argument, int number)
 
 	if (argument == T_REG)
 	{
-		parameter = get_argument(field, bot, 1 + codage + fishka(main_arg, number, bytes)) - 1;
+		parameter = get_argument(field, CUR_COORD + 1 + codage + fishka(main_arg, number, bytes)) - 1;
 		return ((unsigned char)parameter);
 	}
 	else if (argument ==  GET_T_IND_ARG(T_IND))
 	{
-		pos = (short)get_dir(field, bot, 1 + codage + fishka(main_arg, number, bytes), TWO_BYTES);
+		pos = (short)get_dir(field, 1 + codage + fishka(main_arg, number, bytes), TWO_BYTES, carriage);
 		pos %= IDX_MOD;
 
-		parameter = (unsigned)get_dir(field, bot, fishka(main_arg, number, bytes) + pos, FOUR_BYTES);
+		parameter = (unsigned)get_dir(field, fishka(main_arg, number, bytes) + pos, FOUR_BYTES, carriage);
 
 		return ((unsigned)parameter);
 	}
 	else if (argument == T_DIR)
 	{
-		parameter = get_dir(field, bot, 1 + codage + fishka(main_arg, number, bytes), bytes);
+		parameter = get_dir(field, 1 + codage + fishka(main_arg, number, bytes), bytes, carriage);
 		if (bytes == 2)
 			parameter = (short)parameter;
 		else
@@ -45,7 +45,7 @@ ssize_t			get_arguments(t_field *field, t_bot *bot, int argument, int number)
 	return (0);
 }
 
-ssize_t 		get_dir(t_field *field, t_bot *bot, int handicap, int bytes)
+ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage) // swap to CUR_CORD  + handicap
 {
 	int 		temp_bytes;
 	char 		*temp;

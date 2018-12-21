@@ -1,20 +1,20 @@
 #include "../includes/corewar_header.h"
 
 
-int					get_bot(t_bot *bot, char *botfilename, unsigned number)
+int					get_champ(t_champ *champ, char *champfilename, unsigned number)
 {
 	int				fd;
 
-	bot->id = number;
+	champ->id = number;
 
-	if ((fd = open(botfilename, O_RDONLY)) < 0)
+	if ((fd = open(champfilename, O_RDONLY)) < 0)
 		return (BAD_ARGUMENTS);
 	if (get_num_by_octet_bytes(fd) != COREWAR_EXEC_MAGIC)
 		return (WRONG_MAGIC_VALUE);
-	bot->name = get_name(fd);
-	bot->size = (unsigned)get_size(fd);
-	bot->comment = get_comment(fd);
-	get_exec_code(fd, bot->size, &bot->exec_code);
+	champ->name = get_name(fd);
+	champ->size = (unsigned)get_size(fd);
+	champ->comment = get_comment(fd);
+	get_exec_code(fd, champ->size, &champ->exec_code);
 	close(fd);
 	return (0);
 }
@@ -26,33 +26,33 @@ t_carriage 				*create_carriage(int id)
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
 	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, 0, NULL};
+									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, NULL};
 	return (carriage);
 }
 
 
-int 				create_bots(t_bot **bots)
+int 				create_champs(t_champ **champs)
 {
 	int 			counter;
 
 	counter = 0;
-	if (!(*bots = (t_bot *)malloc(sizeof(t_bot) * O_BOTS)))
+	if (!(*champs = (t_champ *)malloc(sizeof(t_champ) * O_BOTS)))
 		return (MEMORY_ERROR);
 	while (counter < O_BOTS)
 	{
-		(*bots)[counter] = (t_bot){NULL, NULL, NULL, 0, 0, 0, 0, NULL};
+		(*champs)[counter] = (t_champ){NULL, NULL, NULL, 0, 0, 0, 0, NULL};
 		counter++;
 	}
 	return (0);
 }
 
 
-unsigned 			find_free_space(t_bot *bots)
+unsigned 			find_free_space(t_champ *champs)
 {
 	unsigned 			counter;
 	int 			ids[O_BOTS];
 
-	if (bots == NULL)
+	if (champs == NULL)
 		return (0);
 	counter = 0;
 	while (counter < O_BOTS)
@@ -60,8 +60,8 @@ unsigned 			find_free_space(t_bot *bots)
 	counter = 0;
 	while (counter < O_BOTS)
 	{
-		if (bots[counter].id != 0)
-			ids[bots[counter].id - 1] = 1;
+		if (champs[counter].id != 0)
+			ids[champs[counter].id - 1] = 1;
 		counter++;
 	}
 	counter = 0;
@@ -74,28 +74,28 @@ unsigned 			find_free_space(t_bot *bots)
 	return (counter);
 }
 
-int 				fill_bot_by_himself(t_bot *bot, int id)
+int 				fill_champ_by_himself(t_champ *champ, int id)
 {
-	(bot)->carriage = create_carriage(id);
-	(bot)->fd =
+	(champ)->carriage = create_carriage(id);
+	(champ)->fd =
 			open("/Users/ariabyi/CLionProjects/Corewar/test.txt", O_WRONLY);
-	(bot)->quant_carriages++;
+	(champ)->quant_carriages++;
 	return (0);
 }
 
-void 				fill_bots(t_bot **bot, int qua_bots)
+void 				fill_champs(t_champ **champ, int qua_champs)
 {
 	int 			counter;
 
 	counter = 0;
-	while (counter < qua_bots)
+	while (counter < qua_champs)
 	{
-		fill_bot_by_himself(&((*bot)[counter]), (*bot)[counter].id);
+		fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id);
 		counter++;
 	}
 }
 
-void 				swap_bots_id(t_bot *first, t_bot *second)
+void 				swap_champs_id(t_champ *first, t_champ *second)
 {
 	unsigned		temp;
 
@@ -104,51 +104,51 @@ void 				swap_bots_id(t_bot *first, t_bot *second)
 	second->id = temp;
 }
 
-void 				swap_bots(t_bot *first, t_bot *second, int code)
+void 				swap_champs(t_champ *first, t_champ *second, int code)
 {
-	t_bot			temp;
+	t_champ			temp;
 
 	temp = *first;
 	*first = *second;
 	*second = temp;
 	if (code == SWAP_ID)
-		swap_bots_id(first, second);
+		swap_champs_id(first, second);
 }
 
 
 
 
-void 				reverse_bots(t_bot **bot, int qua_bots)
+void 				reverse_champs(t_champ **champ, int qua_champs)
 {
 
-	if (qua_bots == 1)
+	if (qua_champs == 1)
 		return ;
-	else if (qua_bots == 2)
+	else if (qua_champs == 2)
 	{
-		swap_bots(&((*bot)[0]), &((*bot)[1]), SWAP_ID);
+		swap_champs(&((*champ)[0]), &((*champ)[1]), SWAP_ID);
 	}
-	else if (qua_bots == 3)
+	else if (qua_champs == 3)
 	{
-		swap_bots(&((*bot)[0]), &((*bot)[2]), SWAP_ID);
+		swap_champs(&((*champ)[0]), &((*champ)[2]), SWAP_ID);
 	}
-	else if (qua_bots == 4)
+	else if (qua_champs == 4)
 	{
-		swap_bots(&((*bot)[0]), &((*bot)[3]), SWAP_ID);
-		swap_bots(&((*bot)[1]), &((*bot)[2]), SWAP_ID);
+		swap_champs(&((*champ)[0]), &((*champ)[3]), SWAP_ID);
+		swap_champs(&((*champ)[1]), &((*champ)[2]), SWAP_ID);
 	}
 }
 
 
-void 				sort_bots(t_bot **bot, int qua_bots)
+void 				sort_champs(t_champ **champ, int qua_champs)
 {
 	int 			counter;
 
 	counter = 0;
-	while (counter + 1 < qua_bots)
+	while (counter + 1 < qua_champs)
 	{
-		if ((*bot)[counter].id > (*bot)[counter + 1].id)
+		if ((*champ)[counter].id > (*champ)[counter + 1].id)
 		{
-			swap_bots(&((*bot)[counter]), &((*bot)[counter + 1]), DO_NOT_SWAP_ID);
+			swap_champs(&((*champ)[counter]), &((*champ)[counter + 1]), DO_NOT_SWAP_ID);
 			counter = 0;
 		}
 		else
@@ -156,38 +156,38 @@ void 				sort_bots(t_bot **bot, int qua_bots)
 	}
 }
 
-int 				get_bots_info(t_corewar *core, char **av, int *counter)
+int 				get_champs_info(t_corewar *core, char **av, int *counter)
 {
-	unsigned 		bot_id;
+	unsigned 		champ_id;
 	int 			check_code;
-	int 			bots;
+	int 			champs;
 
-	bots = 0;
+	champs = 0;
 	check_code = 0;
-	while (av[(*counter)] && check_code == 0 && ++bots <= O_BOTS)
+	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
 	{
 		if (*(av[(*counter)]) == '-')
 		{
-			bot_id = (unsigned)ft_atoi(av[(*counter) + 1]);
-			if (bot_id < 1 || bot_id > 4 || core->bots[bot_id].id != 0 ||
-				ft_pwrbase(bot_id, 10) != ft_strlen(av[(*counter) + 1]))
+			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
+			if (champ_id < 1 || champ_id > 4 || core->champs[champ_id].id != 0 ||
+				ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
 				return (ERROR);
 			(*counter) += 2;
-			check_code = get_bot(&(core->bots[core->qua_bots]),
-								 av[(*counter)++], bot_id);
+			check_code = get_champ(&(core->champs[core->qua_champs]),
+								 av[(*counter)++], champ_id);
 		}
 		else
 		{
-			check_code = get_bot(&(core->bots[core->qua_bots]),
-							av[(*counter)++], (find_free_space(core->bots)));
+			check_code = get_champ(&(core->champs[core->qua_champs]),
+							av[(*counter)++], (find_free_space(core->champs)));
 		}
-		core->qua_bots++;
+		core->qua_champs++;
 	}
 	return (check_code);
 }
 
 
-int					get_bots(t_corewar *core, char **av)
+int					get_champs(t_corewar *core, char **av)
 {
 	int				check_code;
 	int				counter;
@@ -203,13 +203,13 @@ int					get_bots(t_corewar *core, char **av)
 	}
 	if (!av[counter])
 		return (BAD_ARGUMENTS);
-	if ((check_code = create_bots(&core->bots)) != 0)
+	if ((check_code = create_champs(&core->champs)) != 0)
 		return (check_code);
-	if (get_bots_info(core, av, &counter) != 0)
+	if (get_champs_info(core, av, &counter) != 0)
 		return (1);
-	fill_bots(&core->bots, core->qua_bots);
-	sort_bots(&core->bots, core->qua_bots);
-	reverse_bots(&core->bots, core->qua_bots);
+	fill_champs(&core->champs, core->qua_champs);
+	sort_champs(&core->champs, core->qua_champs);
+	reverse_champs(&core->champs, core->qua_champs);
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
@@ -219,7 +219,7 @@ int					parse(t_corewar *core, char **av)
 {
 	int				check_code;
 
-	check_code = get_bots(core, av);
+	check_code = get_champs(core, av);
 	check_correctness(core, check_code);
 
 	return (0);

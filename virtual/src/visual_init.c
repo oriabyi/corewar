@@ -11,7 +11,7 @@ int				visual_init(t_corewar *core)
 	core->ncur.where_pause = 0;
 
 	fill_input_field_with_zeros(core->ncur.cycle_to_go);
-	fill_input_field_with_zeros(core->ncur.bot_id);
+	fill_input_field_with_zeros(core->ncur.champ_id);
 	fill_input_field_with_zeros(core->ncur.carriage_id);
 	core->ncur.current_field = core->ncur.cycle_to_go;
 
@@ -21,6 +21,6 @@ int				visual_init(t_corewar *core)
 		check_correctness(core, check_code);
 
 
-	fill_memory_space(core->bots, core->field, core->qua_bots);
+	fill_memory_space(core->champs, core->field, core->qua_champs);
 	return (0);
 }

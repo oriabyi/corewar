@@ -1,41 +1,41 @@
 #include "../includes/corewar_header.h"
 
-void				fill_memory_space(t_bot *bots, t_field *field, int qua_bots)
+void				fill_memory_space(t_champ *champs, t_field *field, int qua_champs)
 {
 	unsigned 		counter;
-	unsigned 		bot_counter;
-	unsigned 		num_of_bot;
+	unsigned 		champ_counter;
+	unsigned 		num_of_champ;
 	unsigned char	*seq;
 
 	counter = 0;
-	num_of_bot = 0;
-	bot_counter = 0;
+	num_of_champ = 0;
+	champ_counter = 0;
 	seq = (unsigned char *)"0123456789abcdef";
-	while (num_of_bot < qua_bots)
+	while (num_of_champ < qua_champs)
 	{
-		if (counter && counter % (MEM_SIZE / qua_bots) == 0)
+		if (counter && counter % (MEM_SIZE / qua_champs) == 0)
 		{
-			if (++num_of_bot == qua_bots)
+			if (++num_of_champ == qua_champs)
 				break ;
-			bot_counter = 0;
+			champ_counter = 0;
 		}
-		field[counter].val = bots[num_of_bot].exec_code[bot_counter];
+		field[counter].val = champs[num_of_champ].exec_code[champ_counter];
 
-		if (counter < bots[num_of_bot].size + (MEM_SIZE / qua_bots) * num_of_bot)
+		if (counter < champs[num_of_champ].size + (MEM_SIZE / qua_champs) * num_of_champ)
 		{
-			field[counter].bot_id = num_of_bot + COUNTING_FROM_ONE;
-			field[counter].old_owner = field[counter].bot_id;
-			field[counter].hex[0] = seq[bots[num_of_bot].exec_code[bot_counter] / 16];
-			field[counter].hex[1] = seq[bots[num_of_bot].exec_code[bot_counter] % 16];
+			field[counter].champ_id = num_of_champ + COUNTING_FROM_ONE;
+			field[counter].old_owner = field[counter].champ_id;
+			field[counter].hex[0] = seq[champs[num_of_champ].exec_code[champ_counter] / 16];
+			field[counter].hex[1] = seq[champs[num_of_champ].exec_code[champ_counter] % 16];
 		}
-		if (bots[num_of_bot].carriage &&
-		((bots[num_of_bot].carriage->cur_coord == NOT_EXPOSED && num_of_bot) ||
-											(counter == 0 && num_of_bot == 0)))
+		if (champs[num_of_champ].carriage &&
+		((champs[num_of_champ].carriage->cur_coord == NOT_EXPOSED && num_of_champ) ||
+											(counter == 0 && num_of_champ == 0)))
 		{
-			bots[num_of_bot].carriage->cur_coord = counter;
-			field[counter].bot_id = num_of_bot + COUNTING_FROM_ONE + DENOTE_CARRIAGE;
+			champs[num_of_champ].carriage->cur_coord = counter;
+			field[counter].champ_id = num_of_champ + COUNTING_FROM_ONE + DENOTE_CARRIAGE;
 		}
-		bot_counter++;
+		champ_counter++;
 		counter++;
 	}
 }

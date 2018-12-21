@@ -1,15 +1,14 @@
 #include "../includes/corewar_header.h"
 
 
-unsigned char 	 get_argument(t_field *field, t_bot *bot, int num_of_argument)
+unsigned char 	 get_argument(t_field *field, int coord)
 {
-	return ((unsigned char)ft_ahtoi((char *)field[CUR_COORD
-								  + num_of_argument].hex));
+	return ((unsigned char)ft_ahtoi((char *)field[coord].hex));
 }
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, t_bot *bot, int t_reg)
+int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage)
 {
 
 	char **str;
@@ -23,8 +22,10 @@ int 	write_in_field(t_field *field, int coord, t_bot *bot, int t_reg)
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
-		if (!(CR_IS_VIEW_CARRIAGE(field[coord].bot_id))) // denote color
-			field[coord].bot_id = get_id_of_bot(bot->id) + DENOTE_ALTERED;
+		if (!(CR_IS_VIEW_CARRIAGE(field[coord].champ_id))) // denote color
+		{
+			field[coord].champ_id = get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALTERED;
+		}
 		field[coord].time = SHOW_CHANGED_CYCLES;
 		coord++;
 		counter++;
@@ -47,7 +48,7 @@ ssize_t 		correction_coordinates(ssize_t coordinate)
 }
 
 
-int 					get_regs_value(int argument, t_bot *bot, int type, int num, ...)
+int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...)
 {
 	int 				check_code;
 	va_list 			ap;
@@ -72,31 +73,31 @@ int 					get_regs_value(int argument, t_bot *bot, int type, int num, ...)
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_bot *bot)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument)	//label size == 2
 {
-	int 			argument;
+//	int 			argument;
 	ssize_t 		coord;
 	ssize_t		 	first_arg;
 	ssize_t 		second_arg;
 	ssize_t			third_arg;
 
-	argument = get_argument(field, bot, 1);
+//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument,
 			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
 	{
 		return ;
 	}
 
-	first_arg = get_arguments(field, bot, argument, FIRST_ARG);
-	second_arg = get_arguments(field, bot, argument, SECOND_ARG);
-	third_arg = get_arguments(field, bot, argument, THIRD_ARG);
+	first_arg = get_arguments(field, argument, FIRST_ARG, carriage);
+	second_arg = get_arguments(field, argument, SECOND_ARG, carriage);
+	third_arg = get_arguments(field, argument, THIRD_ARG, carriage);
 
-	if (get_regs_value(argument, bot, T_REG, 2, 1, &second_arg, 2, &third_arg) == 1)
+	if (get_regs_value(argument, carriage, T_REG, 2, 1, &second_arg, 2, &third_arg) == 1)
 		return ;
 
 	coord = ((((int)second_arg + (int)third_arg) % IDX_MOD) + CUR_COORD);
 
-	write_in_field(field, (int)coord, bot, (int)first_arg);
+	write_in_field(field, (int)coord, (int)first_arg, carriage);
 }
 
 
