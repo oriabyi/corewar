@@ -88,7 +88,7 @@ void 			choose_instruction(t_field *field, t_bot *bot)
 	{
 		aff_instruct(field, bot);
 	}
-	if (COMMAND != CW_ZJMP || check_jump == 1)
+	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
 		move_carriage(field, bot, (1 + fishka(argument, 3, get_dir_bytes(COMMAND)) + get_codage(COMMAND)), NOT_OWN);
 	}
@@ -108,15 +108,14 @@ void 			get_command(t_field *field, t_bot *bot)
 
 		if (COMMAND == 0)
 		{
-			COMMAND = which_instruction((char *) field[CUR_COORD].hex);
+			COMMAND = which_instruction((char *)(field[CUR_COORD].hex));
 			if (IS_VALID_COMMAND(COMMAND) == true)
 				bot->carriage->cycles = get_cycles(bot);
-
 		}
 		bot->carriage->cycles--;
 		if (bot->carriage->cycles <= 0)
 		{
-			choose_instruction(field, bot); // do i need bot
+			choose_instruction(field, bot);
 			COMMAND = 0;
 			bot->carriage->cycles = 0;
 		}

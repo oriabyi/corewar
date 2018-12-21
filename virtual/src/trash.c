@@ -60,6 +60,10 @@ int			get_codage(unsigned command)
 		return (true);
 }
 
+void					get_old_owner(t_field *field, int coord)
+{
+	field[coord].bot_id = field[coord].old_owner;
+}
 
 
 void					fill_old_owner(t_field *field, int coord)

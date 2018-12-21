@@ -475,6 +475,9 @@ void 					 denote_field(t_field *field, int coord);
 
 
 int 					get_regs_value(int argument, t_bot *bot, int type, int num, ...);
+
+void					get_old_owner(t_field *field, int coord);
+
 #endif
 
 // 4 magic value

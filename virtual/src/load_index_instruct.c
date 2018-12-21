@@ -66,5 +66,5 @@ void 	load_index_instruct(t_field *field, t_bot *bot) // label size == 2
 	REG[third_arg] = (unsigned)write_from_field(field, (int)(coord), FOUR_BYTES);
 
 	if (COMMAND == CW_LLDI)
-		change_carry_if_need(bot, third_arg);
+		change_carry_if_need(bot, (int)third_arg);
 }

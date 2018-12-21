@@ -4,18 +4,18 @@ void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 {
 	if (is_owned == OWN)
 	{
-		field->bot_id = field->old_owner;
+		field->bot_id = get_id_of_bot(field->old_owner);
 		return;
 	}
-	if (field->sum_acts == 0)
-	{
+//	if (field->sum_acts == 0)
+//	{
 		field->bot_id = get_id_of_bot(id);
 		field->old_owner = field->bot_id;
-	}
-	else
-	{
-		field->sum_acts--;
-	}
+//	}
+//	else
+//	{
+//		field->sum_acts--;
+//	}
 }
 
 void 	place_carriage(t_field *field, unsigned id, int is_owned)
@@ -36,12 +36,7 @@ void 	move_carriage(t_field *field, t_bot *bot, int step, int is_owned)
 	remove_carriage(&field[CUR_COORD], bot->id, is_owned);
 	CUR_COORD = (int)correction_coordinates(CUR_COORD + step);
 	place_carriage(&field[CUR_COORD], bot->id, is_owned);
-
-	CUR_COORD = (unsigned)correction_coordinates(CUR_COORD);
-	if (bot->carriage->invalid_reg == true)
-	{
-		bot->carriage->invalid_reg = false;
-	}
+	CUR_COORD = (int)correction_coordinates(CUR_COORD);
 }
 
 
