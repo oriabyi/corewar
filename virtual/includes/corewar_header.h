@@ -153,6 +153,10 @@
 
 # define MEMORY_ERROR				17
 # define BAD_ARGUMENTS				24
+# define TOO_BIG_NUM_FOR_CHAMP		24
+# define MISSING_CHAMP				24
+# define SAME_NUM_FOR_CHAMPS		24
+
 # define WRONG_ARGUMENTS			25
 # define WRONG_MAGIC_VALUE			26
 # define WRONG_PLACE_FOR_FLAGS		27

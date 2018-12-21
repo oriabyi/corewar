@@ -115,30 +115,6 @@ void 				swap_champs(t_champ *first, t_champ *second, int code)
 		swap_champs_id(first, second);
 }
 
-
-
-
-void 				reverse_champs(t_champ **champ, int qua_champs)
-{
-
-	if (qua_champs == 1)
-		return ;
-	else if (qua_champs == 2)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[1]), SWAP_ID);
-	}
-	else if (qua_champs == 3)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[2]), SWAP_ID);
-	}
-	else if (qua_champs == 4)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[3]), SWAP_ID);
-		swap_champs(&((*champ)[1]), &((*champ)[2]), SWAP_ID);
-	}
-}
-
-
 void 				sort_champs(t_champ **champ, int qua_champs)
 {
 	int 			counter;
@@ -168,10 +144,13 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	{
 		if (*(av[(*counter)]) == '-')
 		{
-			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
-			if (champ_id < 1 || champ_id > 4 || core->champs[champ_id].id != 0 ||
-				ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
-				return (ERROR);
+			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
+			if (core->champs[champ_id].id != 0)
+				return (SAME_NUM_FOR_CHAMPS);
+
+			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
+				return (TOO_BIG_NUM_FOR_CHAMP);
+
 			(*counter) += 2;
 			check_code = get_champ(&(core->champs[core->qua_champs]),
 								 av[(*counter)++], champ_id);
@@ -181,6 +160,8 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 			check_code = get_champ(&(core->champs[core->qua_champs]),
 							av[(*counter)++], (find_free_space(core->champs)));
 		}
+//		champ_id = (champ_id < 1 || champ_id > 4) ? champ_id : find_free_space(core->champs);
+
 		core->qua_champs++;
 	}
 	return (check_code);
@@ -202,17 +183,28 @@ int					get_champs(t_corewar *core, char **av)
 		counter++;
 	}
 	if (!av[counter])
-		return (BAD_ARGUMENTS);
+		return (MISSING_CHAMP);
 	if ((check_code = create_champs(&core->champs)) != 0)
 		return (check_code);
 	if (get_champs_info(core, av, &counter) != 0)
 		return (1);
 	fill_champs(&core->champs, core->qua_champs);
 	sort_champs(&core->champs, core->qua_champs);
-	reverse_champs(&core->champs, core->qua_champs);
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
+}
+
+void 				set_zero_bots(t_corewar *core)
+{
+	int 			counter;
+
+	counter = 0;
+	while (counter < O_BOTS)
+	{
+		core->champs[counter] = (t_champ ){NULL, NULL, NULL, 0, 0, 0, 0, 0};
+		counter++;
+	}
 }
 
 int					parse(t_corewar *core, char **av)
@@ -224,3 +216,9 @@ int					parse(t_corewar *core, char **av)
 
 	return (0);
 }
+//-n 4 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
+// -n 2 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
+// -n 1 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
+// -n 3 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
+
+//-n 4 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 3 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 2 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 1 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor

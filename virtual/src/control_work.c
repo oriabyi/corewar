@@ -7,7 +7,7 @@ void				exit_message(t_corewar *core,
 {
 	ft_putendl_fd(error_message, STDERR_FILENO);
 	clean_all(core);
-	system("leaks -q corewar");
+//	system("leaks -q corewar");
 	exit(error_code);
 }
 
