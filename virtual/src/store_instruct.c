@@ -1,15 +1,11 @@
 #include "../includes/corewar_header.h"
 
-void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argument) // label size == 4
+void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argument, unsigned id) // label size == 4
 {
-//	int 		argument;
 	int 		t_reg;
 	ssize_t 	coord;
 	ssize_t 	second_arg;
 
-//	argument = get_argument(field, CUR_COORD + 1);
-	
-	
 	t_reg = (unsigned char)get_arguments(field, argument, FIRST_ARG, carriage);
 	second_arg = (unsigned)get_arguments(field, argument, SECOND_ARG, carriage);
 
@@ -28,7 +24,7 @@ void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argumen
 	{
 		coord = (short)get_dir(field, 2 + fishka(argument, SECOND_ARG, 4), TWO_BYTES, carriage);
 
-		write_in_field(field, (int)(coord + CUR_COORD), t_reg, carriage);
+		write_in_field(field, (int)(coord + CUR_COORD), t_reg, carriage, id);
 //		write_in_field(field, (int)(second_arg % IDX_MOD + CUR_COORD), champ, t_reg); it looks rightly
 	}
 }

@@ -2,11 +2,9 @@
 
 void					load_instruct(t_field *field, t_carriage *carriage, unsigned char argument)
 {
-//	int					argument;
 	ssize_t				first_arg;
 	unsigned char		second_arg;
 
-//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument,
 			(T_DIR | T_IND), T_REG, NONE_ARG) == ERROR)
 	{

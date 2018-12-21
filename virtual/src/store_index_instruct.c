@@ -8,7 +8,8 @@ unsigned char 	 get_argument(t_field *field, int coord)
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage)
+int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
+					  unsigned id)
 {
 
 	char **str;
@@ -24,7 +25,8 @@ int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage)
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
 		if (!(CR_IS_VIEW_CARRIAGE(field[coord].champ_id))) // denote color
 		{
-			field[coord].champ_id = get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALTERED;
+//			field[coord].champ_id = get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALTERED;
+			field[coord].champ_id = get_id_of_champ(id) + DENOTE_ALTERED;
 		}
 		field[coord].time = SHOW_CHANGED_CYCLES;
 		coord++;
@@ -73,15 +75,13 @@ int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, .
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument, unsigned id)	//label size == 2
 {
-//	int 			argument;
 	ssize_t 		coord;
 	ssize_t		 	first_arg;
 	ssize_t 		second_arg;
 	ssize_t			third_arg;
 
-//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument,
 			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
 	{
@@ -97,7 +97,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char a
 
 	coord = ((((int)second_arg + (int)third_arg) % IDX_MOD) + CUR_COORD);
 
-	write_in_field(field, (int)coord, (int)first_arg, carriage);
+	write_in_field(field, (int)coord, (int)first_arg, carriage, id);
 }
 
 

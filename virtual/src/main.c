@@ -13,7 +13,7 @@ void			war(t_corewar *core)
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 15000 && core->cycle_to_die > 0)
+	while (i < 150000 && core->cycle_to_die > 0)
 	{
 		if (F_VISUAL == false && i == F_DUMP)
 		{
