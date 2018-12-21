@@ -7,7 +7,7 @@ unsigned 			get_id_of_champ(unsigned num)
 
 int 			display_windows(t_corewar *core, int cycle)
 {
-	draw_memory_window(core);
+	draw_memory_window(core, cycle);
 	draw_score_window(core, cycle);
 	return (0);
 }
@@ -51,9 +51,10 @@ int				draw(t_corewar *core, int cycle)
 			if (!core->ncur.pause)
 				break;
 		}
-		mvwprintw(core->ncur.score_window, 40, 3, "one way preparing took about %.5f seconds\n",
-				  ((double)core->ncur.tend.tv_sec + 1.0e-9*core->ncur.tend.tv_nsec) -
-				  ((double)core->ncur.tstart.tv_sec + 1.0e-9*core->ncur.tstart.tv_nsec));
+		mvwprintw(core->ncur.score_window, 60, 3, "one way preparing took about %.5f seconds\n",
+													((double)core->ncur.tend.tv_sec + 1.0e-9*core->ncur.tend.tv_nsec) -
+													((double)core->ncur.tstart.tv_sec + 1.0e-9*core->ncur.tstart.tv_nsec));
+		wrefresh(core->ncur.score_window);
 	}
 
 	return (cycle + 1);

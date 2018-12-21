@@ -85,15 +85,6 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 
 
-	// TODO:	Start the war
-
-	// TODO:	Hello Oriabyi, let's play the war.
-	//  		Here you can see the code, it's amazing isn't it?
-	//			Your task is to fix the cycle of printing registers
-	// 			goto:    /// printing registers
-	//			And print your fucking carriages in the right format!
-	//			ps: check by the way whether I choose the carriage from the champ
-
 	/// getting champ id from input field
 
 	int champ_id = ft_atoi(core->ncur.champ_id);
@@ -138,7 +129,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 					/// printing registers
 
-					while (r < 16)
+					while (r < 15)
 					{
 						if (r == 0)
 							wprintw(core->ncur.score_window, "1 |[%. 8x]", r, tmp_carr->registers[r]);
@@ -160,7 +151,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 				mvwprintw(core->ncur.score_window, i + 50, 3, "Type carriage id!");
 		}
 		else
-			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d champs!", core->qua_champs);
+			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d champs! ", core->qua_champs);
 	else
 		mvwprintw(core->ncur.score_window, i + 49, 3, "Type champ id!");
 

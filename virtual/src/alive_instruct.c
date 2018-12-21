@@ -11,7 +11,7 @@ void 	alive_instruct(t_field *field, t_carriage *carriage)
 
 	field[CUR_COORD].champ_id =
 			get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALIVE;
-	field[CUR_COORD].time = SHOW_CHANGED_CYCLES;
+	field[CUR_COORD].altered_cycles = SHOW_CHANGED_CYCLES;
 
 	ALIVE = true;
 }

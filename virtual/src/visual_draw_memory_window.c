@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-void 			draw_memory_window(t_corewar *core)
+void 			draw_memory_window(t_corewar *core, int cycles)
 {
 	int 		i;
 	unsigned	id;
@@ -22,10 +22,14 @@ void 			draw_memory_window(t_corewar *core)
 		else  if (CR_IS_VIEW_ALTERED(core->field[i].champ_id))	// changed
 		{
 			altered_view(core->ncur.memory_window, id);
-			if (core->field[i].time == 0)
+			if (core->field[i].altered_cycles == 0)
 				core->field[i].champ_id = id;
-			else
-				(core->field[i].time)--;
+
+			if (core->field[i].altered_cycles == -1)
+				core->field[i].altered_cycles == SH
+
+			else if (core->field[i].altered_cycles >= cycles)
+				core->field[i].altered_cycles = 0;
 		}
 		else  if (CR_IS_VIEW_ALIVE(core->field[i].champ_id))	//alive
 			alive_view(core->ncur.memory_window, id);
