@@ -59,12 +59,10 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 
 void					logical_operations(t_field *field, t_carriage *carriage, unsigned char argument)
 {
-//	int 			argument;
 	unsigned 		first_arg;
 	unsigned 		second_arg;
 	unsigned 		third_arg;
 
-//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
 	{
 		return ;

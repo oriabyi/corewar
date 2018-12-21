@@ -30,14 +30,12 @@ ssize_t 		write_from_field(t_field *field, int handicap, int bytes)
 
 void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument) // label size == 2
 {
-//	int 		argument;
 	ssize_t 	coord;
 	ssize_t 	first_arg;
 	ssize_t 	second_arg;
 	ssize_t 	third_arg;
 
 	coord = 0;
-//	argument = get_argument(field, CUR_COORD + 1);
 	if (check_instruction_args(argument,
 					(T_REG | T_DIR | T_IND), (T_REG | T_DIR), T_REG) == ERROR)
 	{

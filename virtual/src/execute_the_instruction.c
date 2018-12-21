@@ -54,7 +54,7 @@ void 			choose_instruction(t_field *field, t_carriage *carriage, unsigned id,
 	}
 	else if (COMMAND == CW_ST)	// checked coordinates && t_reg
 	{
-		store_instruct(field, carriage, argument);
+		store_instruct(field, carriage, argument, id);
 	}
 	else if (COMMAND == CW_ADD ||
 			COMMAND == CW_SUB)
@@ -78,7 +78,7 @@ void 			choose_instruction(t_field *field, t_carriage *carriage, unsigned id,
 	}
 	else if (COMMAND == CW_STI)
 	{
-		store_index_instruct(field, carriage, argument);
+		store_index_instruct(field, carriage, argument, id);
 	}
 	else if (COMMAND == CW_FORK ||
 			COMMAND == CW_LFORK)
@@ -87,7 +87,7 @@ void 			choose_instruction(t_field *field, t_carriage *carriage, unsigned id,
 	}
 	else if (COMMAND == CW_AFF)
 	{
-		aff_instruct(field, carriage);
+		aff_instruct(field, carriage, id);
 	}
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{

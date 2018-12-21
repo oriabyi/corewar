@@ -11,17 +11,16 @@
 #define F_VISUAL core->flags.visual
 #define F_DUMP core->flags.dump
 
-#define CUR_COORD		 carriage->cur_coord
+#define CUR_COORD		carriage->cur_coord
 
-#define REG			 carriage->registers
+#define REG				carriage->registers
 
-#define CHAMP_COMMAND		(champ->carriage->command)
-#define COMMAND		 carriage->command
+#define COMMAND		 	carriage->command
 
 #define CARRY			carriage->carry
 #define CYCLES			carriage->cycles
 
-#define ALIVE			 carriage->alive
+#define ALIVE			carriage->alive
 
 
 # define NOT_OWN	0
@@ -36,7 +35,7 @@
 # define NONE_ARG				0
 
 
-# define SHOW_CHANGED_CYCLES		-1
+# define SHOW_CHANGED_CYCLES		750
 
 #define NOT_EXPOSED 				0
 #define COUNTING_FROM_ONE 			1
@@ -289,7 +288,7 @@ typedef struct			s_battlefield
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
 	unsigned			sum_acts:5;
-	unsigned			altered_cycles;
+	unsigned			time;
 	unsigned			old_owner;
 }						t_field;
 
@@ -361,7 +360,7 @@ void 			set_next_field(t_corewar *core);
 void 			set_prev_field(t_corewar *core);
 int 			get_button(t_corewar *core, int cycle);
 void 			draw_score_window(t_corewar *core, int cycle);
-void 			draw_memory_window(t_corewar *core, int cycle);
+void 			draw_memory_window(t_corewar *core);
 void 			init_time(t_corewar *core);
 void 			init_colors(void);
 int 			visual_init(t_corewar *core);
@@ -383,7 +382,7 @@ void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 
 void 	alive_instruct(t_field *field, t_carriage *carriage);
 void 	load_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
-void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
 
 // add and sub operations here
 void 	add_sub_instructs(t_field *field, t_carriage *carriage, unsigned  char argument);
@@ -396,13 +395,13 @@ int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, unsigned id);
 //	LLDI in LDI
 void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
 
 //  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
 									  unsigned *quant_carriages);
 
-void 	aff_instruct(t_field *field, t_carriage *carriage);
+void 	aff_instruct(t_field *field, t_carriage *carriage, unsigned id);
 
 /*
 ** Check carry
@@ -458,7 +457,7 @@ ssize_t		get_arg_reg(t_field *field, t_champ *champ, int *step, ssize_t *get);
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriage);
+int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriage, unsigned id);
 
 //add sub
 unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);

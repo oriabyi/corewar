@@ -6,9 +6,6 @@ void					add_sub_instructs(t_field *field, t_carriage *carriage,
 	unsigned char		third_arg;
 	unsigned char 		second_arg;
 	unsigned char		first_arg;
-//	unsigned char		argument;
-
-//	argument = get_argument(field, CUR_COORD + 1);
 
 	if (check_instruction_args(argument, T_REG, T_REG, T_REG) == ERROR)
 	{
