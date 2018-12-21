@@ -46,7 +46,7 @@ void					ft_print_sequence(int fd, char *str, int size);
 void					ft_print_header(char *file, t_asm *glob);
 void					ft_get_name(t_asm *glob, char **arr, char *line);
 void					ft_get_comment(t_asm *glob, char **arr, char *line);
-void					ft_get_data(char *file);
+void					ft_get_data(char *file, t_asm **glob);
 void					ft_get_two_bits(t_asm *glob, char *arg);
 void					ft_get_four_bits(t_asm *glob, char *arg);
 void					ft_get_prosses(t_asm *glob, char **arr);
@@ -57,5 +57,6 @@ int						ft_put_error(int err, char *str);
 int 					ft_is_label(char *command);
 int						ft_check_extention(char *file);
 int						ft_check_types(char **args, t_op *op);
+int						ft_check_num(char *str);
 t_asm					*ft_init_asm(char *file);
 #endif
