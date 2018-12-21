@@ -13,12 +13,12 @@ void			game(t_corewar *core)
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 15000)
+	while (i < 15000 && core->cycle_to_die > 0)
 	{
 		if (!core->flags.visual && i == core->flags.dump)
 		{
 			print_memory(core);
-			exit_message(core, 0, NULL);
+			break ;
 		}
 		if (i && core->cycle_to_die && i % core->cycle_to_die == 0)
 			core->cycle_to_die = check_cycle_to_die(core);
@@ -61,5 +61,6 @@ int				main(int ac, char **av)
 	parse(&core, av);
 	game(&core);
 	clean_all(&core);
-    return (0);
+//	system("leaks -q corewar");
+	return (0);
 }

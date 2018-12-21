@@ -94,7 +94,7 @@ void 	store_index_instruct(t_field *field, t_bot *bot)	//label size == 2
 	if (get_regs_value(argument, bot, T_REG, 2, 1, &second_arg, 2, &third_arg) == 1)
 		return ;
 
-	coord = (((second_arg + third_arg) % IDX_MOD) + CUR_COORD);
+	coord = ((((int)second_arg + (int)third_arg) % IDX_MOD) + CUR_COORD);
 
 	write_in_field(field, (int)coord, bot, (int)first_arg);
 }

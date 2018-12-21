@@ -7,24 +7,6 @@
 #include "stdio.h"
 #include <time.h>
 
-/* 0-4		simple colors
- * 5-9		carriages
- * 10-14	alive
- * 15-19	altered
-*/
-
-
-
-/* select defines */
-# define ENTER	0xA
-# define ESC	0x1B
-# define SPC	0x20
-# define BKS	0x7F
-# define UP		0x415B1B
-# define DOWN	0x425B1B
-# define LEFT	0x445B1B
-# define RIGHT	0x435B1B
-# define DEL	0x7E335B1B
 
 #define CUR_COORD	(bot->carriage->cur_coord)
 #define REG			(bot->carriage->registers)
@@ -38,19 +20,12 @@
 
 # define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
-/////////////////////////////////////
-
-/*
-**	Obaranni bonus multi bots
-*/
 
 # define O_BOTS					4
 
 
 # define NONE_ARG				0
 
-# define T_DIR_TWO_BYTES		2
-# define T_DIR_FOUR_BYTES		4
 
 # define SHOW_CHANGED_CYCLES		50
 
@@ -64,11 +39,8 @@
 #define THREE_BYTES		3
 #define FOUR_BYTES		4
 
-#define EXIT_COMMAND	0
 
-# define ARGUMENT_OF_PROCESS(x) (x + 1)
 
-#define ignat(x, y, z) if (y == 1 && z == 1) return
 
 
 # define CHECK_REG(x) (x >= 1 && x <= 16)
@@ -82,16 +54,13 @@
 # define GET_THIRD_ARGUMENT(x)		((x >> 2) & 3)
 
 # define GET_T_IND_ARG(x) (x ^ 7)
+
 /*
 ** Bool
 */
+
 # define TRUE	1
 # define FALSE	0
-
-
-#define DIF_BTW_CAR_NOT_CAR		5
-
-
 
 
 
@@ -99,9 +68,6 @@
 
 # define SWAP_ID 1
 # define DO_NOT_SWAP_ID 0
-
-# define IDX_MOD_ON		1
-# define IDX_MOD_OFF	0
 
 
 // colors for delete

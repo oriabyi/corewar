@@ -171,7 +171,7 @@ int 				get_bots_info(t_corewar *core, char **av, int *counter)
 			bot_id = (unsigned)ft_atoi(av[(*counter) + 1]);
 			if (bot_id < 1 || bot_id > 4 || core->bots[bot_id].id != 0 ||
 				ft_pwrbase(bot_id, 10) != ft_strlen(av[(*counter) + 1]))
-				return (ERROR); // replace with good define
+				return (ERROR);
 			(*counter) += 2;
 			check_code = get_bot(&(core->bots[core->qua_bots]),
 								 av[(*counter)++], bot_id);

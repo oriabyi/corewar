@@ -2,7 +2,6 @@
 
 int			vs_counter = 0;
 
-// NORM VISUZUAL
 
 void 			dog_nail_vs(t_corewar *core)
 {

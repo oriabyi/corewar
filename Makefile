@@ -25,14 +25,12 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)parse.c						\
 				$(SRCDIRVIR)treatment_arguments.c		\
 				$(SRCDIRVIR)execute_the_instruction.c 	\
-				$(SRCDIRVIR)instructions.c				\
 				$(SRCDIRVIR)aff_instruct.c 				\
 				$(SRCDIRVIR)alive_instruct.c 			\
 				$(SRCDIRVIR)fork_instruct.c 			\
 				$(SRCDIRVIR)jump_if_carry_instruct.c 	\
 				$(SRCDIRVIR)load_index_instruct.c 		\
 				$(SRCDIRVIR)load_instruct.c 			\
-				$(SRCDIRVIR)long_fork_instruct.c 		\
 				$(SRCDIRVIR)store_index_instruct.c 		\
 				$(SRCDIRVIR)store_instruct.c 			\
 				$(SRCDIRVIR)add_sub_instructions.c      \

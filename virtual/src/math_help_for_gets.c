@@ -33,8 +33,3 @@ int					get_num_by_octet_bytes(int fd)
 	}
 	return (result);
 }
-
-int 				ft_module(int i)
-{
-	return ((i < 0) ? -i : i);
-}

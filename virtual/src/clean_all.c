@@ -19,7 +19,6 @@ void				clean_bots(t_bot *bots, unsigned quantity)
 		free(bots[counter].comment);
 		free(bots[counter].exec_code);
 		clean_carriages(bots[counter].carriage);
-		// free carriages
 		counter++;
 	}
 	free(bots);
@@ -27,7 +26,7 @@ void				clean_bots(t_bot *bots, unsigned quantity)
 
 void				clean_all(t_corewar *core)
 {
-//	clean_bots((core->bots), core->qua_bots);
-//	if (core->field)
-//		free(core->field);
+	clean_bots((core->bots), core->qua_bots);
+	if (core->field)
+		free(core->field);
 }

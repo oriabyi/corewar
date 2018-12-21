@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-int 	check_instruction_arg(int argument, int byte) // rename byte
+int 	check_instruction_arg(int argument, int byte)
 {
 	if (byte == (T_REG | T_DIR | T_IND))
 		return (0);

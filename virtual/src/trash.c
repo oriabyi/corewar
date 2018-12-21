@@ -36,9 +36,7 @@ int 			get_cycles(t_bot *bot)
 	else if (COMMAND == CW_AFF)
 		return (CW_AFF_CYCLES);
 	else
-	{
 		return (NO_INSTRUCTION);
-	}
 }
 
 int 			get_dir_bytes(unsigned command)
@@ -46,29 +44,20 @@ int 			get_dir_bytes(unsigned command)
 	if ((command >= CW_LIVE && command <= CW_XOR) ||
 		command == CW_LLD || command == CW_AFF)
 		return (FOUR_BYTES);
-	else if (command < CW_AFF)
-		return (TWO_BYTES);
 	else
-		return (1); // change return
+		return (TWO_BYTES);
 }
 
 
 int			get_codage(unsigned command)
 {
-	if (command >= CW_LIVE && command <= CW_AFF)
+	if (command == CW_LIVE || command == CW_ZJMP ||
+		command == CW_FORK || command == CW_LFORK)
 	{
-		if (command == CW_LIVE || command == CW_ZJMP ||
-			command == CW_FORK || command == CW_LFORK)
-		{
-			return (false);
-		}
-		else
-			return (true);
+		return (false);
 	}
 	else
-	{
-		return (2);
-	}
+		return (true);
 }
 
 
