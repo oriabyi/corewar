@@ -90,7 +90,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 	int champ_id = ft_atoi(core->ncur.champ_id);
 
 	if (champ_id)
-
+	
 		/// is valid champ
 
 		if (champ_id <= core->qua_champs)

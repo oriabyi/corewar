@@ -35,7 +35,8 @@
 # define NONE_ARG				0
 
 
-# define SHOW_CHANGED_CYCLES		750
+# define ALTERED_FIELD				-1
+# define SHOW_CHANGED_CYCLES		50
 
 #define NOT_EXPOSED 				0
 #define COUNTING_FROM_ONE 			1
@@ -288,7 +289,7 @@ typedef struct			s_battlefield
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
 	unsigned			sum_acts:5;
-	unsigned			time;
+	int					altered_cycles;
 	unsigned			old_owner;
 }						t_field;
 
@@ -360,7 +361,7 @@ void 			set_next_field(t_corewar *core);
 void 			set_prev_field(t_corewar *core);
 int 			get_button(t_corewar *core, int cycle);
 void 			draw_score_window(t_corewar *core, int cycle);
-void 			draw_memory_window(t_corewar *core);
+void 			draw_memory_window(t_corewar *core, int cycle);
 void 			init_time(t_corewar *core);
 void 			init_colors(void);
 int 			visual_init(t_corewar *core);

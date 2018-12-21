@@ -28,7 +28,7 @@ int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
 //			field[coord].champ_id = get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALTERED;
 			field[coord].champ_id = get_id_of_champ(id) + DENOTE_ALTERED;
 		}
-		field[coord].altered_cycles = SHOW_CHANGED_CYCLES;
+		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;
 		counter++;
 	}

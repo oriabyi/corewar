@@ -1,5 +1,7 @@
 #include "../includes/corewar_header.h"
 
+//alive and zjmp
+
 void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 {
 	if (is_owned == OWN)
@@ -7,15 +9,8 @@ void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 		field->champ_id = get_id_of_champ(field->old_owner);
 		return;
 	}
-//	if (field->sum_acts == 0)
-//	{
-		field->champ_id = get_id_of_champ(id);
-		field->old_owner = field->champ_id;
-//	}
-//	else
-//	{
-//		field->sum_acts--;
-//	}
+	field->champ_id = get_id_of_champ(id); // get pure id
+	field->old_owner = field->champ_id;
 }
 
 void 	place_carriage(t_field *field, unsigned id, int is_owned)
@@ -30,6 +25,7 @@ void 	place_carriage(t_field *field, unsigned id, int is_owned)
 		denote_field(field, 0);
 	}
 }
+
 
 void 	move_carriage(t_field *field, unsigned id, int step, int is_owned, t_carriage *carriage)
 {

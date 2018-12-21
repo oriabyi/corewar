@@ -117,28 +117,6 @@ void 				swap_champs(t_champ *first, t_champ *second, int code)
 
 
 
-
-void 				reverse_champs(t_champ **champ, int qua_champs)
-{
-
-	if (qua_champs == 1)
-		return ;
-	else if (qua_champs == 2)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[1]), SWAP_ID);
-	}
-	else if (qua_champs == 3)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[2]), SWAP_ID);
-	}
-	else if (qua_champs == 4)
-	{
-		swap_champs(&((*champ)[0]), &((*champ)[3]), SWAP_ID);
-		swap_champs(&((*champ)[1]), &((*champ)[2]), SWAP_ID);
-	}
-}
-
-
 void 				sort_champs(t_champ **champ, int qua_champs)
 {
 	int 			counter;
@@ -209,7 +187,6 @@ int					get_champs(t_corewar *core, char **av)
 		return (1);
 	fill_champs(&core->champs, core->qua_champs);
 	sort_champs(&core->champs, core->qua_champs);
-	reverse_champs(&core->champs, core->qua_champs);
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
