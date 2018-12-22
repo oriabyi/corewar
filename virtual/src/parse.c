@@ -115,8 +115,6 @@ void 				swap_champs(t_champ *first, t_champ *second, int code)
 		swap_champs_id(first, second);
 }
 
-
-
 void 				sort_champs(t_champ **champ, int qua_champs)
 {
 	int 			counter;
@@ -146,10 +144,13 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	{
 		if (*(av[(*counter)]) == '-')
 		{
-			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
-			if (champ_id < 1 || champ_id > 4 || core->champs[champ_id].id != 0 ||
-				ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
-				return (ERROR);
+			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
+			if (core->champs[champ_id].id != 0)
+				return (SAME_NUM_FOR_CHAMPS);
+
+			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
+				return (TOO_BIG_NUM_FOR_CHAMP);
+
 			(*counter) += 2;
 			check_code = get_champ(&(core->champs[core->qua_champs]),
 								 av[(*counter)++], champ_id);
@@ -180,7 +181,7 @@ int					get_champs(t_corewar *core, char **av)
 		counter++;
 	}
 	if (!av[counter])
-		return (BAD_ARGUMENTS);
+		return (MISSING_CHAMP);
 	if ((check_code = create_champs(&core->champs)) != 0)
 		return (check_code);
 	if (get_champs_info(core, av, &counter) != 0)
@@ -190,6 +191,18 @@ int					get_champs(t_corewar *core, char **av)
 	if (av[counter])
 		return (BAD_ARGUMENTS);
 	return (check_code);
+}
+
+void 				set_zero_bots(t_corewar *core)
+{
+	int 			counter;
+
+	counter = 0;
+	while (counter < O_BOTS)
+	{
+		core->champs[counter] = (t_champ ){NULL, NULL, NULL, 0, 0, 0, 0, 0};
+		counter++;
+	}
 }
 
 int					parse(t_corewar *core, char **av)
