@@ -1,5 +1,19 @@
 #include "../includes/corewar_header.h"
 
+int 			is_anychamp_alive(t_champ *champs, unsigned qua_champs)
+{
+	int 		counter;
+
+	counter = 0;
+	while (counter < qua_champs)
+	{
+		if (champs[counter].carriage)
+			return (1);
+		counter++;
+	}
+	return (0);
+}
+
 void			war(t_corewar *core)
 {
 	unsigned 		i;
@@ -13,7 +27,7 @@ void			war(t_corewar *core)
 		display_windows(core, 1);
 	}
 	i = 1;
-	while (i < 150000 && core->cycle_to_die > 0)
+	while (i < 150000 && core->cycle_to_die > 0 && is_anychamp_alive(core->champs, core->qua_champs))
 	{
 		if (F_VISUAL == false && i == F_DUMP)
 		{

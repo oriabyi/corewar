@@ -6,7 +6,8 @@
 #include "ncurses.h"
 #include "stdio.h"
 #include <time.h>
-
+# include <sys/stat.h>
+# include <sys/types.h>
 
 #define F_VISUAL core->flags.visual
 #define F_DUMP core->flags.dump
@@ -58,7 +59,7 @@
 ** Get arguments // check defines
 */
 
-# define GET_FIRST_ARGUMENT(x)		 (x >> 6)
+# define GET_FIRST_ARGUMENT(x)		(x >> 6)
 # define GET_SECOND_ARGUMENT(x)		((x >> 4) & 3)
 # define GET_THIRD_ARGUMENT(x)		((x >> 2) & 3)
 
@@ -157,10 +158,30 @@
 # define TOO_BIG_NUM_FOR_CHAMP		24
 # define MISSING_CHAMP				24
 # define SAME_NUM_FOR_CHAMPS		24
+# define FILE_DOESNT_EXIST			24
+# define BAD_CHAMP_EXTENSION		25
+# define REDUNDANT_ARGUMENTS		25
+
+# define FILE_IS_REG		0
+
+
+# define BAD_FILE					25
+# define WRONG_FILE_TYPE			25
+# define FILE_IS_PIPE				25
+# define FILE_IS_SPEC_CHAR			25
+# define FILE_IS_DIR				25
+# define FILE_IS_SOCKET				25
+# define FILE_IS_BLOCK				25
+# define NO_RIGHT_FOR_READ			25
+
 
 # define WRONG_ARGUMENTS			25
 # define WRONG_MAGIC_VALUE			26
 # define WRONG_PLACE_FOR_FLAGS		27
+
+# define WRONG_NAME_LENGTH			27
+# define WRONG_CHAMP_SIZE			27
+# define WRONG_COMMENT_LENGTH		27
 
 
 # define NO_INSTRUCTION				0
@@ -262,7 +283,6 @@ typedef struct			s_champ
 	unsigned			id;
 	unsigned			size;
 	unsigned 			quant_carriages;
-	int 				fd;
 //	t_arguments			arg;
 
 	t_carriage			*carriage;
@@ -385,7 +405,7 @@ void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 ** Instructions
 */
 
-void 	alive_instruct(t_field *field, t_carriage *carriage);
+void 	alive_instruct(t_field *field, t_carriage *carriage, int id);
 void 	load_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
 

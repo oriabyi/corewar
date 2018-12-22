@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-void					load_instruct(t_field *field, t_carriage *carriage, unsigned char argument)
+void					load_instruct(t_field *field, t_carriage *carriage, unsigned char argument) // check 0d
 {
 	ssize_t				first_arg;
 	unsigned char		second_arg;
@@ -16,12 +16,6 @@ void					load_instruct(t_field *field, t_carriage *carriage, unsigned char argum
 	if (check_reg(second_arg) == 1)
 	{
 		return ;
-	}
-
-	if (GET_SECOND_ARGUMENT(argument) == GET_T_IND_ARG(T_IND) &&
-			COMMAND == CW_LD)
-	{
-		first_arg %= IDX_MOD;
 	}
 
 	REG[second_arg] = (unsigned)first_arg;
