@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit_spec.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/22 14:48:09 by akondaur          #+#    #+#             */
+/*   Updated: 2018/12/22 14:48:11 by akondaur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static void		ft_suck(int i, int j, char **p, char **arr)
@@ -35,7 +47,7 @@ char			**ft_strsplit_spec(char const *s, char *c, char end)
 	arr = (char **)malloc(sizeof(char *));
 	while (*p && *p != end && !(j = 0))
 	{
-		while (ft_strchr(c, *p))
+		while (*p && ft_strchr(c, *p))
 			p++;
 		if (*p && !ft_strchr(c, *p) && *p != end)
 		{

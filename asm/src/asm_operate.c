@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asm_operate.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/22 14:41:16 by akondaur          #+#    #+#             */
+/*   Updated: 2018/12/22 14:41:19 by akondaur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 t_asm	*ft_init_asm(char *file)
@@ -8,7 +20,7 @@ t_asm	*ft_init_asm(char *file)
 	asb->file = ft_strdup(file);
 	asb->name = NULL;
 	asb->comment = NULL;
-	asb->commands = (char *)malloc(MEM_SIZE);
+	asb->commands = (char *)malloc(CHAMP_MAX_SIZE);
 	asb->size = 0;
 	asb->n_labels = -1;
 	asb->n_mislabels = -1;
@@ -44,7 +56,7 @@ void	ft_connect_labels(t_asm *glob)
 				ft_put_error(10, glob->mislabels[i]->name);
 }
 
-int 	ft_is_label(char *command)
+int		ft_is_label(char *command)
 {
 	int i;
 
