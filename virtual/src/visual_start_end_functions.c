@@ -10,8 +10,8 @@ void 			visual_start(t_corewar *core)
 	keypad(stdscr, true);
 	nodelay(stdscr, true);
 	cbreak();
-	core->ncur.memory_window = newwin(66, 194, 0, 0);
-	core->ncur.score_window = newwin(66, 70, 0, 195);
+	core->ncur.memory_window = newwin(68, 198, 0, 0);
+	core->ncur.score_window = newwin(68, 70, 0, 199);
 	refresh();
 }
 

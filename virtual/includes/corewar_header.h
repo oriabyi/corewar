@@ -438,7 +438,7 @@ void 	change_carry_if_need(int coord, t_carriage *carriage);
 **	Move Carriage
 */
 
-void 	move_carriage(t_field *field, unsigned id, int step, int is_owned, t_carriage *carriage);
+void 	move_carriage(t_field *field, unsigned id, int step, t_carriage *carriage);
 
 
 /*

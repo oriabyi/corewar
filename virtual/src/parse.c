@@ -221,7 +221,6 @@ int 				set_champ_id(t_champ *champ, unsigned id)
 	return (false);
 }
 
-
 int 				get_champs_info(t_corewar *core, char **av, int *counter)
 {
 	unsigned 		champ_id;
@@ -229,28 +228,62 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	int 			champs;
 
 	champs = 0;
-	champ_id = 0;
 	check_code = 0;
 	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
 	{
 		if (*(av[(*counter)]) == '-')
 		{
 			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
-
-			if (get_champ_by_id(core->champs, champ_id))
+			if (core->champs[champ_id].id != 0)
 				return (SAME_NUM_FOR_CHAMPS);
 
 			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
 				return (TOO_BIG_NUM_FOR_CHAMP);
+
 			(*counter) += 2;
+			check_code = get_champ(&(core->champs[core->qua_champs]),
+								   av[(*counter)++], champ_id);
 		}
-		champ_id = (champ_id >= 1 && champ_id <= 4) ? champ_id : find_free_space(core->champs);
-		check_code = get_champ(&(core->champs[core->qua_champs]),
-							   av[(*counter)++], champ_id);
+		else
+		{
+			check_code = get_champ(&(core->champs[core->qua_champs]),
+								   av[(*counter)++], (find_free_space(core->champs)));
+		}
 		core->qua_champs++;
 	}
 	return (check_code);
 }
+
+
+//int 				get_champs_info(t_corewar *core, char **av, int *counter)
+//{
+//	unsigned 		champ_id;
+//	int 			check_code;
+//	int 			champs;
+//
+//	champs = 0;
+//	champ_id = 0;
+//	check_code = 0;
+//	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
+//	{
+//		if (*(av[(*counter)]) == '-')
+//		{
+//			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
+//
+//			if (get_champ_by_id(core->champs, champ_id))
+//				return (SAME_NUM_FOR_CHAMPS);
+//
+//			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
+//				return (TOO_BIG_NUM_FOR_CHAMP);
+//			(*counter) += 2;
+//		}
+//		champ_id = (champ_id >= 1 && champ_id <= 4) ? champ_id : find_free_space(core->champs);
+//		check_code = get_champ(&(core->champs[core->qua_champs]),
+//							   av[(*counter)++], champ_id);
+//		core->qua_champs++;
+//	}
+//	return (check_code);
+//}
 
 int					get_champs(t_corewar *core, char **av)
 {
