@@ -58,7 +58,7 @@
 ** Get arguments // check defines
 */
 
-# define GET_FIRST_ARGUMENT(x)		(x >> 6)
+# define GET_FIRST_ARGUMENT(x)		 (x >> 6)
 # define GET_SECOND_ARGUMENT(x)		((x >> 4) & 3)
 # define GET_THIRD_ARGUMENT(x)		((x >> 2) & 3)
 

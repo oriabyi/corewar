@@ -7,10 +7,16 @@ void 	remove_carriage(t_field *field, unsigned id, int is_owned)
 	if (is_owned == OWN)
 	{
 		field->champ_id = get_id_of_champ(field->old_owner);
+		if (field->altered_cycles == ALTERED_FIELD || field->altered_cycles > 0)
+			field->champ_id = get_id_of_champ(field->champ_id) + DENOTE_ALTERED;
 		return;
 	}
-	field->champ_id = get_id_of_champ(id); // get pure id
-	field->old_owner = field->champ_id;
+
+//	if (field->altered_cycles > 0)
+//		field->champ_id = get_id_of_champ(field->champ_id) + DENOTE_ALTERED;
+//	field->champ_id = get_id_of_champ(id); // get pure id
+//
+//	field->old_owner = field->champ_id;
 }
 
 void 	place_carriage(t_field *field, unsigned id, int is_owned)

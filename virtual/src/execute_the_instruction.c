@@ -70,7 +70,7 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
 		move_carriage(field, id, (1 + fishka(argument, 3,
-			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), NOT_OWN, carriage);
+			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), OWN, carriage);
 	}
 }
 

@@ -45,7 +45,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 	i = 0;
 	while(i < core->qua_champs)
 	{
-		mvwprintw(core->ncur.score_window, 12 + i + (i * 6), 1, "Player%d: ", i);
+		mvwprintw(core->ncur.score_window, 12 + i + (i * 6), 1, "Player %d: ", i + 1);
 		simple_print(core->ncur.score_window, i + 1);
 		wprintw(core->ncur.score_window, "%s\n", core->champs[i].name);
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
@@ -90,7 +90,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 	int champ_id = ft_atoi(core->ncur.champ_id);
 
 	if (champ_id)
-	
+
 		/// is valid champ
 
 		if (champ_id <= core->qua_champs)

@@ -78,7 +78,14 @@ void 					 denote_field(t_field *field, int coord)
 		field[coord].champ_id =
 				get_id_of_champ(field[coord].champ_id) + DENOTE_ALIVE;
 	else
+	{
+//		if (CR_IS_VIEW_CARRIAGE(field[coord].champ_id))
+//			field[coord].old_owner = get_id_of_champ(id);
+//		else
+//			field[coord].champ_id = get_id_of_champ(id) + DENOTE_ALTERED;
 		field[coord].champ_id =
 				get_id_of_champ(field[coord].champ_id) + DENOTE_CARRIAGE;
+	}
+
 }
 
