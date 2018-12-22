@@ -27,7 +27,9 @@ ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *ca
 	else if (argument ==  GET_T_IND_ARG(T_IND))
 	{
 		pos = (short)get_dir(field, 1 + codage + fishka(main_arg, number, bytes), TWO_BYTES, carriage);
-		pos %= IDX_MOD;
+		if (COMMAND != CW_LLD)
+			pos %= IDX_MOD;
+
 
 		parameter = (unsigned)get_dir(field, fishka(main_arg, number, bytes) + pos, FOUR_BYTES, carriage);
 
@@ -54,11 +56,12 @@ ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage)
 	result = 0;
 	temp = NULL;
 	temp_bytes = bytes;
+	handicap += CUR_COORD;
 	while (temp_bytes--)
 	{
 		handicap = (int)correction_coordinates(handicap);
 		temp = ft_multjoinfr(3, NULL, temp,
-							 (char *)field[CUR_COORD + handicap].hex);
+							 (char *)field[handicap].hex);
 		handicap++;
 	}
 	if (bytes == ONE_BYTE)
@@ -67,7 +70,6 @@ ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage)
 		result = (short)ft_ahtoi(temp);
 	else if (bytes == FOUR_BYTES)
 		result = ft_ahtoi(temp);
-
 	free(temp);
 	return (result);
 }

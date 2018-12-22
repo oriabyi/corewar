@@ -30,7 +30,7 @@ void						list_of_instructions(t_field *field,
 										unsigned char argument)
 {
 	if (COMMAND == CW_LIVE)
-		alive_instruct(field, carriage);
+		alive_instruct(field, carriage, id);
 	else if (COMMAND == CW_LD || COMMAND == CW_LLD) //well
 		load_instruct(field, carriage, argument); //check with T_IND
 	else if (COMMAND == CW_ST)	// checked coordinates && t_reg
@@ -77,13 +77,10 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 
 void 			get_command(t_field *field, t_champ *champ)
 {
-	t_carriage	*head;
 	t_carriage	*carriage;
 
-
 	carriage = champ->carriage;
-	head = champ->carriage;
-	while (champ->carriage)
+	while (carriage)
 	{
 		if (COMMAND == 0)
 		{
@@ -91,18 +88,16 @@ void 			get_command(t_field *field, t_champ *champ)
 			if (IS_VALID_COMMAND(COMMAND) == true)
 				CYCLES = get_cycles(carriage);
 		}
-		(champ->CYCLES)--;
+		(CYCLES)--;
 		if (CYCLES <= 0)
 		{
 			choose_instruction(field, carriage, champ->id, &champ->quant_carriages);
 			COMMAND = 0;
 			CYCLES = 0;
 		}
-		champ->carriage = champ->carriage->next;
-		carriage = champ->carriage;
+		carriage = carriage->next;
 	}
 
-	champ->carriage = head;
 }
 
 void 			do_process(t_corewar *core, int qua_champs)

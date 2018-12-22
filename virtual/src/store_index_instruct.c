@@ -3,6 +3,7 @@
 
 unsigned char 	 get_argument(t_field *field, int coord)
 {
+	coord = (int)correction_coordinates(coord);
 	return ((unsigned char)ft_ahtoi((char *)field[coord].hex));
 }
 
@@ -95,7 +96,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char a
 	if (get_regs_value(argument, carriage, T_REG, 2, 1, &second_arg, 2, &third_arg) == 1)
 		return ;
 
-	coord = ((((int)second_arg + (int)third_arg) % IDX_MOD) + CUR_COORD);
+	coord = (((short)(second_arg + third_arg) % IDX_MOD) + CUR_COORD);
 
 	write_in_field(field, (int)coord, (int)first_arg, carriage, id);
 }
