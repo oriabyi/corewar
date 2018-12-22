@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asm_print.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/22 14:42:14 by akondaur          #+#    #+#             */
+/*   Updated: 2018/12/22 14:42:16 by akondaur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	ft_print_int(int fd, int n)
@@ -22,14 +34,14 @@ void	ft_print_sequence(int fd, char *str, int size)
 		write(fd, "\0", 1);
 }
 
-void 	ft_print_header(char *file, t_asm *glob)
+void	ft_print_header(char *file, t_asm *glob)
 {
-	int				fd;
-	char 			*new_file;
+	int		fd;
+	char	*new_file;
 
 	file[ft_strlen(file) - 2] = '\0';
 	new_file = ft_strjoin(file, ".cor");
-	if ((fd = open(new_file, O_WRONLY | O_CREAT)) != -1)
+	if ((fd = open(new_file, O_RDWR | O_CREAT)) != -1)
 	{
 		ft_print_int(fd, COREWAR_EXEC_MAGIC);
 		ft_print_sequence(fd, glob->name, PROG_NAME_LENGTH);

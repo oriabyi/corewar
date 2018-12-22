@@ -192,5 +192,5 @@ void					ft_free_arr(char **arr);
 int						ft_arrsize(char **arr);
 char					**ft_arrjoin(char **arr1, char **arr2);
 char					**ft_arrjoin_del(char **arr1, char **arr2);
-int 					ft_str_to_hex(char *c, int fd);
+int						ft_str_to_hex(char *c, int fd);
 #endif

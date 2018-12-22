@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asm_getters.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/22 14:40:42 by akondaur          #+#    #+#             */
+/*   Updated: 2018/12/22 14:40:44 by akondaur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	ft_get_name(t_asm *glob, char **arr, char *line)
@@ -46,6 +58,7 @@ void	ft_get_data(char *file, t_asm **glob)
 	ft_connect_labels(*glob);
 	if (!(*glob)->comment || !(*glob)->name)
 		ft_put_error(0, (!(*glob)->comment) ? "comment" : "name");
+	(ft_check_last_n(fd)) ? 0 : ft_put_error(15, NULL);
 	ft_print_header(file, (*glob));
 	if (close(fd))
 		ft_put_error(3, file);
@@ -62,7 +75,8 @@ void	ft_get_prosses(t_asm *glob, char **arr)
 	if ((i = ft_is_label(arr[0])))
 		ft_add_label(glob, arr);
 	j = 0;
-	if (glob->n_labels > -1 && (glob->labels)[glob->n_labels]->indx == glob->cur && !arr[1])
+	if (glob->n_labels > -1 && (glob->labels)[glob->n_labels]->indx
+		== glob->cur && !arr[1])
 	{
 		(glob->cur)--;
 		return ;
@@ -70,8 +84,10 @@ void	ft_get_prosses(t_asm *glob, char **arr)
 	while (g_op_tab[j].name && ft_strcmp(g_op_tab[j].name, arr[i]))
 		j++;
 	if (!(g_op_tab[j].name))
-		ft_put_error(7, NULL);
+		ft_put_error(7, arr[i]);
 	ft_add_prosses(arr, glob, i, &g_op_tab[j]);
+	if (glob->cur >= CHAMP_MAX_SIZE)
+		glob->commands = realloc(glob->commands, glob->cur + CHAMP_MAX_SIZE);
 }
 
 char	ft_get_type_n(char **arr, t_op *op)
@@ -89,7 +105,7 @@ char	ft_get_type_n(char **arr, t_op *op)
 		else if (arr[len][0] == DIRECT_CHAR)
 			type += 2;
 		else
-			ft_put_error(9, arr[len]);
+			type += 3;
 		len++;
 	}
 	while (len++ < MAX_ARGS_NUMBER)
