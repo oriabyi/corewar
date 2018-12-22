@@ -10,14 +10,20 @@ void 			draw_score_window(t_corewar *core, int cycle)
 	if (core->ncur.pause)
 	{
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
-		mvwprintw(core->ncur.score_window, 1, 1, "**********Pause************");
+		mvwprintw(core->ncur.score_window, 1, 1, "  _____  _______ _     _ _______ _______\n"
+												 "  |_____] |_____| |     | |______ |______\n"
+												 "  |       |     | |_____| ______| |______\n"
+												 "                                        ");
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 
 	}
 	else
 	{
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
-		mvwprintw(core->ncur.score_window, 1, 1, "**********Playing**********");
+		mvwprintw(core->ncur.score_window, 1, 1, "  _____         _______ __   __ _____ __   _  ______\n"
+												 "  |_____] |      |_____|   \\_/     |   | \\  | |  ____\n"
+												 "  |       |_____ |     |    |    __|__ |  \\_| |_____|\n"
+												 "                                                    ");
 		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
 	}
 
@@ -57,8 +63,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 	mvwprintw(core->ncur.score_window, i + 40, 0, "   CYCLE_TO_DIE : %d", core->cycle_to_die);
 	mvwprintw(core->ncur.score_window, i + 41, 0, "   CYCLE_DELTA : %d", CYCLE_DELTA);
-	mvwprintw(core->ncur.score_window, i + 42, 0, "   NBR_LIVE : ?");
-	mvwprintw(core->ncur.score_window, i + 43, 0, "   MAX_CHECKS : %d", MAX_CHECKS);
+	mvwprintw(core->ncur.score_window, i + 42, 0, "   MAX_CHECKS : %d", MAX_CHECKS);
 
 	//////////// Carriage registers print
 
@@ -67,21 +72,21 @@ void 			draw_score_window(t_corewar *core, int cycle)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 	mvwprintw(core->ncur.score_window, i + 45, 3, "Type cycle to go : %s", core->ncur.cycle_to_go);
 	if (core->ncur.current_field ==  core->ncur.cycle_to_go)
-		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 
 	/// Bot id field
 	if (core->ncur.current_field ==  core->ncur.champ_id)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 	mvwprintw(core->ncur.score_window, i + 46, 3, "Type champ id : %s", core->ncur.champ_id);
 	if (core->ncur.current_field ==  core->ncur.champ_id)
-		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 
 	/// Carriage field
 	if (core->ncur.current_field ==  core->ncur.carriage_id)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 	mvwprintw(core->ncur.score_window, i + 47, 3, "Type carriage id : %s", core->ncur.carriage_id);
 	if (core->ncur.current_field ==  core->ncur.carriage_id)
-		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 
 
 
@@ -99,8 +104,7 @@ void 			draw_score_window(t_corewar *core, int cycle)
 			mvwprintw(core->ncur.score_window, i + 49, 3, "champ %d with name: ", champ_id);
 			simple_print(core->ncur.score_window, champ_id);
 			wprintw(core->ncur.score_window, "%s", core->champs[champ_id - 1].name);
-			wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WHITE_BLACK));
-
+			wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 			/// getting carriage id from input field
 
 			int carriage_id = ft_atoi(core->ncur.carriage_id);
@@ -161,7 +165,9 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 	/////////////////////////////////
 
-	if (core->ncur.pause)
+	if (!core->ncur.pause)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+	else
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 	box(core->ncur.score_window, 0, 0);
 	wrefresh(core->ncur.score_window);

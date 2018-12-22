@@ -4,12 +4,14 @@ void 			init_colors(void)
 {
 	//simple colours
 
+	init_color(COLOR_GREY, 400, 400, 400);
 	init_color(COLOR_ORANGE, 1000, 700, 0);
 	init_color(COLOR_WWHITE, 1000, 1000, 1000);
 	init_pair(CR_CL_WWHITE_BLACK, COLOR_WWHITE, COLOR_BLACK);
 	init_pair(CR_CL_ORANGE_BLACK, COLOR_ORANGE, COLOR_BLACK);
 
 
+	init_pair(CR_CL_GREY_BLACK, COLOR_GREY, COLOR_BLACK);
 	init_pair(CR_CL_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
 	init_pair(CR_CL_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
 	init_pair(CR_CL_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
