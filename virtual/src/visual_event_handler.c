@@ -12,13 +12,13 @@ int 			get_button(t_corewar *core, int cycle)
 		return (0);
 
 	if (c == PAUSE_BUTTON && core->ncur.pause)
-		core->ncur.pause = FALSE;
+		core->ncur.pause = false;
 	else if (ft_isdigit(c))
 		uppend_input_field(core->ncur.current_field, (char)c);
 	else if (c == DELETE_BUTTON)
 		delete_last_letter_from_iput_field(core->ncur.current_field);
 	else if ((cycle == core->ncur.where_pause  || c == PAUSE_BUTTON) && !core->ncur.pause)
-		core->ncur.pause = TRUE;
+		core->ncur.pause = true;
 	else if (SPEED_PLUS_BUTTONS(c) && core->ncur.draw_speed < MAX_SPEED)
 		core->ncur.draw_speed += SPEED_STEP;
 	else if (SPEED_MINUS_BUTTONS(c) && core->ncur.draw_speed > MIN_SPEED)

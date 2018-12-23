@@ -28,39 +28,37 @@ int 	check_instruction_args(int argument, int first, int second, int third)
 		if (check_code == 0 && third != NONE_ARG)
 		{
 			check_code =
-					check_instruction_arg(GET_SECOND_ARG(argument), third);
+					check_instruction_arg(GET_THIRD_ARG(argument), third);
 		}
 	}
 	return (check_code ? 1 : 0);
 }
 
-int 	calculate_arg(int argument, int bytes)
+int 	help_fishka(int argument, int bytes)
 {
 	if (argument == T_REG)
-		return (T_REG);
+		return (1);
 	else if (argument == T_DIR)
 		return (bytes);
 	else if (argument == T_IND)
-		return (GET_T_IND_ARG(T_IND));
+		return (2);
 
 	return (0);
 }
 
-int 	calculate_space(int argument, int count_arguments, int bytes)
+int 	fishka(int argument, int count_arguments, int bytes)
 {
 	int 	step;
 
 	step = 0;
 	if (count_arguments >= 1)
 	{
-		step += calculate_arg(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
+		step += help_fishka(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
 		if (count_arguments >= 2)
 		{
-			step += calculate_arg(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
+			step += help_fishka(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
 			if (count_arguments == 3)
-			{
-				step += calculate_arg(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
-			}
+				step += help_fishka(check_instruction_arg(GET_THIRD_ARG(argument), NONE_ARG), bytes);
 		}
 	}
 	return (step);

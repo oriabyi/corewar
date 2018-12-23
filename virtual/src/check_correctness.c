@@ -79,16 +79,15 @@ void				check_correctness(t_corewar *core, int check_code)
 	{
 		message = "MEMORY ALLOCATE ERROR!";
 	}
-	else if (check_code >= BAD_ARGUMENTS && check_code <= REDUNDANT_ARGUMENTS)
+	else if (ARGUMENTS_ERROR(check_code))
 	{
 		message = check_corewar_arguments(check_code);
 	}
-	else if (check_code >= FILE_DOESNT_EXIST && check_code <= BAD_CHAMP)
+	else if (FILE_ERROR(check_code))
 	{
 		message = check_correctness_file(check_code);
 	}
-	else if (check_code >= WRONG_MAGIC_VALUE &&
-			check_code <= BAD_COMMENT_LENGTH)
+	else if (CHAMP_DATA_ERROR(check_code))
 	{
 		message = check_champ_data(check_code);
 	}

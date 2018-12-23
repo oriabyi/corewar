@@ -37,12 +37,10 @@
 
 #define NOT_EXPOSED 				0
 #define COUNTING_FROM_ONE 			1
-#define DIF_ID_BOT__CARRIAGE		4
 
 
 #define ONE_BYTE		1
 #define TWO_BYTES		2
-#define THREE_BYTES		3
 #define FOUR_BYTES		4
 
 
@@ -57,42 +55,15 @@
 
 # define GET_FIRST_ARG(x)		(x >> 6)
 # define GET_SECOND_ARG(x)		((x >> 4) & 3)
-# define GET_SECOND_ARG(x)		((x >> 2) & 3)
+# define GET_THIRD_ARG(x)		((x >> 2) & 3)
 
 # define GET_T_IND_ARG(x) (x ^ 7)
-
-/*
-** Bool
-*/
-
-# define TRUE	1
-# define FALSE	0
-
 
 
 # define ERROR	1
 
-# define SWAP_ID 1
-# define DO_NOT_SWAP_ID 0
 
-
-// colors for delete
 # define LINE_SIZE 188
-
-
-# define RESET			"\x1b[0m"
-# define BLUE			"\x1b[34m"
-# define RED			"\x1b[31m"
-# define CYAN			"\x1b[36m"
-# define GREEN			"\x1b[32m"
-# define BLACK			"\x1b[30m"
-
-# define L_GREEN		"\x1b[92m"
-# define L_BLUE			"\x1b[94m"
-# define L_RED			"\x1b[91m"
-# define L_CYAN			"\x1b[96m"
-
-# define BACK_GREEN			"\x1b[42m"
 
 /*
 **	Visual colors
@@ -454,7 +425,7 @@ void 	move_carriage(t_field *field, unsigned id, int step, t_carriage *carriage)
 */
 
 int 	check_instruction_args(int argument, int first, int second, int third);
-int 	calculate_arg(int argument, int bytes);
+int 	help_fishka(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
 int 			get_dir_bytes(unsigned command);
 int			get_codage(unsigned command);
@@ -495,7 +466,7 @@ int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriag
 //add sub
 unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
 
-int 	calculate_space(int argument, int count_arguments, int bytes);
+int 	fishka(int argument, int count_arguments, int bytes);
 
 //dump
 void 			print_memory(t_corewar *core);

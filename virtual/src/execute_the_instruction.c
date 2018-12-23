@@ -49,7 +49,7 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 		list_of_instructions(field, carriage, id, argument);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
-		move_carriage(field, id, (1 + calculate_space(argument, 3,
+		move_carriage(field, id, (1 + fishka(argument, 3,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
 	}
 }
