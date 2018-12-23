@@ -1,28 +1,8 @@
 #include "../includes/corewar_header.h"
 
-unsigned		which_instruction(char *command)
+unsigned		get_instruction_id(char *command)
 {
-	unsigned				code_instruction;
-	char					instruction[3];
-
-	code_instruction = 1;
-	ft_strcpy(instruction, "01");
-	while (ft_strcmp(command, (char *)instruction) && code_instruction < 17)
-	{
-		if (instruction[0] == '0' && instruction[1] < '9')
-			(instruction[1])++;
-		else if (instruction[0] == '0' && instruction[1] == '9')
-			instruction[1] = 'a';
-		else if (instruction[0] == '0' && instruction[1] < 'f')
-			(instruction[1])++;
-		else if (instruction[0] == '0' && instruction[1] == 'f')
-		{
-			instruction[0] = '1';
-			instruction[1] = '0';
-		}
-		code_instruction++;
-	}
-	return (code_instruction);
+	return (ft_ahtoi(command));
 }
 
 void						list_of_instructions(t_field *field,
@@ -69,7 +49,7 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 		list_of_instructions(field, carriage, id, argument);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
-		move_carriage(field, id, (1 + fishka(argument, 3,
+		move_carriage(field, id, (1 + calculate_space(argument, 3,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
 	}
 }
@@ -84,7 +64,7 @@ void 			get_command(t_field *field, t_champ *champ)
 	{
 		if (COMMAND == 0)
 		{
-			COMMAND = which_instruction((char *)(field[CUR_COORD].hex));
+			COMMAND = get_instruction_id((char *)(field[CUR_COORD].hex));
 			if (IS_VALID_COMMAND(COMMAND) == true)
 				CYCLES = get_cycles(carriage);
 		}
@@ -100,15 +80,15 @@ void 			get_command(t_field *field, t_champ *champ)
 
 }
 
-void 			do_process(t_corewar *core, int qua_champs)
+void 			do_process(t_corewar *core)
 {
-	if (qua_champs > 0)
+	unsigned 		champ_num;
+
+	champ_num = 0;
+	get_command(core->field, &(core->champs[core->qua_champs - 1]));
+	while (champ_num < (core->qua_champs - 1))
 	{
-		qua_champs--;
-		do_process(core, (qua_champs));
-		get_command(core->field, &(core->champs[qua_champs]));
+		get_command(core->field, &(core->champs[champ_num]));
+		champ_num++;
 	}
 }
-
-
-//-v -n 1 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 3 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 2 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 4 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor

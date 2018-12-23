@@ -1,6 +1,6 @@
 #include "../includes/corewar_header.h"
 
-int					get_old_young_numbers(int num, int base, int *power)
+int					get_old_young_numbers(unsigned char num, int base, int *power)
 {
 	int				younger;
 	int				older;
@@ -18,18 +18,18 @@ int					get_old_young_numbers(int num, int base, int *power)
 
 
 
-int					get_num_by_octet_bytes(int fd)
+unsigned					get_num_by_octet_bytes(int fd, int size)
 {
-	int				result;
+	unsigned				result;
 	int				power;
 	unsigned char	buf;
 
-	power = 7;
+	power = size * 2 - 1;
 	result = 0;
 	while (power >= 0)
 	{
 		read(fd, &buf, 1);
-		result += get_old_young_numbers((int)buf, 16, &power);
+		result += get_old_young_numbers(buf, 16, &power);
 	}
 	return (result);
 }

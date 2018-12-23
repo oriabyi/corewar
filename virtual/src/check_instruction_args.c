@@ -19,46 +19,48 @@ int 	check_instruction_args(int argument, int first, int second, int third)
 
 	if (argument  <= 3)
 		return (1);
-	check_code = check_instruction_arg(GET_FIRST_ARGUMENT(argument), first);
+	check_code = check_instruction_arg(GET_FIRST_ARG(argument), first);
 	if (check_code == 0)
 	{
 		if (second != NONE_ARG)
 			check_code =
-					check_instruction_arg(GET_SECOND_ARGUMENT(argument), second);
+					check_instruction_arg(GET_SECOND_ARG(argument), second);
 		if (check_code == 0 && third != NONE_ARG)
 		{
 			check_code =
-					check_instruction_arg(GET_THIRD_ARGUMENT(argument), third);
+					check_instruction_arg(GET_SECOND_ARG(argument), third);
 		}
 	}
-	return (check_code ? ERROR : 0);
+	return (check_code ? 1 : 0);
 }
 
-int 	help_fishka(int argument, int bytes)
+int 	calculate_arg(int argument, int bytes)
 {
 	if (argument == T_REG)
-		return (1);
+		return (T_REG);
 	else if (argument == T_DIR)
 		return (bytes);
 	else if (argument == T_IND)
-		return (2);
+		return (GET_T_IND_ARG(T_IND));
 
 	return (0);
 }
 
-int 	fishka(int argument, int count_arguments, int bytes)
+int 	calculate_space(int argument, int count_arguments, int bytes)
 {
 	int 	step;
 
 	step = 0;
 	if (count_arguments >= 1)
 	{
-		step += help_fishka(check_instruction_arg(GET_FIRST_ARGUMENT(argument), NONE_ARG), bytes);
+		step += calculate_arg(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
 		if (count_arguments >= 2)
 		{
-			step += help_fishka(check_instruction_arg(GET_SECOND_ARGUMENT(argument), NONE_ARG), bytes);
+			step += calculate_arg(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
 			if (count_arguments == 3)
-				step += help_fishka(check_instruction_arg(GET_THIRD_ARGUMENT(argument), NONE_ARG), bytes);
+			{
+				step += calculate_arg(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
+			}
 		}
 	}
 	return (step);

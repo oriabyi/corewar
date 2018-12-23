@@ -38,20 +38,21 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)getters_args.c              \
 				$(SRCDIRVIR)logical_operations.c        \
 				$(SRCDIRVIR)fill_memory_space.c		\
-				$(SRCDIRVIR)carriages_move.c		\
+				$(SRCDIRVIR)carriages_move.c		    \
 				$(SRCDIRVIR)create_memory_space.c		\
 				$(SRCDIRVIR)visual_draw_main_function.c		\
 				$(SRCDIRVIR)visual_set_memory_print_attr.c	\
-				$(SRCDIRVIR)visual_init_time.c			\
+				$(SRCDIRVIR)visual_init_time.c			   \
 				$(SRCDIRVIR)visual_start_end_functions.c	\
 				$(SRCDIRVIR)visual_draw_memory_window.c		\
 				$(SRCDIRVIR)visual_draw_score_window.c		\
 				$(SRCDIRVIR)visual_event_handler.c		\
-				$(SRCDIRVIR)visual_init.c			\
+				$(SRCDIRVIR)visual_init.c			    \
 				$(SRCDIRVIR)visual_init_colors.c 		\
 				$(SRCDIRVIR)visual_input_field_functions.c	\
 				$(SRCDIRVIR)visual_reset_event.c		\
 				$(SRCDIRVIR)check_cycle_to_die.c		\
+				$(SRCDIRVIR)check_correctness.c		    \
 				$(SRCDIRVIR)dump.c		\
 				$(SRCDIRVIR)trash.c
 

@@ -12,7 +12,7 @@ int 				check_champ_type(char *champ_file_name)
 	struct stat	sb;
 
 	if (lstat(champ_file_name, &sb) == -1)
-		return (BAD_FILE);
+		return (FILE_DOESNT_EXIST);
 	if (S_ISREG(sb.st_mode))
 		return (FILE_IS_REG);
 	else if (S_ISFIFO(sb.st_mode))
@@ -47,11 +47,11 @@ int 				check_champ_file(char *champfilename)
 int 				check_champ_info(t_champ *champ)
 {
 	if (ft_strlen(champ->name) > PROG_NAME_LENGTH)
-		return (WRONG_NAME_LENGTH);
+		return (BAD_NAME_LENGTH);
 	else if (champ->size > CHAMP_MAX_SIZE)
-		return (WRONG_CHAMP_SIZE);
+		return (BAD_CHAMP_SIZE);
 	else if (ft_strlen(champ->comment) > COMMENT_LENGTH)
-		return (WRONG_COMMENT_LENGTH);
+		return (BAD_COMMENT_LENGTH);
 	return (0);
 }
 
@@ -67,13 +67,13 @@ int					get_champ(t_champ *champ, char *champfilename, unsigned number)
 	if (check_num)
 		return (check_num);
 	if ((fd = open(champfilename, O_RDONLY)) < 0)
-		return (BAD_ARGUMENTS);
-	if (get_num_by_octet_bytes(fd) != COREWAR_EXEC_MAGIC)
+		return (BAD_CHAMP);
+	if (get_num_by_octet_bytes(fd, sizeof(unsigned)) != COREWAR_EXEC_MAGIC)
 		check_num = WRONG_MAGIC_VALUE;
 	else
 	{
 		champ->name = get_name(fd);
-		champ->size = (unsigned) get_size(fd);
+		champ->size = get_size(fd);
 		champ->comment = get_comment(fd);
 		get_exec_code(fd, champ->size, &champ->exec_code);
 		check_num = check_champ_info(champ);
@@ -150,24 +150,13 @@ void 				fill_champs(t_champ **champ, int qua_champs)
 	}
 }
 
-void 				swap_champs_id(t_champ *first, t_champ *second)
-{
-	unsigned		temp;
-
-	temp = first->id;
-	first->id = second->id;
-	second->id = temp;
-}
-
-void 				swap_champs(t_champ *first, t_champ *second, int code)
+void 				swap_champs(t_champ *first, t_champ *second)
 {
 	t_champ			temp;
 
 	temp = *first;
 	*first = *second;
 	*second = temp;
-	if (code == SWAP_ID)
-		swap_champs_id(first, second);
 }
 
 void 				sort_champs(t_champ **champ, int qua_champs)
@@ -179,7 +168,7 @@ void 				sort_champs(t_champ **champ, int qua_champs)
 	{
 		if ((*champ)[counter].id > (*champ)[counter + 1].id)
 		{
-			swap_champs(&((*champ)[counter]), &((*champ)[counter + 1]), DO_NOT_SWAP_ID);
+			swap_champs(&((*champ)[counter]), &((*champ)[counter + 1]));
 			counter = 0;
 		}
 		else
@@ -211,7 +200,7 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	check_code = 0;
 	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
 	{
-		champ_id = 0;
+		champ_id = O_BOTS + 1;
 		if (*(av[(*counter)]) == '-')
 		{
 			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
@@ -219,11 +208,11 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 			if (get_champ_by_id(core->champs, champ_id))
 				return (SAME_NUM_FOR_CHAMPS);
 
-			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
+			if (check_got_num(av[(*counter) + 1], champ_id, 1))
 				return (TOO_BIG_NUM_FOR_CHAMP);
 			(*counter) += 2;
 		}
-		champ_id = (champ_id >= 1 && champ_id <= 4) ? champ_id : find_free_space(core->champs) + 1;
+		champ_id = (champ_id <= 3) ? champ_id : find_free_space(core->champs) + 1;
 		check_code = get_champ(&(core->champs[core->qua_champs]),
 							   av[(*counter)++], champ_id);
 		core->qua_champs++;
@@ -231,7 +220,7 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	return (check_code);
 }
 
-int					get_champs(t_corewar *core, char **av)
+int					parse(t_corewar *core, char **av)
 {
 	int				check_code;
 	int				counter;
@@ -258,12 +247,3 @@ int					get_champs(t_corewar *core, char **av)
 	return (check_code);
 }
 
-int					parse(t_corewar *core, char **av)
-{
-	int				check_code;
-
-	check_code = get_champs(core, av);
-	check_correctness(core, check_code);
-
-	return (0);
-}

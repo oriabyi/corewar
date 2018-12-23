@@ -19,8 +19,6 @@ void			war(t_corewar *core)
 	unsigned 	cycles;
 
 	cycles = 0;
-	core->cycle_to_die = CYCLE_TO_DIE;
-	core->max_checks = 0;
 	visual_init(core);
 	if (F_VISUAL)
 	{
@@ -29,36 +27,27 @@ void			war(t_corewar *core)
 	}
 	while (core->cycle_to_die > 0 && is_anychamp_alive(core->champs, core->qua_champs))
 	{
-		if (F_VISUAL == false && cycles == F_DUMP)
-		{
-			print_memory(core);
-			break ;
-		}
+//		if (F_VISUAL == false && cycles == F_DUMP)
+//		{
+//			print_memory(core);
+//			break ;
+//		}
 		if (cycles && core->cycle_to_die && cycles % core->cycle_to_die == 0)
 			core->cycle_to_die = check_cycle_to_die(core);
-
-
 		if (cycles >= F_DUMP && F_VISUAL)
-		{
 			cycles = (unsigned)draw(core, cycles);
-		}
 		else
-		{
 			cycles++;
-		}
-
-		do_process(core, core->qua_champs);
-
+		do_process(core);
 		bigmother++;
 	}
 	if (F_VISUAL)
 		visual_end(core);
-
 }
 
 void 			reset_core(t_corewar *core)
 {
-	*core->field = (t_field){'\0', {'\0', '\0', '\0'}, 0, 0, 0, 0};
+	core->field = NULL;
 	core->ncur = (t_ncurses){0, {0, 0}, {0, 0}, 0, 0, 0, 0};
 	ft_bzero(core->ncur.cycle_to_go, 7);
 	ft_bzero(core->ncur.champ_id, 7);
@@ -67,22 +56,24 @@ void 			reset_core(t_corewar *core)
 	core->ncur.memory_window = NULL;
 	core->ncur.score_window = NULL;
 	core->champs = NULL;
+//	core->flags = (t_flags){0, (unsigned)-1, 0, 0, 0};
 	core->flags = (t_flags){0, 0, 0, 0, 0};
-	core->cycle_to_die = 0;
+	core->cycle_to_die = CYCLE_TO_DIE;
 	core->max_checks = 0;
 	core->qua_champs = 0;
 }
 
 int				main(int ac, char **av)
 {
+	int 		check_code;
 	t_corewar	core;
 
 	bigmother = 0;
 	reset_core(&core);
 	check_arguments(&core.flags, ac, av);
-	parse(&core, av);
+	check_code = parse(&core, av);
+	check_correctness(&core, check_code);
 	war(&core);
 	clean_all(&core);
-//	system("leaks -q corewar");
 	return (0);
 }

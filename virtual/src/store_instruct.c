@@ -3,7 +3,6 @@
 void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argument, unsigned id) // label size == 4
 {
 	int 		t_reg;
-	ssize_t 	coord;
 	ssize_t 	second_arg;
 
 	t_reg = (unsigned char)get_arguments(field, argument, FIRST_ARG, carriage);
@@ -15,20 +14,13 @@ void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argumen
 		return ;
 	}
 
-	if (GET_SECOND_ARGUMENT(argument) == T_REG)
+	if (GET_SECOND_ARG(argument) == T_REG)
 	{
 		if (check_reg(t_reg) == 0)
 			REG[second_arg] = REG[t_reg];
 	}
-	else // QUESTION
+	else
 	{
-		coord = (short)get_dir(field, 2 + fishka(argument, SECOND_ARG, 4), TWO_BYTES, carriage);
-
-
-		write_in_field(field, (int)(coord + CUR_COORD), t_reg, carriage, id);
-//		write_in_field(field, ((unsigned)(second_arg % IDX_MOD) + CUR_COORD), t_reg, carriage, id);
-
-//		write_in_field(field, (int)(second_arg % IDX_MOD + CUR_COORD), champ, t_reg); it looks rightly
-//		write_in_field(field, (int)(second_arg + CUR_COORD), champ, t_reg); it looks rightly
+		write_in_field(field, (int)(second_arg + CUR_COORD), t_reg, carriage, id);
 	}
 }

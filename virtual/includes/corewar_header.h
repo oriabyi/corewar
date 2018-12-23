@@ -49,15 +49,15 @@
 
 
 
-# define CHECK_REG(x) (x >= 1 && x <= 16)
+# define CHECK_REG(x) (x >= 0 && x <= 15)
 
 /*
 ** Get arguments // check defines
 */
 
-# define GET_FIRST_ARGUMENT(x)		(x >> 6)
-# define GET_SECOND_ARGUMENT(x)		((x >> 4) & 3)
-# define GET_THIRD_ARGUMENT(x)		((x >> 2) & 3)
+# define GET_FIRST_ARG(x)		(x >> 6)
+# define GET_SECOND_ARG(x)		((x >> 4) & 3)
+# define GET_SECOND_ARG(x)		((x >> 2) & 3)
 
 # define GET_T_IND_ARG(x) (x ^ 7)
 
@@ -154,39 +154,50 @@
 # define DENOTE_ALTERED				10
 # define DENOTE_ALIVE				15
 
+# define FILE_IS_REG				0
+
+
 /*
 **	Define errors
 */
 
-# define MEMORY_ERROR				17
-# define BAD_ARGUMENTS				24
-# define TOO_BIG_NUM_FOR_CHAMP		24
-# define MISSING_CHAMP				24
-# define SAME_NUM_FOR_CHAMPS		24
-# define FILE_DOESNT_EXIST			24
-# define BAD_CHAMP_EXTENSION		25
-# define REDUNDANT_ARGUMENTS		25
+# define MEMORY_ERROR				33
 
-# define FILE_IS_REG		0
+# define ARGUMENTS_ERROR(arg)		(arg >= BAD_ARGUMENTS && \
+									arg <= REDUNDANT_ARGUMENTS)
+# define BAD_ARGUMENTS				34
+# define BAD_FLAGS					35
+# define BAD_NUMBER_FOR_DUMP		36
+# define MISSING_CHAMP				37
+# define SAME_NUM_FOR_CHAMPS		38
+# define TOO_BIG_NUM_FOR_CHAMP		39
+# define REDUNDANT_ARGUMENTS		54
+
+# define FILE_ERROR(arg)			(arg >= FILE_DOESNT_EXIST && \
+									arg <= BAD_CHAMP)
+# define FILE_DOESNT_EXIST			40
+# define NO_RIGHT_FOR_READ			41
+# define FILE_IS_PIPE				42
+# define FILE_IS_SPEC_CHAR			43
+# define FILE_IS_DIR				44
+# define FILE_IS_SOCKET				45
+# define FILE_IS_BLOCK				46
+# define WRONG_FILE_TYPE			47
+
+# define CHAMP_DATA_ERROR(arg)		(arg >= WRONG_MAGIC_VALUE && \
+									arg <= BAD_COMMENT_LENGTH)
+
+# define BAD_CHAMP_EXTENSION		48
+# define BAD_CHAMP					49
+# define WRONG_MAGIC_VALUE			50
+# define BAD_NAME_LENGTH			51
+# define BAD_CHAMP_SIZE				52
+# define BAD_COMMENT_LENGTH			53
 
 
-# define BAD_FILE					25
-# define WRONG_FILE_TYPE			25
-# define FILE_IS_PIPE				25
-# define FILE_IS_SPEC_CHAR			25
-# define FILE_IS_DIR				25
-# define FILE_IS_SOCKET				25
-# define FILE_IS_BLOCK				25
-# define NO_RIGHT_FOR_READ			25
 
+//////////////////////////////////////
 
-# define WRONG_ARGUMENTS			25
-# define WRONG_MAGIC_VALUE			26
-# define WRONG_PLACE_FOR_FLAGS		27
-
-# define WRONG_NAME_LENGTH			27
-# define WRONG_CHAMP_SIZE			27
-# define WRONG_COMMENT_LENGTH		27
 
 
 # define NO_INSTRUCTION				0
@@ -246,14 +257,6 @@
 # define CW_AFF_CYCLES				2
 
 int 				bigmother;
-
-typedef struct			s_arguments
-{
-	unsigned char		t_reg;
-	short 				t_int;
-	short	 			t_dir;
-	unsigned 			ut_dir;
-}						t_arguments;
 
 typedef	struct			s_flags
 {
@@ -355,14 +358,14 @@ char 	*get_name(int fd);
 
 void	get_exec_code(int fd, unsigned len, unsigned char **exec_code);
 char 	*get_comment(int fd);
-int 	get_size(int fd);
+unsigned 	get_size(int fd);
 
 /*
 ** Math help for getters
 */
 
-int 	get_num_by_octet_bytes(int fd);
-int 	get_old_young_numbers(int num, int base, int *power);
+unsigned 	get_num_by_octet_bytes(int fd, int size);
+int 	get_old_young_numbers(unsigned char num, int base, int *power);
 int 				ft_module(int i);
 
 /*
@@ -451,13 +454,13 @@ void 	move_carriage(t_field *field, unsigned id, int step, t_carriage *carriage)
 */
 
 int 	check_instruction_args(int argument, int first, int second, int third);
-int 	help_fishka(int argument, int bytes);
+int 	calculate_arg(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
 int 			get_dir_bytes(unsigned command);
 int			get_codage(unsigned command);
 
 // some trash
-void 			do_process(t_corewar *core, int qua_champs);
+void 			do_process(t_corewar *core);
 int 			check_reg(int reg);
 
 ssize_t 		correction_coordinates(ssize_t coordinate);
@@ -492,7 +495,7 @@ int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriag
 //add sub
 unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
 
-int 	fishka(int argument, int count_arguments, int bytes);
+int 	calculate_space(int argument, int count_arguments, int bytes);
 
 //dump
 void 			print_memory(t_corewar *core);
