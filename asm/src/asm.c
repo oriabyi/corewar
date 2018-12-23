@@ -6,7 +6,7 @@
 /*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:34:49 by akondaur          #+#    #+#             */
-/*   Updated: 2018/12/22 14:35:00 by akondaur         ###   ########.fr       */
+/*   Updated: 2018/12/23 17:35:27 by akondaur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int	main(int ac, char **av)
 			ft_put_error(2, av[ac - 1]);
 	else
 		ft_put_error(0, "file");
-	system("leaks asm");
 	return (0);
 }

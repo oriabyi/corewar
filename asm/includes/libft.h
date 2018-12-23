@@ -6,7 +6,7 @@
 /*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 13:56:36 by akondaur          #+#    #+#             */
-/*   Updated: 2018/10/27 09:24:30 by akondaur         ###   ########.fr       */
+/*   Updated: 2018/12/23 17:15:06 by akondaur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,5 @@ void					ft_free_arr(char **arr);
 int						ft_arrsize(char **arr);
 char					**ft_arrjoin(char **arr1, char **arr2);
 char					**ft_arrjoin_del(char **arr1, char **arr2);
-int 					ft_str_to_hex(char *c, int fd);
+int						ft_str_to_hex(char *c, int fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:43:25 by akondaur          #+#    #+#             */
-/*   Updated: 2018/12/22 14:43:27 by akondaur         ###   ########.fr       */
+/*   Updated: 2018/12/23 17:35:41 by akondaur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int		ft_put_error(int err, char *str)
 	(err == 14) ? ft_printf("Error: you need full header, dear\n") : 0;
 	(err == 15) ? ft_printf("Error: last \\n missed\n") : 0;
 	(err == 16) ? ft_printf("Error: check registers number %s\n", str) : 0;
-	system("leaks asm");
 	exit(-1);
 }
 
