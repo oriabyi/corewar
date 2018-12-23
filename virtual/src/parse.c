@@ -1,13 +1,11 @@
 #include "../includes/corewar_header.h"
 
-
 int 				check_champ_extension(char *champ_file_name)
 {
 	if (ft_strcmp(champ_file_name + ft_strlen(champ_file_name) - 3, "cor") == 0)
 		return (0);
 	return (1);
 }
-
 
 int 				check_champ_type(char *champ_file_name)
 {
@@ -62,6 +60,8 @@ int					get_champ(t_champ *champ, char *champfilename, unsigned number)
 	int				fd;
 	int 			check_num;
 
+	if (number == O_BOTS + 1)
+		return (ERROR); // define error
 	champ->id = number;
 	check_num = check_champ_file(champfilename);
 	if (check_num)
@@ -79,7 +79,7 @@ int					get_champ(t_champ *champ, char *champfilename, unsigned number)
 		check_num = check_champ_info(champ);
 	}
 	close(fd);
-	return (0);
+	return (check_num);
 }
 
 t_carriage 				*create_carriage(int id)
@@ -92,7 +92,6 @@ t_carriage 				*create_carriage(int id)
 									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, NULL};
 	return (carriage);
 }
-
 
 int 				create_champs(t_champ **champs)
 {
@@ -110,7 +109,6 @@ int 				create_champs(t_champ **champs)
 	return (0);
 }
 
-
 unsigned 			find_free_space(t_champ *champs)
 {
 	unsigned 			counter;
@@ -120,22 +118,18 @@ unsigned 			find_free_space(t_champ *champs)
 		return (0);
 	counter = 0;
 	while (counter < O_BOTS)
-		ids[counter++] = 0;
-	counter = 0;
-	while (counter < O_BOTS)
 	{
-		if (champs[counter].id != 0)
-			ids[champs[counter].id - 1] = 1;
+		ids[counter] = champs[counter].id;
 		counter++;
 	}
 	counter = 0;
 	while (counter < O_BOTS)
 	{
-		if (ids[counter] == 0)
-			return (counter + 1);
+		if (ids[counter] == (O_BOTS + 1))
+			return (counter);
 		counter++;
 	}
-	return (counter);
+	return (O_BOTS + 1);
 }
 
 void 				fill_champ_by_himself(t_champ *champ, int id)
@@ -207,20 +201,6 @@ int 				get_champ_by_id(t_champ *champ, unsigned id)
 	return (false);
 }
 
-int 				set_champ_id(t_champ *champ, unsigned id)
-{
-	int				counter;
-
-	counter = 0;
-	while (counter < O_BOTS)
-	{
-		if (champ[counter].id == id)
-			return (true);
-		counter++;
-	}
-	return (false);
-}
-
 int 				get_champs_info(t_corewar *core, char **av, int *counter)
 {
 	unsigned 		champ_id;
@@ -231,59 +211,25 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	check_code = 0;
 	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
 	{
+		champ_id = 0;
 		if (*(av[(*counter)]) == '-')
 		{
 			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
-			if (core->champs[champ_id].id != 0)
+
+			if (get_champ_by_id(core->champs, champ_id))
 				return (SAME_NUM_FOR_CHAMPS);
 
 			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
 				return (TOO_BIG_NUM_FOR_CHAMP);
-
 			(*counter) += 2;
-			check_code = get_champ(&(core->champs[core->qua_champs]),
-								   av[(*counter)++], champ_id);
 		}
-		else
-		{
-			check_code = get_champ(&(core->champs[core->qua_champs]),
-								   av[(*counter)++], (find_free_space(core->champs)));
-		}
+		champ_id = (champ_id >= 1 && champ_id <= 4) ? champ_id : find_free_space(core->champs) + 1;
+		check_code = get_champ(&(core->champs[core->qua_champs]),
+							   av[(*counter)++], champ_id);
 		core->qua_champs++;
 	}
 	return (check_code);
 }
-
-
-//int 				get_champs_info(t_corewar *core, char **av, int *counter)
-//{
-//	unsigned 		champ_id;
-//	int 			check_code;
-//	int 			champs;
-//
-//	champs = 0;
-//	champ_id = 0;
-//	check_code = 0;
-//	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
-//	{
-//		if (*(av[(*counter)]) == '-')
-//		{
-//			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
-//
-//			if (get_champ_by_id(core->champs, champ_id))
-//				return (SAME_NUM_FOR_CHAMPS);
-//
-//			if (ft_pwrbase(champ_id, 10) != ft_strlen(av[(*counter) + 1]))
-//				return (TOO_BIG_NUM_FOR_CHAMP);
-//			(*counter) += 2;
-//		}
-//		champ_id = (champ_id >= 1 && champ_id <= 4) ? champ_id : find_free_space(core->champs);
-//		check_code = get_champ(&(core->champs[core->qua_champs]),
-//							   av[(*counter)++], champ_id);
-//		core->qua_champs++;
-//	}
-//	return (check_code);
-//}
 
 int					get_champs(t_corewar *core, char **av)
 {
@@ -321,9 +267,3 @@ int					parse(t_corewar *core, char **av)
 
 	return (0);
 }
-//-n 4 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
-// -n 2 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
-// -n 1 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
-// -n 3 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
-
-//-n 4 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 3 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 2 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor -n 1 /Users/ariabyi/CLionProjects/Corewar/def_vm_champs/champs/Gagnant.cor
