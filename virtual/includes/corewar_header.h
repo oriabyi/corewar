@@ -23,10 +23,6 @@
 
 #define ALIVE			carriage->alive
 
-
-# define NOT_OWN	0
-# define OWN		1
-
 # define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
 
@@ -99,11 +95,19 @@
 # define BACK_GREEN			"\x1b[42m"
 
 /*
-**	Define colors
+**	Visual colors
 */
+
+
+# define SCORE_WIN_HEIGHT			66
+# define SCORE_WIN_WIDTH			70
+# define MEM_WIN_HEIGHT				66
+# define MEM_WIN_WIDTH				195
+
 
 # define COLOR_ORANGE				123
 # define COLOR_WWHITE				124
+# define COLOR_GREY					125
 
 # define CR_CL_WHITE_BLACK			1
 # define CR_CL_GREEN_BLACK			2
@@ -124,6 +128,7 @@
 
 # define CR_CL_ORANGE_BLACK			16
 # define CR_CL_WWHITE_BLACK			17
+# define CR_CL_GREY_BLACK			18
 
 
 # define MAX_SPEED					100

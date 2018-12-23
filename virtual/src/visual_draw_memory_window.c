@@ -11,7 +11,7 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 	while (i < MEM_SIZE)
 	{
 		if (i % 64 == 0)
-			wprintw(core->ncur.memory_window, "  \n");
+			wprintw(core->ncur.memory_window, "\n");
 
 		id = get_id_of_champ(core->field[i].champ_id);
 
@@ -37,10 +37,10 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 			alive_view(core->ncur.memory_window, id);
 
 		if (i % 64 == 0)
-			wmove(core->ncur.memory_window, (i / 64) + 1, 3);
+			wmove(core->ncur.memory_window, (i / 64) + 1, 2);
 
 		wprintw(core->ncur.memory_window, "%s", core->field[i].hex);
-		wattron(core->ncur.memory_window, COLOR_PAIR(CR_CL_WHITE_BLACK));
+		wattron(core->ncur.memory_window, COLOR_PAIR(CR_CL_GREY_BLACK));
 		wattroff(core->ncur.memory_window, A_BOLD);
 		wprintw(core->ncur.memory_window, " ");
 		i++;
