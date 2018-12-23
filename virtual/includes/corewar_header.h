@@ -141,29 +141,30 @@
 # define BAD_NUMBER_FOR_DUMP		36
 # define MISSING_CHAMP				37
 # define SAME_NUM_FOR_CHAMPS		38
-# define TOO_BIG_NUM_FOR_CHAMP		39
-# define REDUNDANT_ARGUMENTS		54
+# define NO_ID_AFTER_FLAG			39
+# define TOO_BIG_NUM_FOR_CHAMP		40
+# define REDUNDANT_ARGUMENTS		41
 
 # define FILE_ERROR(arg)			(arg >= FILE_DOESNT_EXIST && \
 									arg <= BAD_CHAMP)
-# define FILE_DOESNT_EXIST			40
-# define NO_RIGHT_FOR_READ			41
-# define FILE_IS_PIPE				42
-# define FILE_IS_SPEC_CHAR			43
-# define FILE_IS_DIR				44
-# define FILE_IS_SOCKET				45
-# define FILE_IS_BLOCK				46
-# define WRONG_FILE_TYPE			47
+# define FILE_DOESNT_EXIST			42
+# define NO_RIGHT_FOR_READ			43
+# define FILE_IS_PIPE				44
+# define FILE_IS_SPEC_CHAR			45
+# define FILE_IS_DIR				46
+# define FILE_IS_SOCKET				47
+# define FILE_IS_BLOCK				48
+# define WRONG_FILE_TYPE			49
 
 # define CHAMP_DATA_ERROR(arg)		(arg >= WRONG_MAGIC_VALUE && \
 									arg <= BAD_COMMENT_LENGTH)
 
-# define BAD_CHAMP_EXTENSION		48
-# define BAD_CHAMP					49
-# define WRONG_MAGIC_VALUE			50
-# define BAD_NAME_LENGTH			51
-# define BAD_CHAMP_SIZE				52
-# define BAD_COMMENT_LENGTH			53
+# define BAD_CHAMP_EXTENSION		50
+# define BAD_CHAMP					51
+# define WRONG_MAGIC_VALUE			52
+# define BAD_NAME_LENGTH			53
+# define BAD_CHAMP_SIZE				54
+# define BAD_COMMENT_LENGTH			55
 
 
 
@@ -253,7 +254,7 @@ typedef struct			s_carriage
 	struct s_carriage	*next;
 }						t_carriage;
 
-typedef struct			s_champ
+typedef struct			s_champion
 {
 
 	char 				*name;
@@ -262,7 +263,8 @@ typedef struct			s_champ
 	unsigned			id;
 	unsigned			size;
 	unsigned 			quant_carriages;
-//	t_arguments			arg;
+	unsigned			last_live;
+	unsigned			lives_cur;
 
 	t_carriage			*carriage;
 }						t_champ;
@@ -384,7 +386,7 @@ void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 ** Instructions
 */
 
-void 	alive_instruct(t_field *field, t_carriage *carriage, int id);
+void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core);
 void 	load_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
 void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
 

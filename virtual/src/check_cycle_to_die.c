@@ -51,6 +51,5 @@ int 			check_cycle_to_die(t_corewar *core)
 		core->max_checks = 0;
 		core->cycle_to_die -= CYCLE_DELTA;
 	}
-	core->cycle_to_die *= (core->cycle_to_die < 0) ? 0 : 1;
-	return (core->cycle_to_die);
+	return ((core->cycle_to_die > 0) ? core->cycle_to_die : 0);
 }

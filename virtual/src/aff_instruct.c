@@ -9,6 +9,5 @@ void 	aff_instruct(t_field *field, t_carriage *carriage, unsigned argument) // l
 	{
 		return ;
 	}
-
 	write(1, (const void *)((ssize_t)(REG[t_reg] % 256)), 1);
 }

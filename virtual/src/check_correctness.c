@@ -60,6 +60,8 @@ char 				*check_corewar_arguments(int check_code)
 		message = "THERE ARE NO CHAMP";
 	else if (check_code == SAME_NUM_FOR_CHAMPS)
 		message = "CHAMPS CAN NOT HAVE THE SAME ID!";
+	else if (check_code == NO_ID_AFTER_FLAG)
+		message = "THERE IS NO ID AFTER FLAG \'n\'!";
 	else if (check_code == TOO_BIG_NUM_FOR_CHAMP)
 		message = "CHAMP CAN NOT HAVE SO BIG ID!";
 	else if (check_code == REDUNDANT_ARGUMENTS)

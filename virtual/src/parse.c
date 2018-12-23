@@ -103,29 +103,44 @@ int 				create_champs(t_champ **champs)
 	while (counter < O_BOTS)
 	{
 		(*champs)[counter] = (t_champ){NULL, NULL, NULL,
-								 (O_BOTS + 1), 0, 0, NULL};
+								 (O_BOTS + 1), 0, 0, 0, 0, NULL};
 		counter++;
 	}
 	return (0);
 }
 
+int 				get_champ_by_id(t_champ *champ, unsigned id);
+
 unsigned 			find_free_space(t_champ *champs)
 {
-	unsigned 			counter;
-	int 			ids[O_BOTS];
+//	unsigned 			min;
+//	unsigned 			counter;
+//	int 			ids[O_BOTS];
+//
+//	min = O_BOTS + 1;
+//	if (champs == NULL)
+//		return (0);
+//	counter = 0;
+//	while (counter < O_BOTS)
+//	{
+//		ids[counter] = champs[counter].id;
+//		counter++;
+//	}
+//	counter = 0;
+//	while (counter < O_BOTS)
+//	{
+//		if (ids[counter] == (O_BOTS + 1))
+//		{
+//			return (counter);
+//		}
+//		counter++;
+//	}
+	unsigned 		counter;
 
-	if (champs == NULL)
-		return (0);
-	counter = 0;
-	while (counter < O_BOTS)
+	counter = 1;
+	while (counter < (O_BOTS + 1))
 	{
-		ids[counter] = champs[counter].id;
-		counter++;
-	}
-	counter = 0;
-	while (counter < O_BOTS)
-	{
-		if (ids[counter] == (O_BOTS + 1))
+		if (get_champ_by_id(champs, counter) == false)
 			return (counter);
 		counter++;
 	}
@@ -201,18 +216,17 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
 	{
 		champ_id = O_BOTS + 1;
-		if (*(av[(*counter)]) == '-')
+		if (*(av[(*counter)]) == '-' && av[(*counter) + 1])
 		{
-			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]) - 1;
+			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
 
 			if (get_champ_by_id(core->champs, champ_id))
 				return (SAME_NUM_FOR_CHAMPS);
-
-			if (check_got_num(av[(*counter) + 1], champ_id, 1))
-				return (TOO_BIG_NUM_FOR_CHAMP);
 			(*counter) += 2;
 		}
-		champ_id = (champ_id <= 3) ? champ_id : find_free_space(core->champs) + 1;
+		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
+			return (NO_ID_AFTER_FLAG);
+		champ_id = (champ_id <= 3) ? champ_id : find_free_space(core->champs);
 		check_code = get_champ(&(core->champs[core->qua_champs]),
 							   av[(*counter)++], champ_id);
 		core->qua_champs++;
