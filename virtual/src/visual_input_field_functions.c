@@ -41,6 +41,17 @@ int 			delete_last_letter_from_iput_field(char *field)
 	return (1);
 }
 
+// ????
+void 			set_field(t_corewar *core, char **field)
+{
+	if ((*field) == core->ncur.cycle_to_go)
+		(*field) = core->ncur.champ_id;
+	else if ((*field) == core->ncur.champ_id)
+		(*field) = core->ncur.carriage_id;
+	else if ((*field) == core->ncur.carriage_id)
+		(*field) = core->ncur.cycle_to_go;
+}
+
 
 void 			set_next_field(t_corewar *core)
 {

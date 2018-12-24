@@ -6,15 +6,9 @@ int				get_flags_help(t_flags *flags, char *av)
 	while (*av)
 	{
 		if (*av == 'v')
-			flags->visual = 1;// Рыба
+			flags->visual = 1;
 		else if (*av == 'd')
-			flags->dump = 1;// Рыба
-		else if (*av == 'a')
-			flags->a_visual = 1;// Рыба
-		else if (*av == 'o')
-			flags->output = 1;// Рыба
-		else if (*av == 's')
-			flags->s_visual = 1;// Рыба
+			flags->dump = 1;
 		else if (*av == 'n')
 			return (0);
 		else
@@ -33,36 +27,34 @@ int				get_flags(t_flags *flags, char **av)
 	{
 		if (ft_strcmp(av[counter], "-v") == 0)
 			flags->visual = 1;
-		else if (ft_strcmp(av[counter], "-d") == 0)// Рыба
+		else if (ft_strcmp(av[counter], "-d") == 0)
 		{
 			flags->dump = (unsigned)ft_atoi(av[++counter]);
 			if (check_got_num(av[counter], flags->dump, 1))
 				return (BAD_NUMBER_FOR_DUMP);
 		}
-		else if (ft_strcmp(av[counter], "-a") == 0)// Рыба
-			flags->a_visual = 1;
-		else if (ft_strcmp(av[counter], "-o") == 0)// Рыба
-			flags->output = 1;
-		else if (ft_strcmp(av[counter], "-s") == 0)// Рыба
-			flags->s_visual = 1;
-		else if (ft_strcmp(av[counter], "-n") == 0)// Рыба
+		else if (ft_strcmp(av[counter], "-n") == 0)
 			break ;
-		else if (*(av[counter]) == '-')
-			if (get_flags_help(flags, (av[counter] + 1)) == 1)
-			{
+		else if (*(av[counter]) == '-' &&
+			get_flags_help(flags, (av[counter] + 1)) == 1)
+		{
 				return (BAD_FLAGS);
-			}
+		}
 		counter++;
 	}
 	return (0);
 }
 
 
-int				check_arguments(t_flags *flags, int ac, char **av)
+int				check_availability_flags(t_flags *flags, int ac, char **av)
 {
 	if (ac < 2)
 	{
 		return (BAD_ARGUMENTS);
+	}
+	else if (ft_strcmp(av[1], "--help") == 0)
+	{
+		return (PRINT_USAGE);
 	}
 	if (av[1] && av[1][0] == '-')
 	{

@@ -55,14 +55,12 @@ int 				check_champ_info(t_champ *champ)
 	return (0);
 }
 
-int					get_champ(t_champ *champ, char *champfilename, unsigned number)
+int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 {
 	int				fd;
 	int 			check_num;
 
-	if (number == O_BOTS + 1)
-		return (ERROR); // define error
-	champ->id = number;
+	champ->id = id;
 	check_num = check_champ_file(champfilename);
 	if (check_num)
 		return (check_num);
@@ -89,7 +87,7 @@ t_carriage 				*create_carriage(int id)
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
 	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, NULL};
+									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, true, NULL};
 	return (carriage);
 }
 
@@ -103,7 +101,7 @@ int 				create_champs(t_champ **champs)
 	while (counter < O_BOTS)
 	{
 		(*champs)[counter] = (t_champ){NULL, NULL, NULL,
-								 (O_BOTS + 1), 0, 0, 0, 0, NULL};
+								 (O_BOTS + 1), 0, 0, 1, NULL};
 		counter++;
 	}
 	return (0);
@@ -113,28 +111,6 @@ int 				get_champ_by_id(t_champ *champ, unsigned id);
 
 unsigned 			find_free_space(t_champ *champs)
 {
-//	unsigned 			min;
-//	unsigned 			counter;
-//	int 			ids[O_BOTS];
-//
-//	min = O_BOTS + 1;
-//	if (champs == NULL)
-//		return (0);
-//	counter = 0;
-//	while (counter < O_BOTS)
-//	{
-//		ids[counter] = champs[counter].id;
-//		counter++;
-//	}
-//	counter = 0;
-//	while (counter < O_BOTS)
-//	{
-//		if (ids[counter] == (O_BOTS + 1))
-//		{
-//			return (counter);
-//		}
-//		counter++;
-//	}
 	unsigned 		counter;
 
 	counter = 1;
@@ -219,14 +195,15 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 		if (*(av[(*counter)]) == '-' && av[(*counter) + 1])
 		{
 			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
-
-			if (get_champ_by_id(core->champs, champ_id))
+			if (are_nums(av[(*counter) + 1]) == 1)
+				return (BAD_VALUE_FOR_FLAG_N);
+			if (get_champ_by_id(core->champs, champ_id) && champ_id != O_BOTS + 1)
 				return (SAME_NUM_FOR_CHAMPS);
 			(*counter) += 2;
 		}
 		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
 			return (NO_ID_AFTER_FLAG);
-		champ_id = (champ_id <= 3) ? champ_id : find_free_space(core->champs);
+		champ_id = (champ_id <= O_BOTS) ? champ_id : find_free_space(core->champs);
 		check_code = get_champ(&(core->champs[core->qua_champs]),
 							   av[(*counter)++], champ_id);
 		core->qua_champs++;

@@ -19,8 +19,6 @@ void				fill_memory_space(t_champ *champs, t_field *field, int qua_champs)
 				break ;
 			champ_counter = 0;
 		}
-		field[counter].val = champs[num_of_champ].exec_code[champ_counter];
-
 		if (counter < champs[num_of_champ].size + (MEM_SIZE / qua_champs) * num_of_champ)
 		{
 			field[counter].champ_id = num_of_champ + COUNTING_FROM_ONE;

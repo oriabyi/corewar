@@ -6,7 +6,7 @@
 /*   By: ariabyi <oleksandr32riabyi@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 14:18:27 by ariabyi           #+#    #+#             */
-/*   Updated: 2018/11/27 14:42:07 by ariabyi          ###   ########.fr       */
+/*   Updated: 2018/12/23 20:17:17 by ariabyi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void				free_char_matrix(char **str);
 char				*ft_multcat(int field, char *dest, ...);
 int					count_chars(const char *string, char letter, int in_row, int position);
 int					check_got_num(char *string, ssize_t num, int precision);
+int					are_nums(char *s);
+
 
 
 #endif

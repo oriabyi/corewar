@@ -7,7 +7,6 @@ void				clean_carriages(t_carriage *carriage)
 	free(carriage);
 }
 
-
 void				clean_champs(t_champ *champs, unsigned quantity)
 {
 	int				counter;
