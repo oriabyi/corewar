@@ -10,7 +10,7 @@ void 	check_whose_id(t_corewar *core, unsigned id)
 		if ((unsigned)(-core->champs[counter].id) == id)
 		{
 			core->champs[counter].alive = true;
-			core->last_live = core->champs[counter].id;
+			core->last_live = core->champs[counter].id; // here_change
 		}
 		counter++;
 	}

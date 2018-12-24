@@ -10,7 +10,7 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 		return (NULL);
 	dst->carry = src->carry;
 	dst->flag = src->flag;
-	dst->alive = false; // false?
+	dst->alive = false; // false? here change
 	dst->command = 0;
 	dst->cycles = 0;
 	dst->id = id;
