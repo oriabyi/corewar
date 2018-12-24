@@ -12,29 +12,75 @@
 
 #include "asm.h"
 
-void	ft_get_name(t_asm *glob, char **arr, char *line)
+void	ft_get_name(t_asm *glob, char **arr, char *line, int fd)
 {
+	char *line_cont;
+	char *prev;
+
 	if (!glob->name && arr[1])
 	{
-		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
+		if (!ft_strchr(line, '\"'))
 			ft_put_error(4, "hero's name");
-		glob->name = ft_strdup(ft_strchr(line, '\"') + 1);
+		glob->name = ft_strdup(ft_strchr(line, '\"'));
+		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
+			while (get_next_line(fd, &line_cont))
+			{
+				prev = glob->name;
+				glob->name = ft_strjoin(glob->name, "\n");
+				ft_free_line(&prev);
+				if ((glob->name = ft_strjoin_del(glob->name, line_cont))
+					&&
+					ft_strchr(glob->name, '\"') != ft_strrchr(glob->name, '\"'))
+					break ;
+			}
+		(ft_strchr(glob->name, '#')) ? *ft_strchr(glob->name, '#') = '\0' : 0;
+		line_cont = ft_strtrim(glob->name);
+		if (ft_strchr(glob->name, '\"') == ft_strrchr(glob->name, '\"') ||
+		line_cont[ft_strlen(line_cont) - 1] != '\"')
+			ft_put_error(4, "hero's name");
+		ft_free_line(&glob->name);
+		glob->name = ft_strdup(line_cont + 1);
 		glob->name[ft_strlen(glob->name) - 1] = '\0';
+		ft_free_line(&line_cont);
 		(ft_strlen(glob->name) > PROG_NAME_LENGTH) ? ft_put_error(12,
-				glob->name) : 0;
+		glob->name) : 0;
 	}
 	else
 		ft_put_error(5, "hero's name");
 }
 
-void	ft_get_comment(t_asm *glob, char **arr, char *line)
+void	ft_get_comment(t_asm *glob, char **arr, char *line, int fd)
 {
+	char *line_cont;
+	char *prev;
+
 	if (!glob->comment && arr[1])
 	{
-		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
+		if (!ft_strchr(line, '\"'))
 			ft_put_error(4, "comment");
-		glob->comment = ft_strdup(ft_strchr(line, '\"') + 1);
+		glob->comment = ft_strdup(ft_strchr(line, '\"'));
+		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
+			while (get_next_line(fd, &line_cont))
+			{
+				prev = glob->comment;
+				glob->comment = ft_strjoin(glob->comment, "\n");
+				ft_free_line(&prev);
+				glob->comment = ft_strjoin_del(glob->comment, "\n");
+				if ((glob->comment = ft_strjoin_del(glob->comment, line_cont))
+					&& ft_strchr(glob->comment, '\"') !=
+						ft_strrchr(glob->comment, '\"'))
+					break ;
+			}
+		(ft_strchr(glob->comment, '#')) ? *ft_strchr(glob->comment, '#') =
+				'\0' : 0;
+		line_cont = ft_strtrim(glob->comment);
+		if (ft_strchr(glob->comment, '\"') == ft_strrchr(glob->comment, '\"') ||
+		line_cont[ft_strlen(line_cont) - 1] != '\"')
+			ft_put_error(4, "comment");
+		ft_free_line(&glob->comment);
+		glob->comment = ft_strdup(line_cont + 1);
 		glob->comment[ft_strlen(glob->comment) - 1] = '\0';
+		ft_free_line(&line_cont);
 		(ft_strlen(glob->comment) > COMMENT_LENGTH) ? ft_put_error(12,
 		glob->comment) : 0;
 	}
@@ -52,7 +98,7 @@ void	ft_get_data(char *file, t_asm **glob)
 	*glob = ft_init_asm(file);
 	while (get_next_line(fd, &line) > 0)
 	{
-		ft_add_op(line, *glob);
+		ft_add_op(line, *glob, fd);
 		ft_free_line(&line);
 	}
 	ft_connect_labels(*glob);

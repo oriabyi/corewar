@@ -22,6 +22,6 @@ int	main(int ac, char **av)
 		else
 			ft_put_error(2, av[ac - 1]);
 	else
-		ft_put_error(0, "file");
+		ft_put_error(17, av[0]);
 	return (0);
 }

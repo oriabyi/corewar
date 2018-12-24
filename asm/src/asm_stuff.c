@@ -34,6 +34,7 @@ int		ft_put_error(int err, char *str)
 	(err == 14) ? ft_printf("Error: you need full header, dear\n") : 0;
 	(err == 15) ? ft_printf("Error: last \\n missed\n") : 0;
 	(err == 16) ? ft_printf("Error: check registers number %s\n", str) : 0;
+	(err == 17) ? ft_printf("Usage: %s <sourcefile.s>\n", str) : 0;
 	exit(-1);
 }
 
