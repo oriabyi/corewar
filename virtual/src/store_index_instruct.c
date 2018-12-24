@@ -26,10 +26,10 @@ int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
 
 
-			if (CR_IS_VIEW_CARRIAGE(field[coord].champ_id))
+//			if (field[coord].carriages_on)
 				field[coord].old_owner = get_id_of_champ(id);
-			else
-				field[coord].champ_id = get_id_of_champ(id) + DENOTE_ALTERED;
+//			else
+				field[coord].champ_id = get_id_of_champ(id); //+ DENOTE_ALTERED;
 
 		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;

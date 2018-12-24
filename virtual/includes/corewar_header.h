@@ -115,13 +115,7 @@
 # define MENU_UP_BUTTON				258
 # define VISUAL_OFF					27
 
-
-# define CR_IS_VIEW_SANE(x)			(x >= 0 && x <= 4)
-# define CR_IS_VIEW_CARRIAGE(x)		(x >= 5 && x <= 9)
-# define CR_IS_VIEW_ALTERED(x)		(x >= 10 && x <= 14)
-# define CR_IS_VIEW_ALIVE(x)		(x >= 15 && x <= 19)
-
-# define DENOTE_CARRIAGE			5
+# define DENOTE_CARRIAGE			5 //TODO: remove
 # define DENOTE_ALTERED				10
 # define DENOTE_ALIVE				15
 
@@ -293,7 +287,7 @@ typedef struct			s_battlefield
 	char 				val;
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
-	unsigned			sum_acts:5;
+	unsigned			is_alive:1;
 	unsigned			carriages_on;
 	int					altered_cycles;
 	unsigned			old_owner;

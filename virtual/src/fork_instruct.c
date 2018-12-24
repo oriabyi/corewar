@@ -49,6 +49,7 @@ void					fork_instruct(t_field *field, t_carriage *carriage,
 	}
 	new_carriage->cur_coord = (int)correction_coordinates(new_carriage->cur_coord);
 
+	field[new_carriage->cur_coord].carriages_on++;
 	denote_field(field, new_carriage->cur_coord);
 
 	while (head && head->next)

@@ -15,14 +15,13 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 
 		id = get_id_of_champ(core->field[i].champ_id);
 
-		if (CR_IS_VIEW_SANE(core->field[i].champ_id))
-			simple_print(core->ncur.memory_window, id);
-		else if (CR_IS_VIEW_CARRIAGE(core->field[i].champ_id)) // carriage
-			carriage_print(core->ncur.memory_window, id);
-		else  if (CR_IS_VIEW_ALTERED(core->field[i].champ_id))	// changed
-		{
-			altered_view(core->ncur.memory_window, id);
 
+		if (core->field[i].is_alive)	//alive
+			alive_view(core->ncur.memory_window, id);
+		else if (core->field[i].carriages_on) // carriage
+			carriage_print(core->ncur.memory_window, id);
+		else  if (core->field[i].altered_cycles)	// changed
+		{
 			if (core->field[i].altered_cycles == ALTERED_FIELD)
 				core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
 			else if (core->field[i].altered_cycles <= cycles)
@@ -31,10 +30,12 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 				core->field[i].champ_id = id;
 			}
 
-
+			altered_view(core->ncur.memory_window, id);
 		}
-		else  if (CR_IS_VIEW_ALIVE(core->field[i].champ_id))	//alive
-			alive_view(core->ncur.memory_window, id);
+		else
+			simple_print(core->ncur.memory_window, id);
+
+
 
 		if (i % 64 == 0)
 			wmove(core->ncur.memory_window, (i / 64) + 1, 2);
