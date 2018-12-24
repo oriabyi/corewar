@@ -32,6 +32,7 @@ void				fill_memory_space(t_champ *champs, t_field *field, int qua_champs)
 		{
 			champs[num_of_champ].carriage->cur_coord = counter;
 			field[counter].champ_id = num_of_champ + COUNTING_FROM_ONE + DENOTE_CARRIAGE;
+			field[counter].carriages_on++;
 		}
 		champ_counter++;
 		counter++;
