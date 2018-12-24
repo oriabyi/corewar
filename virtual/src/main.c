@@ -27,7 +27,7 @@ void 			get_game_type(t_corewar *core)
 	}
 	else
 	{
-		ft_putstr(pull_out_champs_info(core));
+//		ft_putstr(pull_out_champs_info(core));
 	}
 }
 
@@ -43,17 +43,20 @@ void			war(t_corewar *core)
 	while (core->cycle_to_die > 0)
 	{
 
-		if (F_VISUAL == false && cycles == F_DUMP)
-		{
-			print_memory(core);
-			break ;
-		}
+//		if (F_VISUAL == false && cycles == F_DUMP)
+//		{
+//			print_memory(core);
+//			break ;
+//		}
+
+		do_process(core);
 
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles);
 		else
 			cycles++;
-		do_process(core);
+
+
 		bigmother++;
 		if (cycles == cycles_limit)
 		{
@@ -70,6 +73,7 @@ void			war(t_corewar *core)
 
 	if (F_VISUAL)
 		visual_end(core);
+//	system("leaks corewar");
 }
 
 void 			init_core(t_corewar *core)

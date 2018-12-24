@@ -24,13 +24,9 @@ int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
-
-
-//			if (field[coord].carriages_on)
-				field[coord].old_owner = get_id_of_champ(id);
-//			else
-				field[coord].champ_id = get_id_of_champ(id); //+ DENOTE_ALTERED;
-
+		field[coord].old_owner = get_id_of_champ(id);
+		field[coord].champ_id = get_id_of_champ(id); //+ DENOTE_ALTERED;
+		field[coord].is_alive = 0;
 		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;
 		counter++;

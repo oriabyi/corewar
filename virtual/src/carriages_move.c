@@ -5,7 +5,7 @@
 void 	remove_carriage(t_field *field)
 {
 	field->carriages_on--;
-	if (field->hex[0] == '0' && field->hex[1] == '1')
+	if (!field->carriages_on && field->hex[0] == '0' && field->hex[1] == '1')
 		field->is_alive = 0;
 }
 
