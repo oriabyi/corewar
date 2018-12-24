@@ -9,7 +9,8 @@ void 	check_whose_id(t_corewar *core, unsigned id)
 	{
 		if ((unsigned)(-core->champs[counter].id) == id)
 		{
-			core->champs[counter].last_live = true;
+			core->champs[counter].alive = true;
+			core->last_live = core->champs[counter].id;
 		}
 		counter++;
 	}
@@ -26,4 +27,5 @@ void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core)
 			get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALIVE;
 	field[CUR_COORD].altered_cycles = SHOW_CHANGED_CYCLES;
 	ALIVE = true;
+	core->qua_lives++;
 }

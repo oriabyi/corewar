@@ -54,10 +54,12 @@ char 				*check_corewar_arguments(int check_code)
 		message = "BAD ARGUMENTS!";
 	else if (check_code == BAD_FLAGS)
 		message = "BAD FLAGS!";
+	else if (check_code == BAD_VALUE_FOR_FLAG_N)
+		message = "BAD VALUE FOR \'n\'!";
 	else if (check_code == BAD_NUMBER_FOR_DUMP)
 		message = "BAD NUMBER OF CYCLES FOR DUMP!";
 	else if (check_code == MISSING_CHAMP)
-		message = "THERE ARE NO CHAMP";
+		message = "THERE IS NO CHAMP";
 	else if (check_code == SAME_NUM_FOR_CHAMPS)
 		message = "CHAMPS CAN NOT HAVE THE SAME ID!";
 	else if (check_code == NO_ID_AFTER_FLAG)
@@ -71,13 +73,23 @@ char 				*check_corewar_arguments(int check_code)
 	return (message);
 }
 
-void				check_correctness(t_corewar *core, int check_code)
+#include "../../libft/ft_strjoin.c"
+char 			*get_message(void)
+{
+	return (ft_multjoinfr(4, "Usage:"
+					  " \tExample: ./corewar -v -n -1 filename.cor\n"
+					  " \tGUI: ./corewar -visual [Players]\n"
+					  " \tDefault Player Numbers: 1, 2, 3, 4...\n"
+					  " \tChange Player Number: -n -1 filename.cor\n"
+					  " \tDump: ./corewar -d 300 [Players](prints the memory after 300 cycles)\n"
+					  " \tGame on! ", ALIEN, ALIEN, ALIEN));
+}
+
+int				check_correctness(t_corewar *core, int check_code)
 {
 	char 			*message;
 
-	if (check_code == 0)
-		return ;
-	else if (check_code == MEMORY_ERROR)
+	if (check_code == MEMORY_ERROR)
 	{
 		message = "MEMORY ALLOCATE ERROR!";
 	}
@@ -93,7 +105,14 @@ void				check_correctness(t_corewar *core, int check_code)
 	{
 		message = check_champ_data(check_code);
 	}
+	else if (check_code == PRINT_USAGE)
+	{
+		message = get_message();
+		check_code = 0;
+	}
 	else
-		message = "ERROR!";
-	exit_message(core, check_code, message);
+		message = "ERROR";
+
+	notification_message(core, check_code, message);
+	return (check_code);
 }

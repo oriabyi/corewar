@@ -12,12 +12,10 @@ void					load_instruct(t_field *field, t_carriage *carriage, unsigned char argum
 	}
 	first_arg = get_arguments(field, argument, FIRST_ARG, carriage);
 	second_arg = (unsigned char)get_arguments(field, argument, SECOND_ARG, carriage);
-
 	if (check_reg(second_arg) == 1)
 	{
 		return ;
 	}
-
 	REG[second_arg] = (unsigned)first_arg;
 	change_carry_if_need(second_arg, carriage);
 }

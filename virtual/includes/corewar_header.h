@@ -9,8 +9,11 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-#define F_VISUAL core->flags.visual
-#define F_DUMP core->flags.dump
+
+# define ALIEN "\xF0\x9F\x91\xBD"
+
+#define F_VISUAL		core->flags.visual
+#define F_DUMP			core->flags.dump
 
 #define CUR_COORD		carriage->cur_coord
 
@@ -26,10 +29,10 @@
 # define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
 
-# define O_BOTS					4
+# define O_BOTS						4
 
 
-# define NONE_ARG				0
+# define NONE_ARG					0
 
 
 # define ALTERED_FIELD				-1
@@ -39,10 +42,13 @@
 #define COUNTING_FROM_ONE 			1
 
 
-#define ONE_BYTE		1
-#define TWO_BYTES		2
-#define FOUR_BYTES		4
+#define ONE_BYTE					1
+#define TWO_BYTES					2
+#define FOUR_BYTES					4
 
+
+
+#define CHAMP_IS_DEAD				3
 
 
 
@@ -138,38 +144,36 @@
 									arg <= REDUNDANT_ARGUMENTS)
 # define BAD_ARGUMENTS				34
 # define BAD_FLAGS					35
-# define BAD_NUMBER_FOR_DUMP		36
-# define MISSING_CHAMP				37
-# define SAME_NUM_FOR_CHAMPS		38
-# define NO_ID_AFTER_FLAG			39
-# define TOO_BIG_NUM_FOR_CHAMP		40
-# define REDUNDANT_ARGUMENTS		41
+# define BAD_VALUE_FOR_FLAG_N		36
+# define BAD_NUMBER_FOR_DUMP		37
+# define MISSING_CHAMP				38
+# define SAME_NUM_FOR_CHAMPS		39
+# define NO_ID_AFTER_FLAG			40
+# define TOO_BIG_NUM_FOR_CHAMP		41
+# define REDUNDANT_ARGUMENTS		42
 
 # define FILE_ERROR(arg)			(arg >= FILE_DOESNT_EXIST && \
 									arg <= BAD_CHAMP)
-# define FILE_DOESNT_EXIST			42
-# define NO_RIGHT_FOR_READ			43
-# define FILE_IS_PIPE				44
-# define FILE_IS_SPEC_CHAR			45
-# define FILE_IS_DIR				46
-# define FILE_IS_SOCKET				47
-# define FILE_IS_BLOCK				48
-# define WRONG_FILE_TYPE			49
+# define FILE_DOESNT_EXIST			43
+# define NO_RIGHT_FOR_READ			44
+# define FILE_IS_PIPE				45
+# define FILE_IS_SPEC_CHAR			46
+# define FILE_IS_DIR				47
+# define FILE_IS_SOCKET				48
+# define FILE_IS_BLOCK				49
+# define WRONG_FILE_TYPE			50
 
 # define CHAMP_DATA_ERROR(arg)		(arg >= WRONG_MAGIC_VALUE && \
 									arg <= BAD_COMMENT_LENGTH)
 
-# define BAD_CHAMP_EXTENSION		50
-# define BAD_CHAMP					51
-# define WRONG_MAGIC_VALUE			52
-# define BAD_NAME_LENGTH			53
-# define BAD_CHAMP_SIZE				54
-# define BAD_COMMENT_LENGTH			55
+# define BAD_CHAMP_EXTENSION		51
+# define BAD_CHAMP					52
+# define WRONG_MAGIC_VALUE			53
+# define BAD_NAME_LENGTH			54
+# define BAD_CHAMP_SIZE				55
+# define BAD_COMMENT_LENGTH			56
 
-
-
-//////////////////////////////////////
-
+# define PRINT_USAGE				60
 
 
 # define NO_INSTRUCTION				0
@@ -234,9 +238,6 @@ typedef	struct			s_flags
 {
 	unsigned			visual:1;
 	unsigned			dump;
-	unsigned			a_visual:5;// Рыба
-	unsigned			output:1;// Рыба
-	unsigned			s_visual:1;// Рыба
 }						t_flags;
 
 
@@ -263,8 +264,7 @@ typedef struct			s_champion
 	unsigned			id;
 	unsigned			size;
 	unsigned 			quant_carriages;
-	unsigned			last_live;
-	unsigned			lives_cur;
+	unsigned			alive:2;
 
 	t_carriage			*carriage;
 }						t_champ;
@@ -290,7 +290,6 @@ typedef struct			s_ncurses
 
 typedef struct			s_battlefield
 {
-	char 				val;
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
 	unsigned			sum_acts:5;
@@ -307,6 +306,8 @@ typedef struct			s_corewar
 	int 				cycle_to_die;
 	int 				max_checks;
 	unsigned 			qua_champs;
+	unsigned 			qua_lives;
+	unsigned 			last_live:3;
 }						t_corewar;
 
 
@@ -314,7 +315,7 @@ typedef struct			s_corewar
 ** Treatment arguments
 */
 
-int 	check_arguments(t_flags *flags, int ac, char **av);
+int 	check_availability_flags(t_flags *flags, int ac, char **av);
 
 /*
 ** Parse
@@ -352,8 +353,8 @@ void 	clean_all(t_corewar *core);
 ** Control work
 */
 
-void 	exit_message(t_corewar *core, int error_code, char *error_message);
-void 	check_correctness(t_corewar *core, int check_code);
+int 	notification_message(t_corewar *core, int error_code, char *error_message);
+int 	check_correctness(t_corewar *core, int check_code);
 /*
 ** Visualization
 */
@@ -396,7 +397,7 @@ void 	add_sub_instructs(t_field *field, t_carriage *carriage, unsigned  char arg
 // all logical operations here
 void 	logical_operations(t_field *field, t_carriage *carriage, unsigned  char argument);
 
-int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, unsigned id);
+int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage);
 
 //	LLDI in LDI
 void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
@@ -419,7 +420,7 @@ void 	change_carry_if_need(int coord, t_carriage *carriage);
 **	Move Carriage
 */
 
-void 	move_carriage(t_field *field, unsigned id, int step, t_carriage *carriage);
+void 	move_carriage(t_field *field, int step, t_carriage *carriage);
 
 
 /*

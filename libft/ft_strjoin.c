@@ -26,9 +26,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		free(dest);
 		return (NULL);
 	}
-	while (s1 && *s1 && ft_isascii(*s1))
+	while (s1 && *s1)
 		dest[i++] = *s1++;
-	while (s2 && *s2 && ft_isascii(*s2))
+	while (s2 && *s2)
 		dest[i++] = *s2++;
 	dest[i] = '\0';
 	return (dest);

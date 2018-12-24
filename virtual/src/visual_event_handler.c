@@ -30,7 +30,7 @@ int 			get_button(t_corewar *core, int cycle)
 	else if (c == VISUAL_OFF)			//TODO: ??????????
 	{
 		F_VISUAL = FALSE;
-		exit_message(core, 3, "ESCAPE!");
+		notification_message(core, 3, "ESCAPE!");
 	}
 	return (c);
 }

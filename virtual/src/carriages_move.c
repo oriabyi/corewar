@@ -1,15 +1,16 @@
 #include "../includes/corewar_header.h"
 
-//alive and zjmp
-
-void 	remove_carriage(t_field *field, unsigned id)
+void 	remove_carriage(t_field *field)
 {
 	field->champ_id = get_id_of_champ(field->old_owner);
-	if ((field->altered_cycles == ALTERED_FIELD || field->altered_cycles > 0) &&  !CR_IS_VIEW_ALTERED(field->champ_id))
+	if ((field->altered_cycles == ALTERED_FIELD || field->altered_cycles > 0) &&
+		CR_IS_VIEW_ALTERED(field->champ_id) == false)
+	{
 		field->champ_id = get_id_of_champ(field->champ_id) + DENOTE_ALTERED;
+	}
 }
 
-void 	place_carriage(t_field *field, unsigned id)
+void 	place_carriage(t_field *field)
 {
 	if (CR_IS_VIEW_CARRIAGE(field->champ_id))
 	{
@@ -23,14 +24,11 @@ void 	place_carriage(t_field *field, unsigned id)
 }
 
 
-void 	move_carriage(t_field *field, unsigned id, int step, t_carriage *carriage)
+void 	move_carriage(t_field *field, int step, t_carriage *carriage)
 {
-	remove_carriage(&field[CUR_COORD], id);
-
+	remove_carriage(&field[CUR_COORD]);
 	CUR_COORD = (int)correction_coordinates(CUR_COORD + step);
-
-	place_carriage(&field[CUR_COORD], id);
-
+	place_carriage(&field[CUR_COORD]);
 	CUR_COORD = (int)correction_coordinates(CUR_COORD);
 }
 

@@ -1,51 +1,76 @@
 #include "../includes/corewar_header.h"
 
-int 			is_anychamp_alive(t_champ *champs, unsigned qua_champs)
+unsigned 			how_many_champs_alive(t_corewar *core)
 {
 	int 		counter;
+	unsigned 	lives;
 
 	counter = 0;
-	while (counter < qua_champs)
+	lives = 0;
+	while (counter < core->qua_champs)
 	{
-		if (champs[counter].carriage)
-			return (1);
+		if (core->champs[counter].alive != CHAMP_IS_DEAD)
+			lives++;
 		counter++;
 	}
-	return (0);
+	return (lives);
 }
 
-void			war(t_corewar *core)
-{
-	unsigned 	cycles;
+char			*pull_out_champs_info(t_corewar *core);
 
-	cycles = 0;
-	visual_init(core);
+void 			get_game_type(t_corewar *core)
+{
 	if (F_VISUAL)
 	{
 		visual_start(core);
 		display_windows(core, 1);
 	}
-	while (core->cycle_to_die > 0 && is_anychamp_alive(core->champs, core->qua_champs))
+	else
 	{
+		ft_putstr(pull_out_champs_info(core));
+	}
+}
+
+
+void			war(t_corewar *core)
+{
+	unsigned 	cycles;
+	unsigned 	cycles_limit;
+
+	cycles_limit = (unsigned)core->cycle_to_die;
+	cycles = 0;
+	get_game_type(core);
+	while (core->cycle_to_die > 0)
+	{
+
 //		if (F_VISUAL == false && cycles == F_DUMP)
 //		{
 //			print_memory(core);
 //			break ;
 //		}
-		if (cycles && core->cycle_to_die && cycles % core->cycle_to_die == 0)
-			core->cycle_to_die = check_cycle_to_die(core);
+
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles);
 		else
 			cycles++;
 		do_process(core);
 		bigmother++;
+		if (cycles == cycles_limit)
+		{
+			core->cycle_to_die = check_cycle_to_die(core);
+			if (how_many_champs_alive(core) == 0)
+				break ;
+			cycles_limit = cycles + core->cycle_to_die;
+		}
 	}
+	char *temp = ft_multjoinfr(3, "Contestant 2, \"", core->champs[core->last_live - 1].name, "\", has won !\n");
+	ft_putstr(temp);
+	free(temp);
 	if (F_VISUAL)
 		visual_end(core);
 }
 
-void 			reset_core(t_corewar *core)
+void 			init_core(t_corewar *core)
 {
 	core->field = NULL;
 	core->ncur = (t_ncurses){0, {0, 0}, {0, 0}, 0, 0, 0, 0};
@@ -56,11 +81,13 @@ void 			reset_core(t_corewar *core)
 	core->ncur.memory_window = NULL;
 	core->ncur.score_window = NULL;
 	core->champs = NULL;
-//	core->flags = (t_flags){0, (unsigned)-1, 0, 0, 0};
-	core->flags = (t_flags){0, 0, 0, 0, 0};
+//	core->flags = (t_flags){0, (unsigned)-1};
+	core->flags = (t_flags){0, 0};
 	core->cycle_to_die = CYCLE_TO_DIE;
 	core->max_checks = 0;
 	core->qua_champs = 0;
+	core->qua_lives = 0;
+	core->last_live = 0;
 }
 
 int				main(int ac, char **av)
@@ -69,10 +96,13 @@ int				main(int ac, char **av)
 	t_corewar	core;
 
 	bigmother = 0;
-	reset_core(&core);
-	check_arguments(&core.flags, ac, av);
-	check_code = parse(&core, av);
-	check_correctness(&core, check_code);
+	init_core(&core);
+	check_code = check_availability_flags(&core.flags, ac, av);
+	if ((check_code || (check_code = parse(&core, av))) ||
+		(check_code = visual_init(&core)))
+	{
+		return (check_correctness(&core, check_code));
+	}
 	war(&core);
 	clean_all(&core);
 	return (0);
