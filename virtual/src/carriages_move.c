@@ -4,22 +4,25 @@
 
 void 	remove_carriage(t_field *field)
 {
-	field->champ_id = get_id_of_champ(field->old_owner);
-	if ((field->altered_cycles == ALTERED_FIELD || field->altered_cycles > 0) &&  !CR_IS_VIEW_ALTERED(field->champ_id))
-		field->champ_id = get_id_of_champ(field->champ_id) + DENOTE_ALTERED;
+	field->carriages_on--;
+	if (field->carriages_on == 0)
+	{
+		field->champ_id = get_id_of_champ(field->old_owner);
+		if ((field->altered_cycles == ALTERED_FIELD || field->altered_cycles > 0) &&
+			!CR_IS_VIEW_ALTERED(field->champ_id))
+			field->champ_id = get_id_of_champ(field->champ_id) + DENOTE_ALTERED;
+	}
+	else
+	{
+		field->champ_id = field->champ_id;
+	}
 }
 
 void 	place_carriage(t_field *field)
 {
-	if (CR_IS_VIEW_CARRIAGE(field->champ_id))
-	{
-		field->sum_acts++;
-	}
-	else
-	{
-		field->old_owner = field->champ_id;
-		denote_field(field, 0);
-	}
+	field->carriages_on++;
+	field->old_owner = field->champ_id;
+	denote_field(field, 0);
 }
 
 
