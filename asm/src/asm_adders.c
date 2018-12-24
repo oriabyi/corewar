@@ -109,7 +109,7 @@ void	ft_add_prosses(char **arr, t_asm *glob, int i, t_op *op)
 	ft_free_arr(prosses);
 }
 
-void	ft_add_op(char *line, t_asm *glob)
+void	ft_add_op(char *line, t_asm *glob, int fd)
 {
 	char **arr;
 
@@ -117,9 +117,9 @@ void	ft_add_op(char *line, t_asm *glob)
 	if (!arr || !arr[0])
 		;
 	else if (!ft_strcmp(arr[0], NAME_CMD_STRING))
-		ft_get_name(glob, arr, line);
+		ft_get_name(glob, arr, line, fd);
 	else if (!ft_strcmp(arr[0], COMMENT_CMD_STRING))
-		ft_get_comment(glob, arr, line);
+		ft_get_comment(glob, arr, line, fd);
 	else if (glob->name && glob->comment && ft_strlen(arr[0]))
 		ft_get_prosses(glob, arr);
 	else

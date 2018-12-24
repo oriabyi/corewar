@@ -23,14 +23,22 @@ int		ft_check_extention(char *file)
 int		ft_check_types(char **args, t_op *op)
 {
 	int i;
+	int type;
 
 	i = 0;
 	while (args && args[i] && i < op->n_par)
-		if ((op->type_arg[i] & (args[i][0] == 'r' || args[i][0] == DIRECT_CHAR)
-			? args[i][0] : 0) == op->type_arg[i])
+	{
+		if (args[i][0] == 'r')
+			type = T_REG;
+		else if (args[i][0] == DIRECT_CHAR)
+			type = T_DIR;
+		else
+			type = T_IND;
+		if ((op->type_arg[i] & type) != type)
 			return (0);
 		else
 			i++;
+	}
 	return (1);
 }
 
