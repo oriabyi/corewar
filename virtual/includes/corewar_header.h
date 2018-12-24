@@ -294,6 +294,7 @@ typedef struct			s_battlefield
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
 	unsigned			sum_acts:5;
+	unsigned			carriages_on;
 	int					altered_cycles;
 	unsigned			old_owner;
 }						t_field;
