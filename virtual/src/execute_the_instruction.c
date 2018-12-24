@@ -56,7 +56,7 @@ void 			perform_champ_carriages(t_field *field, t_champ *champ, t_corewar *core)
 
 	qua_carriages = champ->quant_carriages;
 	carriage = champ->carriage;
-	while (carriage && qua_carriages--)
+	while (carriage) // && qua_carriages--
 	{
 		if (COMMAND == 0)
 		{
