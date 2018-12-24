@@ -43,11 +43,11 @@ void			war(t_corewar *core)
 	while (core->cycle_to_die > 0)
 	{
 
-//		if (F_VISUAL == false && cycles == F_DUMP)
-//		{
-//			print_memory(core);
-//			break ;
-//		}
+		if (F_VISUAL == false && cycles == F_DUMP)
+		{
+			print_memory(core);
+			break ;
+		}
 
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles);
@@ -63,9 +63,11 @@ void			war(t_corewar *core)
 			cycles_limit = cycles + core->cycle_to_die;
 		}
 	}
-	char *temp = ft_multjoinfr(3, "Contestant 2, \"", core->champs[core->last_live - 1].name, "\", has won !\n");
-	ft_putstr(temp);
-	free(temp);
+
+//	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
+//	ft_putstr(temp);
+//	free(temp);
+
 	if (F_VISUAL)
 		visual_end(core);
 }
@@ -81,7 +83,6 @@ void 			init_core(t_corewar *core)
 	core->ncur.memory_window = NULL;
 	core->ncur.score_window = NULL;
 	core->champs = NULL;
-//	core->flags = (t_flags){0, (unsigned)-1};
 	core->flags = (t_flags){0, 0};
 	core->cycle_to_die = CYCLE_TO_DIE;
 	core->max_checks = 0;

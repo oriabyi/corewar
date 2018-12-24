@@ -159,7 +159,6 @@
 
 # define CHAMP_DATA_ERROR(arg)		(arg >= WRONG_MAGIC_VALUE && \
 									arg <= BAD_COMMENT_LENGTH)
-
 # define BAD_CHAMP_EXTENSION		51
 # define BAD_CHAMP					52
 # define WRONG_MAGIC_VALUE			53

@@ -5,12 +5,6 @@
 void 	remove_carriage(t_field *field)
 {
 	field->carriages_on--;
-
-
-//	if (field->carriages_on == 0)
-//	{
-//		field->champ_id = field->old_owner;
-//	}
 	if (field->hex[0] == '0' && field->hex[1] == '1')
 		field->is_alive = 0;
 }
@@ -20,8 +14,6 @@ void 	place_carriage(t_field *field)
 	field->carriages_on++;
 	if (field->hex[0] == '0' && field->hex[1] == '1')
 		field->is_alive = 1;
-//	field->old_owner = field->champ_id;
-//	denote_field(field, 0);
 }
 
 
