@@ -34,6 +34,21 @@ void	remove_dead_processes(t_carriage **begin_list,
 	}
 }
 
+unsigned		reset_carriages_id(t_carriage **cariage)
+{
+	t_carriage	*head;
+	unsigned	counter;
+
+	counter = 0;
+	head = *cariage;
+	while (head)
+	{
+		head->id = counter++;
+		head = head->next;
+	}
+	return (counter);
+}
+
 int 			check_cycle_to_die(t_corewar *core)
 {
 	remove_dead_processes(&core->carriage, &core->quant_carriages);
@@ -51,5 +66,6 @@ int 			check_cycle_to_die(t_corewar *core)
 		core->cycle_to_die -= CYCLE_DELTA;
 	}
 	core->qua_lives = 0;
+	core->quant_carriages = reset_carriages_id(&core->carriage);
 	return ((core->cycle_to_die > 0) ? core->cycle_to_die : 0);
 }

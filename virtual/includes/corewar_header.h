@@ -217,34 +217,6 @@
 # define CW_AFF_CYCLES				2
 
 
-
-
-//live(1), zjmp(9), fork(12), lfork(15)
-# define D_N_N			(T_DIR, NONE_ARG, NONE_ARG)
-
-// ld(2),  lld(13)
-# define DI_R_N			(T_DIR | T_IND, T_R, NONE_ARG)
-
-// st(3)
-# define R_RI_N
-
-// add(4), sub(5)
-# define R_R_R
-
-// and(6), or(7), xor(8)
-# define RDI_RDI_R
-
-// ldi(10), lldi(14)
-#define RDI_RD_R
-
-// sti(11)
-# define R_RDI_RD
-
-// aff(16)
-# define R_N_N
-
-
-
 int 				bigmother;
 
 typedef	struct			s_flags
@@ -264,6 +236,7 @@ typedef struct 			s_arguments
 
 typedef struct			s_carriage
 {
+	unsigned			id;
 	int 				cur_coord;
 	unsigned 			carry:1;
 	unsigned			flag:1;

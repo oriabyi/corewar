@@ -45,12 +45,16 @@ void			war(t_corewar *core)
 		}
 		if (core->cycle_to_die <= 0 || core->carriage == NULL)
 		{
-			int old_cycles = cycles;
-			NCUR.pause = 1;
-			cycles = (unsigned)draw(core, cycles, &cycles_limit);
-			if (cycles >= old_cycles)
-				break ;
-			continue ;
+			if (F_VISUAL)
+			{
+				int old_cycles = cycles;
+				NCUR.pause = 1;
+				cycles = (unsigned) draw(core, cycles, &cycles_limit);
+				if (cycles >= old_cycles)
+					break;
+				continue;
+			}
+			break ;
 		}
 	}
 

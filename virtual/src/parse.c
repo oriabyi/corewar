@@ -86,7 +86,7 @@ t_carriage 				*create_carriage(int id)
 
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
-	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
+	*carriage = (t_carriage){0, 0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
 									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, NULL};
 	return (carriage);
 }
@@ -126,7 +126,7 @@ unsigned 			find_free_space(t_champ *champs)
 void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refactor me
 {
 	t_carriage		*head;
-	int 			counter;
+	unsigned		counter;
 
 	counter = 0;
 	head = NULL;
@@ -143,7 +143,7 @@ void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refact
 			head = head->next;
 		}
 		head->next = NULL;
-		core->quant_carriages++;
+		head->id = core->quant_carriages++;
 		counter++;
 	}
 	head = core->carriage;
