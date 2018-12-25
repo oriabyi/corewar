@@ -1,7 +1,7 @@
 #include "../includes/corewar_header.h"
 
 void						list_of_instructions(t_field *field,
-										t_carriage *carriage, unsigned char argument)
+										t_carriage *carriage)
 {
 	if (COMMAND == CW_LD || COMMAND == CW_LLD)
 		load_instruct(carriage);
@@ -67,7 +67,7 @@ void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *co
 	else if (COMMAND == CW_LIVE)
 		alive_instruct(field, carriage, core);
 	else
-		list_of_instructions(field, carriage, LIST_ARGUMENTS);
+		list_of_instructions(field, carriage);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
 		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, 3,

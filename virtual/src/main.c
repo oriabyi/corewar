@@ -62,7 +62,10 @@ void			war(t_corewar *core)
 				break ;
 			cycles_limit = cycles + core->cycle_to_die;
 		}
+		if (bigmother >= 10000)
+			break;
 	}
+	reset_game(core);
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
 //	ft_putstr(temp);
@@ -93,7 +96,7 @@ void 			init_core(t_corewar *core)
 	core->carriage = NULL;
 }
 
-int				main(int ac, char **av)
+int				submain(int ac, char **av)
 {
 	int 		check_code;
 	t_corewar	core;
@@ -110,4 +113,11 @@ int				main(int ac, char **av)
 	clean_all(&core);
 	printf("bigmother = %d\n", bigmother);
 	return (0);
+}
+
+int main(int ac, char **av)
+{
+	submain(ac, av);
+	system("leaks -q Corewar");
+	return(0);
 }

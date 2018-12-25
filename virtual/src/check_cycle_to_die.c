@@ -26,26 +26,6 @@ void	remove_dead_processes(t_field *field, t_carriage **begin_list,
 	}
 }
 
-int i(t_champ *champ)
-{
-	int i = 0;
-	int f = 0;
-	t_carriage *temp;
-
-	if (champ == NULL)
-		return (0);
-	temp = champ->carriage;
-	while (champ->carriage)
-	{
-		i++;
-		if (champ->carriage->alive == false)
-			f++;
-		champ->carriage = champ->carriage->next;
-	}
-	champ->carriage = temp;
-	return (i);
-}
-
 int 			check_cycle_to_die(t_corewar *core)
 {
 	remove_dead_processes(core->field, &core->carriage, &core->quant_carriages);
