@@ -24,8 +24,6 @@ void 			reset_game(t_corewar *core)
 
 	core->cycle_to_die = CYCLE_TO_DIE;
 	core->max_checks = 0;
-
-	core->qua_champs = 0;
 	core->qua_lives = 0;
 	core->quant_carriages = 0;
 	core->last_live = 0;
