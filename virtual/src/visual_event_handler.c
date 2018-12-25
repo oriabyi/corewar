@@ -7,22 +7,22 @@ int 			get_button(t_corewar *core, int cycle)
 	c = getch();
 
 	if (c != -1)
-		core->ncur.pressed_button = c;
+		NCUR.pressed_button = c;
 	else
 		return (0);
 
-	if (c == PAUSE_BUTTON && core->ncur.pause)
-		core->ncur.pause = false;
+	if (c == PAUSE_BUTTON && NCUR.pause)
+		NCUR.pause = false;
 	else if (ft_isdigit(c))
-		uppend_input_field(core->ncur.current_field, (char)c);
+		uppend_input_field(NCUR.current_field, (char)c);
 	else if (c == DELETE_BUTTON)
-		delete_last_letter_from_iput_field(core->ncur.current_field);
-	else if ((cycle == core->ncur.where_pause  || c == PAUSE_BUTTON) && !core->ncur.pause)
-		core->ncur.pause = true;
-	else if (SPEED_PLUS_BUTTONS(c) && core->ncur.draw_speed < MAX_SPEED)
-		core->ncur.draw_speed += SPEED_STEP;
-	else if (SPEED_MINUS_BUTTONS(c) && core->ncur.draw_speed > MIN_SPEED)
-		core->ncur.draw_speed -= SPEED_STEP;
+		delete_last_letter_from_iput_field(NCUR.current_field);
+	else if ((cycle == NCUR.where_pause  || c == PAUSE_BUTTON) && !NCUR.pause)
+		NCUR.pause = true;
+	else if (SPEED_PLUS_BUTTONS(c) && NCUR.draw_speed < MAX_SPEED)
+		NCUR.draw_speed += SPEED_STEP;
+	else if (SPEED_MINUS_BUTTONS(c) && NCUR.draw_speed > MIN_SPEED)
+		NCUR.draw_speed -= SPEED_STEP;
 	else if (c == MENU_DOWN_BUTTON)
 		set_prev_field(core);
 	else if (c == MENU_UP_BUTTON)
