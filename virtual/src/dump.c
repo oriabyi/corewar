@@ -42,7 +42,8 @@ void 			print_memory(t_corewar *core)
 	size_t		i;
 
 	i = 0;
-	temp = pull_out_champs_info(core);
+//	temp = pull_out_champs_info(core);
+	temp = NULL;
 	while (i < MEM_SIZE)
 	{
 		temp = ft_multjoinfr(9, NULL, temp, "0x", NULL,

@@ -62,14 +62,10 @@ void			war(t_corewar *core)
 				break ;
 			cycles_limit = cycles + core->cycle_to_die;
 		}
-		if (bigmother >= 10000)
-			break;
 	}
-	reset_game(core);
-
-//	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
-//	ft_putstr(temp);
-//	free(temp);
+	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live - 1].name, "\", has won !\n");
+	ft_putstr(temp);
+	free(temp);
 
 	if (F_VISUAL)
 		visual_end(core);
@@ -111,7 +107,7 @@ int				submain(int ac, char **av)
 	}
 	war(&core);
 	clean_all(&core);
-	printf("bigmother = %d\n", bigmother);
+//	printf("bigmother = %d\n", bigmother);
 	return (0);
 }
 

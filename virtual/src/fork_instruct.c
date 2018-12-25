@@ -13,7 +13,6 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 	dst->alive = false; // false? here change
 	dst->command = 0;
 	dst->cycles = 0;
-	dst->id = id;
 	while (counter < NUMBER_OF_REGISTERS)
 	{
 		dst->registers[counter] = src->registers[counter];
