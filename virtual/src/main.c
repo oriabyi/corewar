@@ -48,7 +48,6 @@ void			war(t_corewar *core)
 			print_memory(core);
 			break ;
 		}
-
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles);
 		else
@@ -62,10 +61,7 @@ void			war(t_corewar *core)
 				break ;
 			cycles_limit = cycles + core->cycle_to_die;
 		}
-		if (bigmother >= 10000)
-			break;
 	}
-	reset_game(core);
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
 //	ft_putstr(temp);
@@ -78,13 +74,13 @@ void			war(t_corewar *core)
 void 			init_core(t_corewar *core)
 {
 	core->field = NULL;
-	core->ncur = (t_ncurses){0, {0, 0}, {0, 0}, 0, 0, 0, 0};
-	ft_bzero(core->ncur.cycle_to_go, 7);
-	ft_bzero(core->ncur.champ_id, 7);
-	ft_bzero(core->ncur.carriage_id, 7);
-	core->ncur.current_field = NULL;
-	core->ncur.memory_window = NULL;
-	core->ncur.score_window = NULL;
+	NCUR = (t_ncurses){0, {0, 0}, {0, 0}, 0, 0, 0, 0};
+	ft_bzero(NCUR.cycle_to_go, 7);
+	ft_bzero(NCUR.champ_id, 7);
+	ft_bzero(NCUR.carriage_id, 7);
+	NCUR.current_field = NULL;
+	NCUR.memory_window = NULL;
+	NCUR.score_window = NULL;
 	core->champs = NULL;
 	core->flags = (t_flags){0, 0};
 	core->cycle_to_die = CYCLE_TO_DIE;
@@ -118,6 +114,6 @@ int				submain(int ac, char **av)
 int main(int ac, char **av)
 {
 	submain(ac, av);
-	system("leaks -q Corewar");
+	system("leaks corewar");
 	return(0);
 }

@@ -12,6 +12,7 @@
 
 # define ALIEN "\xF0\x9F\x91\xBD"
 
+#define NCUR			core->ncur
 #define F_VISUAL		core->flags.visual
 #define F_DUMP			core->flags.dump
 #define CUR_COORD		carriage->cur_coord

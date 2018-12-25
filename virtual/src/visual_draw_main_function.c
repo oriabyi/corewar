@@ -12,46 +12,43 @@ int 			display_windows(t_corewar *core, int cycle)
 	return (0);
 }
 
+int 			change_cycle(t_corewar *core, int cycle)
+{
+	if (ft_atoi(NCUR.cycle_to_go) >= 0)
+	{
+		F_DUMP = (unsigned)ft_atoi(NCUR.cycle_to_go);
+		fill_input_field_with_zeros(NCUR.cycle_to_go);
+		if (F_DUMP < cycle)
+		{
+			reset_game(core);
+			return (1); // TODO: first cycle is 'one'?
+		}
+	}
+	return (cycle);
+}
+
 int				draw(t_corewar *core, int cycle)
 {
 	int 		button;
 
 	init_time(core);
-	clock_gettime(CLOCK_MONOTONIC, &core->ncur.tstart);
+	clock_gettime(CLOCK_MONOTONIC, &NCUR.tstart);
 	while (1)
 	{
-		///
-
 		button = get_button(core, cycle);
 		if (button == NEXT_CYCLE_BUTTON)
 			return (cycle + 1);
 		else if (button == ENTER_BUTTON)
-		{
-			if (ft_atoi(core->ncur.cycle_to_go) >= 0)
-			{
-				F_DUMP = (unsigned)ft_atoi(core->ncur.cycle_to_go); // TODO: do we need limit on this? default: False
-				fill_input_field_with_zeros(core->ncur.cycle_to_go);
-				if (F_DUMP < cycle)
-				{
-					reset_game(core);
-					return (1); // TODO: first cycle is 'one'?
-				}
-				else
-					return (cycle);
-			}
-		}
-
-		///
-
+			return (change_cycle(core, cycle));
 		display_windows(core, cycle);
-		clock_gettime(CLOCK_MONOTONIC, &core->ncur.tend);
-		if (((double)core->ncur.tend.tv_sec + 1.0e-9*core->ncur.tend.tv_nsec) -
-			((double)core->ncur.tstart.tv_sec + 1.0e-9*core->ncur.tstart.tv_nsec) > (1.0 - ((double)core->ncur.draw_speed / 100)))
+		clock_gettime(CLOCK_MONOTONIC, &NCUR.tend);
+		if (((double)NCUR.tend.tv_sec + 1.0e-9*NCUR.tend.tv_nsec) -
+			((double)NCUR.tstart.tv_sec + 1.0e-9*NCUR.tstart.tv_nsec)
+			> (1.0 - ((double)NCUR.draw_speed / 100)))
 		{
-			if (!core->ncur.pause)
+			if (!NCUR.pause)
 				break;
 		}
 	}
-
 	return (cycle + 1);
 }
