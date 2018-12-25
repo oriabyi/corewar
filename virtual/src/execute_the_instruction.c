@@ -72,16 +72,14 @@ void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *co
 	{
 		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, 3,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
-		carriage->arguments = (t_args){0, 0, {0, 0, 0}, 0, 0, 0};
+		carriage->arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
 	}
 }
 
 void 			do_process(t_corewar *core)
 {
-	unsigned 	qua_carriages;
 	t_carriage	*carriage;
 
-	qua_carriages = core->quant_carriages;
 	carriage = core->carriage;
 	while (carriage)
 	{

@@ -19,8 +19,6 @@ int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *
 	str = int_to_char_hex(REG[t_reg], 4); //define 5
 	if (!str)
 		return (1); // return an ERROR
-//	if (coord == 617)
-//		coord = 613;
 	while (str[counter])
 	{
 		coord = (int)correction_coordinates(coord);
@@ -44,8 +42,7 @@ ssize_t 		correction_coordinates(ssize_t coordinate)
 	}
 	while (coordinate < 0)
 	{
-//		exit (23);
-		coordinate += MEM_SIZE; // sdelat po modylu
+		coordinate += MEM_SIZE;
 	}
 	return (coordinate);
 }

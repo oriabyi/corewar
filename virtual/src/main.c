@@ -48,6 +48,7 @@ void			war(t_corewar *core)
 			print_memory(core);
 			break ;
 		}
+
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles);
 		else
@@ -62,6 +63,7 @@ void			war(t_corewar *core)
 			cycles_limit = cycles + core->cycle_to_die;
 		}
 	}
+
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
 //	ft_putstr(temp);
@@ -107,7 +109,7 @@ int				submain(int ac, char **av)
 	}
 	war(&core);
 	clean_all(&core);
-	printf("bigmother = %d\n", bigmother);
+//	printf("bigmother = %d\n", bigmother);
 	return (0);
 }
 

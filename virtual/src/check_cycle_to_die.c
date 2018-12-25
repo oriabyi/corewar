@@ -1,35 +1,43 @@
 #include "../includes/corewar_header.h"
 
-void	remove_dead_processes(t_field *field, t_carriage **begin_list,
-													unsigned *qua_carriages)
+void	remove_dead_processes(t_carriage **begin_list,
+							  unsigned *qua_carriages)
 {
+	t_carriage	*head;
 	t_carriage	*to_free;
+	t_carriage	*prev;
 
-	if (*begin_list == NULL)
-		return ;
-	if ((*begin_list)->alive == false)
+	head = *begin_list;
+	prev = *begin_list;
+	while (head)
 	{
-		to_free = *begin_list;
-		*begin_list = (*begin_list)->next;
-//		if (*begin_list && (*begin_list)->next)
-//			(*begin_list)->next->id = (*begin_list)->id;
-		(*qua_carriages)--;
-//		field[to_free->cur_coord].champ_id = get_id_of_champ((unsigned)to_free->id);
-		free(to_free);
-		remove_dead_processes(field, begin_list, qua_carriages);
-	}
-	else
-	{
-		if ((*begin_list)->next)
-			(*begin_list)->next->id = (*begin_list)->id + 1;
-		remove_dead_processes(field, &(*begin_list)->next, qua_carriages);
+		if (head->alive == 0)
+		{
+			to_free = head;
+			if (head == *begin_list)
+			{
+				*begin_list = (*begin_list)->next;
+				head = *begin_list;
+			}
+			else
+			{
+				head = head->next;
+				prev->next = head;
+			}
+			(*qua_carriages)--;
+			free(to_free);
+ 		} else
+		{
+			prev = head;
+			head = head->next;
+		}
 	}
 }
 
 int 			check_cycle_to_die(t_corewar *core)
 {
-	remove_dead_processes(core->field, &core->carriage, &core->quant_carriages);
-	if (core->qua_lives > 21)
+	remove_dead_processes(&core->carriage, &core->quant_carriages);
+	if (core->qua_lives > NBR_LIVE)
 	{
 		core->cycle_to_die -= CYCLE_DELTA;
 	}
@@ -45,27 +53,3 @@ int 			check_cycle_to_die(t_corewar *core)
 	core->qua_lives = 0;
 	return ((core->cycle_to_die > 0) ? core->cycle_to_die : 0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

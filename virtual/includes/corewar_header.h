@@ -257,7 +257,6 @@ typedef	struct			s_flags
 typedef struct 			s_arguments
 {
 	unsigned char		list_arguments;
-	unsigned 			is_correct;
 	unsigned			have_to_have[3];
 	ssize_t 			first_arg;
 	ssize_t 			second_arg;
@@ -273,7 +272,6 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:8;
 	int 				cycles;
-	int 				id;
 	t_args				arguments;
 
 	struct s_carriage	*next;

@@ -29,6 +29,12 @@ void 	load_index_instruct(t_field *field, t_carriage *carriage) // label size ==
 {
 	ssize_t 	coord;
 
+	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
+					   FIRST_ARG, &CAR_FIRST_ARG,
+					   SECOND_ARG, &CAR_SECOND_ARG) == 1)
+	{
+		return ;
+	}
 	if (COMMAND == CW_LDI)
 	{
 		coord = (((CAR_FIRST_ARG + CAR_SECOND_ARG) % IDX_MOD) + CUR_COORD);
