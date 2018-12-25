@@ -90,6 +90,7 @@ void 			init_core(t_corewar *core)
 	core->quant_carriages = 0;
 	core->last_live = 0;
 	core->carriage = NULL;
+	core->arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
 }
 
 int				submain(int ac, char **av)

@@ -73,7 +73,7 @@ int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, .
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments)	//label size == 2
 {
 	ssize_t 		coord;
 

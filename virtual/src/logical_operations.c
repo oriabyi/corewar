@@ -60,7 +60,7 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 	return (check_code);
 }
 
-void					logical_operations(t_carriage *carriage)
+void					logical_operations(t_carriage *carriage, t_args *arguments)
 {
 	REG[CAR_THIRD_ARG] =
 			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, COMMAND);
