@@ -25,7 +25,7 @@ void 			get_game_type(t_corewar *core)
 		visual_start(core);
 		display_windows(core, 1);
 	}
-	else
+	else if (F_DUMP)
 	{
 		ft_putstr(pull_out_champs_info(core));
 	}
@@ -43,7 +43,7 @@ void			war(t_corewar *core)
 	while (core->cycle_to_die > 0)
 	{
 
-		if (F_VISUAL == false && cycles == F_DUMP)
+		if (F_VISUAL == false && cycles && cycles == F_DUMP)
 		{
 			print_memory(core);
 			break ;
@@ -88,7 +88,9 @@ void 			init_core(t_corewar *core)
 	core->max_checks = 0;
 	core->qua_champs = 0;
 	core->qua_lives = 0;
+	core->qua_carrs = 0;
 	core->last_live = 0;
+	core->carriage = NULL;
 }
 
 int				main(int ac, char **av)

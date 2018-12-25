@@ -129,16 +129,23 @@ void 				fill_champ_by_himself(t_champ *champ, int id)
 	(champ)->quant_carriages++;
 }
 
-void 				fill_champs(t_champ **champ, int qua_champs)
+void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs)
 {
+	t_carriage		*head;
 	int 			counter;
 
 	counter = 0;
+	head = create_carriage((*champ)[counter++].id);
+ 	core->carriage = head;
 	while (counter < qua_champs)
 	{
+		head->next = create_carriage((*champ)[counter].id);
+		head = head->next;
 		fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id);
+		core->qua_carrs++;
 		counter++;
 	}
+	head->next = NULL;
 }
 
 void 				swap_champs(t_champ *first, t_champ *second)
@@ -231,7 +238,7 @@ int					parse(t_corewar *core, char **av)
 		return (check_code);
 	if ((check_code = get_champs_info(core, av, &counter)))
 		return (check_code);
-	fill_champs(&core->champs, core->qua_champs);
+	fill_champs(core, &core->champs, core->qua_champs);
 	sort_champs(&core->champs, core->qua_champs);
 	if (av[counter])
 		return (REDUNDANT_ARGUMENTS);

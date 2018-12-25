@@ -301,7 +301,10 @@ typedef struct			s_corewar
 	int 				max_checks;
 	unsigned 			qua_champs;
 	unsigned 			qua_lives;
+	unsigned 			qua_carrs;
 	unsigned 			last_live:3;
+
+	t_carriage			*carriage;
 }						t_corewar;
 
 

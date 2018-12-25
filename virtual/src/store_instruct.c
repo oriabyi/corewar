@@ -21,6 +21,6 @@ void 	store_instruct(t_field *field, t_carriage *carriage, unsigned char argumen
 	}
 	else
 	{
-		write_in_field(field, (int)(second_arg + CUR_COORD), t_reg, carriage, id);
+		write_in_field(field, (short)(second_arg + CUR_COORD), t_reg, carriage, id); //add fishka
 	}
 }
