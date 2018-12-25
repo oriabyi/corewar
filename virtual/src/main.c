@@ -1,21 +1,5 @@
 #include "../includes/corewar_header.h"
 
-unsigned 			how_many_champs_alive(t_corewar *core)
-{
-	int 		counter;
-	unsigned 	lives;
-
-	counter = 0;
-	lives = 0;
-	while (counter < core->qua_champs)
-	{
-		if (core->champs[counter].alive != CHAMP_IS_DEAD)
-			lives++;
-		counter++;
-	}
-	return (lives);
-}
-
 char			*pull_out_champs_info(t_corewar *core);
 
 void 			get_game_type(t_corewar *core)
@@ -31,7 +15,6 @@ void 			get_game_type(t_corewar *core)
 	}
 }
 
-
 void			war(t_corewar *core)
 {
 	unsigned 	cycles;
@@ -40,7 +23,7 @@ void			war(t_corewar *core)
 	cycles_limit = (unsigned)core->cycle_to_die;
 	cycles = 0;
 	get_game_type(core);
-	while (core->cycle_to_die > 0)
+	while (1)
 	{
 
 		if (F_VISUAL == false && cycles && cycles == F_DUMP)
@@ -58,12 +41,21 @@ void			war(t_corewar *core)
 		if (cycles == cycles_limit)
 		{
 			core->cycle_to_die = check_cycle_to_die(core);
-			if (how_many_champs_alive(core) == 0)
-				break ;
 			cycles_limit = cycles + core->cycle_to_die;
+		}
+		if (core->cycle_to_die <= 0 || core->carriage == NULL)
+		{
+			int old_cycles = cycles;
+			NCUR.pause = 1;
+			cycles = (unsigned)draw(core, cycles);
+			if (cycles > old_cycles)
+				break ;
+			cycles_limit = (unsigned)core->cycle_to_die;
+			continue ;
 		}
 	}
 
+	NCUR.pause = 1;
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
 //	ft_putstr(temp);
@@ -116,6 +108,6 @@ int				submain(int ac, char **av)
 int main(int ac, char **av)
 {
 	submain(ac, av);
-	system("leaks corewar");
+//	system("leaks corewar");
 	return(0);
 }
