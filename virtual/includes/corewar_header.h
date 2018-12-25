@@ -287,10 +287,7 @@ typedef struct			s_champion
 	unsigned char		*exec_code;
 	unsigned			id;
 	unsigned			size;
-	unsigned 			quant_carriages;
 	unsigned			alive:2;
-
-	t_carriage			*carriage;
 }						t_champ;
 
 typedef struct			s_ncurses

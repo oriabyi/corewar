@@ -92,72 +92,72 @@ void 			draw_score_window(t_corewar *core, int cycle)
 
 	/// getting champ id from input field
 
-	int champ_id = ft_atoi(core->ncur.champ_id);
-
-	if (champ_id)
-
-		/// is valid champ
-
-		if (champ_id <= core->qua_champs)
-		{
-			/// printing champ id and champ name
-			mvwprintw(core->ncur.score_window, i + 49, 3, "champ %d with name: ", champ_id);
-			simple_print(core->ncur.score_window, champ_id);
-			wprintw(core->ncur.score_window, "%s", core->champs[champ_id - 1].name);
-			wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
-			/// getting carriage id from input field
-
-			int carriage_id = ft_atoi(core->ncur.carriage_id);
-
-			/// is valid carriage id in input field
-
-			if (carriage_id >= 0)
-			{
-				t_carriage *tmp_carr;
-
-				/// finding carriage by id
-				tmp_carr = core->champs[champ_id - 1].carriage;
-				while (tmp_carr && tmp_carr->id != carriage_id)
-					tmp_carr = tmp_carr->next;
-
-				/// whether carriage found
-
-				if (tmp_carr)
-				{
-					/// printing carriage id
-					mvwprintw(core->ncur.score_window, i + 50, 3, "Carriage with id: %d", carriage_id);
-
-
-					int r = 0;
-					wmove(core->ncur.score_window, i + 52, 3);
-
-					/// printing registers
-
-					while (r < 15)
-					{
-						if (r == 0)
-							wprintw(core->ncur.score_window, "1 |[%. 8x]", tmp_carr->registers[r]);
-						else
-							wprintw(core->ncur.score_window, "   %. -1x |[%. 8x]", r + 1, tmp_carr->registers[r]);
-
-						r++;
-						if (r % 3 == 0)
-							wprintw(core->ncur.score_window, "\n");
-					}
-				}
-				else
-				{
-					mvwprintw(core->ncur.score_window, i + 50, 3, "Bad carriage id!");
-				}
-
-			}
-			else
-				mvwprintw(core->ncur.score_window, i + 50, 3, "Type carriage id!");
-		}
-		else
-			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d champs! ", core->qua_champs);
-	else
-		mvwprintw(core->ncur.score_window, i + 49, 3, "Type champ id!");
+//	int champ_id = ft_atoi(core->ncur.champ_id);
+//
+//	if (champ_id)
+//
+//		/// is valid champ
+//
+//		if (champ_id <= core->qua_champs)
+//		{
+//			/// printing champ id and champ name
+//			mvwprintw(core->ncur.score_window, i + 49, 3, "champ %d with name: ", champ_id);
+//			simple_print(core->ncur.score_window, champ_id);
+//			wprintw(core->ncur.score_window, "%s", core->champs[champ_id - 1].name);
+//			wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+//			/// getting carriage id from input field
+//
+//			int carriage_id = ft_atoi(core->ncur.carriage_id);
+//
+//			/// is valid carriage id in input field
+//
+//			if (carriage_id >= 0)
+//			{
+//				t_carriage *tmp_carr;
+//
+//				/// finding carriage by id
+//				tmp_carr = core->champs[champ_id - 1].carriage;
+//				while (tmp_carr && tmp_carr->id != carriage_id)
+//					tmp_carr = tmp_carr->next;
+//
+//				/// whether carriage found
+//
+//				if (tmp_carr)
+//				{
+//					/// printing carriage id
+//					mvwprintw(core->ncur.score_window, i + 50, 3, "Carriage with id: %d", carriage_id);
+//
+//
+//					int r = 0;
+//					wmove(core->ncur.score_window, i + 52, 3);
+//
+//					/// printing registers
+//
+//					while (r < 15)
+//					{
+//						if (r == 0)
+//							wprintw(core->ncur.score_window, "1 |[%. 8x]", tmp_carr->registers[r]);
+//						else
+//							wprintw(core->ncur.score_window, "   %. -1x |[%. 8x]", r + 1, tmp_carr->registers[r]);
+//
+//						r++;
+//						if (r % 3 == 0)
+//							wprintw(core->ncur.score_window, "\n");
+//					}
+//				}
+//				else
+//				{
+//					mvwprintw(core->ncur.score_window, i + 50, 3, "Bad carriage id!");
+//				}
+//
+//			}
+//			else
+//				mvwprintw(core->ncur.score_window, i + 50, 3, "Type carriage id!");
+//		}
+//		else
+//			mvwprintw(core->ncur.score_window, i + 49, 3, "Hey, we have only %d champs! ", core->qua_champs);
+//	else
+//		mvwprintw(core->ncur.score_window, i + 49, 3, "Type champ id!");
 
 
 

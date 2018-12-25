@@ -17,7 +17,6 @@ void				clean_champs(t_champ *champs, unsigned quantity)
 		free(champs[counter].name);
 		free(champs[counter].comment);
 		free(champs[counter].exec_code);
-		clean_carriages(champs[counter].carriage);
 		counter++;
 	}
 	free(champs);
@@ -26,6 +25,8 @@ void				clean_champs(t_champ *champs, unsigned quantity)
 void				clean_all(t_corewar *core)
 {
 	clean_champs((core->champs), core->qua_champs);
+	if (core->carriage)
+		clean_carriages(core->carriage);
 	if (core->field)
 		free(core->field);
 }

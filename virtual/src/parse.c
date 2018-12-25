@@ -101,7 +101,7 @@ int 				create_champs(t_champ **champs)
 	while (counter < O_BOTS)
 	{
 		(*champs)[counter] = (t_champ){NULL, NULL, NULL,
-								 (O_BOTS + 1), 0, 0, 1, NULL};
+								 (O_BOTS + 1), 0, 0};
 		counter++;
 	}
 	return (0);
@@ -123,31 +123,37 @@ unsigned 			find_free_space(t_champ *champs)
 	return (O_BOTS + 1);
 }
 
-void 				fill_champ_by_himself(t_champ *champ, int id)
-{
-	(champ)->carriage = create_carriage(id);
-	(champ)->quant_carriages++;
-}
-
 void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refactor me
 {
 	t_carriage		*head;
 	int 			counter;
 
 	counter = 0;
-	fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id); // hey, emm, delete me pleeeeasee
-	head = create_carriage((*champ)[counter++].id);
- 	core->carriage = head;
-	core->quant_carriages++;
+	head = NULL;
 	while (counter < qua_champs)
 	{
-		head->next = create_carriage((*champ)[counter].id);
-		head = head->next;
-		fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id); // and me too <3
+		if (core->carriage == NULL)
+		{
+			head = create_carriage((*champ)[counter].id);
+			core->carriage = head;
+		}
+		else
+		{
+			head->next = create_carriage((*champ)[counter].id);
+			head = head->next;
+		}
+		head->next = NULL;
 		core->quant_carriages++;
 		counter++;
 	}
-	head->next = NULL;
+	head = core->carriage;
+	counter = 0;
+	while (counter < qua_champs)
+	{
+		head->cur_coord = (MEM_SIZE / qua_champs) * counter;
+		head = head->next;
+		counter++;
+	}
 }
 
 void 				swap_champs(t_champ *first, t_champ *second)
@@ -240,8 +246,8 @@ int					parse(t_corewar *core, char **av)
 		return (check_code);
 	if ((check_code = get_champs_info(core, av, &counter)))
 		return (check_code);
-	fill_champs(core, &core->champs, core->qua_champs);
 	sort_champs(&core->champs, core->qua_champs);
+	fill_champs(core, &core->champs, core->qua_champs);
 	if (av[counter])
 		return (REDUNDANT_ARGUMENTS);
 	return (check_code);
