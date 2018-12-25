@@ -78,4 +78,10 @@ void 		alive_view(WINDOW *win, int id)
 	}
 }
 
+void 		follow_view(WINDOW *win, int id)
+{
+	wattron(win, COLOR_PAIR(CR_CL_BLACK_CYAN));
+	carriage_print(win, id + 1);
+}
+
 
