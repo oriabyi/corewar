@@ -58,8 +58,8 @@ void	ft_get_prosses(t_asm *glob, char **arr)
 	if ((i = ft_is_label(arr[0])))
 		ft_add_label(glob, arr);
 	j = 0;
-	if (glob->n_labels > -1 && (glob->labels)[glob->n_labels]->indx
-		== glob->cur && !arr[1])
+	if (glob->n_labels > -1 && ft_is_label(arr[0]) &&
+	(glob->labels)[glob->n_labels]->indx == glob->cur && !arr[1])
 	{
 		(glob->cur)--;
 		return ;

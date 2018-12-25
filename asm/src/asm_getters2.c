@@ -50,7 +50,6 @@ static void	ft_get_comment2(t_asm *glob, int to_read, int fd)
 			prev = glob->comment;
 			glob->comment = ft_strjoin(glob->comment, "\n");
 			ft_free_line(&prev);
-			glob->comment = ft_strjoin_del(glob->comment, "\n");
 			if ((glob->comment = ft_strjoin_del(glob->comment, line_cont))
 				&& ft_strchr(glob->comment, '\"') !=
 					ft_strrchr(glob->comment, '\"'))
