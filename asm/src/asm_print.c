@@ -53,7 +53,7 @@ void	ft_print_header(char *file, t_asm *glob)
 		ft_printf("Writing output program to %s.cor\n", file);
 	}
 	else
-		ft_put_error(6, NULL);
+		ft_put_error(1, NULL);
 	ft_free_line(&new_file);
 	close(fd);
 }

@@ -17,8 +17,8 @@ NAME = asm
 SRC_N			=	asm.c \
                     asm_adders.c \
                     asm_checkers.c \
-                    asm_getters.c \
-                    asm_operate.c \
+                    asm_getters1.c \
+                    asm_getters2.c \
                     asm_print.c \
                     asm_stuff.c \
                     get_next_line.c

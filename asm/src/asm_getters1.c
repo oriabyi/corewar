@@ -1,45 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm_getters.c                                      :+:      :+:    :+:   */
+/*   asm_getters1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akondaur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/22 14:40:42 by akondaur          #+#    #+#             */
-/*   Updated: 2018/12/22 14:40:44 by akondaur         ###   ########.fr       */
+/*   Created: 2018/12/25 08:22:13 by akondaur          #+#    #+#             */
+/*   Updated: 2018/12/25 08:22:16 by akondaur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	ft_get_name(t_asm *glob, char **arr, char *line)
+void	ft_get_two_bits(t_asm *glob, char *arg, int mod)
 {
-	if (!glob->name && arr[1])
-	{
-		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
-			ft_put_error(4, "hero's name");
-		glob->name = ft_strdup(ft_strchr(line, '\"') + 1);
-		glob->name[ft_strlen(glob->name) - 1] = '\0';
-		(ft_strlen(glob->name) > PROG_NAME_LENGTH) ? ft_put_error(12,
-				glob->name) : 0;
-	}
-	else
-		ft_put_error(5, "hero's name");
+	glob->commands[++(glob->cur)] = (ft_atoi(arg + mod) >> 8) & 255;
+	glob->commands[++(glob->cur)] = (ft_atoi(arg + mod)) & 255;
 }
 
-void	ft_get_comment(t_asm *glob, char **arr, char *line)
+void	ft_get_four_bits(t_asm *glob, char *arg)
 {
-	if (!glob->comment && arr[1])
-	{
-		if (ft_strchr(line, '\"') == ft_strrchr(line, '\"'))
-			ft_put_error(4, "comment");
-		glob->comment = ft_strdup(ft_strchr(line, '\"') + 1);
-		glob->comment[ft_strlen(glob->comment) - 1] = '\0';
-		(ft_strlen(glob->comment) > COMMENT_LENGTH) ? ft_put_error(12,
-		glob->comment) : 0;
-	}
-	else
-		ft_put_error(5, "comment");
+	glob->commands[++(glob->cur)] = (ft_atoi(arg + 1) >> 24) & 255;
+	glob->commands[++(glob->cur)] = (ft_atoi(arg + 1) >> 16) & 255;
+	ft_get_two_bits(glob, arg, 1);
 }
 
 void	ft_get_data(char *file, t_asm **glob)
@@ -52,7 +35,7 @@ void	ft_get_data(char *file, t_asm **glob)
 	*glob = ft_init_asm(file);
 	while (get_next_line(fd, &line) > 0)
 	{
-		ft_add_op(line, *glob);
+		ft_add_op(line, *glob, fd);
 		ft_free_line(&line);
 	}
 	ft_connect_labels(*glob);
@@ -75,8 +58,8 @@ void	ft_get_prosses(t_asm *glob, char **arr)
 	if ((i = ft_is_label(arr[0])))
 		ft_add_label(glob, arr);
 	j = 0;
-	if (glob->n_labels > -1 && (glob->labels)[glob->n_labels]->indx
-		== glob->cur && !arr[1])
+	if (glob->n_labels > -1 && ft_is_label(arr[0]) &&
+	(glob->labels)[glob->n_labels]->indx == glob->cur && !arr[1])
 	{
 		(glob->cur)--;
 		return ;
