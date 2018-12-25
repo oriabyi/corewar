@@ -37,7 +37,7 @@ void 					insert_new_carriage(t_carriage *head, t_carriage *new_carriage, unsign
 }
 
 void					fork_instruct(t_field *field, t_carriage *carriage,
-									 unsigned *quant_carriages)
+									 unsigned *quant_carriages, t_args *arguments)
 {
 	t_carriage			*new_carriage;
 

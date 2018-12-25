@@ -35,33 +35,33 @@ void 			insert(t_args *arguments, unsigned first, unsigned second,
 }
 
 
-void 			get_arguments_table(t_carriage *carriage)
+void 			get_arguments_table(t_carriage *carriage, t_args *arguments)
 {
 	if (COMMAND == CW_LIVE || COMMAND == CW_ZJMP ||
 		COMMAND == CW_FORK || COMMAND == CW_LFORK)
 	{
-		insert(&carriage->arguments, NONE_ARG, NONE_ARG, NONE_ARG);
+		insert(arguments, NONE_ARG, NONE_ARG, NONE_ARG);
 	}
 	else if (COMMAND == CW_LD || COMMAND == CW_LLD)
-		insert(&carriage->arguments, T_DIR | T_IND, T_REG, NONE_ARG);
+		insert(arguments, T_DIR | T_IND, T_REG, NONE_ARG);
 	else if (COMMAND == CW_ST)
-		insert(&carriage->arguments, T_REG, T_REG | T_IND, NONE_ARG);
+		insert(arguments, T_REG, T_REG | T_IND, NONE_ARG);
 	else if (COMMAND == CW_ADD || COMMAND == CW_SUB)
-		insert(&carriage->arguments, T_REG, T_REG, T_REG);
+		insert(arguments, T_REG, T_REG, T_REG);
 	else if (COMMAND == CW_AND || COMMAND == CW_OR || COMMAND == CW_XOR)
 	{
-		insert(&carriage->arguments,
+		insert(arguments,
 				T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG);
 	}
 	else if (COMMAND == CW_LDI || COMMAND == CW_LLDI)
 	{
-		insert(&carriage->arguments,
+		insert(arguments,
 				T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG);
 	}
 	else if (COMMAND == CW_STI)
-		insert(&carriage->arguments, T_REG, T_REG | T_DIR, T_REG | T_DIR);
+		insert(arguments, T_REG, T_REG | T_DIR, T_REG | T_DIR);
 	else if (COMMAND == CW_AFF)
-		insert(&carriage->arguments, T_REG, NONE_ARG, NONE_ARG);
+		insert(arguments, T_REG, NONE_ARG, NONE_ARG);
 }
 
 

@@ -22,13 +22,12 @@
 #define CYCLES			carriage->cycles
 #define ALIVE			carriage->alive
 
-#define LIST_ARGUMENTS	carriage->arguments.list_arguments
 
-#define CAR_FIRST_ARG	carriage->arguments.first_arg
-#define CAR_SECOND_ARG	carriage->arguments.second_arg
-#define CAR_THIRD_ARG	carriage->arguments.third_arg
-
-# define ADJUSTED		carriage->arguments.have_to_have
+#define LIST_ARGUMENTS	arguments->list_arguments
+#define CAR_FIRST_ARG	arguments->first_arg
+#define CAR_SECOND_ARG	arguments->second_arg
+#define CAR_THIRD_ARG	arguments->third_arg
+# define ADJUSTED		arguments->have_to_have
 
 # define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
@@ -272,7 +271,6 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:8;
 	int 				cycles;
-	t_args				arguments;
 
 	struct s_carriage	*next;
 }						t_carriage;
@@ -324,6 +322,7 @@ typedef struct			s_corewar
 	t_ncurses			ncur;
 	t_champ				*champs;
 	t_flags				flags;
+	t_args				arguments;
 	int 				cycle_to_die;
 	int 				max_checks;
 	unsigned 			qua_champs;
@@ -412,28 +411,28 @@ void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 ** Instructions
 */
 
-void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core);
-void 	load_instruct(t_carriage *carriage);
-void 	store_instruct(t_field *field, t_carriage *carriage);
+void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core, t_args *arguments);
+void 	load_instruct(t_carriage *carriage, t_args *arguments);
+void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
 
 // add and sub operations here
-void 	add_sub_instructs(t_carriage *carriage);
+void 	add_sub_instructs(t_carriage *carriage, t_args *arguments);
 
 // all logical operations here
-void 	logical_operations(t_carriage *carriage);
+void 	logical_operations(t_carriage *carriage, t_args *arguments);
 
-int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage);
+int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
 
 //	LLDI in LDI
-void 	load_index_instruct(t_field *field, t_carriage *carriage);
+void 	load_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage);
+void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
 
 //  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
-									  unsigned *quant_carriages);
+									  unsigned *quant_carriages, t_args *arguments);
 
-void 	aff_instruct(t_carriage *carriage);
+void 	aff_instruct(t_carriage *carriage, t_args *arguments);
 
 /*
 ** Check carry

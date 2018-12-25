@@ -25,7 +25,7 @@ ssize_t 		write_from_field(t_field *field, int handicap, int bytes)
 	return (result);
 }
 
-void 	load_index_instruct(t_field *field, t_carriage *carriage) // label size == 2
+void 	load_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments) // label size == 2
 {
 	ssize_t 	coord;
 

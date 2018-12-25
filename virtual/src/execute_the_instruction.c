@@ -1,32 +1,33 @@
 #include "../includes/corewar_header.h"
 
 void						list_of_instructions(t_field *field,
-										t_carriage *carriage)
+										t_carriage *carriage, t_args *arguments)
 {
 	if (COMMAND == CW_LD || COMMAND == CW_LLD)
-		load_instruct(carriage);
+		load_instruct(carriage, arguments);
 	else if (COMMAND == CW_ST)
-		store_instruct(field, carriage);
+		store_instruct(field, carriage, arguments);
 	else if (COMMAND == CW_ADD || COMMAND == CW_SUB)
-		add_sub_instructs(carriage);
+		add_sub_instructs(carriage, arguments);
 	else if (COMMAND == CW_XOR || COMMAND == CW_OR || COMMAND == CW_AND)
-		logical_operations(carriage);
+		logical_operations(carriage, arguments);
 	else if (COMMAND == CW_LDI || COMMAND == CW_LLDI)
-		load_index_instruct(field, carriage);
+		load_index_instruct(field, carriage, arguments);
 	else if (COMMAND == CW_STI)
-		store_index_instruct(field, carriage);
+		store_index_instruct(field, carriage, arguments);
 	else if (COMMAND == CW_AFF)
-		aff_instruct(carriage);
+		aff_instruct(carriage, arguments);
 }
 
-void					get_arguments_table(t_carriage *carriage);
+void 			get_arguments_table(t_carriage *carriage, t_args *arguments);
 
-void 					get_t_args(t_field *field, t_carriage *carriage)
+
+void 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments)
 {
 	if (get_codage(COMMAND) == true)
 	{
 		LIST_ARGUMENTS = get_argument(field, CUR_COORD + 1);
-		get_arguments_table(carriage);
+		get_arguments_table(carriage, arguments);
 		if (check_instruction_args(LIST_ARGUMENTS,
 								ADJUSTED[FIRST_ARG],
 								ADJUSTED[SECOND_ARG],
@@ -50,7 +51,7 @@ void 					get_t_args(t_field *field, t_carriage *carriage)
 	}
 }
 
-void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *core)
+void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *core, t_args *arguments)
 {
 	int 				check_jump;
 
@@ -59,20 +60,20 @@ void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *co
 		move_carriage(field, 1, carriage);
 		return ;
 	}
-	get_t_args(field, carriage);
+	get_t_args(field, carriage, arguments);
 	if (COMMAND == CW_ZJMP)
-		check_jump = jump_if_carry_instruct(field, carriage);
+		check_jump = jump_if_carry_instruct(field, carriage, arguments);
 	else if (COMMAND == CW_FORK || COMMAND == CW_LFORK)
-		fork_instruct(field, carriage, &core->quant_carriages);
+		fork_instruct(field, carriage, &core->quant_carriages, arguments);
 	else if (COMMAND == CW_LIVE)
-		alive_instruct(field, carriage, core);
+		alive_instruct(field, carriage, core, arguments);
 	else
-		list_of_instructions(field, carriage);
+		list_of_instructions(field, carriage, arguments);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
 		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, 3,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
-		carriage->arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
+		*arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
 	}
 }
 
@@ -92,7 +93,7 @@ void 			do_process(t_corewar *core)
 		(CYCLES)--;
 		if (CYCLES <= 0)
 		{
-			choose_instruction(core->field, carriage, core);
+			choose_instruction(core->field, carriage, core, &core->arguments);
 			COMMAND = 0;
 			CYCLES = 0;
 		}

@@ -87,7 +87,7 @@ t_carriage 				*create_carriage(int id)
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
 	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, {0, {0, 0, 0}, 0, 0}, NULL};
+									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, NULL};
 	return (carriage);
 }
 
