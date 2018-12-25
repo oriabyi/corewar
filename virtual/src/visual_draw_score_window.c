@@ -100,8 +100,87 @@ void			draw_score_window(t_corewar *core, int cycle)
 			core->quant_carriages);
 	pos_y = print_players(core, pos_y);
 	pos_y = print_game_info(core, pos_y);
+
+
+	if (core->ncur.current_field ==  core->ncur.cycle_to_go)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
 	mvwprintw(NCUR.score_window, ++pos_y, 3, "Type cycle to go : %s",
 			NCUR.cycle_to_go);
+	if (core->ncur.current_field ==  core->ncur.cycle_to_go)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+
+
+
+
+	/// Carriage field
+	if (core->ncur.current_field ==  core->ncur.carriage_id)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
+	mvwprintw(core->ncur.score_window, ++pos_y, 3, "Type carriage id : %s", core->ncur.carriage_id);
+	if (core->ncur.current_field ==  core->ncur.carriage_id)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+	/// Carriage field
+	if (core->ncur.current_field ==  core->ncur.champ_id)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
+	mvwprintw(core->ncur.score_window, ++pos_y, 3, "Type carriage id : %s", core->ncur.champ_id);
+	if (core->ncur.current_field ==  core->ncur.champ_id)
+		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+
+
+
+
+	wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+	/// getting carriage id from input field
+
+	int carriage_id = ft_atoi(core->ncur.carriage_id);
+
+	/// is valid carriage id in input field
+
+	if (carriage_id >= 0)
+	{
+		t_carriage *tmp_carr;
+		/// finding carriage by id
+		tmp_carr = core->carriage;
+		while (tmp_carr && tmp_carr->id != carriage_id)
+			tmp_carr = tmp_carr->next;
+
+		/// whether carriage found
+
+		if (tmp_carr)
+		{
+			/// printing carriage id
+			mvwprintw(core->ncur.score_window, pos_y + 4, 3, "Carriage with id: %d", carriage_id);
+			int r = 0;
+			wmove(core->ncur.score_window, pos_y + 6, 3);
+
+			/// printing registers
+
+			while (r < 15)
+			{
+				if (r == 0)
+					wprintw(core->ncur.score_window, "1 |[%. 8x]", tmp_carr->registers[r]);
+				else
+					wprintw(core->ncur.score_window, "   %. -1x |[%. 8x]", r + 1, tmp_carr->registers[r]);
+
+				r++;
+				if (r % 3 == 0)
+					wprintw(core->ncur.score_window, "\n");
+			}
+		}
+		else
+		{
+			mvwprintw(core->ncur.score_window, pos_y + 58, 3, "Bad carriage id!");
+		}
+
+	}
+	else
+		mvwprintw(core->ncur.score_window, pos_y + 60, 3, "Type carriage id!");
+
+
+
+
+
+
+
 	if (!NCUR.pause)
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 	else
@@ -109,3 +188,4 @@ void			draw_score_window(t_corewar *core, int cycle)
 	box(NCUR.score_window, 0, 0);
 	wrefresh(NCUR.score_window);
 }
+

@@ -264,6 +264,7 @@ typedef struct 			s_arguments
 
 typedef struct			s_carriage
 {
+	unsigned			id;
 	int 				cur_coord;
 	unsigned 			carry:1;
 	unsigned			flag:1;

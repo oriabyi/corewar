@@ -23,9 +23,9 @@ int 			get_button(t_corewar *core, int cycle)
 		NCUR.draw_speed += SPEED_STEP;
 	else if (SPEED_MINUS_BUTTONS(c) && NCUR.draw_speed > MIN_SPEED)
 		NCUR.draw_speed -= SPEED_STEP;
-	else if (c == MENU_DOWN_BUTTON)
-		set_prev_field(core);
 	else if (c == MENU_UP_BUTTON)
+		set_prev_field(core);
+	else if (c == MENU_DOWN_BUTTON)
 		set_next_field(core);
 	else if (c == VISUAL_OFF)			//TODO: ??????????
 	{

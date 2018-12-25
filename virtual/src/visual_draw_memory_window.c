@@ -1,5 +1,27 @@
 #include "../includes/corewar_header.h"
 
+void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
+{
+	//y
+	if (core->field[i].is_alive)
+		alive_view(NCUR.memory_window, id);
+	else if (core->field[i].carriages_on) // carriage
+		carriage_print(NCUR.memory_window, id);
+	else  if (core->field[i].altered_cycles)	// changed
+	{
+		if (core->field[i].altered_cycles == ALTERED_FIELD)
+			core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
+		else if (core->field[i].altered_cycles <= cycles)
+		{
+			core->field[i].altered_cycles = 0;
+			core->field[i].champ_id = id;
+		}
+		altered_view(NCUR.memory_window, id);
+	}
+	else
+		simple_print(NCUR.memory_window, id);
+}
+
 void 			draw_memory_window(t_corewar *core, int cycles)
 {
 	int 		i;
@@ -12,23 +34,7 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 		if (i % 64 == 0)
 			wprintw(NCUR.memory_window, "\n");
 		id = get_id_of_champ(core->field[i].champ_id);
-		if (core->field[i].is_alive)
-			alive_view(NCUR.memory_window, id);
-		else if (core->field[i].carriages_on) // carriage
-			carriage_print(NCUR.memory_window, id);
-		else  if (core->field[i].altered_cycles)	// changed
-		{
-			if (core->field[i].altered_cycles == ALTERED_FIELD)
-				core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
-			else if (core->field[i].altered_cycles <= cycles)
-			{
-				core->field[i].altered_cycles = 0;
-				core->field[i].champ_id = id;
-			}
-			altered_view(NCUR.memory_window, id);
-		}
-		else
-			simple_print(NCUR.memory_window, id);
+		print_cell(core, id, i, cycles);
 		if (i % 64 == 0)
 			wmove(NCUR.memory_window, (i / 64) + 1, 2);
 		wprintw(NCUR.memory_window, "%s", core->field[i].hex);
