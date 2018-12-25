@@ -48,22 +48,7 @@ int i(t_champ *champ)
 
 int 			check_cycle_to_die(t_corewar *core)
 {
-	int 			counter;
-
-	counter = 0;
-	i(&core->champs[0]);
-	while (counter < core->qua_champs)
-	{
-		core->champs[counter].alive =
-				(core->champs[counter].alive == false) ? CHAMP_IS_DEAD : false;
-		if (core->champs[counter].alive != CHAMP_IS_DEAD)
-		{
-			remove_dead_processes(core->field, &core->champs[counter].carriage,
-					&core->champs[counter].quant_carriages);
-		}
-		counter++;
-	}
-	i(&core->champs[0]);
+	remove_dead_processes(core->field, &core->carriage, &core->quant_carriages);
 	if (core->qua_lives > 21)
 	{
 		core->cycle_to_die -= CYCLE_DELTA;

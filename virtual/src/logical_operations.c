@@ -1,17 +1,17 @@
 #include "../includes/corewar_header.h"
 
-unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command)
+unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command)
 {
 	if (command == CW_AND)
-		return (a & b);
+		return (unsigned)(a & b);
 	else if (command == CW_OR)
-		return (a | b);
+		return (unsigned)(a | b);
 	else if (command == CW_XOR)
-		return (a ^ b);
+		return (unsigned)(a ^ b);
 	else if (command == CW_ADD)
-		return (a + b);
+		return (unsigned)(a + b);
 	else if (command == CW_SUB)
-		return (a - b);
+		return (unsigned)(a - b);
 	return (0);
 }
 
@@ -49,7 +49,10 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 		if (check_instruction_arg(get_part_argument(argument, coord), type) == 0)
 		{
 			if (check_reg(temp_reg))
+			{
 				check_code = 1;
+				break ;
+			}
 		}
 		num--;
 	}
@@ -57,23 +60,9 @@ int 					check_type_arguments(int argument, int type, int num, ...)
 	return (check_code);
 }
 
-void					logical_operations(t_field *field, t_carriage *carriage, unsigned char argument)
+void					logical_operations(t_carriage *carriage)
 {
-	unsigned 		first_arg;
-	unsigned 		second_arg;
-	unsigned 		third_arg;
-
-	if (check_instruction_args(argument, (T_REG | T_DIR | T_IND),(T_REG | T_DIR | T_IND), T_REG) == ERROR)
-	{
-		return ;
-	}
-	first_arg = (unsigned)get_arguments(field, argument, FIRST_ARG, carriage);
-	second_arg = (unsigned)get_arguments(field, argument, SECOND_ARG, carriage);
-	third_arg = (unsigned)get_arguments(field, argument, THIRD_ARG, carriage);
-
-	if (check_type_arguments(argument, T_REG, 3, 0, first_arg, 1, second_arg, 2, third_arg) == 1)
-		return ;
-
-	REG[third_arg] = which_operation_needs(first_arg, second_arg, COMMAND);
-	change_carry_if_need(third_arg, carriage);
+	REG[CAR_THIRD_ARG] =
+			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, COMMAND);
+	change_carry_if_need((unsigned char)CAR_THIRD_ARG, carriage);
 }

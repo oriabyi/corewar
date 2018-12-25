@@ -88,7 +88,7 @@ void 			init_core(t_corewar *core)
 	core->max_checks = 0;
 	core->qua_champs = 0;
 	core->qua_lives = 0;
-	core->qua_carrs = 0;
+	core->quant_carriages = 0;
 	core->last_live = 0;
 	core->carriage = NULL;
 }
@@ -108,5 +108,6 @@ int				main(int ac, char **av)
 	}
 	war(&core);
 	clean_all(&core);
+	printf("bigmother = %d\n", bigmother);
 	return (0);
 }

@@ -9,8 +9,7 @@ unsigned char 	 get_argument(t_field *field, int coord)
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
-					  unsigned id)
+int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *carriage)
 {
 
 	char **str;
@@ -20,14 +19,14 @@ int 	write_in_field(t_field *field, int coord, int t_reg, t_carriage *carriage,
 	str = int_to_char_hex(REG[t_reg], 4); //define 5
 	if (!str)
 		return (1); // return an ERROR
-	if (coord == 617)
-		coord = 613;
+//	if (coord == 617)
+//		coord = 613;
 	while (str[counter])
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
-		field[coord].old_owner = get_id_of_champ(id);
-		field[coord].champ_id = get_id_of_champ(id); //+ DENOTE_ALTERED;
+		field[coord].old_owner = get_id_of_champ(field[CUR_COORD].champ_id);
+		field[coord].champ_id = get_id_of_champ(field[CUR_COORD].champ_id); //+ DENOTE_ALTERED;
 		field[coord].is_alive = 0;
 		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;
@@ -45,7 +44,8 @@ ssize_t 		correction_coordinates(ssize_t coordinate)
 	}
 	while (coordinate < 0)
 	{
-		coordinate += MEM_SIZE;
+//		exit (23);
+		coordinate += MEM_SIZE; // sdelat po modylu
 	}
 	return (coordinate);
 }
@@ -76,29 +76,18 @@ int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, .
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned char argument, unsigned id)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage)	//label size == 2
 {
 	ssize_t 		coord;
-	ssize_t		 	first_arg;
-	ssize_t 		second_arg;
-	ssize_t			third_arg;
 
-	if (check_instruction_args(argument,
-			T_REG, (T_REG | T_DIR | T_IND), (T_REG | T_DIR)) == ERROR)
+	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
+			SECOND_ARG, &CAR_SECOND_ARG,
+			THIRD_ARG, &CAR_THIRD_ARG) == 1)
 	{
 		return ;
 	}
-
-	first_arg = get_arguments(field, argument, FIRST_ARG, carriage);
-	second_arg = get_arguments(field, argument, SECOND_ARG, carriage);
-	third_arg = get_arguments(field, argument, THIRD_ARG, carriage);
-
-	if (get_regs_value(argument, carriage, T_REG, 2, 1, &second_arg, 2, &third_arg) == 1)
-		return ;
-
-	coord = (((short)(second_arg + third_arg) % IDX_MOD) + CUR_COORD);
-
-	write_in_field(field, (int)coord, (int)first_arg, carriage, id);
+	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
+	write_in_field(field, (int)coord, (unsigned char)CAR_FIRST_ARG, carriage);
 }
 
 

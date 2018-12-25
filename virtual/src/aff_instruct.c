@@ -1,13 +1,6 @@
 #include "../includes/corewar_header.h"
 
-void 	aff_instruct(t_field *field, t_carriage *carriage, unsigned argument) // label size == 4
+void 	aff_instruct(t_carriage *carriage)
 {
-	unsigned char	t_reg;
-
-	t_reg = (unsigned char)get_arguments(field, 0x40, FIRST_ARG, carriage);
-	if (check_instruction_args(argument, T_REG, NONE_ARG, NONE_ARG) == ERROR)
-	{
-		return ;
-	}
-	write(1, (const void *)((ssize_t)(REG[t_reg] % 256)), 1);
+	write(1, (const void *)((ssize_t)(REG[CAR_FIRST_ARG] % 256)), 1);
 }

@@ -18,10 +18,7 @@ void 	check_whose_id(t_corewar *core, unsigned id)
 
 void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core)
 {
-	unsigned 	id;
-
-	id = (unsigned)get_arguments(field, 0x80, FIRST_ARG, carriage);
-	check_whose_id(core, id);
+	check_whose_id(core, (unsigned)CAR_FIRST_ARG);
 	field[CUR_COORD].old_owner = field[CUR_COORD].champ_id;
 	field[CUR_COORD].champ_id =
 			get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALIVE;

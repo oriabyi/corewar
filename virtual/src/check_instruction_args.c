@@ -34,7 +34,7 @@ int 	check_instruction_args(int argument, int first, int second, int third)
 	return (check_code ? 1 : 0);
 }
 
-int 	help_fishka(int argument, int bytes)
+int 	get_indent_size(int argument, int bytes)
 {
 	if (argument == T_REG)
 		return (1);
@@ -46,19 +46,19 @@ int 	help_fishka(int argument, int bytes)
 	return (0);
 }
 
-int 	fishka(int argument, int count_arguments, int bytes)
+int 	get_indent(int argument, int count_arguments, int bytes)
 {
 	int 	step;
 
 	step = 0;
 	if (count_arguments >= 1)
 	{
-		step += help_fishka(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
+		step += get_indent_size(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
 		if (count_arguments >= 2)
 		{
-			step += help_fishka(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
+			step += get_indent_size(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
 			if (count_arguments == 3)
-				step += help_fishka(check_instruction_arg(GET_THIRD_ARG(argument), NONE_ARG), bytes);
+				step += get_indent_size(check_instruction_arg(GET_THIRD_ARG(argument), NONE_ARG), bytes);
 		}
 	}
 	return (step);

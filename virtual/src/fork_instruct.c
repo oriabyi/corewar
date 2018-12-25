@@ -22,39 +22,43 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 	return (dst);
 }
 
+void 					insert_new_carriage(t_carriage *head, t_carriage *new_carriage, unsigned *quant_carriages)
+{
+	t_carriage *temp;
+
+	if (head->next)
+	{
+		temp = head->next;
+		head->next = new_carriage;
+		new_carriage->next = temp;
+	}
+	else
+		head->next = new_carriage;
+	++(*quant_carriages);
+}
+
 
 void					fork_instruct(t_field *field, t_carriage *carriage,
 									 unsigned *quant_carriages)
 {
-	short				first_arg;
 	t_carriage			*new_carriage;
-	t_carriage			*head;
 
-	head = carriage;
 
-	first_arg = (short)get_arguments(field, 0x80, FIRST_ARG, head);
-	new_carriage = copy_carriage(head, *quant_carriages);
+	new_carriage = copy_carriage(carriage, *quant_carriages);
 	if (new_carriage == NULL)
 	{
 		return ;
 	}
-
 	if (COMMAND == CW_FORK)
 	{
-		new_carriage->cur_coord = head->cur_coord + (first_arg % IDX_MOD);
+		new_carriage->cur_coord = CUR_COORD + (int)(CAR_FIRST_ARG % IDX_MOD);
 	}
 	else if (COMMAND == CW_LFORK)
 	{
-		new_carriage->cur_coord = head->cur_coord + (first_arg);
+		new_carriage->cur_coord = CUR_COORD + (int)(CAR_FIRST_ARG);
 	}
 	new_carriage->cur_coord = (int)correction_coordinates(new_carriage->cur_coord);
-
 	field[new_carriage->cur_coord].carriages_on++;
-
 	denote_field(field, new_carriage->cur_coord);
-
-	while (head && head->next)
-		head = head->next;
-	if (head && ++(*quant_carriages)) // move it upper (++)
-		head->next = new_carriage;
+	insert_new_carriage(carriage, new_carriage, quant_carriages);
 }

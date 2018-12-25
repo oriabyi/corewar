@@ -1,90 +1,103 @@
 #include "../includes/corewar_header.h"
 
 void						list_of_instructions(t_field *field,
-										t_carriage *carriage, unsigned id,
-										unsigned char argument)
+										t_carriage *carriage, unsigned char argument)
 {
 	if (COMMAND == CW_LD || COMMAND == CW_LLD)
-		load_instruct(field, carriage, argument);
+		load_instruct(carriage);
 	else if (COMMAND == CW_ST)
-		store_instruct(field, carriage, argument, id);
+		store_instruct(field, carriage);
 	else if (COMMAND == CW_ADD || COMMAND == CW_SUB)
-		add_sub_instructs(field, carriage, argument);
-	else if (COMMAND == CW_OR || COMMAND == CW_XOR || COMMAND == CW_AND)
-		logical_operations(field, carriage, argument);
+		add_sub_instructs(carriage);
+	else if (COMMAND == CW_XOR || COMMAND == CW_OR || COMMAND == CW_AND)
+		logical_operations(carriage);
 	else if (COMMAND == CW_LDI || COMMAND == CW_LLDI)
-		load_index_instruct(field, carriage, argument);
+		load_index_instruct(field, carriage);
 	else if (COMMAND == CW_STI)
-		store_index_instruct(field, carriage, argument, id);
+		store_index_instruct(field, carriage);
 	else if (COMMAND == CW_AFF)
-		aff_instruct(field, carriage, id);
+		aff_instruct(carriage);
 }
 
-void 					choose_instruction(t_field *field, t_carriage *carriage,
-										   t_champ *champ, t_corewar *core)
+void					get_arguments_table(t_carriage *carriage);
+
+void 					get_t_args(t_field *field, t_carriage *carriage)
+{
+	if (get_codage(COMMAND) == true)
+	{
+		LIST_ARGUMENTS = get_argument(field, CUR_COORD + 1);
+		get_arguments_table(carriage);
+		if (check_instruction_args(LIST_ARGUMENTS,
+								ADJUSTED[FIRST_ARG],
+								ADJUSTED[SECOND_ARG],
+								ADJUSTED[THIRD_ARG])
+								== ERROR)
+		{
+			COMMAND = NO_INSTRUCTION;
+		}
+	}
+	else
+		LIST_ARGUMENTS = (unsigned char)0x80;
+	CAR_FIRST_ARG = get_arguments(field, LIST_ARGUMENTS, FIRST_ARG, carriage);
+	CAR_SECOND_ARG = get_arguments(field, LIST_ARGUMENTS, SECOND_ARG, carriage);
+	CAR_THIRD_ARG = get_arguments(field, LIST_ARGUMENTS, THIRD_ARG, carriage);
+	if (check_type_arguments(LIST_ARGUMENTS, T_REG, 3,
+							FIRST_ARG, CAR_FIRST_ARG,
+							SECOND_ARG, CAR_SECOND_ARG,
+							THIRD_ARG, CAR_THIRD_ARG) == 1)
+	{
+		COMMAND = NO_INSTRUCTION;
+	}
+}
+
+void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *core)
 {
 	int 				check_jump;
-	unsigned char		argument;
 
 	if (IS_VALID_COMMAND(COMMAND) == false)
 	{
 		move_carriage(field, 1, carriage);
 		return ;
 	}
-	argument = (get_codage(COMMAND)) ?
-			get_argument(field, CUR_COORD + 1) : (unsigned char)0x80;
+	get_t_args(field, carriage);
 	if (COMMAND == CW_ZJMP)
 		check_jump = jump_if_carry_instruct(field, carriage);
 	else if (COMMAND == CW_FORK || COMMAND == CW_LFORK)
-		fork_instruct(field, carriage, &champ->quant_carriages);
+		fork_instruct(field, carriage, &core->quant_carriages);
 	else if (COMMAND == CW_LIVE)
 		alive_instruct(field, carriage, core);
 	else
-		list_of_instructions(field, carriage, champ->id, argument);
+		list_of_instructions(field, carriage, LIST_ARGUMENTS);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
-		move_carriage(field, (1 + fishka(argument, 3,
+		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, 3,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
+		carriage->arguments = (t_args){0, 0, {0, 0, 0}, 0, 0, 0};
 	}
 }
 
-
-void 			perform_champ_carriages(t_field *field, t_champ *champ, t_corewar *core)
+void 			do_process(t_corewar *core)
 {
 	unsigned 	qua_carriages;
 	t_carriage	*carriage;
 
-	qua_carriages = champ->quant_carriages;
-	carriage = champ->carriage;
-	while (carriage) // && qua_carriages--
+	qua_carriages = core->quant_carriages;
+	carriage = core->carriage;
+	while (carriage)
 	{
 		if (COMMAND == 0)
 		{
-			COMMAND = ft_ahtoi((char *)(field[CUR_COORD].hex));
+			COMMAND = ft_ahtoi((char *)(core->field[CUR_COORD].hex));
 			if (IS_VALID_COMMAND(COMMAND) == true)
 				CYCLES = get_cycles(carriage);
 		}
 		(CYCLES)--;
 		if (CYCLES <= 0)
 		{
-			choose_instruction(field, carriage, champ, core);
+			choose_instruction(core->field, carriage, core);
 			COMMAND = 0;
 			CYCLES = 0;
 		}
 		carriage = carriage->next;
-	}
-}
-
-void 			do_process(t_corewar *core)
-{
-	unsigned 		champ_num;
-
-	champ_num = 0;
-	perform_champ_carriages(core->field, &(core->champs[core->qua_champs - 1]), core);
-	while (champ_num < (core->qua_champs - 1))
-	{
-		if (core->champs[champ_num].alive != CHAMP_IS_DEAD)
-			perform_champ_carriages(core->field, &(core->champs[champ_num]), core);
-		champ_num++;
 	}
 }

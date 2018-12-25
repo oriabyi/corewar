@@ -87,7 +87,7 @@ t_carriage 				*create_carriage(int id)
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
 	*carriage = (t_carriage){0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, true, NULL};
+									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, id, {0, 0, {0, 0, 0}, 0, 0}, NULL};
 	return (carriage);
 }
 
@@ -129,20 +129,22 @@ void 				fill_champ_by_himself(t_champ *champ, int id)
 	(champ)->quant_carriages++;
 }
 
-void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs)
+void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refactor me
 {
 	t_carriage		*head;
 	int 			counter;
 
 	counter = 0;
+	fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id); // hey, emm, delete me pleeeeasee
 	head = create_carriage((*champ)[counter++].id);
  	core->carriage = head;
+	core->quant_carriages++;
 	while (counter < qua_champs)
 	{
 		head->next = create_carriage((*champ)[counter].id);
 		head = head->next;
-		fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id);
-		core->qua_carrs++;
+		fill_champ_by_himself(&((*champ)[counter]), (*champ)[counter].id); // and me too <3
+		core->quant_carriages++;
 		counter++;
 	}
 	head->next = NULL;

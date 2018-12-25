@@ -14,17 +14,20 @@
 
 #define F_VISUAL		core->flags.visual
 #define F_DUMP			core->flags.dump
-
 #define CUR_COORD		carriage->cur_coord
-
 #define REG				carriage->registers
-
 #define COMMAND		 	carriage->command
-
 #define CARRY			carriage->carry
 #define CYCLES			carriage->cycles
-
 #define ALIVE			carriage->alive
+
+#define LIST_ARGUMENTS	carriage->arguments.list_arguments
+
+#define CAR_FIRST_ARG	carriage->arguments.first_arg
+#define CAR_SECOND_ARG	carriage->arguments.second_arg
+#define CAR_THIRD_ARG	carriage->arguments.third_arg
+
+# define ADJUSTED		carriage->arguments.have_to_have
 
 # define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
@@ -49,7 +52,6 @@
 
 
 #define CHAMP_IS_DEAD				3
-
 
 
 
@@ -208,22 +210,40 @@
 **	Define cycles
 */
 
-# define CW_LIVE_CYCLES				10
-# define CW_LD_CYCLES				5
-# define CW_ST_CYCLES				5
-# define CW_ADD_CYCLES				10
-# define CW_SUB_CYCLES				10
-# define CW_AND_CYCLES				6
-# define CW_OR_CYCLES				6
-# define CW_XOR_CYCLES				6
 # define CW_ZJMP_CYCLES				20
-# define CW_LDI_CYCLES				25
-# define CW_STI_CYCLES				25
 # define CW_FORK_CYCLES				800
-# define CW_LLD_CYCLES				10
 # define CW_LLDI_CYCLES				50
 # define CW_LFORK_CYCLES			1000
 # define CW_AFF_CYCLES				2
+
+
+
+
+//live(1), zjmp(9), fork(12), lfork(15)
+# define D_N_N			(T_DIR, NONE_ARG, NONE_ARG)
+
+// ld(2),  lld(13)
+# define DI_R_N			(T_DIR | T_IND, T_R, NONE_ARG)
+
+// st(3)
+# define R_RI_N
+
+// add(4), sub(5)
+# define R_R_R
+
+// and(6), or(7), xor(8)
+# define RDI_RDI_R
+
+// ldi(10), lldi(14)
+#define RDI_RD_R
+
+// sti(11)
+# define R_RDI_RD
+
+// aff(16)
+# define R_N_N
+
+
 
 int 				bigmother;
 
@@ -233,6 +253,15 @@ typedef	struct			s_flags
 	unsigned			dump;
 }						t_flags;
 
+typedef struct 			s_arguments
+{
+	unsigned char		list_arguments;
+	unsigned 			is_correct;
+	unsigned			have_to_have[3];
+	ssize_t 			first_arg;
+	ssize_t 			second_arg;
+	ssize_t 			third_arg;
+}						t_args;
 
 typedef struct			s_carriage
 {
@@ -244,9 +273,11 @@ typedef struct			s_carriage
 	unsigned 			command:8;
 	int 				cycles;
 	int 				id;
+	t_args				arguments;
 
 	struct s_carriage	*next;
 }						t_carriage;
+
 
 typedef struct			s_champion
 {
@@ -301,7 +332,7 @@ typedef struct			s_corewar
 	int 				max_checks;
 	unsigned 			qua_champs;
 	unsigned 			qua_lives;
-	unsigned 			qua_carrs;
+	unsigned 			quant_carriages;
 	unsigned 			last_live:3;
 
 	t_carriage			*carriage;
@@ -319,6 +350,7 @@ int 	check_availability_flags(t_flags *flags, int ac, char **av);
 */
 
 int 	parse(t_corewar *core, char **av);
+void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs); // refactor me;
 
 
 /*
@@ -385,33 +417,33 @@ void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 */
 
 void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core);
-void 	load_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
-void 	store_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
+void 	load_instruct(t_carriage *carriage);
+void 	store_instruct(t_field *field, t_carriage *carriage);
 
 // add and sub operations here
-void 	add_sub_instructs(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	add_sub_instructs(t_carriage *carriage);
 
 // all logical operations here
-void 	logical_operations(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	logical_operations(t_carriage *carriage);
 
 int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage);
 
 //	LLDI in LDI
-void 	load_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument);
+void 	load_index_instruct(t_field *field, t_carriage *carriage);
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, unsigned  char argument, unsigned id);
+void 	store_index_instruct(t_field *field, t_carriage *carriage);
 
 //  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
 									  unsigned *quant_carriages);
 
-void 	aff_instruct(t_field *field, t_carriage *carriage, unsigned id);
+void 	aff_instruct(t_carriage *carriage);
 
 /*
 ** Check carry
 */
 
-void 	change_carry_if_need(int coord, t_carriage *carriage);
+void 	change_carry_if_need(unsigned char coord, t_carriage *carriage);
 
 /*
 **	Move Carriage
@@ -425,7 +457,7 @@ void 	move_carriage(t_field *field, int step, t_carriage *carriage);
 */
 
 int 	check_instruction_args(int argument, int first, int second, int third);
-int 	help_fishka(int argument, int bytes);
+int 	get_indent_size(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
 int 			get_dir_bytes(unsigned command);
 int			get_codage(unsigned command);
@@ -461,12 +493,12 @@ ssize_t		get_arg_reg(t_field *field, t_champ *champ, int *step, ssize_t *get);
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, int t_reg, t_carriage *carriage, unsigned id);
+int 	write_in_field(t_field *field, int position, unsigned char t_reg, t_carriage *carriage);
 
 //add sub
-unsigned				which_operation_needs(unsigned a, unsigned b, unsigned command);
+unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command);
 
-int 	fishka(int argument, int count_arguments, int bytes);
+int 	get_indent(int argument, int count_arguments, int bytes);
 
 //dump
 void 			print_memory(t_corewar *core);

@@ -29,7 +29,7 @@ void 	move_carriage(t_field *field, int step, t_carriage *carriage)
 }
 
 
-void 	change_carry_if_need(int coord, t_carriage *carriage)
+void 	change_carry_if_need(unsigned char coord, t_carriage *carriage)
 {
 	if (REG[coord] == 0)
 		CARRY = true;

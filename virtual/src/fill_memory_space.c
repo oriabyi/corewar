@@ -27,10 +27,10 @@ void				fill_memory_space(t_champ *champs, t_field *field, int qua_champs)
 			field[counter].hex[1] = seq[champs[num_of_champ].exec_code[champ_counter] % 16];
 		}
 		if (champs[num_of_champ].carriage &&
-		((champs[num_of_champ].carriage->cur_coord == NOT_EXPOSED && num_of_champ) ||
+		((champs[num_of_champ].CUR_COORD == NOT_EXPOSED && num_of_champ) ||
 											(counter == 0 && num_of_champ == 0)))
 		{
-			champs[num_of_champ].carriage->cur_coord = counter;
+			champs[num_of_champ].CUR_COORD = counter;
 			field[counter].champ_id = num_of_champ + COUNTING_FROM_ONE + DENOTE_CARRIAGE;
 			field[counter].carriages_on++;
 		}

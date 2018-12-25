@@ -3,32 +3,19 @@
 
 int 			get_cycles(t_carriage *carriage)
 {
-	if (COMMAND == CW_LIVE)
-		return (CW_LIVE_CYCLES);
-	else if (COMMAND == CW_LD)
-		return (CW_LD_CYCLES);
-	else if (COMMAND == CW_ST)
-		return(CW_ST_CYCLES);
-	else if (COMMAND == CW_ADD)
-		return (CW_ADD_CYCLES);
-	else if (COMMAND == CW_SUB)
-		return (CW_SUB_CYCLES);
-	else if (COMMAND == CW_AND)
-		return(CW_AND_CYCLES);
-	else if (COMMAND == CW_OR)
-		return(CW_OR_CYCLES);
-	else if (COMMAND == CW_XOR)
-		return(CW_XOR_CYCLES);
+	if (COMMAND == CW_SUB || COMMAND == CW_ADD ||
+		COMMAND == CW_LLD || COMMAND == CW_LIVE)
+		return (10);
+	else if (COMMAND == CW_LD || COMMAND == CW_ST)
+		return (5);
+	else if (COMMAND == CW_OR || COMMAND == CW_AND || COMMAND == CW_XOR)
+		return(6);
 	else if (COMMAND == CW_ZJMP)
 		return (CW_ZJMP_CYCLES);
-	else if (COMMAND == CW_LDI)
-		return (CW_LDI_CYCLES);
-	else if (COMMAND == CW_STI)
-		return (CW_STI_CYCLES);
+	else if (COMMAND == CW_LDI || COMMAND == CW_STI)
+		return (25);
 	else if (COMMAND == CW_FORK)
 		return (CW_FORK_CYCLES);
-	else if (COMMAND == CW_LLD)
-		return (CW_LLD_CYCLES);
 	else if (COMMAND == CW_LLDI)
 		return (CW_LLDI_CYCLES);
 	else if (COMMAND == CW_LFORK)
@@ -38,6 +25,45 @@ int 			get_cycles(t_carriage *carriage)
 	else
 		return (NO_INSTRUCTION);
 }
+
+void 			insert(t_args *arguments, unsigned first, unsigned second,
+					   unsigned third)
+{
+	arguments->have_to_have[0] = first;
+	arguments->have_to_have[1] = second;
+	arguments->have_to_have[2] = third;
+}
+
+
+void 			get_arguments_table(t_carriage *carriage)
+{
+	if (COMMAND == CW_LIVE || COMMAND == CW_ZJMP ||
+		COMMAND == CW_FORK || COMMAND == CW_LFORK)
+	{
+		insert(&carriage->arguments, NONE_ARG, NONE_ARG, NONE_ARG);
+	}
+	else if (COMMAND == CW_LD || COMMAND == CW_LLD)
+		insert(&carriage->arguments, T_DIR | T_IND, T_REG, NONE_ARG);
+	else if (COMMAND == CW_ST)
+		insert(&carriage->arguments, T_REG, T_REG | T_IND, NONE_ARG);
+	else if (COMMAND == CW_ADD || COMMAND == CW_SUB)
+		insert(&carriage->arguments, T_REG, T_REG, T_REG);
+	else if (COMMAND == CW_AND || COMMAND == CW_OR || COMMAND == CW_XOR)
+	{
+		insert(&carriage->arguments,
+				T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG);
+	}
+	else if (COMMAND == CW_LDI || COMMAND == CW_LLDI)
+	{
+		insert(&carriage->arguments,
+				T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG);
+	}
+	else if (COMMAND == CW_STI)
+		insert(&carriage->arguments, T_REG, T_REG | T_DIR, T_REG | T_DIR);
+	else if (COMMAND == CW_AFF)
+		insert(&carriage->arguments, T_REG, NONE_ARG, NONE_ARG);
+}
+
 
 int 			get_dir_bytes(unsigned command)
 {
@@ -60,23 +86,10 @@ int			get_codage(unsigned command)
 		return (true);
 }
 
-void					get_old_owner(t_field *field, int coord)
-{
-	field[coord].champ_id = field[coord].old_owner;
-}
-
-
-void					fill_old_owner(t_field *field, int coord)
-{
-	field[coord].old_owner = field[coord].champ_id;
-}
-
 void 					 denote_field(t_field *field, int coord)
 {
-	fill_old_owner(field, coord);
+	field[coord].old_owner = field[coord].champ_id;
 	if (field[coord].hex[0] == '0' && field[coord].hex[1] == '1')
 		field[coord].is_alive = 1;
-
-
 }
 
