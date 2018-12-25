@@ -33,7 +33,7 @@ void			war(t_corewar *core)
 		}
 
 		if (cycles >= F_DUMP && F_VISUAL)
-			cycles = (unsigned)draw(core, cycles);
+			cycles = (unsigned)draw(core, cycles, &cycles_limit);
 		else
 			cycles++;
 		do_process(core);
@@ -47,15 +47,12 @@ void			war(t_corewar *core)
 		{
 			int old_cycles = cycles;
 			NCUR.pause = 1;
-			cycles = (unsigned)draw(core, cycles);
-			if (cycles > old_cycles)
+			cycles = (unsigned)draw(core, cycles, &cycles_limit);
+			if (cycles >= old_cycles)
 				break ;
-			cycles_limit = (unsigned)core->cycle_to_die;
 			continue ;
 		}
 	}
-
-	NCUR.pause = 1;
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
 //	ft_putstr(temp);

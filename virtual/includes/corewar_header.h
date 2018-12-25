@@ -398,7 +398,7 @@ int 			visual_init(t_corewar *core);
 void 			visual_start(t_corewar *core);
 int 			visual_end(t_corewar *core);
 int 			display_windows(t_corewar *core, int cycle);
-int				draw(t_corewar *core, int cycle);
+int				draw(t_corewar *core, int cycle, int *cycles_limit);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 
