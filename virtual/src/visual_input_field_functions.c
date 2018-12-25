@@ -41,23 +41,11 @@ int 			delete_last_letter_from_iput_field(char *field)
 	return (1);
 }
 
-// ????
-void 			set_field(t_corewar *core, char **field)
-{
-	if ((*field) == NCUR.cycle_to_go)
-		(*field) = NCUR.champ_id;
-	else if ((*field) == NCUR.champ_id)
-		(*field) = NCUR.carriage_id;
-	else if ((*field) == NCUR.carriage_id)
-		(*field) = NCUR.cycle_to_go;
-}
 
 
 void 			set_next_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
-		NCUR.current_field = NCUR.champ_id;
-	else if (NCUR.current_field == NCUR.champ_id)
 		NCUR.current_field = NCUR.carriage_id;
 	else if (NCUR.current_field == NCUR.carriage_id)
 		NCUR.current_field = NCUR.cycle_to_go;
@@ -67,8 +55,6 @@ void 			set_prev_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
 		NCUR.current_field = NCUR.carriage_id;
-	else if (NCUR.current_field == NCUR.champ_id)
-		NCUR.current_field = NCUR.cycle_to_go;
 	else if (NCUR.current_field == NCUR.carriage_id)
-		NCUR.current_field = NCUR.champ_id;
+		NCUR.current_field = NCUR.cycle_to_go;
 }

@@ -10,7 +10,6 @@ int				visual_init(t_corewar *core)
 	NCUR.where_pause = 0;
 
 	fill_input_field_with_zeros(NCUR.cycle_to_go);
-	fill_input_field_with_zeros(NCUR.champ_id);
 	fill_input_field_with_zeros(NCUR.carriage_id);
 	NCUR.current_field = NCUR.cycle_to_go;
 

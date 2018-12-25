@@ -50,11 +50,6 @@
 #define FOUR_BYTES					4
 
 
-
-#define CHAMP_IS_DEAD				3
-
-
-
 # define CHECK_REG(x) (x >= 0 && x <= 15)
 
 /*
@@ -122,10 +117,6 @@
 # define MENU_DOWN_BUTTON			259
 # define MENU_UP_BUTTON				258
 # define VISUAL_OFF					27
-
-# define DENOTE_CARRIAGE			5 //TODO: remove
-# define DENOTE_ALTERED				10
-# define DENOTE_ALIVE				15
 
 # define FILE_IS_REG				0
 
@@ -262,16 +253,13 @@ typedef struct			s_champion
 
 typedef struct			s_ncurses
 {
-	int 				i;
 	struct timespec 	tstart;
 	struct timespec		tend;
 	int		 			draw_speed;
-	int 				pressed_button;
 	int 				where_pause;
 	unsigned 			pause:1;
-
+	int 				pressed_button;
 	char				cycle_to_go[7];
-	char				champ_id[7];
 	char				carriage_id[7];
 	char 				*current_field;
 
@@ -371,7 +359,7 @@ int 			visual_init(t_corewar *core);
 void 			visual_start(t_corewar *core);
 int 			visual_end(t_corewar *core);
 int 			display_windows(t_corewar *core, int cycle);
-int				draw(t_corewar *core, int cycle, int *cycles_limit);
+int				draw(t_corewar *core, int cycle, unsigned *cycles_limit);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 

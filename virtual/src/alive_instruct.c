@@ -21,7 +21,7 @@ void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core, t_ar
 	check_whose_id(core, (unsigned)CAR_FIRST_ARG);
 	field[CUR_COORD].old_owner = field[CUR_COORD].champ_id;
 	field[CUR_COORD].champ_id =
-			get_id_of_champ(field[CUR_COORD].champ_id) + DENOTE_ALIVE;
+			get_id_of_champ(field[CUR_COORD].champ_id);
 	field[CUR_COORD].altered_cycles = SHOW_CHANGED_CYCLES;
 	ALIVE = true;
 	core->qua_lives++;

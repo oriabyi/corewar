@@ -69,13 +69,6 @@ void			war(t_corewar *core)
 void 			init_core(t_corewar *core)
 {
 	core->field = NULL;
-	NCUR = (t_ncurses){0, {0, 0}, {0, 0}, 0, 0, 0, 0};
-	ft_bzero(NCUR.cycle_to_go, 7);
-	ft_bzero(NCUR.champ_id, 7);
-	ft_bzero(NCUR.carriage_id, 7);
-	NCUR.current_field = NULL;
-	NCUR.memory_window = NULL;
-	NCUR.score_window = NULL;
 	core->champs = NULL;
 	core->flags = (t_flags){0, 0};
 	core->cycle_to_die = CYCLE_TO_DIE;

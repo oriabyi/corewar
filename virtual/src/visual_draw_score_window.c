@@ -118,12 +118,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 	mvwprintw(core->ncur.score_window, ++pos_y, 3, "Type carriage id : %s", core->ncur.carriage_id);
 	if (core->ncur.current_field ==  core->ncur.carriage_id)
 		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
-	/// Carriage field
-	if (core->ncur.current_field ==  core->ncur.champ_id)
-		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_BLACK_WHITE));
-	mvwprintw(core->ncur.score_window, ++pos_y, 3, "Type carriage id : %s", core->ncur.champ_id);
-	if (core->ncur.current_field ==  core->ncur.champ_id)
-		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
+
 
 
 
@@ -135,7 +130,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 
 	/// is valid carriage id in input field
 
-	if (carriage_id >= 0)
+	if (carriage_id >= 0 && ft_strlen(core->ncur.carriage_id))
 	{
 		t_carriage *tmp_carr;
 		/// finding carriage by id

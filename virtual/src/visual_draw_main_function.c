@@ -12,7 +12,7 @@ int 			display_windows(t_corewar *core, int cycle)
 	return (0);
 }
 
-int 			change_cycle(t_corewar *core, int cycle, int *cycles_limit)
+int 			change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 {
 	if (ft_atoi(NCUR.cycle_to_go) >= 0)
 	{
@@ -28,7 +28,7 @@ int 			change_cycle(t_corewar *core, int cycle, int *cycles_limit)
 	return (cycle);
 }
 
-int				draw(t_corewar *core, int cycle, int *cycles_limit)
+int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)
 {
 	int 		button;
 
