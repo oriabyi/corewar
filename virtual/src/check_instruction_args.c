@@ -18,7 +18,8 @@ int 	check_instruction_args(t_args *arguments)
 	int 		check_code;
 
 	check_code = 0;
-	if (LIST_ARGUMENTS <= 3)
+
+	if (LIST_ARGUMENTS < 0x40)
 		return (1);
 	if (arguments->qua_args)
 	{
@@ -34,6 +35,8 @@ int 	check_instruction_args(t_args *arguments)
 	}
 	return (check_code ? 1 : 0);
 }
+
+
 
 int 	get_indent_size(int argument, int bytes)
 {

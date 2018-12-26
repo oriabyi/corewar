@@ -26,6 +26,7 @@ void 					insert_new_carriage(t_carriage *head, t_carriage *new_carriage, unsign
 	t_carriage *temp;
 
 	new_carriage->id = (*quant_carriages)++;
+	//just after
 	if (head->next)
 	{
 		temp = head->next;
@@ -34,6 +35,18 @@ void 					insert_new_carriage(t_carriage *head, t_carriage *new_carriage, unsign
 	}
 	else
 		head->next = new_carriage;
+
+	//at end
+
+//	temp = head;
+//	while (temp && temp->next)
+//	{
+//		temp = temp->next;
+//	}
+//	if (temp)
+//		temp->next = new_carriage;
+
+
 }
 
 void					fork_instruct(t_field *field, t_carriage *carriage,

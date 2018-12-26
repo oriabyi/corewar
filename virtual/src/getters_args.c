@@ -32,6 +32,7 @@ ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *ca
 		if (COMMAND == CW_ST)
 			return ((short)pos);
 		parameter = (unsigned)get_dir(field, pos, FOUR_BYTES, carriage);
+
 		return ((unsigned)parameter);
 	}
 	else if (argument == T_DIR)

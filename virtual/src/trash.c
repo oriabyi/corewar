@@ -62,7 +62,7 @@ void 			get_arguments_table(t_carriage *carriage, t_args *arguments)
 				T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG);
 	}
 	else if (COMMAND == CW_STI)
-		insert(arguments, T_REG, T_REG | T_DIR, T_REG | T_DIR);
+		insert(arguments, T_REG, T_REG | T_DIR | T_IND, T_REG | T_DIR);
 	else if (COMMAND == CW_AFF)
 		insert(arguments, T_REG, NONE_ARG, NONE_ARG);
 }

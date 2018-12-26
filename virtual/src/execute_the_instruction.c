@@ -41,9 +41,8 @@ void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *co
 		list_of_instructions(field, carriage, arguments);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
-		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, arguments->is_valid == 1 ? arguments->qua_args : 3,
-//		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, arguments->qua_args,
-			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
+		move_carriage(field, 1 + (get_codage(COMMAND) ? get_indent(LIST_ARGUMENTS, arguments->qua_args, get_dir_bytes(COMMAND)) + 1 : (COMMAND == CW_LIVE ? 4 : 2)),
+				carriage);
 		*arguments = (t_args){0, 0, 0, {0, 0, 0}, 0, 0, 0};
 	}
 }
