@@ -19,7 +19,7 @@ int 	check_instruction_args(t_args *arguments)
 
 	check_code = 0;
 
-	if (LIST_ARGUMENTS < 0x40)
+	if (LIST_ARGUMENTS < 0x40) // TODO: if there will be smaller?!?!??!?!?!
 		return (1);
 	if (arguments->qua_args)
 	{
