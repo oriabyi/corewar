@@ -262,6 +262,7 @@ typedef struct			s_ncurses
 	int 				pressed_button;
 	char				cycle_to_go[7];
 	char				carriage_id[7];
+	int					carriage_pos;
 	char 				*current_field;
 
 	WINDOW				*memory_window;
@@ -449,6 +450,7 @@ void		simple_print(WINDOW *win, int id);
 void 		carriage_print(WINDOW *win, int id);
 void 		alive_view(WINDOW *win, int id);
 void 		altered_view(WINDOW *win, int id);
+void 		follow_view(WINDOW *win, int id);
 
 //
 ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);

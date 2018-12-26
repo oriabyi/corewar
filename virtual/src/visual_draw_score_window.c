@@ -142,6 +142,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 
 		if (tmp_carr)
 		{
+			NCUR.carriage_pos = tmp_carr->cur_coord;
 			/// printing carriage id
 			mvwprintw(core->ncur.score_window, pos_y + 4, 3, "Carriage with id: %d", carriage_id);
 			int r = 0;
@@ -163,6 +164,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 		}
 		else
 		{
+			NCUR.carriage_pos = -1;
 			mvwprintw(core->ncur.score_window, pos_y + 58, 3, "Bad carriage id!");
 		}
 
