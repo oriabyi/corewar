@@ -48,6 +48,6 @@ add_executable(Corewar
         virtual/src/visual_reset_event.c
         virtual/src/visual_set_memory_print_attr.c
         virtual/src/visual_start_end_functions.c
-        virtual/src/check_correctness.c)
+        virtual/src/check_correctness.c virtual/src/check_champ.c virtual/src/operations_with_champs.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(Corewar ${LIBFT})

@@ -102,7 +102,5 @@ int				submain(int ac, char **av)
 
 int main(int ac, char **av)
 {
-	submain(ac, av);
-//	system("leaks corewar");
-	return(0);
+	return (submain(ac, av));
 }

@@ -1,9 +1,5 @@
 #include "../includes/corewar_header.h"
 
-unsigned 			get_id_of_champ(unsigned num)
-{
-	return ((num < 5) ? num : get_id_of_champ(num - 5)); // define 5
-}
 
 int 			display_windows(t_corewar *core, int cycle)
 {

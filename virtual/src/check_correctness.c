@@ -68,6 +68,8 @@ char 				*check_corewar_arguments(int check_code)
 		message = "CHAMP CAN NOT HAVE SO BIG ID!";
 	else if (check_code == REDUNDANT_ARGUMENTS)
 		message = "THERE ARE REDUNDANT ARGUMENTS!";
+	else if (check_code == NEED_ARGUMENTS)
+		message = "Short Usage:\n\t./corewar [champ1 .. champ4]";
 	else
 		message = "ERROR!";
 	return (message);
@@ -82,6 +84,7 @@ char 			*get_message(void)
 					  " \tDefault Player Numbers: 1, 2, 3, 4...\n"
 					  " \tChange Player Number: -n -1 filename.cor\n"
 					  " \tDump: ./corewar -d 300 [Players](prints the memory after 300 cycles)\n"
+					  " \tGOTO: ./corewar -v -d 300 [Players](start corewar in visual mode after 300 cycles)\n"
 					  " \tGame on! ", ALIEN, ALIEN, ALIEN));
 }
 
@@ -93,7 +96,7 @@ int				check_correctness(t_corewar *core, int check_code)
 	{
 		message = "MEMORY ALLOCATE ERROR!";
 	}
-	else if (ARGUMENTS_ERROR(check_code))
+	else if (ARGUMENTS_ERROR(check_code) || check_code == NEED_ARGUMENTS)
 	{
 		message = check_corewar_arguments(check_code);
 	}

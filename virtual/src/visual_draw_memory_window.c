@@ -25,7 +25,6 @@ void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 void 			draw_memory_window(t_corewar *core, int cycles)
 {
 	int 		i;
-	unsigned	id;
 
 	i = 0;
 	werase(NCUR.memory_window);
@@ -33,8 +32,7 @@ void 			draw_memory_window(t_corewar *core, int cycles)
 	{
 		if (i % 64 == 0)
 			wprintw(NCUR.memory_window, "\n");
-		id = get_id_of_champ(core->field[i].champ_id);
-		print_cell(core, id, i, cycles);
+		print_cell(core, core->field[i].champ_id, i, cycles);
 		if (i % 64 == 0)
 			wmove(NCUR.memory_window, (i / 64) + 1, 2);
 		wprintw(NCUR.memory_window, "%s", core->field[i].hex);

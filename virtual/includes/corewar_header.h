@@ -160,6 +160,7 @@
 # define BAD_COMMENT_LENGTH			56
 
 # define PRINT_USAGE				60
+# define NEED_ARGUMENTS				61
 
 
 # define NO_INSTRUCTION				0
@@ -364,10 +365,19 @@ int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 
 
+//operations
+
+unsigned 			find_free_space(t_champ *champs);
+int 				get_champ_by_id(t_champ *champ, unsigned id);
+int 				create_champs(t_champ **champs);
+void 				sort_champs(t_champ **champ, int qua_champs);
+
 /*
-** Math
+** Check Champ
 */
 
+int 				check_champ_file(char *champfilename);
+int 				check_champ_info(t_champ *champ);
 /*
 ** Instructions
 */
@@ -424,7 +434,6 @@ int 			check_reg(int reg);
 
 ssize_t 		correction_coordinates(ssize_t coordinate);
 
-unsigned 			get_id_of_champ(unsigned num);
 unsigned char 	get_argument(t_field *field, int coord);
 
 // carriage

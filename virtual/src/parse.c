@@ -1,60 +1,5 @@
 #include "../includes/corewar_header.h"
 
-int 				check_champ_extension(char *champ_file_name)
-{
-	if (ft_strcmp(champ_file_name + ft_strlen(champ_file_name) - 3, "cor") == 0)
-		return (0);
-	return (1);
-}
-
-int 				check_champ_type(char *champ_file_name)
-{
-	struct stat	sb;
-
-	if (lstat(champ_file_name, &sb) == -1)
-		return (FILE_DOESNT_EXIST);
-	if (S_ISREG(sb.st_mode))
-		return (FILE_IS_REG);
-	else if (S_ISFIFO(sb.st_mode))
-		return (FILE_IS_PIPE);
-	else if (S_ISCHR(sb.st_mode))
-		return (FILE_IS_SPEC_CHAR);
-	else if (S_ISDIR(sb.st_mode))
-		return (FILE_IS_DIR);
-	else if (S_ISSOCK(sb.st_mode))
-		return (FILE_IS_SOCKET);
-	else if (S_ISBLK(sb.st_mode))
-		return (FILE_IS_BLOCK);
-	else
-		return (WRONG_FILE_TYPE);
-}
-
-int 				check_champ_file(char *champfilename)
-{
-	int 			check_num;
-
-	if (access(champfilename, F_OK ) == -1)
-		return (FILE_DOESNT_EXIST);
-	if (access(champfilename, R_OK ) == -1)
-		return (NO_RIGHT_FOR_READ);
-	if ((check_num = check_champ_type(champfilename)) != FILE_IS_REG)
-		return (check_num);
-	if (check_champ_extension(champfilename) == 1)
-		return (BAD_CHAMP_EXTENSION);
-	return (0);
-}
-
-int 				check_champ_info(t_champ *champ)
-{
-	if (ft_strlen(champ->name) > PROG_NAME_LENGTH)
-		return (BAD_NAME_LENGTH);
-	else if (champ->size > CHAMP_MAX_SIZE)
-		return (BAD_CHAMP_SIZE);
-	else if (ft_strlen(champ->comment) > COMMENT_LENGTH)
-		return (BAD_COMMENT_LENGTH);
-	return (0);
-}
-
 int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 {
 	int				fd;
@@ -91,37 +36,6 @@ t_carriage 				*create_carriage(int id)
 	return (carriage);
 }
 
-int 				create_champs(t_champ **champs)
-{
-	int 			counter;
-
-	counter = 0;
-	if (!(*champs = (t_champ *)malloc(sizeof(t_champ) * O_BOTS)))
-		return (MEMORY_ERROR);
-	while (counter < O_BOTS)
-	{
-		(*champs)[counter] = (t_champ){NULL, NULL, NULL,
-								 (O_BOTS + 1), 0, 0};
-		counter++;
-	}
-	return (0);
-}
-
-int 				get_champ_by_id(t_champ *champ, unsigned id);
-
-unsigned 			find_free_space(t_champ *champs)
-{
-	unsigned 		counter;
-
-	counter = 1;
-	while (counter < (O_BOTS + 1))
-	{
-		if (get_champ_by_id(champs, counter) == false)
-			return (counter);
-		counter++;
-	}
-	return (O_BOTS + 1);
-}
 
 void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refactor me
 {
@@ -156,45 +70,6 @@ void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refact
 	}
 }
 
-void 				swap_champs(t_champ *first, t_champ *second)
-{
-	t_champ			temp;
-
-	temp = *first;
-	*first = *second;
-	*second = temp;
-}
-
-void 				sort_champs(t_champ **champ, int qua_champs)
-{
-	int 			counter;
-
-	counter = 0;
-	while (counter + 1 < qua_champs)
-	{
-		if ((*champ)[counter].id > (*champ)[counter + 1].id)
-		{
-			swap_champs(&((*champ)[counter]), &((*champ)[counter + 1]));
-			counter = 0;
-		}
-		else
-			counter++;
-	}
-}
-
-int 				get_champ_by_id(t_champ *champ, unsigned id)
-{
-	int				counter;
-
-	counter = 0;
-	while (counter < O_BOTS)
-	{
-		if (champ[counter].id == id)
-			return (true);
-		counter++;
-	}
-	return (false);
-}
 
 int 				get_champs_info(t_corewar *core, char **av, int *counter)
 {

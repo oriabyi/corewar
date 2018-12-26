@@ -50,7 +50,7 @@ int				check_availability_flags(t_flags *flags, int ac, char **av)
 {
 	if (ac < 2)
 	{
-		return (BAD_ARGUMENTS);
+		return (NEED_ARGUMENTS);
 	}
 	else if (ft_strcmp(av[1], "--help") == 0)
 	{
