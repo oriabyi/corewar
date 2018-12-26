@@ -36,8 +36,8 @@ void			war(t_corewar *core)
 			cycles = (unsigned)draw(core, cycles, &cycles_limit);
 		else
 			cycles++;
-		do_process(core);
 		bigmother++;
+		do_process(core);
 		if (cycles == cycles_limit)
 		{
 			core->cycle_to_die = check_cycle_to_die(core);
@@ -78,7 +78,7 @@ void 			init_core(t_corewar *core)
 	core->quant_carriages = 0;
 	core->last_live = 0;
 	core->carriage = NULL;
-	core->arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
+	core->arguments = (t_args){0, 0, 0, {0, 0, 0}, 0, 0, 0};
 }
 
 int				submain(int ac, char **av)

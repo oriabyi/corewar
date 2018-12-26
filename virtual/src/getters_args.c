@@ -9,8 +9,8 @@ ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *ca
 	int 		codage;
 
 	main_arg = argument;
-	bytes = get_dir_bytes(COMMAND);
-	codage = get_codage(COMMAND);
+	bytes = get_dir_bytes(COMMAND); // move it to struct
+	codage = get_codage(COMMAND);	// and this
 
 	if (number == 0)
 		argument = GET_FIRST_ARG(argument);
@@ -31,10 +31,7 @@ ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *ca
 			pos %= IDX_MOD;
 		if (COMMAND == CW_ST)
 			return ((short)pos);
-
-
-		parameter = (unsigned)get_dir(field, get_indent(main_arg, number, bytes) + pos, FOUR_BYTES, carriage);
-
+		parameter = (unsigned)get_dir(field, pos, FOUR_BYTES, carriage);
 		return ((unsigned)parameter);
 	}
 	else if (argument == T_DIR)

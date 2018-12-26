@@ -48,7 +48,7 @@ void 			print_memory(t_corewar *core)
 	{
 		temp = ft_multjoinfr(9, NULL, temp, "0x", NULL,
 				get_hex_by_int_byte((i), 4), " : ", NULL,
-				get_field_line(core, &i), "\n");
+				get_field_line(core, &i), " \n");
 	}
 	write(1, temp, ft_strlen(temp));
 	free(temp);

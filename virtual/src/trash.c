@@ -29,9 +29,12 @@ int 			get_cycles(t_carriage *carriage)
 void 			insert(t_args *arguments, unsigned first, unsigned second,
 					   unsigned third)
 {
-	arguments->have_to_have[0] = first;
-	arguments->have_to_have[1] = second;
-	arguments->have_to_have[2] = third;
+	if ((arguments->have_to_have[0] = first))
+		arguments->qua_args++;
+	if ((arguments->have_to_have[1] = second))
+		arguments->qua_args++;
+	if ((arguments->have_to_have[2] = third))
+		arguments->qua_args++;
 }
 
 

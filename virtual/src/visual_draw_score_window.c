@@ -130,7 +130,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 
 	/// is valid carriage id in input field
 
-	if (carriage_id >= 0 && ft_strlen(core->ncur.carriage_id))
+	if (carriage_id >= 0)// && ft_strlen(core->ncur.carriage_id))
 	{
 		t_carriage *tmp_carr;
 		/// finding carriage by id
@@ -161,6 +161,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 				if (r % 3 == 0)
 					wprintw(core->ncur.score_window, "\n");
 			}
+			wprintw(core->ncur.score_window, " Carry = %s", tmp_carr->carry ? "true" : "false");
 		}
 		else
 		{

@@ -54,6 +54,9 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)check_cycle_to_die.c		\
 				$(SRCDIRVIR)check_correctness.c		    \
 				$(SRCDIRVIR)dump.c		\
+				$(SRCDIRVIR)check_champ.c		\
+				$(SRCDIRVIR)operations_with_champs.c	\
+				$(SRCDIRVIR)get_list_arguments.c	\
 				$(SRCDIRVIR)trash.c
 
 

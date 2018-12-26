@@ -7,6 +7,8 @@ void 			init_colors(void)
 	init_color(COLOR_GREY, 400, 400, 400);
 	init_color(COLOR_ORANGE, 1000, 700, 0);
 	init_color(COLOR_WWHITE, 1000, 1000, 1000);
+//	init_color(COLOR_YELLOW, 1000, 1000, 0);
+
 	init_pair(CR_CL_WWHITE_BLACK, COLOR_WWHITE, COLOR_BLACK);
 	init_pair(CR_CL_ORANGE_BLACK, COLOR_ORANGE, COLOR_BLACK);
 

@@ -103,6 +103,7 @@
 # define CR_CL_ORANGE_BLACK			16
 # define CR_CL_WWHITE_BLACK			17
 # define CR_CL_GREY_BLACK			18
+# define CR_CL_BLACK_YELLOW			18
 
 
 # define MAX_SPEED					100
@@ -164,6 +165,7 @@
 
 
 # define NO_INSTRUCTION				0
+# define COMMAND_BAD_ARGS			0
 
 # define NOONE						0
 # define FIRST_BOT					1
@@ -220,6 +222,8 @@ typedef	struct			s_flags
 typedef struct 			s_arguments
 {
 	unsigned char		list_arguments;
+	unsigned			qua_args:2;
+	unsigned 			is_valid:1;
 	unsigned			have_to_have[3];
 	ssize_t 			first_arg;
 	ssize_t 			second_arg;
@@ -423,7 +427,7 @@ void 	move_carriage(t_field *field, int step, t_carriage *carriage);
 ** Check args of instruction
 */
 
-int 	check_instruction_args(int argument, int first, int second, int third);
+int 	check_instruction_args(t_args *args);
 int 	get_indent_size(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
 int 			get_dir_bytes(unsigned command);
@@ -475,7 +479,7 @@ int 			check_cycle_to_die(t_corewar *core);
 
 //
 int 		check_mult_regs(int field, ...);
-int 					check_type_arguments(int argument, int type, int num, ...);
+int 					check_type_arguments(t_args *args, int type, int num, ...);
 int 					get_part_argument(int argument, int position);
 // new way
 ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
@@ -487,6 +491,10 @@ void 					 denote_field(t_field *field, int coord);
 int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...);
 
 void					get_old_owner(t_field *field, int coord);
+
+void 			get_arguments_table(t_carriage *carriage, t_args *arguments);
+
+int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
 
 #endif
 

@@ -19,49 +19,19 @@ void						list_of_instructions(t_field *field,
 		aff_instruct(carriage, arguments);
 }
 
-void 			get_arguments_table(t_carriage *carriage, t_args *arguments);
-
-
-void 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments)
-{
-	if (get_codage(COMMAND) == true)
-	{
-		LIST_ARGUMENTS = get_argument(field, CUR_COORD + 1);
-		get_arguments_table(carriage, arguments);
-		if (check_instruction_args(LIST_ARGUMENTS,
-								ADJUSTED[FIRST_ARG],
-								ADJUSTED[SECOND_ARG],
-								ADJUSTED[THIRD_ARG])
-								== ERROR)
-		{
-			COMMAND = NO_INSTRUCTION;
-		}
-	}
-	else
-		LIST_ARGUMENTS = (unsigned char)0x80;
-	CAR_FIRST_ARG = get_arguments(field, LIST_ARGUMENTS, FIRST_ARG, carriage);
-	CAR_SECOND_ARG = get_arguments(field, LIST_ARGUMENTS, SECOND_ARG, carriage);
-	CAR_THIRD_ARG = get_arguments(field, LIST_ARGUMENTS, THIRD_ARG, carriage);
-	if (check_type_arguments(LIST_ARGUMENTS, T_REG, 3,
-							FIRST_ARG, CAR_FIRST_ARG,
-							SECOND_ARG, CAR_SECOND_ARG,
-							THIRD_ARG, CAR_THIRD_ARG) == 1)
-	{
-		COMMAND = NO_INSTRUCTION;
-	}
-}
 
 void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *core, t_args *arguments)
 {
 	int 				check_jump;
 
-	if (IS_VALID_COMMAND(COMMAND) == false)
+	if ((IS_VALID_COMMAND(COMMAND) == false))
 	{
 		move_carriage(field, 1, carriage);
 		return ;
 	}
-	get_t_args(field, carriage, arguments);
-	if (COMMAND == CW_ZJMP)
+	if (get_t_args(field, carriage, arguments) == 1)
+		arguments->is_valid = 1;
+	else if (COMMAND == CW_ZJMP)
 		check_jump = jump_if_carry_instruct(field, carriage, arguments);
 	else if (COMMAND == CW_FORK || COMMAND == CW_LFORK)
 		fork_instruct(field, carriage, &core->quant_carriages, arguments);
@@ -71,9 +41,10 @@ void 					choose_instruction(t_field *field, t_carriage *carriage, t_corewar *co
 		list_of_instructions(field, carriage, arguments);
 	if (COMMAND != CW_ZJMP || check_jump == true)
 	{
-		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, 3,
+		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, arguments->is_valid == 1 ? arguments->qua_args : 3,
+//		move_carriage(field, (1 + get_indent(LIST_ARGUMENTS, arguments->qua_args,
 			get_dir_bytes(COMMAND)) + get_codage(COMMAND)), carriage);
-		*arguments = (t_args){0, {0, 0, 0}, 0, 0, 0};
+		*arguments = (t_args){0, 0, 0, {0, 0, 0}, 0, 0, 0};
 	}
 }
 
@@ -95,7 +66,6 @@ void 			do_process(t_corewar *core)
 		{
 			choose_instruction(core->field, carriage, core, &core->arguments);
 			COMMAND = 0;
-			CYCLES = 0;
 		}
 		carriage = carriage->next;
 	}
