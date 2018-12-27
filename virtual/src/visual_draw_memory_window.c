@@ -4,7 +4,7 @@ void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 {
 	//y
 	if (NCUR.carriage_pos == i)
-		follow_view(NCUR.memory_window, id);
+		follow_view(NCUR.memory_window);
 	else if (core->field[i].is_alive)
 		alive_view(NCUR.memory_window, id);
 	else if (core->field[i].carriages_on) // carriage

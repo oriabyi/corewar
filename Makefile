@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 15:21:59 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/20 16:26:17 by ariabyi          ###   ########.fr        #
+#    Updated: 2018/12/27 17:31:33 by obaranni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCVIR		=	$(SRCDIRVIR)clean_all.c					\
 				$(SRCDIRVIR)visual_init_colors.c 		\
 				$(SRCDIRVIR)visual_input_field_functions.c	\
 				$(SRCDIRVIR)visual_reset_event.c		\
+				$(SRCDIRVIR)visual_draw_menu.c			\
 				$(SRCDIRVIR)check_cycle_to_die.c		\
 				$(SRCDIRVIR)check_correctness.c		    \
 				$(SRCDIRVIR)dump.c		\

@@ -86,6 +86,7 @@
 # define COLOR_WWHITE				124
 # define COLOR_GREY					125
 
+
 # define CR_CL_WHITE_BLACK			1
 # define CR_CL_GREEN_BLACK			2
 # define CR_CL_BLUE_BLACK			3
@@ -106,7 +107,7 @@
 # define CR_CL_ORANGE_BLACK			16
 # define CR_CL_WWHITE_BLACK			17
 # define CR_CL_GREY_BLACK			18
-# define CR_CL_BLACK_YELLOW			18
+# define CR_CL_YELLOW_BLACK			19
 
 
 # define MAX_SPEED					100
@@ -175,6 +176,7 @@
 # define SECOND_BOT					2
 # define THIRD_BOT					3
 # define FOURTH_BOT					4
+# define FOLLOW_CARRIAGE			5
 
 # define NUMBER_OF_REGISTERS		16
 
@@ -379,6 +381,7 @@ int 			display_windows(t_corewar *core, int cycle);
 int				draw(t_corewar *core, int cycle, unsigned *cycles_limit);
 int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
+int 			draw_menu(t_corewar *core, int pos_y);
 
 
 //operations
@@ -438,7 +441,7 @@ void 	move_carriage(t_field *field, int step, t_carriage *carriage);
 ** Check args of instruction
 */
 
-int 	get_indent_size(int argument, int bytes);
+  int 	get_indent_size(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
 
 // some trash
@@ -462,7 +465,7 @@ void		simple_print(WINDOW *win, int id);
 void 		carriage_print(WINDOW *win, int id);
 void 		alive_view(WINDOW *win, int id);
 void 		altered_view(WINDOW *win, int id);
-void 		follow_view(WINDOW *win, int id);
+void 		follow_view(WINDOW *win);
 
 //
 ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);
