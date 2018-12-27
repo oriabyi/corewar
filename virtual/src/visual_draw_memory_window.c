@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visual_draw_memory_window.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/27 19:42:20 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/27 19:42:24 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/corewar_header.h"
 
-void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
+void			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 {
 	if (NCUR.carriage_pos == i)
 		follow_view(NCUR.memory_window);
 	else if (core->field[i].is_alive)
 		alive_view(NCUR.memory_window, id);
-	else if (core->field[i].carriages_on) // carriage
+	else if (core->field[i].carriages_on)
 		carriage_print(NCUR.memory_window, id);
-	else  if (core->field[i].altered_cycles)	// changed
+	else if (core->field[i].altered_cycles)
 	{
 		if (core->field[i].altered_cycles == ALTERED_FIELD)
 			core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
@@ -23,9 +35,9 @@ void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 		simple_print(NCUR.memory_window, id);
 }
 
-void 			draw_memory_window(t_corewar *core, int cycles)
+void			draw_memory_window(t_corewar *core, int cycles)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	werase(NCUR.memory_window);

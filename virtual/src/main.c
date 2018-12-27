@@ -30,12 +30,28 @@ void			war(t_corewar *core)
 			print_memory(core);
 			break ;
 		}
+
+		bigmother = cycles;
+
 		if (cycles >= F_DUMP && F_VISUAL)
-			cycles = (unsigned)draw(core, cycles, &cycles_limit);
+		{
+			cycles = (unsigned) draw(core, cycles, &cycles_limit);
+			if (!cycles)
+				continue;
+			else if (cycles == -1)
+				break ;
+		}
 		else
 			cycles++;
-		bigmother = cycles;
+
+
+
+
 		do_process(core);
+
+
+
+
 		if (cycles == cycles_limit)
 		{
 			core->cycle_to_die = check_cycle_to_die(core);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visual_input_field_functions.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/27 19:27:57 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/27 19:27:58 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/corewar_header.h"
 
 void				fill_input_field_with_zeros(char *field)
@@ -5,7 +17,7 @@ void				fill_input_field_with_zeros(char *field)
 	ft_bzero(field, 7);
 }
 
-int 				uppend_input_field(char *field, char n)
+int					uppend_input_field(char *field, char n)
 {
 	int				i;
 
@@ -23,9 +35,9 @@ int 				uppend_input_field(char *field, char n)
 	return (1);
 }
 
-int 			delete_last_letter_from_iput_field(char *field)
+int					delete_last_letter_from_iput_field(char *field)
 {
-	int 		i;
+	int				i;
 
 	i = 0;
 	while (i <= 5)
@@ -41,9 +53,7 @@ int 			delete_last_letter_from_iput_field(char *field)
 	return (1);
 }
 
-
-
-void 			set_next_field(t_corewar *core)
+void				set_next_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
 		NCUR.current_field = NCUR.carriage_id;
@@ -51,7 +61,7 @@ void 			set_next_field(t_corewar *core)
 		NCUR.current_field = NCUR.cycle_to_go;
 }
 
-void 			set_prev_field(t_corewar *core)
+void				set_prev_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
 		NCUR.current_field = NCUR.carriage_id;

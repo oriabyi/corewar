@@ -87,7 +87,6 @@
 # define COLOR_GREY					125
 
 
-# define CR_CL_WHITE_BLACK			1
 # define CR_CL_GREEN_BLACK			2
 # define CR_CL_BLUE_BLACK			3
 # define CR_CL_RED_BLACK			4
@@ -109,7 +108,7 @@
 # define CR_CL_GREY_BLACK			18
 # define CR_CL_YELLOW_BLACK			19
 
-
+# define EXIT						-1
 # define MAX_SPEED					100
 # define MIN_SPEED					0
 # define SPEED_STEP					5

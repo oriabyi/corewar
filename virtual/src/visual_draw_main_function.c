@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visual_draw_main_function.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/27 20:00:50 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/27 20:00:52 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/corewar_header.h"
 
-
-int 			display_windows(t_corewar *core, int cycle)
+int				display_windows(t_corewar *core, int cycle)
 {
 	draw_memory_window(core, cycle);
 	draw_score_window(core, cycle);
 	return (0);
 }
 
-int 			change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
+int				change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 {
 	if (ft_atoi(NCUR.cycle_to_go) >= 0)
 	{
@@ -18,7 +29,7 @@ int 			change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 		{
 			reset_game(core);
 			*cycles_limit = (unsigned)core->cycle_to_die;
-			return (1); // TODO: first cycle is 'one'?
+			return (0);
 		}
 	}
 	return (cycle);
@@ -38,6 +49,8 @@ int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)
 		else if (button == ENTER_BUTTON
 			&& NCUR.current_field == NCUR.cycle_to_go)
 			return (change_cycle(core, cycle, cycles_limit));
+		else if (button == EXIT)
+			return (EXIT);
 		display_windows(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &NCUR.tend);
 		if (((double)NCUR.tend.tv_sec + 1.0e-9*NCUR.tend.tv_nsec) -

@@ -16,23 +16,23 @@ int				print_state(t_corewar *core, int pos_y)
 {
 	if (NCUR.pause)
 	{
-		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
-		mvwprintw(core->ncur.score_window, pos_y, 1,
+		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
+		mvwprintw(NCUR.score_window, pos_y, 1,
 			"  _____  _______ _     _ _______ _______\n"
 			"  |_____] |_____| |     | |______ |______\n"
 			"  |       |     | |_____| ______| |______\n"
 			"                                        ");
-		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
+		wattroff(NCUR.score_window, COLOR_PAIR(CR_CL_ORANGE_BLACK));
 	}
 	else
 	{
-		wattron(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
-		mvwprintw(core->ncur.score_window, pos_y, 1,
+		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
+		mvwprintw(NCUR.score_window, pos_y, 1,
 			"  _____         _______ __   __ _____ __   _  ______\n"
 			"  |_____] |      |_____|   \\_/     |   | \\  | |  ____\n"
 			"  |       |_____ |     |    |    __|__ |  \\_| |_____|\n"
 			"                                                    ");
-		wattroff(core->ncur.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
+		wattroff(NCUR.score_window, COLOR_PAIR(CR_CL_GREEN_BLACK));
 	}
 	wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 	return (pos_y + 5);
@@ -100,10 +100,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 			core->quant_carriages);
 	pos_y = print_players(core, pos_y);
 	pos_y = print_game_info(core, pos_y);
-
 	pos_y = draw_menu(core, pos_y);
-
-
 	if (!NCUR.pause)
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 	else
@@ -111,4 +108,3 @@ void			draw_score_window(t_corewar *core, int cycle)
 	box(NCUR.score_window, 0, 0);
 	wrefresh(NCUR.score_window);
 }
-

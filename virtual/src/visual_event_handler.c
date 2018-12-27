@@ -27,10 +27,7 @@ int 			get_button(t_corewar *core, int cycle)
 		set_prev_field(core);
 	else if (c == MENU_DOWN_BUTTON)
 		set_next_field(core);
-	else if (c == VISUAL_OFF)			//TODO: ??????????
-	{
-		F_VISUAL = FALSE;
+	else if (c == VISUAL_OFF)
 		return (-1);
-	}
 	return (c);
 }
