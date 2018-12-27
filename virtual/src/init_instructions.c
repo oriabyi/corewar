@@ -1,5 +1,51 @@
 #include "../includes/corewar_header.h"
 
+
+void 			insert(t_instructions *instructions, unsigned first, unsigned second,
+					   unsigned third)
+{
+	if ((instructions->have_to_have[0] = first))
+	{
+		instructions->qua_args++;
+		if ((instructions->have_to_have[1] = second))
+		{
+			instructions->qua_args++;
+			if ((instructions->have_to_have[2] = third))
+				instructions->qua_args++;
+		}
+	}
+}
+
+void 			fill_have_to_have(t_instructions *instructions, unsigned command)
+{
+	if (command == CW_LIVE || command == CW_ZJMP ||
+		command == CW_FORK || command == CW_LFORK)
+	{
+		insert(instructions, NONE_ARG, NONE_ARG, NONE_ARG);
+	}
+	else if (command == CW_LD || command == CW_LLD)
+		insert(instructions, T_DIR | T_IND, T_REG, NONE_ARG);
+	else if (command == CW_ST)
+		insert(instructions, T_REG, T_REG | T_IND, NONE_ARG);
+	else if (command == CW_ADD || command == CW_SUB)
+		insert(instructions, T_REG, T_REG, T_REG);
+	else if (command == CW_AND || command == CW_OR || command == CW_XOR)
+	{
+		insert(instructions,
+			   T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG);
+	}
+	else if (command == CW_LDI || command == CW_LLDI)
+	{
+		insert(instructions,
+			   T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG);
+	}
+	else if (command == CW_STI)
+		insert(instructions, T_REG, T_REG | T_DIR | T_IND, T_REG | T_DIR);
+	else if (command == CW_AFF)
+		insert(instructions, T_REG, NONE_ARG, NONE_ARG);
+}
+
+
 void 			fill_cycles(t_instructions *instructions, unsigned command)
 {
 	if (command == CW_SUB || command == CW_ADD ||
@@ -43,13 +89,6 @@ void 			fill_dir_bytes(t_instructions *instructions, unsigned command)
 		instructions->bytes_dir = TWO_BYTES;
 }
 
-
-void 			fill_aicommand(t_instructions *instructions, unsigned code)
-{
-	instructions->i_command = code;
-	instructions->a_byte = get_hex_by_int_byte(code, 2);
-}
-
 void 			init_instructions(t_instructions *instructions)
 {
 	unsigned 		pos_instr;
@@ -57,10 +96,11 @@ void 			init_instructions(t_instructions *instructions)
 	pos_instr = 0;
 	while (pos_instr < QUA_INSTRUCTIONS)
 	{
-		fill_aicommand(&instructions[pos_instr], (pos_instr + 1));
+		instructions[pos_instr].i_command = pos_instr + 1;
 		fill_cycles(&instructions[pos_instr], instructions[pos_instr].i_command);
 		fill_codage(&instructions[pos_instr], instructions[pos_instr].i_command);
 		fill_dir_bytes(&instructions[pos_instr], instructions[pos_instr].i_command);
+		fill_have_to_have(&instructions[pos_instr], instructions[pos_instr].i_command);
 		pos_instr++;
 	}
 }

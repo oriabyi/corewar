@@ -25,13 +25,11 @@ void			war(t_corewar *core)
 	get_game_type(core);
 	while (1)
 	{
-
 		if (F_VISUAL == false && cycles && cycles == F_DUMP)
 		{
 			print_memory(core);
 			break ;
 		}
-
 		if (cycles >= F_DUMP && F_VISUAL)
 			cycles = (unsigned)draw(core, cycles, &cycles_limit);
 		else
@@ -78,7 +76,7 @@ void 			init_core(t_corewar *core)
 	core->quant_carriages = 0;
 	core->last_live = 0;
 	core->carriage = NULL;
-	core->arguments = (t_args){0, 0, 0, {0, 0, 0}, 0, 0, 0};
+	core->arguments = (t_args){0, 0, 0, 0};
 }
 
 

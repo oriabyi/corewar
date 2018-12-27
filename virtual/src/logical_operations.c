@@ -46,7 +46,7 @@ int 					check_type_arguments(t_args *arguments, int type, int num, ...)
 	{
 		coord = va_arg(ap, int);
 		temp_reg = va_arg(ap, int);
-		if (check_instruction_arg(get_part_argument(LIST_ARGUMENTS, coord), type) == 0)
+		if (check_instruction_arg(get_part_argument(arguments->list_arguments, coord), type) == 0)
 		{
 			if (check_reg(temp_reg))// && coord <= arguments->qua_args)
 			{
@@ -62,13 +62,13 @@ int 					check_type_arguments(t_args *arguments, int type, int num, ...)
 
 void					logical_operations(t_carriage *carriage, t_args *arguments)
 {
-	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
+	if (get_regs_value(arguments->list_arguments, carriage, T_REG, 2,
 					   FIRST_ARG, &CAR_FIRST_ARG,
 					   SECOND_ARG, &CAR_SECOND_ARG) == 1)
 	{
 		return ;
 	}
 	REG[CAR_THIRD_ARG] =
-			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, COMMAND);
+			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, carriage->instr->i_command);
 	change_carry_if_need((unsigned char)CAR_THIRD_ARG, carriage);
 }

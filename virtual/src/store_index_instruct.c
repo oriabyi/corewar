@@ -24,7 +24,7 @@ int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
 		field[coord].old_owner = field[CUR_COORD].champ_id;
-		field[coord].champ_id = field[CUR_COORD].champ_id; //+ DENOTE_ALTERED;
+		field[coord].champ_id = field[CUR_COORD].champ_id;
 		field[coord].is_alive = 0;
 		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;
@@ -77,7 +77,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 {
 	ssize_t 		coord;
 
-	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
+	if (get_regs_value(arguments->list_arguments, carriage, T_REG, 2,
 			SECOND_ARG, &CAR_SECOND_ARG,
 			THIRD_ARG, &CAR_THIRD_ARG) == 1)
 	{

@@ -17,7 +17,7 @@
 #define F_DUMP			core->flags.dump
 #define CUR_COORD		carriage->cur_coord
 #define REG				carriage->registers
-#define COMMAND		 	carriage->command
+#define COMMAND		 	carriage->instr->i_command
 #define CARRY			carriage->carry
 #define CYCLES			carriage->cycles
 #define ALIVE			carriage->alive
@@ -225,9 +225,6 @@ typedef	struct			s_flags
 typedef struct 			s_arguments
 {
 	unsigned char		list_arguments;
-	unsigned			qua_args:2;
-	unsigned 			is_valid:1;
-	unsigned			have_to_have[3];
 	ssize_t 			first_arg;
 	ssize_t 			second_arg;
 	ssize_t 			third_arg;
@@ -236,11 +233,12 @@ typedef struct 			s_arguments
 
 typedef struct 			s_instructions
 {
-	char 				*a_byte;
 	unsigned			i_command:5;
 	unsigned 			codage:1;
 	unsigned 			bytes_dir:3;
 	unsigned 			cycles:10;
+	unsigned			have_to_have[3];
+	unsigned			qua_args:3;
 }						t_instructions;
 
 typedef struct			s_carriage
@@ -251,7 +249,6 @@ typedef struct			s_carriage
 	unsigned			flag:1;
 	unsigned 			alive:1;
 	unsigned 			registers[16];
-	unsigned 			command:8;
 	int 				cycles;
 	t_instructions		*instr;
 
@@ -346,7 +343,6 @@ unsigned 	get_size(int fd);
 
 unsigned 	get_num_by_octet_bytes(int fd, int size);
 int 	get_old_young_numbers(unsigned char num, int base, int *power);
-int 				ft_module(int i);
 
 /*
 ** Clean functions
@@ -421,7 +417,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 
 //  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
-									  unsigned *quant_carriages, t_args *arguments);
+									  t_corewar *core, t_args *arguments);
 
 void 	aff_instruct(t_carriage *carriage, t_args *arguments);
 
@@ -442,11 +438,8 @@ void 	move_carriage(t_field *field, int step, t_carriage *carriage);
 ** Check args of instruction
 */
 
-int 	check_instruction_args(t_args *args);
 int 	get_indent_size(int argument, int bytes);
 int 	check_instruction_arg(int argument, int byte);
-int 			get_dir_bytes(unsigned command);
-int			get_codage(unsigned command);
 
 // some trash
 void 			do_process(t_corewar *core);
@@ -475,7 +468,6 @@ void 		follow_view(WINDOW *win, int id);
 ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);
 
 //getters args
-ssize_t		get_arg_reg(t_field *field, t_champ *champ, int *step, ssize_t *get);
 
 
 //write in field
@@ -493,21 +485,16 @@ void 			print_memory(t_corewar *core);
 int 			check_cycle_to_die(t_corewar *core);
 
 //
-int 		check_mult_regs(int field, ...);
 int 					check_type_arguments(t_args *args, int type, int num, ...);
 int 					get_part_argument(int argument, int position);
 // new way
 ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
 
-void					fill_old_owner(t_field *field, int coord);
 void 					 denote_field(t_field *field, int coord);
 
 
 int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...);
 
-void					get_old_owner(t_field *field, int coord);
-
-void 			get_arguments_table(t_carriage *carriage, t_args *arguments);
 
 int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
 

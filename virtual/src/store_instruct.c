@@ -2,7 +2,7 @@
 
 void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments) // label size == 4
 {
-	if (GET_SECOND_ARG(LIST_ARGUMENTS) == T_REG)
+	if (GET_SECOND_ARG(arguments->list_arguments) == T_REG)
 	{
 		REG[CAR_SECOND_ARG] = REG[CAR_FIRST_ARG];
 	}

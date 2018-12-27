@@ -27,7 +27,7 @@ int				get_flags(t_flags *flags, char **av)
 	{
 		if (ft_strcmp(av[counter], "-v") == 0)
 			flags->visual = 1;
-		else if (ft_strcmp(av[counter], "-d") == 0)
+		else if (ft_strcmp(av[counter], "-d") == 0 || ft_strcmp(av[counter], "-dump") == 0)
 		{
 			flags->dump = (unsigned)ft_atoi(av[++counter]);
 			if (check_got_num(av[counter], flags->dump, 1))

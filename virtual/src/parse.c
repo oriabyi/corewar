@@ -32,8 +32,27 @@ t_carriage 				*create_carriage(int id)
 	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
 		return (NULL);
 	*carriage = (t_carriage){0, 0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, NULL, NULL};
+									0, 0, 0, 0, 0, 0, 0, 0}, 0, NULL, NULL};
 	return (carriage);
+}
+
+void 				reverse_list(t_carriage **begin_list)
+{
+	t_carriage		*curr;
+	t_carriage		*next;
+	t_carriage		*prev;
+
+	prev = NULL;
+	curr = *begin_list;
+	while (curr)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	*begin_list = prev;
+
 }
 
 
@@ -123,6 +142,7 @@ int					parse(t_corewar *core, char **av)
 		return (check_code);
 	sort_champs(&core->champs, core->qua_champs);
 	fill_champs(core, &core->champs, core->qua_champs);
+	reverse_list(&core->carriage);
 	if (av[counter])
 		return (REDUNDANT_ARGUMENTS);
 	return (check_code);

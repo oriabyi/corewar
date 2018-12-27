@@ -13,31 +13,6 @@ int 	check_instruction_arg(int argument, int byte)
 	return (0);
 }
 
-int 	check_instruction_args(t_args *arguments)
-{
-	int 		check_code;
-
-	check_code = 0;
-
-	if (LIST_ARGUMENTS < 0x40) // TODO: if there will be smaller?!?!??!?!?!
-		return (1);
-	if (arguments->qua_args)
-	{
-		check_code = check_instruction_arg(GET_FIRST_ARG(LIST_ARGUMENTS), ADJUSTED[FIRST_ARG]);
-		if (check_code == 0 && arguments->qua_args >= 2)
-		{
-			check_code = check_instruction_arg(GET_SECOND_ARG(LIST_ARGUMENTS), ADJUSTED[SECOND_ARG]);
-			if (check_code == 0 && arguments->qua_args >= 3)
-			{
-				check_code = check_instruction_arg(GET_THIRD_ARG(LIST_ARGUMENTS), ADJUSTED[THIRD_ARG]);
-			}
-		}
-	}
-	return (check_code ? 1 : 0);
-}
-
-
-
 int 	get_indent_size(int argument, int bytes)
 {
 	if (argument == T_REG)
@@ -54,10 +29,6 @@ int 	get_indent(int argument, int count_arguments, int bytes)
 {
 	int 	step;
 
-//	if (argument == 0x80)
-//		return (bytes);
-//	else if (argument == 0x40)
-//		return (2);
 	step = 0;
 	if (count_arguments >= 1)
 	{
