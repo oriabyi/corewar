@@ -114,6 +114,7 @@ void	ft_add_op(char *line, t_asm *glob, int fd)
 	char **arr;
 
 	arr = ft_strsplit_spec(line, " \t\v\f\r", COMMENT_CHAR);
+	arr = ft_continue_split(arr);
 	if (!arr || !arr[0])
 		;
 	else if (!ft_strcmp(arr[0], NAME_CMD_STRING))

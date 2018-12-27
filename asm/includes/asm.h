@@ -55,6 +55,7 @@ void					ft_add_mislabel(t_asm *glob, char *label,
 void					ft_add_data(t_asm *glob, char *arg, t_op *op);
 void					ft_add_prosses(char **arr, t_asm *glob,
 	int i, t_op *op);
+void					ft_connect_labels(t_asm *glob);
 void					ft_print_int(int fd, int n);
 void					ft_print_sequence(int fd, char *str, int size);
 void					ft_print_header(char *file, t_asm *glob);
@@ -66,11 +67,11 @@ void					ft_get_data(char *file, t_asm **glob);
 void					ft_get_two_bits(t_asm *glob, char *arg, int mod);
 void					ft_get_four_bits(t_asm *glob, char *arg);
 void					ft_get_prosses(t_asm *glob, char **arr);
-void					ft_connect_labels(t_asm *glob);
 char					ft_get_type_n(char **arr, t_op *op);
 char					*ft_joinarg(char **arr);
 int						ft_put_error(int err, char *str);
 int						ft_is_label(char *command);
+char					**ft_continue_split(char **arr);
 int						ft_check_extention(char *file);
 int						ft_check_types(char **args, t_op *op);
 int						ft_check_num(char *str);

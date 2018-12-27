@@ -26,8 +26,8 @@ char	**ft_arrjoin(char **arr1, char **arr2)
 			* sizeof(char *));
 	arr[k] = NULL;
 	while (j--)
-		arr[--k] = arr2[j];
+		arr[--k] = ft_strdup(arr2[j]);
 	while (i--)
-		arr[--k] = arr1[i];
+		arr[--k] = ft_strdup(arr1[i]);
 	return (arr);
 }

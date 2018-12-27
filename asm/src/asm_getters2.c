@@ -23,12 +23,17 @@ static void	ft_get_name2(t_asm *glob, int to_read, int fd)
 			prev = glob->name;
 			glob->name = ft_strjoin(glob->name, "\n");
 			ft_free_line(&prev);
+			(ft_strchr(line_cont, COMMENT_CHAR)) ? *ft_strchr(line_cont,
+					COMMENT_CHAR) = '\0' : 0;
+			(ft_strchr(line_cont, ';')) ? *ft_strchr(line_cont, ';') = '\0' : 0;
 			if ((glob->name = ft_strjoin_del(glob->name, line_cont))
 				&&
 				ft_strchr(glob->name, '\"') != ft_strrchr(glob->name, '\"'))
 				break ;
 		}
-	(ft_strchr(glob->name, '#')) ? *ft_strchr(glob->name, '#') = '\0' : 0;
+	(ft_strchr(glob->name, COMMENT_CHAR)) ? *ft_strchr(glob->name,
+			COMMENT_CHAR) = '\0' : 0;
+	(ft_strchr(glob->name, ';')) ? *ft_strchr(glob->name, ';') = '\0' : 0;
 	line_cont = ft_strtrim(glob->name);
 	if (ft_strchr(glob->name, '\"') == ft_strrchr(glob->name, '\"') ||
 	line_cont[ft_strlen(line_cont) - 1] != '\"')
@@ -50,13 +55,17 @@ static void	ft_get_comment2(t_asm *glob, int to_read, int fd)
 			prev = glob->comment;
 			glob->comment = ft_strjoin(glob->comment, "\n");
 			ft_free_line(&prev);
+			(ft_strchr(line_cont, COMMENT_CHAR)) ? *ft_strchr(line_cont,
+					COMMENT_CHAR) = '\0' : 0;
+			(ft_strchr(line_cont, ';')) ? *ft_strchr(line_cont, ';') = '\0' : 0;
 			if ((glob->comment = ft_strjoin_del(glob->comment, line_cont))
 				&& ft_strchr(glob->comment, '\"') !=
 					ft_strrchr(glob->comment, '\"'))
 				break ;
 		}
-	(ft_strchr(glob->comment, '#')) ? *ft_strchr(glob->comment, '#') =
-			'\0' : 0;
+	(ft_strchr(glob->comment, COMMENT_CHAR)) ? *ft_strchr(glob->comment,
+			COMMENT_CHAR) = '\0' : 0;
+	(ft_strchr(glob->name, ';')) ? *ft_strchr(glob->name, ';') = '\0' : 0;
 	line_cont = ft_strtrim(glob->comment);
 	if (ft_strchr(glob->comment, '\"') == ft_strrchr(glob->comment, '\"') ||
 	line_cont[ft_strlen(line_cont) - 1] != '\"')

@@ -85,6 +85,7 @@ int		ft_put_error(int err, char *str)
 	(err == 7) ? ft_printf("Error: unknown operation %s\n", str) : 0;
 	(err == 8) ? ft_printf("Error: some arguments missed or extra near %s\n",
 			str) : 0;
+	(err == 9) ? ft_printf("Error: value missed near %s\n", str) : 0;
 	(err == 10) ? ft_printf("Error: unknown label %s\n", str) : 0;
 	(err == 11) ? ft_printf("Error: wrong type in %s\n", str) : 0;
 	(err == 12) ? ft_printf("Error: is this \"%s\" \nokay for you? "
@@ -95,6 +96,7 @@ int		ft_put_error(int err, char *str)
 	(err == 15) ? ft_printf("Error: last \\n missed\n") : 0;
 	(err == 16) ? ft_printf("Error: check registers number %s\n", str) : 0;
 	(err == 17) ? ft_printf("Usage: %s <sourcefile.s>\n", str) : 0;
+	system("leaks asm");
 	exit(-1);
 }
 

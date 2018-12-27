@@ -34,6 +34,8 @@ int		ft_check_types(char **args, t_op *op)
 			type = T_DIR;
 		else
 			type = T_IND;
+		((ft_strlen(args[i]) > 1 && type != T_IND) || (ft_strlen(args[i])
+			> 0 && type == T_IND)) ? 0 : ft_put_error(9, args[i]);
 		if ((op->type_arg[i] & type) != type)
 			return (0);
 		else
