@@ -23,10 +23,6 @@ int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
-		field[coord].old_owner = field[CUR_COORD].champ_id;
-		field[coord].champ_id = field[CUR_COORD].champ_id;
-		field[coord].is_alive = 0;
-		field[coord].altered_cycles = ALTERED_FIELD;
 		coord++;
 		counter++;
 	}
@@ -73,21 +69,21 @@ int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, .
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
+							 unsigned cycles)	//label size == 2
 {
 	ssize_t 		coord;
 
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
-			SECOND_ARG, &CAR_SECOND_ARG,
-			THIRD_ARG, &CAR_THIRD_ARG) == 1)
+					   SECOND_ARG, &CAR_SECOND_ARG,
+					   THIRD_ARG, &CAR_THIRD_ARG) == 1)
 	{
 		return ;
 	}
 	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
 	write_in_field(field, (int)coord, (unsigned char)CAR_FIRST_ARG, carriage);
+	add_champ_id((int)(CAR_SECOND_ARG + CUR_COORD), field, carriage);
 }
-
-
 
 
 

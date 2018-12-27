@@ -52,7 +52,7 @@ unsigned		reset_carriages_id(t_carriage **cariage)
 	head = *cariage;
 	while (head)
 	{
-		head->id = counter++;
+//		head->id = counter++; // TODO: make me great again
 		head = head->next;
 	}
 	return (counter);
