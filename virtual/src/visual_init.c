@@ -1,14 +1,17 @@
 #include "../includes/corewar_header.h"
 
 void 			fill_first_positions(t_field *field, unsigned  quant_carriages,
-														t_carriage **carriage)
+														t_carriage *carriage)
 {
+	t_carriage	*head;
 	unsigned 	counter;
 
 	counter = 0;
+	head = carriage;
 	while(counter < quant_carriages)
 	{
-		field[(*carriage)[counter].cur_coord].carriages_on++;
+		field[head->cur_coord].carriages_on++;
+		head = head->next;
 		counter++;
 	}
 }
@@ -34,6 +37,6 @@ int				visual_init(t_corewar *core)
 	if (check_code)
 		return (check_correctness(core, check_code));
 	fill_memory_space(core->champs, core->field, core->qua_champs);
-	fill_first_positions(core->field, core->quant_carriages, &core->carriage);
+	fill_first_positions(core->field, core->quant_carriages, core->carriage);
 	return (0);
 }
