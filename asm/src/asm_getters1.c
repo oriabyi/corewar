@@ -29,22 +29,28 @@ void	ft_get_data(char *file, t_asm **glob)
 {
 	int		fd;
 	char	*line;
+	char	*p;
+	int		len;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 		ft_put_error(1, file);
 	*glob = ft_init_asm(file);
+	len = -1;
 	while (get_next_line(fd, &line) > 0)
 	{
+		ft_strcut(&line, COMMENT_CHAR, ';');
+		p = ft_strtrim(line);
+		len = (int)ft_strlen(p);
 		ft_add_op(line, *glob, fd);
 		ft_free_line(&line);
+		ft_free_line(&p);
 	}
 	ft_connect_labels(*glob);
 	if (!(*glob)->comment || !(*glob)->name)
 		ft_put_error(0, (!(*glob)->comment) ? "comment" : "name");
-	(ft_check_last_n(fd)) ? 0 : ft_put_error(15, NULL);
+	(ft_check_last_n(fd) || !len) ? 0 : ft_put_error(15, NULL);
 	ft_print_header(file, (*glob));
-	if (close(fd))
-		ft_put_error(3, file);
+	(close(fd)) ? ft_put_error(3, file) : 0;
 }
 
 void	ft_get_prosses(t_asm *glob, char **arr)
@@ -64,10 +70,10 @@ void	ft_get_prosses(t_asm *glob, char **arr)
 		(glob->cur)--;
 		return ;
 	}
+	(!arr[i] || !arr[i + 1]) ? ft_put_error(8, "[some_where]") : 0;
 	while (g_op_tab[j].name && ft_strcmp(g_op_tab[j].name, arr[i]))
 		j++;
-	if (!(g_op_tab[j].name))
-		ft_put_error(7, arr[i]);
+	(!(g_op_tab[j].name)) ? ft_put_error(7, arr[i]) : 0;
 	ft_add_prosses(arr, glob, i, &g_op_tab[j]);
 	if (glob->cur >= CHAMP_MAX_SIZE)
 		glob->commands = realloc(glob->commands, glob->cur + CHAMP_MAX_SIZE);

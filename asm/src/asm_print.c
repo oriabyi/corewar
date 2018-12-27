@@ -41,7 +41,7 @@ void	ft_print_header(char *file, t_asm *glob)
 
 	file[ft_strlen(file) - 2] = '\0';
 	new_file = ft_strjoin(file, ".cor");
-	if ((fd = open(new_file, O_RDWR | O_CREAT)) != -1)
+	if ((fd = open(new_file, O_WRONLY | O_CREAT, 0666)) != -1)
 	{
 		ft_print_int(fd, COREWAR_EXEC_MAGIC);
 		ft_print_sequence(fd, glob->name, PROG_NAME_LENGTH);

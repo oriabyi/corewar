@@ -56,22 +56,6 @@ void	ft_connect_labels(t_asm *glob)
 				ft_put_error(10, glob->mislabels[i]->name);
 }
 
-int		ft_is_label(char *command)
-{
-	int i;
-
-	if (ft_strlen(command) && ft_strchr(command, LABEL_CHAR) == command +
-	ft_strlen(command) - 1)
-	{
-		i = (int)ft_strlen(command) - 1;
-		while (--i)
-			if (!ft_strchr(LABEL_CHARS, command[i]))
-				ft_put_error(6, command);
-		return (1);
-	}
-	return (0);
-}
-
 int		ft_put_error(int err, char *str)
 {
 	(!err) ? ft_printf("Error: %s missed\n", str) : 0;
@@ -85,6 +69,7 @@ int		ft_put_error(int err, char *str)
 	(err == 7) ? ft_printf("Error: unknown operation %s\n", str) : 0;
 	(err == 8) ? ft_printf("Error: some arguments missed or extra near %s\n",
 			str) : 0;
+	(err == 9) ? ft_printf("Error: value missed near %s\n", str) : 0;
 	(err == 10) ? ft_printf("Error: unknown label %s\n", str) : 0;
 	(err == 11) ? ft_printf("Error: wrong type in %s\n", str) : 0;
 	(err == 12) ? ft_printf("Error: is this \"%s\" \nokay for you? "
@@ -98,19 +83,10 @@ int		ft_put_error(int err, char *str)
 	exit(-1);
 }
 
-char	*ft_joinarg(char **arr)
+void	ft_strcut(char **line, char c1, char c2)
 {
-	char	*res;
-	char	*prev;
-	int		i;
-
-	i = -1;
-	res = NULL;
-	while (arr && arr[++i])
-	{
-		prev = res;
-		res = ft_strjoin(res, arr[i]);
-		ft_free_line(&prev);
-	}
-	return (res);
+	if (!line || !*line)
+		return ;
+	(ft_strchr(*line, c1)) ? *ft_strchr(*line, c1) = '\0' : 0;
+	(ft_strchr(*line, c2)) ? *ft_strchr(*line, c2) = '\0' : 0;
 }
