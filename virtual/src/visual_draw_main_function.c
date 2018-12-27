@@ -35,7 +35,8 @@ int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)
 		button = get_button(core, cycle);
 		if (button == NEXT_CYCLE_BUTTON)
 			return (cycle + 1);
-		else if (button == ENTER_BUTTON)
+		else if (button == ENTER_BUTTON
+			&& NCUR.current_field == NCUR.cycle_to_go)
 			return (change_cycle(core, cycle, cycles_limit));
 		display_windows(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &NCUR.tend);

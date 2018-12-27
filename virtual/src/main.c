@@ -54,8 +54,6 @@ void			war(t_corewar *core)
 			}
 			break ;
 		}
-		if (cycles == 10000) //delete me
-			break;
 	}
 
 //	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
