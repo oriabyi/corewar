@@ -49,6 +49,9 @@ void 		carriage_print(WINDOW *win, int id)
 	{
 		wattron(win, COLOR_PAIR(CR_CL_BLACK_CYAN));
 	}
+	else if (id == FOLLOW_CARRIAGE)
+		wattron(win, COLOR_PAIR(CR_CL_YELLOW_BLACK));
+
 }
 
 void 		altered_view(WINDOW *win, int id)
@@ -78,10 +81,10 @@ void 		alive_view(WINDOW *win, int id)
 	}
 }
 
-void 		follow_view(WINDOW *win, int id)
+void 		follow_view(WINDOW *win)
 {
 	wattron(win, COLOR_PAIR(CR_CL_BLACK_CYAN));
-	carriage_print(win, id + 1);
+	carriage_print(win, FOLLOW_CARRIAGE);
 }
 
 

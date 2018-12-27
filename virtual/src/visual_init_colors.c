@@ -6,9 +6,11 @@ void 			init_colors(void)
 
 	init_color(COLOR_GREY, 400, 400, 400);
 	init_color(COLOR_ORANGE, 1000, 700, 0);
+	init_color(COLOR_YELLOW, 1000, 1000, 0);
 	init_color(COLOR_WWHITE, 1000, 1000, 1000);
 //	init_color(COLOR_YELLOW, 1000, 1000, 0);
 
+	init_pair(CR_CL_YELLOW_BLACK, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(CR_CL_WWHITE_BLACK, COLOR_WWHITE, COLOR_BLACK);
 	init_pair(CR_CL_ORANGE_BLACK, COLOR_ORANGE, COLOR_BLACK);
 
@@ -21,10 +23,8 @@ void 			init_colors(void)
 	init_pair(CR_CL_CYAN_BLACK, COLOR_CYAN, COLOR_BLACK);
 
 
-	init_pair(48, COLOR_WHITE, -1);
 	//
 
-	init_pair(44, COLOR_BLACK, COLOR_BLACK);
 
 	//carriage colours
 	init_pair(CR_CL_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
