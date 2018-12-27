@@ -22,9 +22,7 @@ void			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 		carriage_print(NCUR.memory_window, id);
 	else if (core->field[i].altered_cycles)
 	{
-		if (core->field[i].altered_cycles == ALTERED_FIELD)
-			core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
-		else if (core->field[i].altered_cycles <= cycles)
+		if (core->field[i].altered_cycles <= cycles)
 		{
 			core->field[i].altered_cycles = 0;
 			core->field[i].champ_id = id;
@@ -47,7 +45,8 @@ void			draw_memory_window(t_corewar *core, int cycles)
 			wprintw(NCUR.memory_window, "\n");
 		print_cell(core, core->field[i].champ_id, i, cycles);
 		if (i % 64 == 0)
-			wmove(NCUR.memory_window, (i / 64) + 1, 2);
+			wmove(NCUR.memory_window, (i / 64) + 2, 3);
+//			wmove(NCUR.memory_window, (i / 64) + 1, 2); //use me again
 		wprintw(NCUR.memory_window, "%s", core->field[i].hex);
 		wattron(NCUR.memory_window, COLOR_PAIR(CR_CL_GREY_BLACK));
 		wattroff(NCUR.memory_window, A_BOLD);

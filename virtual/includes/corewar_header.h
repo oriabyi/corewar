@@ -302,7 +302,8 @@ typedef struct			s_corewar
 	t_champ				*champs;
 	t_flags				flags;
 	t_args				arguments;
-	t_instructions			instructions[QUA_INSTRUCTIONS];
+	t_instructions		instructions[QUA_INSTRUCTIONS];
+	unsigned 			cycles;
 	int 				cycle_to_die;
 	int 				max_checks;
 	unsigned 			qua_champs;
@@ -402,7 +403,8 @@ int 				check_champ_info(t_champ *champ);
 
 void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core, t_args *arguments);
 void 	load_instruct(t_carriage *carriage, t_args *arguments);
-void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
+void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
+					   unsigned cycles);
 
 // add and sub operations here
 void 	add_sub_instructs(t_carriage *carriage, t_args *arguments);
@@ -415,7 +417,8 @@ int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, t_args *argume
 //	LLDI in LDI
 void 	load_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
+void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
+							 unsigned cycles);
 
 //  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
@@ -473,7 +476,8 @@ ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage)
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, unsigned char t_reg, t_carriage *carriage);
+int 	write_in_field(t_field *field, int position, unsigned t_reg);
+int  write_in_field1(t_field *field, int coord, unsigned t_reg, t_carriage *carriage);//delete
 
 //add sub
 unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command);
@@ -507,6 +511,8 @@ t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id)
 void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carriage *carriage);
 
 void 				reverse_list(t_carriage **begin_list);
+
+void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
 
 #endif
 

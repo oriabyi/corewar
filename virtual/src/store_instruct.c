@@ -1,6 +1,7 @@
 #include "../includes/corewar_header.h"
 
-void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments) // label size == 4
+void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
+					   unsigned cycles)
 {
 	if (GET_SECOND_ARG(LIST_ARGUMENTS) == T_REG)
 	{
@@ -9,6 +10,7 @@ void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments) //
 	else
 	{
 		write_in_field(field, (int)(CAR_SECOND_ARG + CUR_COORD),
-				(unsigned char)CAR_FIRST_ARG, carriage); //TODO: dont sure that it has to be (int)
+					   REG[CAR_FIRST_ARG]); //TODO: dont sure that it has to be (int)
+		add_champ_id((int)(CAR_SECOND_ARG + CUR_COORD), field, carriage, cycles);
 	}
 }

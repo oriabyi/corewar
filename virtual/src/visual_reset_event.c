@@ -16,6 +16,8 @@ void			reset_game(t_corewar *core)
 {
 	clean_carriages(core->carriage);
 	core->carriage = NULL;
+	core->cycles = 0;
+
 	core->quant_carriages = 0;
 	fill_champs(core, &core->champs, core->qua_champs);
 	reverse_list(&core->carriage);

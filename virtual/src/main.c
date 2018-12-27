@@ -17,54 +17,43 @@ void 			get_game_type(t_corewar *core)
 
 void			war(t_corewar *core)
 {
-	unsigned 	cycles;
 	unsigned 	cycles_limit;
 
 	cycles_limit = (unsigned)core->cycle_to_die;
-	cycles = 0;
+	core->cycles = 0;
 	get_game_type(core);
 	while (1)
 	{
-		if (F_VISUAL == false && cycles && cycles == F_DUMP)
+		if (F_VISUAL == false && core->cycles && core->cycles == F_DUMP)
 		{
 			print_memory(core);
 			break ;
 		}
-
-		bigmother = cycles;
-
-		if (cycles >= F_DUMP && F_VISUAL)
+		if (core->cycles >= F_DUMP && F_VISUAL)
 		{
-			cycles = (unsigned) draw(core, cycles, &cycles_limit);
-			if (!cycles)
+			core->cycles = (unsigned)draw(core, core->cycles, &cycles_limit);
+			if (!core->cycles)
 				continue;
-			else if (cycles == -1)
+			else if (core->cycles == -1)
 				break ;
 		}
 		else
-			cycles++;
-
-
-
-
+			core->cycles++;
+		bigmother = core->cycles;
 		do_process(core);
-
-
-
-
-		if (cycles == cycles_limit)
+		if (core->cycles == cycles_limit)
 		{
 			core->cycle_to_die = check_cycle_to_die(core);
-			cycles_limit = cycles + core->cycle_to_die;
+			cycles_limit = core->cycles + core->cycle_to_die;
 		}
 		if (core->cycle_to_die <= 0 || core->carriage == NULL)
 		{
 			if (F_VISUAL)
 			{
-				int old_cycles = cycles;
+				int old_cycles = core->cycles;
 				NCUR.pause = 1;
-				cycles = (unsigned) draw(core, cycles, &cycles_limit);
-				if (cycles >= old_cycles)
+				core->cycles = (unsigned) draw(core, core->cycles, &cycles_limit);
+				if (core->cycles >= old_cycles)
 					break;
 				continue;
 			}
@@ -92,6 +81,7 @@ void 			init_core(t_corewar *core)
 	core->quant_carriages = 0;
 	core->last_live = 0;
 	core->carriage = NULL;
+	core->cycles = 0;
 	core->arguments = (t_args){0, 0, 0, 0};
 }
 

@@ -9,24 +9,38 @@ unsigned char 	 get_argument(t_field *field, int coord)
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *carriage)
-{
 
-	char **str;
+void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles)
+{
 	int 	counter;
 
 	counter = 0;
-	str = int_to_char_hex(REG[t_reg], 4); //define 5
+	while (counter < 4)
+	{
+		coord = (int)correction_coordinates(coord);
+		field[coord].champ_id = field[CUR_COORD].champ_id;
+		field[coord].is_alive = 0;
+		field[coord].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
+		coord++;
+		counter++;
+	}
+}
+
+int 	write_in_field(t_field *field, int coord, unsigned t_reg)
+{
+
+	char **str;
+	int  counter;
+
+	counter = 0;
+	str = int_to_char_hex(t_reg, 4); //define 5
 	if (!str)
 		return (1); // return an ERROR
 	while (str[counter])
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
-		field[coord].old_owner = field[CUR_COORD].champ_id;
-		field[coord].champ_id = field[CUR_COORD].champ_id;
-		field[coord].is_alive = 0;
-		field[coord].altered_cycles = ALTERED_FIELD;
+
 		coord++;
 		counter++;
 	}
@@ -73,21 +87,22 @@ int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, .
 	return (check_code);
 }
 
-void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments)	//label size == 2
+void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
+							 unsigned cycles)	//label size == 2
 {
 	ssize_t 		coord;
 
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
-			SECOND_ARG, &CAR_SECOND_ARG,
-			THIRD_ARG, &CAR_THIRD_ARG) == 1)
+					   SECOND_ARG, &CAR_SECOND_ARG,
+					   THIRD_ARG, &CAR_THIRD_ARG) == 1)
 	{
 		return ;
 	}
 	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
-	write_in_field(field, (int)coord, (unsigned char)CAR_FIRST_ARG, carriage);
+	write_in_field(field, (int)coord, REG[CAR_FIRST_ARG]);
+	add_champ_id((int)coord, field, carriage, cycles);
+
 }
-
-
 
 
 
