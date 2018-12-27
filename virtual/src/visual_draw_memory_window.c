@@ -10,9 +10,7 @@ void 			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 		carriage_print(NCUR.memory_window, id);
 	else  if (core->field[i].altered_cycles)	// changed
 	{
-		if (core->field[i].altered_cycles == ALTERED_FIELD)
-			core->field[i].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
-		else if (core->field[i].altered_cycles <= cycles)
+		if (core->field[i].altered_cycles <= cycles)
 		{
 			core->field[i].altered_cycles = 0;
 			core->field[i].champ_id = id;

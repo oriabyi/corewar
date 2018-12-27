@@ -9,20 +9,38 @@ unsigned char 	 get_argument(t_field *field, int coord)
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, unsigned t_reg, unsigned cycles)
-{
 
-	char **str;
+void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles)
+{
 	int 	counter;
 
 	counter = 0;
-	str = int_to_char_hex(t_reg, 4);
+	while (counter < 4)
+	{
+		coord = (int)correction_coordinates(coord);
+		field[coord].champ_id = field[CUR_COORD].champ_id;
+		field[coord].is_alive = 0;
+		field[coord].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
+		coord++;
+		counter++;
+	}
+}
+
+int 	write_in_field(t_field *field, int coord, unsigned t_reg)
+{
+
+	char **str;
+	int  counter;
+
+	counter = 0;
+	str = int_to_char_hex(t_reg, 4); //define 5
 	if (!str)
-		return (1);
+		return (1); // return an ERROR
 	while (str[counter])
 	{
 		coord = (int)correction_coordinates(coord);
 		ft_strncpy((char *)field[coord].hex, str[counter], 2);
+
 		coord++;
 		counter++;
 	}
@@ -81,8 +99,9 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 		return ;
 	}
 	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
-	write_in_field(field, (int)coord, REG[CAR_FIRST_ARG], cycles);
-	add_champ_id((int)(CAR_SECOND_ARG + CUR_COORD), field, carriage);
+	write_in_field(field, (int)coord, REG[CAR_FIRST_ARG]);
+	add_champ_id((int)coord, field, carriage, cycles);
+
 }
 
 

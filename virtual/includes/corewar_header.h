@@ -477,7 +477,8 @@ ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage)
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, unsigned t_reg, unsigned cycles);
+int 	write_in_field(t_field *field, int position, unsigned t_reg);
+int  write_in_field1(t_field *field, int coord, unsigned t_reg, t_carriage *carriage);//delete
 
 //add sub
 unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command);
@@ -512,7 +513,7 @@ void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carria
 
 void 				reverse_list(t_carriage **begin_list);
 
-void 	add_champ_id(int coord, t_field *field, t_carriage *carriage);
+void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
 
 #endif
 
