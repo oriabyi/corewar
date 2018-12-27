@@ -1,7 +1,6 @@
 #include "../includes/corewar_header.h"
 
-void 			fill_first_positions(t_field *field, unsigned  quant_carriages,
-														t_carriage *carriage)
+void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carriage *carriage)
 {
 	t_carriage	*head;
 	unsigned 	counter;

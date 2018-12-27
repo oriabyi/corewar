@@ -505,6 +505,10 @@ int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
 void 			init_instructions(t_instructions *instructions);
 t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id);
 
+void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carriage *carriage);
+
+void 				reverse_list(t_carriage **begin_list);
+
 #endif
 
 // 4 magic value
