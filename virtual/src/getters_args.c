@@ -1,53 +1,56 @@
 #include "../includes/corewar_header.h"
 
+
+ssize_t get_t_dir(t_field *field, t_carriage *carriage, int number, int main_arg)
+{
+	if (I_LABEL_SIZE == 2)
+		return ((short)(get_dir(field, 1 + I_CODAGE + get_indent(main_arg, number, I_LABEL_SIZE), I_LABEL_SIZE, carriage)));
+	else
+		return ((unsigned)(get_dir(field, 1 + I_CODAGE + get_indent(main_arg, number, I_LABEL_SIZE), I_LABEL_SIZE, carriage)));
+}
+
+ssize_t get_t_ind(t_field *field, t_carriage *carriage, int number, int main_arg)
+{
+	int 	pos;
+
+	pos = (short)get_dir(field, 1 + I_CODAGE + get_indent(main_arg, number, I_LABEL_SIZE), TWO_BYTES, carriage);
+	if (I_COMMAND != CW_LLD)
+		pos %= IDX_MOD;
+	if (I_COMMAND == CW_ST)
+		return ((short)pos);
+	else
+		return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage));
+}
+
 ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage)
 {
-	ssize_t 	parameter;
-	int			bytes;
 	int 		main_arg;
-	int			pos;
-	int 		codage;
 
 	main_arg = argument;
-	bytes = carriage->instr->bytes_dir;
-	codage = carriage->instr->codage;	// and this
-
 	if (number == 0)
 		argument = GET_FIRST_ARG(argument);
 	else if (number == 1)
 		argument = GET_SECOND_ARG(argument);
 	else if (number == 2)
 		argument = GET_THIRD_ARG(argument);
-
 	if (argument == T_REG)
 	{
-		parameter = get_argument(field, CUR_COORD + 1 + codage + get_indent(main_arg, number, bytes)) - 1;
-		return ((unsigned char)parameter);
+		return ((unsigned char)(get_argument(field, CUR_COORD + 1 + I_CODAGE +
+			get_indent(main_arg, number, I_LABEL_SIZE)) - 1));
 	}
 	else if (argument ==  GET_T_IND_ARG(T_IND))
 	{
-		pos = (short)get_dir(field, 1 + codage + get_indent(main_arg, number, bytes), TWO_BYTES, carriage);
-		if (carriage->instr->i_command != CW_LLD)
-			pos %= IDX_MOD;
-		if (carriage->instr->i_command == CW_ST)
-			return ((short)pos);
-		parameter = (unsigned)get_dir(field, pos, FOUR_BYTES, carriage);
-
-		return ((unsigned)parameter);
+		return (get_t_ind(field, carriage, number, main_arg));
 	}
 	else if (argument == T_DIR)
 	{
-		parameter = get_dir(field, 1 + codage + get_indent(main_arg, number, bytes), bytes, carriage);
-		if (bytes == 2)
-			parameter = (short)parameter;
-		else
-			parameter = (unsigned)parameter;
-		return (parameter);
+		return (get_t_dir(field, carriage, number, main_arg));
 	}
 	return (0);
 }
 
-ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage) // swap to CUR_CORD  + handicap
+ssize_t 		get_dir(t_field *field, int handicap, int bytes,
+													t_carriage *carriage)
 {
 	int 		temp_bytes;
 	char 		*temp;

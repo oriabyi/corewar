@@ -1,7 +1,8 @@
 # include "../includes/corewar_header.h"
 
 
-int 	check_instruction_args(unsigned char list_arguments, t_instructions *instr)
+int 	check_instruction_args(unsigned char list_arguments,
+													t_instructions *instruction)
 {
 	int 		check_code;
 
@@ -9,18 +10,19 @@ int 	check_instruction_args(unsigned char list_arguments, t_instructions *instr)
 
 	if (list_arguments < 0x40)
 		return (1);
-	if (instr->qua_args)
+	if (instruction->qua_args)
 	{
 		check_code = check_instruction_arg(GET_FIRST_ARG(list_arguments),
-				instr->have_to_have[FIRST_ARG]);
-		if (check_code == 0 && instr->qua_args >= 2)
+				I_DESIRED[FIRST_ARG]);
+		if (check_code == 0 && instruction->qua_args >= 2)
 		{
 			check_code = check_instruction_arg(GET_SECOND_ARG(list_arguments),
-					instr->have_to_have[SECOND_ARG]);
-			if (check_code == 0 && instr->qua_args >= 3)
+					I_DESIRED[SECOND_ARG]);
+			if (check_code == 0 && instruction->qua_args >= 3)
 			{
-				check_code = check_instruction_arg(GET_THIRD_ARG(list_arguments),
-						instr->have_to_have[THIRD_ARG]);
+				check_code =
+					check_instruction_arg(GET_THIRD_ARG(list_arguments),
+							I_DESIRED[THIRD_ARG]);
 			}
 		}
 	}
@@ -29,31 +31,35 @@ int 	check_instruction_args(unsigned char list_arguments, t_instructions *instr)
 
 
 
-int 					get_check_list_args(t_field *field, t_carriage *carriage, t_args *arguments)
+int 					get_check_list_args(t_field *field,
+									t_carriage *carriage, t_args *arguments)
 {
-	if (carriage->instr->codage == 1)
+	if (I_CODAGE == 1)
 	{
-		arguments->list_arguments = get_argument(field, CUR_COORD + 1);
+		LIST_ARGUMENTS = get_argument(field, CUR_COORD + 1);
 
-		if (check_instruction_args(arguments->list_arguments, carriage->instr) == ERROR)
+		if (check_instruction_args(LIST_ARGUMENTS, I_INSTRUCT) == ERROR)
 		{
 			return (1);
 		}
 	}
 	else
-		arguments->list_arguments = (unsigned char)0x80;
+		LIST_ARGUMENTS = (unsigned char)0x80;
 	return (0);
 }
 
-void 					get_three_args(t_field *field, t_carriage *carriage, t_args *arguments)
+void 					get_three_args(t_field *field, t_carriage *carriage,
+															t_args *arguments)
 {
-	CAR_FIRST_ARG = get_arguments(field, arguments->list_arguments, FIRST_ARG, carriage);
-	if (carriage->instr->qua_args >= 2)
+	CAR_FIRST_ARG = get_arguments(field, LIST_ARGUMENTS, FIRST_ARG, carriage);
+	if (I_QUA_ARGS >= 2)
 	{
-		CAR_SECOND_ARG = get_arguments(field, arguments->list_arguments, SECOND_ARG, carriage);
-		if (carriage->instr->qua_args == 3)
+		CAR_SECOND_ARG = get_arguments(field, LIST_ARGUMENTS,
+				SECOND_ARG, carriage);
+		if (I_QUA_ARGS == 3)
 		{
-			CAR_THIRD_ARG = get_arguments(field, arguments->list_arguments, THIRD_ARG, carriage);
+			CAR_THIRD_ARG = get_arguments(field, LIST_ARGUMENTS,
+					THIRD_ARG, carriage);
 		}
 	}
 }
@@ -71,7 +77,8 @@ int 					check_regs_in_args(t_args *arguments)
 	return (0);
 }
 
-int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments)
+int 					get_t_args(t_field *field, t_carriage *carriage,
+															t_args *arguments)
 {
 	int					check_code;
 

@@ -17,32 +17,32 @@
 #define F_DUMP			core->flags.dump
 #define CUR_COORD		carriage->cur_coord
 #define REG				carriage->registers
-#define COMMAND		 	carriage->instr->i_command
 #define CARRY			carriage->carry
-#define CYCLES			carriage->cycles
 #define ALIVE			carriage->alive
+
+
+# define I_COMMAND		carriage->instruction->command
+# define I_CODAGE		carriage->instruction->codage
+# define I_QUA_ARGS		carriage->instruction->qua_args
+# define I_LABEL_SIZE	carriage->instruction->label_size
+# define I_INSTRUCT		carriage->instruction
+# define I_DESIRED		instruction->desired
+
+
 
 
 #define LIST_ARGUMENTS	arguments->list_arguments
 #define CAR_FIRST_ARG	arguments->first_arg
 #define CAR_SECOND_ARG	arguments->second_arg
 #define CAR_THIRD_ARG	arguments->third_arg
-# define ADJUSTED		arguments->have_to_have
-
-# define IS_VALID_COMMAND(x) (x >= 1 && x <= 16)
 
 
 # define O_BOTS						4
-
-
 # define NONE_ARG					0
-
-
 # define ALTERED_FIELD				-1
 # define SHOW_CHANGED_CYCLES		50
-
-#define NOT_EXPOSED 				0
-#define COUNTING_FROM_ONE 			1
+# define NOT_EXPOSED 				0
+# define COUNTING_FROM_ONE 			1
 
 
 #define ONE_BYTE					1
@@ -233,11 +233,11 @@ typedef struct 			s_arguments
 
 typedef struct 			s_instructions
 {
-	unsigned			i_command:5;
+	unsigned			command:5;
 	unsigned 			codage:1;
-	unsigned 			bytes_dir:3;
+	unsigned 			label_size:3;
 	unsigned 			cycles:10;
-	unsigned			have_to_have[3];
+	unsigned			desired[3];
 	unsigned			qua_args:3;
 }						t_instructions;
 
@@ -250,7 +250,7 @@ typedef struct			s_carriage
 	unsigned 			alive:1;
 	unsigned 			registers[16];
 	int 				cycles;
-	t_instructions		*instr;
+	t_instructions		*instruction;
 
 	struct s_carriage	*next;
 }						t_carriage;

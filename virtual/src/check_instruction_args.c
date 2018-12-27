@@ -32,12 +32,17 @@ int 	get_indent(int argument, int count_arguments, int bytes)
 	step = 0;
 	if (count_arguments >= 1)
 	{
-		step += get_indent_size(check_instruction_arg(GET_FIRST_ARG(argument), NONE_ARG), bytes);
+		step += get_indent_size(check_instruction_arg(GET_FIRST_ARG(argument),
+				NONE_ARG), bytes);
 		if (count_arguments >= 2)
 		{
-			step += get_indent_size(check_instruction_arg(GET_SECOND_ARG(argument), NONE_ARG), bytes);
+			step += get_indent_size(
+				check_instruction_arg(GET_SECOND_ARG(argument),
+						NONE_ARG), bytes);
 			if (count_arguments >= 3)
-				step += get_indent_size(check_instruction_arg(GET_THIRD_ARG(argument), NONE_ARG), bytes);
+				step += get_indent_size(
+						check_instruction_arg(GET_THIRD_ARG(argument),
+								NONE_ARG), bytes);
 		}
 	}
 	return (step);

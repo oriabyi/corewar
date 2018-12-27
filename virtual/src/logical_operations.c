@@ -1,6 +1,7 @@
 #include "../includes/corewar_header.h"
 
-unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command)
+unsigned				which_operation_needs(ssize_t a, ssize_t b,
+														unsigned command)
 {
 	if (command == CW_AND)
 		return (unsigned)(a & b);
@@ -33,7 +34,8 @@ int 					get_part_argument(int argument, int coord)
 	return (-1);
 }
 
-int 					check_type_arguments(t_args *arguments, int type, int num, ...)
+int 					check_type_arguments(t_args *arguments, int type,
+																int num, ...)
 {
 	int 				check_code;
 	va_list 			ap;
@@ -46,9 +48,10 @@ int 					check_type_arguments(t_args *arguments, int type, int num, ...)
 	{
 		coord = va_arg(ap, int);
 		temp_reg = va_arg(ap, int);
-		if (check_instruction_arg(get_part_argument(arguments->list_arguments, coord), type) == 0)
+		if (check_instruction_arg(
+				get_part_argument(LIST_ARGUMENTS, coord),	type) == 0)
 		{
-			if (check_reg(temp_reg))// && coord <= arguments->qua_args)
+			if (check_reg(temp_reg))
 			{
 				check_code = 1;
 				break ;
@@ -62,13 +65,13 @@ int 					check_type_arguments(t_args *arguments, int type, int num, ...)
 
 void					logical_operations(t_carriage *carriage, t_args *arguments)
 {
-	if (get_regs_value(arguments->list_arguments, carriage, T_REG, 2,
+	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
 					   FIRST_ARG, &CAR_FIRST_ARG,
 					   SECOND_ARG, &CAR_SECOND_ARG) == 1)
 	{
 		return ;
 	}
 	REG[CAR_THIRD_ARG] =
-			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, carriage->instr->i_command);
+			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, I_COMMAND);
 	change_carry_if_need((unsigned char)CAR_THIRD_ARG, carriage);
 }

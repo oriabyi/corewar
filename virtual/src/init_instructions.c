@@ -4,13 +4,13 @@
 void 			insert(t_instructions *instructions, unsigned first, unsigned second,
 					   unsigned third)
 {
-	if ((instructions->have_to_have[0] = first))
+	if ((instructions->desired[0] = first))
 	{
 		instructions->qua_args++;
-		if ((instructions->have_to_have[1] = second))
+		if ((instructions->desired[1] = second))
 		{
 			instructions->qua_args++;
-			if ((instructions->have_to_have[2] = third))
+			if ((instructions->desired[2] = third))
 				instructions->qua_args++;
 		}
 	}
@@ -84,9 +84,9 @@ void 			fill_dir_bytes(t_instructions *instructions, unsigned command)
 {
 	if ((command >= CW_LIVE && command <= CW_XOR) ||
 		command == CW_LLD || command == CW_AFF)
-		instructions->bytes_dir = FOUR_BYTES;
+		instructions->label_size = FOUR_BYTES;
 	else
-		instructions->bytes_dir = TWO_BYTES;
+		instructions->label_size = TWO_BYTES;
 }
 
 void 			init_instructions(t_instructions *instructions)
@@ -96,11 +96,11 @@ void 			init_instructions(t_instructions *instructions)
 	pos_instr = 0;
 	while (pos_instr < QUA_INSTRUCTIONS)
 	{
-		instructions[pos_instr].i_command = pos_instr + 1;
-		fill_cycles(&instructions[pos_instr], instructions[pos_instr].i_command);
-		fill_codage(&instructions[pos_instr], instructions[pos_instr].i_command);
-		fill_dir_bytes(&instructions[pos_instr], instructions[pos_instr].i_command);
-		fill_have_to_have(&instructions[pos_instr], instructions[pos_instr].i_command);
+		instructions[pos_instr].command = pos_instr + 1;
+		fill_cycles(&instructions[pos_instr], instructions[pos_instr].command);
+		fill_codage(&instructions[pos_instr], instructions[pos_instr].command);
+		fill_dir_bytes(&instructions[pos_instr], instructions[pos_instr].command);
+		fill_have_to_have(&instructions[pos_instr], instructions[pos_instr].command);
 		pos_instr++;
 	}
 }
@@ -112,7 +112,7 @@ t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id)
 	counter = 0;
 	while (counter < QUA_INSTRUCTIONS)
 	{
-		if (instructions[counter].i_command == id)
+		if (instructions[counter].command == id)
 			return (&instructions[counter]);
 		counter++;
 	}

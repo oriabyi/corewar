@@ -9,7 +9,8 @@ char						*get_name(int fd)
 	return (ft_strdup(buf));
 }
 
-unsigned char				*ft_strncpy_without_boundes(const unsigned char *src, size_t len, size_t max)
+unsigned char				*ft_strncpy_without_boundes
+							(const unsigned char *src, size_t len, size_t max)
 {
 	unsigned char			*result;
 	unsigned				i;
@@ -26,7 +27,8 @@ unsigned char				*ft_strncpy_without_boundes(const unsigned char *src, size_t le
 }
 
 
-void						get_exec_code(int fd, unsigned len, unsigned char **exec_code)
+void						get_exec_code(int fd, unsigned len,
+										unsigned char **exec_code)
 {
 	unsigned char			buf[1024];
 
@@ -45,9 +47,9 @@ char						*get_comment(int fd)
 	return (ft_strdup(buf));
 }
 
-unsigned							get_size(int fd)
+unsigned					get_size(int fd)
 {
-	unsigned char					buf[4];
+	unsigned char			buf[4];
 	unsigned 				counter;
 	int						power;
 	ssize_t					y;

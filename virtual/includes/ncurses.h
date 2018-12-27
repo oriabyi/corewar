@@ -590,7 +590,7 @@ extern NCURSES_EXPORT(int) insdelln (int);				/* generated */
 extern NCURSES_EXPORT(int) insertln (void);				/* generated */
 extern NCURSES_EXPORT(int) insnstr (const char *, int);			/* generated */
 extern NCURSES_EXPORT(int) insstr (const char *);			/* generated */
-extern NCURSES_EXPORT(int) instr (char *);				/* generated */
+extern NCURSES_EXPORT(int) instruction (char *);				/* generated */
 extern NCURSES_EXPORT(int) intrflush (WINDOW *,bool);			/* implemented */
 extern NCURSES_EXPORT(bool) isendwin (void);				/* implemented */
 extern NCURSES_EXPORT(bool) is_linetouched (WINDOW *,int);		/* implemented */
@@ -1043,7 +1043,7 @@ extern NCURSES_EXPORT(int) wgetscrreg (const WINDOW *, int *, int *); /* generat
 #define insertln()		winsdelln(stdscr,1)
 #define insnstr(s,n)		winsnstr(stdscr,s,n)
 #define insstr(s)		winsstr(stdscr,s)
-#define instr(s)		winstr(stdscr,s)
+#define instruction(s)		winstr(stdscr,s)
 #define move(y,x)		wmove(stdscr,y,x)
 #define refresh()		wrefresh(stdscr)
 #define scrl(n)			wscrl(stdscr,n)

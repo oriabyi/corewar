@@ -77,7 +77,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 {
 	ssize_t 		coord;
 
-	if (get_regs_value(arguments->list_arguments, carriage, T_REG, 2,
+	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
 			SECOND_ARG, &CAR_SECOND_ARG,
 			THIRD_ARG, &CAR_THIRD_ARG) == 1)
 	{
