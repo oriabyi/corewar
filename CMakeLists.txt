@@ -50,6 +50,6 @@ add_executable(Corewar
         virtual/src/visual_start_end_functions.c
         virtual/src/check_correctness.c
         virtual/src/check_champ.c
-        virtual/src/operations_with_champs.c virtual/src/get_list_arguments.c)
+        virtual/src/operations_with_champs.c virtual/src/get_list_arguments.c virtual/src/init_instructions.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(Corewar ${LIBFT})

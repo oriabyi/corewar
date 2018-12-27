@@ -68,6 +68,9 @@
 
 # define LINE_SIZE 188
 
+
+# define QUA_INSTRUCTIONS 			16
+
 /*
 **	Visual colors
 */
@@ -230,6 +233,16 @@ typedef struct 			s_arguments
 	ssize_t 			third_arg;
 }						t_args;
 
+
+typedef struct 			s_instructions
+{
+	char 				*a_byte;
+	unsigned			i_command:5;
+	unsigned 			codage:1;
+	unsigned 			bytes_dir:3;
+	unsigned 			cycles:10;
+}						t_instructions;
+
 typedef struct			s_carriage
 {
 	unsigned			id;
@@ -240,6 +253,7 @@ typedef struct			s_carriage
 	unsigned 			registers[16];
 	unsigned 			command:8;
 	int 				cycles;
+	t_instructions		*instr;
 
 	struct s_carriage	*next;
 }						t_carriage;
@@ -290,6 +304,7 @@ typedef struct			s_corewar
 	t_champ				*champs;
 	t_flags				flags;
 	t_args				arguments;
+	t_instructions			instructions[QUA_INSTRUCTIONS];
 	int 				cycle_to_die;
 	int 				max_checks;
 	unsigned 			qua_champs;
@@ -495,6 +510,10 @@ void					get_old_owner(t_field *field, int coord);
 void 			get_arguments_table(t_carriage *carriage, t_args *arguments);
 
 int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
+
+
+void 			init_instructions(t_instructions *instructions);
+t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id);
 
 #endif
 

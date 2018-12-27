@@ -1,10 +1,30 @@
 #include "../includes/corewar_header.h"
 
+
+void	delete_carriage(t_carriage **begin_list, t_carriage **head,
+						t_carriage **prev, t_field *field)
+{
+	t_carriage	*to_free;
+
+	to_free = *head;
+	if (*head == *begin_list)
+	{
+		*begin_list = (*begin_list)->next;
+		*head = *begin_list;
+	}
+	else
+	{
+		*head = (*head)->next;
+		(*prev)->next = *head;
+	}
+	field[to_free->cur_coord].carriages_on--;
+	free(to_free);
+}
+
 void	remove_dead_processes(t_carriage **begin_list,
-							  unsigned *qua_carriages)
+							  unsigned *qua_carriages, t_field *field)
 {
 	t_carriage	*head;
-	t_carriage	*to_free;
 	t_carriage	*prev;
 
 	head = *begin_list;
@@ -13,19 +33,8 @@ void	remove_dead_processes(t_carriage **begin_list,
 	{
 		if (head->alive == 0)
 		{
-			to_free = head;
-			if (head == *begin_list)
-			{
-				*begin_list = (*begin_list)->next;
-				head = *begin_list;
-			}
-			else
-			{
-				head = head->next;
-				prev->next = head;
-			}
+			delete_carriage(begin_list, &head, &prev, field);
 			(*qua_carriages)--;
-			free(to_free);
  		} else
 		{
 			prev = head;
@@ -51,7 +60,7 @@ unsigned		reset_carriages_id(t_carriage **cariage)
 
 int 			check_cycle_to_die(t_corewar *core)
 {
-	remove_dead_processes(&core->carriage, &core->quant_carriages);
+	remove_dead_processes(&core->carriage, &core->quant_carriages, core->field);
 	if (core->qua_lives > NBR_LIVE)
 	{
 		core->cycle_to_die -= CYCLE_DELTA;

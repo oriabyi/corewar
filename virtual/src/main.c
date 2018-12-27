@@ -36,7 +36,7 @@ void			war(t_corewar *core)
 			cycles = (unsigned)draw(core, cycles, &cycles_limit);
 		else
 			cycles++;
-		bigmother++;
+		bigmother = cycles;
 		do_process(core);
 		if (cycles == cycles_limit)
 		{
@@ -81,6 +81,7 @@ void 			init_core(t_corewar *core)
 	core->arguments = (t_args){0, 0, 0, {0, 0, 0}, 0, 0, 0};
 }
 
+
 int				submain(int ac, char **av)
 {
 	int 		check_code;
@@ -94,6 +95,7 @@ int				submain(int ac, char **av)
 	{
 		return (check_correctness(&core, check_code));
 	}
+	init_instructions((t_instructions *)&core.instructions);
 	war(&core);
 	clean_all(&core);
 //	printf("bigmother = %d\n", bigmother);
