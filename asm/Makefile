@@ -21,6 +21,7 @@ SRC_N			=	asm.c \
                     asm_getters2.c \
                     asm_print.c \
                     asm_stuff.c \
+		    asm_bool_arr.c \
                     get_next_line.c
 
 SRC_P 			= ./src/

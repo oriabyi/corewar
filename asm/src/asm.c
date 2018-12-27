@@ -23,6 +23,5 @@ int	main(int ac, char **av)
 			ft_put_error(2, av[ac - 1]);
 	else
 		ft_put_error(17, av[0]);
-	system("leaks asm");
 	return (0);
 }

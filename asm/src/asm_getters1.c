@@ -29,8 +29,8 @@ void	ft_get_data(char *file, t_asm **glob)
 {
 	int		fd;
 	char	*line;
-	char 	*p;
-	int 	len;
+	char	*p;
+	int		len;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 		ft_put_error(1, file);
@@ -38,9 +38,7 @@ void	ft_get_data(char *file, t_asm **glob)
 	len = -1;
 	while (get_next_line(fd, &line) > 0)
 	{
-		(ft_strchr(line, COMMENT_CHAR)) ?
-		(*ft_strchr(line, COMMENT_CHAR) = '\0') : 0;
-		(ft_strchr(line, ';')) ? (*ft_strchr(line, ';') = '\0') : 0;
+		ft_strcut(&line, COMMENT_CHAR, ';');
 		p = ft_strtrim(line);
 		len = (int)ft_strlen(p);
 		ft_add_op(line, *glob, fd);
@@ -52,8 +50,7 @@ void	ft_get_data(char *file, t_asm **glob)
 		ft_put_error(0, (!(*glob)->comment) ? "comment" : "name");
 	(ft_check_last_n(fd) || !len) ? 0 : ft_put_error(15, NULL);
 	ft_print_header(file, (*glob));
-	if (close(fd))
-		ft_put_error(3, file);
+	(close(fd)) ? ft_put_error(3, file) : 0;
 }
 
 void	ft_get_prosses(t_asm *glob, char **arr)

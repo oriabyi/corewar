@@ -70,6 +70,7 @@ void					ft_get_prosses(t_asm *glob, char **arr);
 char					ft_get_type_n(char **arr, t_op *op);
 char					*ft_joinarg(char **arr);
 int						ft_put_error(int err, char *str);
+void					ft_strcut(char **line, char c1, char c2);
 int						ft_is_label(char *command);
 char					**ft_continue_split(char **arr);
 int						ft_check_extention(char *file);
