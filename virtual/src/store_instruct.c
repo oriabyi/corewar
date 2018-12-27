@@ -27,7 +27,7 @@ void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
 	else
 	{
 		write_in_field(field, (int)(CAR_SECOND_ARG + CUR_COORD),
-					   (unsigned char)CAR_FIRST_ARG, carriage); //TODO: dont sure that it has to be (int)
+					   REG[CAR_FIRST_ARG], cycles); //TODO: dont sure that it has to be (int)
 		add_champ_id((int)(CAR_SECOND_ARG + CUR_COORD), field, carriage);
 	}
 }

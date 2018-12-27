@@ -477,7 +477,7 @@ ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage)
 
 
 //write in field
-int 	write_in_field(t_field *field, int position, unsigned char t_reg, t_carriage *carriage);
+int 	write_in_field(t_field *field, int position, unsigned t_reg, unsigned cycles);
 
 //add sub
 unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command);

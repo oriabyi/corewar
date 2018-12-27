@@ -9,16 +9,16 @@ unsigned char 	 get_argument(t_field *field, int coord)
 
 #include "../../libft/int_to_char_hex.c"
 
-int 	write_in_field(t_field *field, int coord, unsigned char t_reg, t_carriage *carriage)
+int 	write_in_field(t_field *field, int coord, unsigned t_reg, unsigned cycles)
 {
 
 	char **str;
 	int 	counter;
 
 	counter = 0;
-	str = int_to_char_hex(REG[t_reg], 4); //define 5
+	str = int_to_char_hex(t_reg, 4);
 	if (!str)
-		return (1); // return an ERROR
+		return (1);
 	while (str[counter])
 	{
 		coord = (int)correction_coordinates(coord);
@@ -81,7 +81,7 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 		return ;
 	}
 	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
-	write_in_field(field, (int)coord, (unsigned char)CAR_FIRST_ARG, carriage);
+	write_in_field(field, (int)coord, REG[CAR_FIRST_ARG], cycles);
 	add_champ_id((int)(CAR_SECOND_ARG + CUR_COORD), field, carriage);
 }
 
