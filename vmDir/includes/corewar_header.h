@@ -205,19 +205,6 @@
 # define CW_LFORK					15
 # define CW_AFF						16
 
-/*
-**	Define cycles
-*/
-
-# define CW_ZJMP_CYCLES				20
-# define CW_FORK_CYCLES				800
-# define CW_LLDI_CYCLES				50
-# define CW_LFORK_CYCLES			1000
-# define CW_AFF_CYCLES				2
-
-
-int 				bigmother;
-
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
@@ -293,7 +280,6 @@ typedef struct			s_battlefield
 	unsigned			is_alive:1;
 	unsigned			carriages_on;
 	int					altered_cycles;
-	unsigned			old_owner;
 }						t_field;
 
 typedef struct			s_corewar

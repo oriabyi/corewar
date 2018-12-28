@@ -19,10 +19,6 @@ ssize_t get_t_ind(t_field *field, t_carriage *carriage, int number, int main_arg
 		pos %= IDX_MOD;
 	if (I_COMMAND == CW_ST)
 		return ((short)pos);
-//	if (I_COMMAND == CW_LLD) //delete
-//		return ((unsigned)get_dir(field, pos, TWO_BYTES, carriage)); // delete
-	if (I_COMMAND == CW_LD)
-		return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage) % IDX_MOD);
 	return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage));
 }
 

@@ -143,15 +143,6 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 		champ_id = O_BOTS + 1;
 		if (get_flag_n(core, av, counter, &champ_id))
 			;
-//		if (*(av[(*counter)]) == '-' && av[(*counter) + 1])
-//		{
-//			champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
-//			if (are_nums(av[(*counter) + 1]) == 1)
-//				return (BAD_VALUE_FOR_FLAG_N);
-//			if (get_champ_by_id(core->champs, champ_id) && champ_id != O_BOTS + 1)
-//				return (SAME_NUM_FOR_CHAMPS);
-//			(*counter) += 2;
-//		}
 		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
 			return (NO_ID_AFTER_FLAG);
 		champ_id = (champ_id <= O_BOTS) ? champ_id : find_free_space(core->champs);

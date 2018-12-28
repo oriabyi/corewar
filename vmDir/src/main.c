@@ -48,7 +48,6 @@ void			war(t_corewar *core)
 		}
 		else
 			core->cycles++;
-		bigmother = core->cycles;
 		do_process(core);
 		if (core->cycles == cycles_limit)
 		{
@@ -74,7 +73,7 @@ void			war(t_corewar *core)
 
 	if (F_VISUAL)
 		visual_end(core);
-	else if (core->cycle_to_die == 0) // swap with flag dump
+	if (core->cycle_to_die <= 0 || core->carriage == NULL)
 	{
 		print_winner(core);
 	}
@@ -102,7 +101,6 @@ int				submain(int ac, char **av)
 	int 		check_code;
 	t_corewar	core;
 
-	bigmother = 0;
 	init_core(&core);
 	check_code = check_availability_flags(&core.flags, ac, av);
 	if ((check_code || (check_code = parse(&core, av))) ||
