@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fork_instruct.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:13:48 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 19:13:50 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/corewar_header.h"
 
 t_carriage				*copy_carriage(t_carriage *src, int id)
@@ -20,21 +32,18 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 	return (dst);
 }
 
-void	insert_new_carriage(t_carriage **list, t_carriage *new,
-													unsigned *quant_carriages)
+void					insert_new_carriage(t_carriage **list, t_carriage *new,
+										unsigned *quant_carriages)
 {
 	new->id = (*quant_carriages)++;
 	new->next = *list;
 	*list = new;
 }
 
-
-
 void					fork_instruct(t_field *field, t_carriage *carriage,
-									  t_corewar *core, t_args *arguments)
+										t_corewar *core, t_args *arguments)
 {
 	t_carriage			*new_carriage;
-
 
 	new_carriage = copy_carriage(carriage, core->quant_carriages);
 	if (new_carriage == NULL)

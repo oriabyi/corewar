@@ -12,7 +12,7 @@
 
 #include "../includes/corewar_header.h"
 
-int				submain(int ac, char **av)
+int				main(int ac, char **av)
 {
 	int			check_code;
 	t_corewar	core;
@@ -28,12 +28,5 @@ int				submain(int ac, char **av)
 	war_loop(&core);
 	reset_game(&core);
 	clean_all(&core);
-	return (0);
-}
-
-int			main(int ac, char **av)
-{
-	submain(ac, av);
-	system("leaks corewar");
 	return (0);
 }

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alive_instruct.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:16:07 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 19:16:08 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/corewar_header.h"
 
-void 	check_whose_id(t_corewar *core, unsigned id)
+void					check_whose_id(t_corewar *core, unsigned id)
 {
-	unsigned 	counter;
+	unsigned			counter;
 
 	counter = 0;
 	while (counter < core->qua_champs)
@@ -16,7 +28,7 @@ void 	check_whose_id(t_corewar *core, unsigned id)
 	}
 }
 
-void 	alive_instruct(t_field *field, t_carriage *carriage,
+void					alive_instruct(t_field *field, t_carriage *carriage,
 								t_corewar *core, t_args *arguments)
 {
 	check_whose_id(core, (unsigned)ARG_FIRST);
