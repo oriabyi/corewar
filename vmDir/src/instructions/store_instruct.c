@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
 					   unsigned cycles)

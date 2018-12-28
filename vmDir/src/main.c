@@ -1,4 +1,4 @@
-# include "../includes/corewar_header.h"
+#include "../includes/corewar_header.h"
 
 void 			init_core(t_corewar *core)
 {

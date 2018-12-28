@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 ssize_t 		write_from_field(t_field *field, int handicap, int bytes)
 {

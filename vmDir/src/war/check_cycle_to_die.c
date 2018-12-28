@@ -1,8 +1,19 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_cycle_to_die.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 17:33:33 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 17:33:34 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../includes/corewar_header.h"
 
-void	delete_carriage(t_carriage **begin_list, t_carriage **head,
-						t_carriage **prev, t_field *field)
+void				delete_carriage(t_carriage **begin_list, t_carriage **head,
+											t_carriage **prev, t_field *field)
 {
 	t_carriage	*to_free;
 
@@ -22,8 +33,8 @@ void	delete_carriage(t_carriage **begin_list, t_carriage **head,
 	free(to_free);
 }
 
-void	remove_dead_processes(t_carriage **begin_list,
-							  unsigned *qua_carriages, t_field *field)
+void				remove_dead_processes(t_carriage **begin_list,
+								unsigned *qua_carriages, t_field *field)
 {
 	t_carriage	*head;
 	t_carriage	*prev;
@@ -36,7 +47,8 @@ void	remove_dead_processes(t_carriage **begin_list,
 		{
 			delete_carriage(begin_list, &head, &prev, field);
 			(*qua_carriages)--;
- 		} else
+		}
+		else
 		{
 			prev = head;
 			head = head->next;
@@ -44,7 +56,7 @@ void	remove_dead_processes(t_carriage **begin_list,
 	}
 }
 
-unsigned		reset_carriages_id(t_carriage **cariage)
+unsigned			reset_carriages_id(t_carriage **cariage)
 {
 	t_carriage	*head;
 	unsigned	counter;
@@ -53,14 +65,14 @@ unsigned		reset_carriages_id(t_carriage **cariage)
 	head = *cariage;
 	while (head)
 	{
-		head->id = counter++; // TODO: make me great again
+		head->id = counter++;
 		head->alive = 0;
 		head = head->next;
 	}
 	return (counter);
 }
 
-int 			check_cycle_to_die(t_corewar *core)
+int					check_cycle_to_die(t_corewar *core)
 {
 	remove_dead_processes(&core->carriage, &core->quant_carriages, core->field);
 	if (core->qua_lives > NBR_LIVE)

@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 char				*check_correctness_file(int check_code)
 {
@@ -84,8 +84,10 @@ char 			*get_message(void)
 					  " \tGUI: ./corewar -visual [Players]\n"
 					  " \tDefault Player Numbers: 1, 2, 3, 4...\n"
 					  " \tChange Player Number: -n -1 filename.cor\n"
-					  " \tDump: ./corewar -d 300 [Players](prints the memory after 300 cycles)\n"
-					  " \tGOTO: ./corewar -v -d 300 [Players](start corewar in visual mode after 300 cycles)\n"
+					  " \tDump: ./corewar -d 300 [Players](prints the memory"
+														"after 300 cycles)\n"
+					  " \tGOTO: ./corewar -v -d 300 [Players](start corewar in"
+											"visual mode after 300 cycles)\n"
 					  " \tGame on! ", ALIEN, ALIEN, ALIEN));
 }
 

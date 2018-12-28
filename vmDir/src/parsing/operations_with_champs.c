@@ -1,4 +1,4 @@
-# include "corewar_header.h"
+#include "corewar_header.h"
 
 int 				create_champs(t_champ **champs)
 {

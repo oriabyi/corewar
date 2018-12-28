@@ -36,7 +36,6 @@ add_executable(Corewar
         vmDir/src/parsing/parse.c
         vmDir/src/instructions/store_index_instruct.c
         vmDir/src/instructions/store_instruct.c
-        vmDir/src/war/trash.c
         vmDir/src/parsing/treatment_arguments.c
         vmDir/src/visualization/visual_draw_main_function.c
         vmDir/src/visualization/visual_draw_memory_window.c
@@ -54,6 +53,7 @@ add_executable(Corewar
         vmDir/src/parsing/operations_with_champs.c
         vmDir/src/war/get_list_arguments.c
         vmDir/src/initialization/init_instructions.c
+        vmDir/src/war/squire.c
         vmDir/src/visualization/visual_draw_menu.c vmDir/src/war/war_loop.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(Corewar ${LIBFT})

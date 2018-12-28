@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 int					get_old_young_numbers(unsigned char num, int base, int *power)
 {

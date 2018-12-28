@@ -56,7 +56,7 @@
 # define GET_FIRST_ARG(x)		(x >> 6)
 # define GET_SECOND_ARG(x)		((x >> 4) & 3)
 # define GET_THIRD_ARG(x)		((x >> 2) & 3)
-
+# define IS_LIVE(x, y) (x == '0' && y == '1')
 # define GET_T_IND_ARG(x) (x ^ 7)
 
 
@@ -517,6 +517,9 @@ void 				reverse_list(t_carriage **begin_list);
 
 void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
 
+void				get_game_type(t_corewar *core);
+void				print_winner(t_corewar *core);
+int					game_over(t_corewar *core, unsigned *cycles_limit);
 #endif
 
 // 4 magic value

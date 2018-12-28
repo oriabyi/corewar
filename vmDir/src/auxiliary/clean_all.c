@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void				clean_carriages(t_carriage *carriage)
 {

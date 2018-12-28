@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 
 unsigned char 	 get_argument(t_field *field, int coord)

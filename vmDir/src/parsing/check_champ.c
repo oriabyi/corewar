@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 int 				check_champ_extension(char *champ_file_name)
 {

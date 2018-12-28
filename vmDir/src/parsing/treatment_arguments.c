@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 
 int				get_flags_help(t_flags *flags, char *av)

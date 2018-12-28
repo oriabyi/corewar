@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void 			fill_rank(t_field *field, int cur_qua, int qua_inrank)
 {
@@ -10,7 +10,6 @@ void 			fill_rank(t_field *field, int cur_qua, int qua_inrank)
 	field[cur_qua].carriages_on = 0;
 	field[cur_qua].altered_cycles = 0;
 	field[cur_qua].is_alive = 0;
-	field[cur_qua].old_owner = 0;
 	field[cur_qua].hex[0] = '0';
 	field[cur_qua].hex[1] = '0';
 	field[cur_qua].hex[2] = '\0';

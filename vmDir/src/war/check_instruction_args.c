@@ -1,6 +1,18 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_instruction_args.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 17:35:46 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 17:35:47 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int 	check_instruction_arg(int argument, int byte)
+#include "../../includes/corewar_header.h"
+
+int				check_instruction_arg(int argument, int byte)
 {
 	if (byte == (T_REG | T_DIR | T_IND))
 		return (0);
@@ -13,7 +25,7 @@ int 	check_instruction_arg(int argument, int byte)
 	return (0);
 }
 
-int 	get_indent_size(int argument, int bytes)
+int				get_indent_size(int argument, int bytes)
 {
 	if (argument == T_REG)
 		return (1);
@@ -21,13 +33,12 @@ int 	get_indent_size(int argument, int bytes)
 		return (bytes);
 	else if (argument == T_IND)
 		return (2);
-
 	return (0);
 }
 
-int 	get_indent(int argument, int count_arguments, int bytes)
+int				get_indent(int argument, int count_arguments, int bytes)
 {
-	int 	step;
+	int			step;
 
 	step = 0;
 	if (count_arguments >= 1)
@@ -48,7 +59,7 @@ int 	get_indent(int argument, int count_arguments, int bytes)
 	return (step);
 }
 
-int 		check_reg(int reg)
+int				check_reg(int reg)
 {
 	if (CHECK_REG(reg) == false)
 	{

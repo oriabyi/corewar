@@ -1,4 +1,4 @@
-# include "../includes/corewar_header.h"
+#include "../includes/corewar_header.h"
 
 char			*pull_out_champs_info(t_corewar *core)
 {

@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 
 void 			insert(t_instructions *instructions, unsigned first, unsigned second,
