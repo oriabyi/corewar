@@ -37,7 +37,7 @@ int				change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 
 int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)
 {
-	int 		button;
+	int			button;
 
 	init_time(core);
 	clock_gettime(CLOCK_MONOTONIC, &NCUR.tstart);
@@ -53,12 +53,12 @@ int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)
 			return (EXIT);
 		display_windows(core, cycle);
 		clock_gettime(CLOCK_MONOTONIC, &NCUR.tend);
-		if (((double)NCUR.tend.tv_sec + 1.0e-9*NCUR.tend.tv_nsec) -
-			((double)NCUR.tstart.tv_sec + 1.0e-9*NCUR.tstart.tv_nsec)
+		if (((double)NCUR.tend.tv_sec + 1.0e-9 * NCUR.tend.tv_nsec) -
+			((double)NCUR.tstart.tv_sec + 1.0e-9 * NCUR.tstart.tv_nsec)
 			> (1.0 - ((double)NCUR.draw_speed / 100)))
 		{
 			if (!NCUR.pause)
-				break;
+				break ;
 		}
 	}
 	return (cycle + 1);

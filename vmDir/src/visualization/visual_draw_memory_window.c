@@ -45,8 +45,7 @@ void			draw_memory_window(t_corewar *core, int cycles)
 			wprintw(NCUR.memory_window, "\n");
 		print_cell(core, core->field[i].champ_id, i, cycles);
 		if (i % 64 == 0)
-			wmove(NCUR.memory_window, (i / 64) + 2, 3);
-//			wmove(NCUR.memory_window, (i / 64) + 1, 2); //use me again
+			wmove(NCUR.memory_window, (i / 64) + 1, 2);
 		wprintw(NCUR.memory_window, "%s", core->field[i].hex);
 		wattron(NCUR.memory_window, COLOR_PAIR(CR_CL_GREY_BLACK));
 		wattroff(NCUR.memory_window, A_BOLD);
