@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_correctness.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 18:57:18 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 18:57:19 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/corewar_header.h"
 
 char				*check_correctness_file(int check_code)
 {
-	char 			*message;
+	char			*message;
 
 	if (check_code == FILE_DOESNT_EXIST)
 		message = "THERE IS NO CHAMP!";
@@ -31,7 +43,7 @@ char				*check_correctness_file(int check_code)
 
 char				*check_champ_data(int check_code)
 {
-	char 			*message;
+	char			*message;
 
 	if (check_code == WRONG_MAGIC_VALUE)
 		message = "THE CHAMP HAS WRONG MAGIC VALUE!";
@@ -48,9 +60,9 @@ char				*check_champ_data(int check_code)
 	return (message);
 }
 
-char 				*check_corewar_arguments(int check_code)
+char				*check_corewar_arguments(int check_code)
 {
-	char 			*message;
+	char			*message;
 
 	if (check_code == BAD_ARGUMENTS)
 		message = "BAD ARGUMENTS!";
@@ -77,40 +89,33 @@ char 				*check_corewar_arguments(int check_code)
 	return (message);
 }
 
-char 			*get_message(void)
+char				*get_message(void)
 {
-	return (ft_multjoinfr(4, "Usage:"
-					  " \tExample: ./corewar -v -n -1 filename.cor\n"
-					  " \tGUI: ./corewar -visual [Players]\n"
-					  " \tDefault Player Numbers: 1, 2, 3, 4...\n"
-					  " \tChange Player Number: -n -1 filename.cor\n"
-					  " \tDump: ./corewar -d 300 [Players](prints the memory"
-														"after 300 cycles)\n"
-					  " \tGOTO: ./corewar -v -d 300 [Players](start corewar in"
-											"visual mode after 300 cycles)\n"
-					  " \tGame on! ", ALIEN, ALIEN, ALIEN));
+	return (ft_multjoinfr(4,
+		"Usage:"
+		" \tExample: ./corewar -v -n -1 filename.cor\n"
+		" \tGUI: ./corewar -visual [Players]\n"
+		" \tDefault Player Numbers: 1, 2, 3, 4...\n"
+		" \tChange Player Number: -n -1 filename.cor\n"
+		" \tDump: ./corewar -d 300 [Players](prints the memory"
+		"after 300 cycles)\n"
+		" \tGOTO: ./corewar -v -d 300 [Players](start corewar in"
+		"visual mode after 300 cycles)\n"
+		" \tGame on! ", ALIEN, ALIEN, ALIEN));
 }
 
-int				check_correctness(t_corewar *core, int check_code)
+int					check_correctness(t_corewar *core, int check_code)
 {
-	char 			*message;
+	char			*message;
 
 	if (check_code == MEMORY_ERROR)
-	{
 		message = "MEMORY ALLOCATE ERROR!";
-	}
 	else if (ARGUMENTS_ERROR(check_code) || check_code == NEED_ARGUMENTS)
-	{
 		message = check_corewar_arguments(check_code);
-	}
 	else if (FILE_ERROR(check_code))
-	{
 		message = check_correctness_file(check_code);
-	}
 	else if (CHAMP_DATA_ERROR(check_code))
-	{
 		message = check_champ_data(check_code);
-	}
 	else if (check_code == PRINT_USAGE)
 	{
 		message = get_message();
@@ -118,7 +123,6 @@ int				check_correctness(t_corewar *core, int check_code)
 	}
 	else
 		message = "ERROR";
-
 	notification_message(core, check_code, message);
 	return (check_code);
 }

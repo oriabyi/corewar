@@ -77,9 +77,9 @@ unsigned					interlayer(int fd)
 		return (ERROR);
 }
 
-unsigned char				*ft_strncpy_without_boundes
-												(const unsigned char *src,
-														size_t len, size_t max)
+unsigned char				*ft_strncpy_without_boundes(
+								const unsigned char *src,
+								size_t len, size_t max)
 {
 	unsigned char			*result;
 	unsigned				i;

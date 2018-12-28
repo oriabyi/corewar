@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 14:39:08 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/28 18:41:05 by obaranni         ###   ########.fr        #
+#    Updated: 2018/12/28 18:50:37 by obaranni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ INITIALIZ	:=  create_memory_space fill_memory_space				\
 				desired_function
 
 WAR			:=  carriages_move check_cycle_to_die getters_args		\
-				execute_the_instruction get_list_arguments squire	\
+				execute_the_instruction get_list_arguments			\
 				check_instruction_args war_loop squire
 
 AUX			:=  check_correctness clean_all control_work
