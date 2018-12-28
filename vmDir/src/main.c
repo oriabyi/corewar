@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:11:27 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 19:12:40 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/corewar_header.h"
 
 int				submain(int ac, char **av)
 {
-	int 		check_code;
+	int			check_code;
 	t_corewar	core;
 
 	init_core(&core);
@@ -19,8 +31,9 @@ int				submain(int ac, char **av)
 	return (0);
 }
 
-int main(int ac, char **av)
+int			main(int ac, char **av)
 {
+	//todo: delete me
 	submain(ac, av);
 	system("leaks corewar");
 	return (0);
