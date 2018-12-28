@@ -66,12 +66,12 @@ int 					check_type_arguments(t_args *arguments, int type,
 void					logical_operations(t_carriage *carriage, t_args *arguments)
 {
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
-					   FIRST_ARG, &CAR_FIRST_ARG,
-					   SECOND_ARG, &CAR_SECOND_ARG) == 1)
+					   FIRST_ARG, &ARG_FIRST,
+					   SECOND_ARG, &ARG_SECOND) == 1)
 	{
 		return ;
 	}
-	REG[CAR_THIRD_ARG] =
-			which_operation_needs(CAR_FIRST_ARG, CAR_SECOND_ARG, I_COMMAND);
-	change_carry_if_need((unsigned char)CAR_THIRD_ARG, carriage);
+	REG[ARG_THIRD] =
+			which_operation_needs(ARG_FIRST, ARG_SECOND, I_COMMAND);
+	change_carry_if_need((unsigned char)ARG_THIRD, carriage);
 }

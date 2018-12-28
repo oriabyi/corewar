@@ -10,7 +10,7 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 		return (NULL);
 	dst->carry = src->carry;
 	dst->flag = src->flag;
-	dst->alive = false; // false? here change
+	dst->alive = false;
 	dst->cycles = 0;
 	while (counter < NUMBER_OF_REGISTERS)
 	{
@@ -43,11 +43,11 @@ void					fork_instruct(t_field *field, t_carriage *carriage,
 	}
 	if (I_COMMAND == CW_FORK)
 	{
-		new_carriage->cur_coord = CUR_COORD + (int)(CAR_FIRST_ARG % IDX_MOD);
+		new_carriage->cur_coord = (int)(CUR_COORD + (ARG_FIRST % IDX_MOD));
 	}
 	else if (I_COMMAND == CW_LFORK)
 	{
-		new_carriage->cur_coord = CUR_COORD + (int)(CAR_FIRST_ARG);
+		new_carriage->cur_coord = (int)(CUR_COORD + (ARG_FIRST));
 	}
 	new_carriage->cur_coord =
 			(int)correction_coordinates(new_carriage->cur_coord);

@@ -9,10 +9,19 @@ void 			get_game_type(t_corewar *core)
 		visual_start(core);
 		display_windows(core, 1);
 	}
-	else if (F_DUMP)
+	else
 	{
 		ft_putstr(pull_out_champs_info(core));
 	}
+}
+
+void 			print_winner(t_corewar *core)
+{
+	char *temp;
+
+	temp = ft_multjoinfr(6, "Contestant " , NULL, ft_itoa(core->champs[core->last_live].id) ,", \"", core->champs[core->last_live].name, "\", has won !\n");
+	ft_putstr(temp);
+	free(temp);
 }
 
 void			war(t_corewar *core)
@@ -61,12 +70,14 @@ void			war(t_corewar *core)
 		}
 	}
 
-//	char *temp = ft_multjoin(3, "Contestant 2, \"", core->champs[core->last_live].name, "\", has won !\n");
-//	ft_putstr(temp);
-//	free(temp);
+
 
 	if (F_VISUAL)
 		visual_end(core);
+	else if (core->cycle_to_die == 0) // swap with flag dump
+	{
+		print_winner(core);
+	}
 }
 
 void 			init_core(t_corewar *core)

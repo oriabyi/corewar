@@ -1,5 +1,34 @@
 #include "../includes/corewar_header.h"
 
+unsigned 					interlayer(int fd);
+
+
+int 				get_all_other_info(t_champ *champ, int fd)
+{
+	char 			buf;
+
+	champ->name = get_name(fd);
+	if (interlayer(fd) == 0)
+	{
+		champ->size = get_size(fd);
+		champ->comment = get_comment(fd);
+		if (interlayer(fd) == 0)
+		{
+			get_exec_code(fd, champ->size, &champ->exec_code);
+			if (read(fd, &buf, 1) == 0)
+			{
+				return (check_champ_info(champ));
+			}
+			else
+				return (BAD_EXEC_CODE_LENGTH);
+		}
+		else
+			return (BAD_COMMENT_LENGTH);
+	}
+	else
+		return (BAD_NAME_LENGTH);
+}
+
 int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 {
 	int				fd;
@@ -15,11 +44,7 @@ int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 		check_num = WRONG_MAGIC_VALUE;
 	else
 	{
-		champ->name = get_name(fd);
-		champ->size = get_size(fd);
-		champ->comment = get_comment(fd);
-		get_exec_code(fd, champ->size, &champ->exec_code);
-		check_num = check_champ_info(champ);
+		check_num = get_all_other_info(champ, fd);
 	}
 	close(fd);
 	return (check_num);

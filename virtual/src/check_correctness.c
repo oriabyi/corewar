@@ -41,6 +41,8 @@ char				*check_champ_data(int check_code)
 		message = "THE CHAMP HAS WRONG CHAMP SIZE!";
 	else if (check_code == BAD_COMMENT_LENGTH)
 		message = "THE CHAMP HAS WRONG COMMENT LENGTH!";
+	else if (check_code == BAD_EXEC_CODE_LENGTH)
+		message = "THE CHAMP HAS WRONG EXEC CODE LENGTH!";
 	else
 		message = "ERROR!";
 	return (message);

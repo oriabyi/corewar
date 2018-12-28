@@ -18,6 +18,7 @@ void	delete_carriage(t_carriage **begin_list, t_carriage **head,
 		(*prev)->next = *head;
 	}
 	field[to_free->cur_coord].carriages_on--;
+	field[to_free->cur_coord].is_alive = 0;
 	free(to_free);
 }
 
@@ -52,7 +53,8 @@ unsigned		reset_carriages_id(t_carriage **cariage)
 	head = *cariage;
 	while (head)
 	{
-//		head->id = counter++; // TODO: make me great again
+		head->id = counter++; // TODO: make me great again
+		head->alive = 0;
 		head = head->next;
 	}
 	return (counter);

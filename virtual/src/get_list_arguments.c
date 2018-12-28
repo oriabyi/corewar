@@ -51,14 +51,14 @@ int 					get_check_list_args(t_field *field,
 void 					get_three_args(t_field *field, t_carriage *carriage,
 															t_args *arguments)
 {
-	CAR_FIRST_ARG = get_arguments(field, LIST_ARGUMENTS, FIRST_ARG, carriage);
+	ARG_FIRST = get_arguments(field, LIST_ARGUMENTS, FIRST_ARG, carriage);
 	if (I_QUA_ARGS >= 2)
 	{
-		CAR_SECOND_ARG = get_arguments(field, LIST_ARGUMENTS,
+		ARG_SECOND = get_arguments(field, LIST_ARGUMENTS,
 				SECOND_ARG, carriage);
 		if (I_QUA_ARGS == 3)
 		{
-			CAR_THIRD_ARG = get_arguments(field, LIST_ARGUMENTS,
+			ARG_THIRD = get_arguments(field, LIST_ARGUMENTS,
 					THIRD_ARG, carriage);
 		}
 	}
@@ -67,9 +67,9 @@ void 					get_three_args(t_field *field, t_carriage *carriage,
 int 					check_regs_in_args(t_args *arguments)
 {
 	if (check_type_arguments(arguments, T_REG, 3,
-							 FIRST_ARG, CAR_FIRST_ARG,
-							 SECOND_ARG, CAR_SECOND_ARG,
-							 THIRD_ARG, CAR_THIRD_ARG)
+							 FIRST_ARG, ARG_FIRST,
+							 SECOND_ARG, ARG_SECOND,
+							 THIRD_ARG, ARG_THIRD)
 							 == ERROR)
 	{
 		return (1);

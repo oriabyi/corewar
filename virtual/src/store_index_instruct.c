@@ -93,13 +93,13 @@ void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *argumen
 	ssize_t 		coord;
 
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
-					   SECOND_ARG, &CAR_SECOND_ARG,
-					   THIRD_ARG, &CAR_THIRD_ARG) == 1)
+					   SECOND_ARG, &ARG_SECOND,
+					   THIRD_ARG, &ARG_THIRD) == 1)
 	{
 		return ;
 	}
-	coord = (((int)(CAR_SECOND_ARG + CAR_THIRD_ARG) % IDX_MOD) + CUR_COORD); // TODO: mb not int
-	write_in_field(field, (int)coord, REG[CAR_FIRST_ARG]);
+	coord = (((int)(ARG_SECOND + ARG_THIRD) % IDX_MOD) + CUR_COORD); // TODO: mb not int
+	write_in_field(field, (int)coord, REG[ARG_FIRST]);
 	add_champ_id((int)coord, field, carriage, cycles);
 
 }

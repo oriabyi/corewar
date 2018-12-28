@@ -26,11 +26,6 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 {
 	int 				check_jump;
 
-	if (I_INSTRUCT == NULL)
-	{
-		move_carriage(field, 1, carriage);
-		return ;
-	}
 	if (get_t_args(field, carriage, &core->arguments) == 1)
 		;
 	else if (I_COMMAND == CW_ZJMP)
@@ -48,6 +43,7 @@ void 					choose_instruction(t_field *field, t_carriage *carriage,
 		(I_COMMAND == CW_LIVE ? 4 : 2)), carriage);
 		core->arguments = (t_args){0, 0, 0, 0};
 	}
+	I_INSTRUCT = NULL;
 }
 
 void 			do_process(t_corewar *core)
@@ -63,17 +59,15 @@ void 			do_process(t_corewar *core)
 					(t_instructions *)&core->instructions,
 					ft_ahtoi((char *)(core->field[CUR_COORD].hex)));
 			if (I_INSTRUCT)
-			{
 				carriage->cycles = I_INSTRUCT->cycles;
-				I_COMMAND = I_COMMAND;
-			}
 		}
 		carriage->cycles--;
 		if (carriage->cycles <= 0)
 		{
-			choose_instruction(core->field, carriage, core);
-			I_INSTRUCT = NULL;
-
+			if (I_INSTRUCT)
+				choose_instruction(core->field, carriage, core);
+			else
+				move_carriage(core->field, 1, carriage);
 		}
 		carriage = carriage->next;
 	}

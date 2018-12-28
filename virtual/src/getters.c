@@ -32,7 +32,6 @@ void						get_exec_code(int fd, unsigned len,
 {
 	unsigned char			buf[1024];
 
-	read(fd, &buf, 4);
 	ft_bzero(buf, 1024);
 	read(fd, &buf, len);
 	*exec_code = ft_strncpy_without_boundes(buf, len, 1024);
@@ -47,6 +46,39 @@ char						*get_comment(int fd)
 	return (ft_strdup(buf));
 }
 
+unsigned 					count_char_no_bound(const char *string, char letter,
+												unsigned len)
+{
+	unsigned 				counter;
+	unsigned 				counter_char;
+
+	counter = 0;
+	counter_char = 0;
+	if (string == NULL)
+		return (0);
+	while (counter < len)
+	{
+		if (string[counter] == letter)
+			counter_char++;
+		counter++;
+	}
+	return (counter_char);
+}
+
+unsigned 					interlayer(int fd)
+{
+	unsigned char			buf[4];
+	unsigned 				len;
+
+	read(fd, buf, 4);
+	len = count_char_no_bound((char *)buf, '\0', 4);
+	if (len == 4)
+		return (0);
+	else
+		return (ERROR); // TOO BIG
+
+}
+
 unsigned					get_size(int fd)
 {
 	unsigned char			buf[4];
@@ -57,7 +89,6 @@ unsigned					get_size(int fd)
 	y = 0;
 	counter = 0;
 	power = 7;
-	read(fd, buf, 4);
 	read(fd, buf, 4);
 	while (counter < 4)
 	{

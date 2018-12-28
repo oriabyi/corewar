@@ -30,19 +30,16 @@
 
 
 
-
 #define LIST_ARGUMENTS	arguments->list_arguments
-#define CAR_FIRST_ARG	arguments->first_arg
-#define CAR_SECOND_ARG	arguments->second_arg
-#define CAR_THIRD_ARG	arguments->third_arg
+#define ARG_FIRST	arguments->first_arg
+#define ARG_SECOND	arguments->second_arg
+#define ARG_THIRD	arguments->third_arg
 
 
 # define O_BOTS						4
 # define NONE_ARG					0
-# define ALTERED_FIELD				-1
 # define SHOW_CHANGED_CYCLES		50
 # define NOT_EXPOSED 				0
-# define COUNTING_FROM_ONE 			1
 
 
 #define ONE_BYTE					1
@@ -78,7 +75,7 @@
 
 # define SCORE_WIN_HEIGHT			66
 # define SCORE_WIN_WIDTH			70
-# define MEM_WIN_HEIGHT				66
+# define MEM_WIN_HEIGHT				68 // 66
 # define MEM_WIN_WIDTH				195
 
 
@@ -163,12 +160,12 @@
 # define BAD_CHAMP_SIZE				55
 # define BAD_COMMENT_LENGTH			56
 
+
+
+# define BAD_EXEC_CODE_LENGTH			57
+
 # define PRINT_USAGE				60
 # define NEED_ARGUMENTS				61
-
-
-# define NO_INSTRUCTION				0
-# define COMMAND_BAD_ARGS			0
 
 # define NOONE						0
 # define FIRST_BOT					1

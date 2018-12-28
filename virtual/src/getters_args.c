@@ -14,12 +14,16 @@ ssize_t get_t_ind(t_field *field, t_carriage *carriage, int number, int main_arg
 	int 	pos;
 
 	pos = (short)get_dir(field, 1 + I_CODAGE + get_indent(main_arg, number, I_LABEL_SIZE), TWO_BYTES, carriage);
+
 	if (I_COMMAND != CW_LLD)
 		pos %= IDX_MOD;
 	if (I_COMMAND == CW_ST)
 		return ((short)pos);
-	else
-		return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage));
+//	if (I_COMMAND == CW_LLD) //delete
+//		return ((unsigned)get_dir(field, pos, TWO_BYTES, carriage)); // delete
+	if (I_COMMAND == CW_LD)
+		return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage) % IDX_MOD);
+	return ((unsigned)get_dir(field, pos, FOUR_BYTES, carriage));
 }
 
 ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage)

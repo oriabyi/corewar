@@ -113,7 +113,9 @@ t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id)
 	while (counter < QUA_INSTRUCTIONS)
 	{
 		if (instructions[counter].command == id)
+		{
 			return (&instructions[counter]);
+		}
 		counter++;
 	}
 	return (NULL);

@@ -7,7 +7,7 @@ int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, t_args *argume
 	{
 		return (1);
 	}
-	move_carriage(field, (int)CAR_FIRST_ARG, carriage); // TODO: int?
+	move_carriage(field, (int)(ARG_FIRST % IDX_MOD), carriage); // TODO: int?
 	denote_field(field, CUR_COORD);
 	return (0);
 }

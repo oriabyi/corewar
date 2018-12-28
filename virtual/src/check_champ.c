@@ -46,11 +46,13 @@ int 				check_champ_file(char *champfilename)
 
 int 				check_champ_info(t_champ *champ)
 {
-	if (ft_strlen(champ->name) > PROG_NAME_LENGTH)
+	size_t			len;
+
+	if ((len = ft_strlen(champ->name)) == 0 || len > PROG_NAME_LENGTH)
 		return (BAD_NAME_LENGTH);
-	else if (champ->size > CHAMP_MAX_SIZE)
+	else if (champ->size > CHAMP_MAX_SIZE || champ->size == 0)
 		return (BAD_CHAMP_SIZE);
-	else if (ft_strlen(champ->comment) > COMMENT_LENGTH)
+	else if ((len = ft_strlen(champ->comment)) == 0 || len > COMMENT_LENGTH)
 		return (BAD_COMMENT_LENGTH);
 	return (0);
 }

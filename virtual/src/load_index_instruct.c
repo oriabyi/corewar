@@ -31,21 +31,21 @@ void 	load_index_instruct(t_field *field, t_carriage *carriage,
 	ssize_t 	coord;
 
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
-					   FIRST_ARG, &CAR_FIRST_ARG,
-					   SECOND_ARG, &CAR_SECOND_ARG) == 1)
+					   FIRST_ARG, &ARG_FIRST,
+					   SECOND_ARG, &ARG_SECOND) == 1)
 	{
 		return ;
 	}
 	if (I_COMMAND == CW_LDI)
 	{
-		coord = (((CAR_FIRST_ARG + CAR_SECOND_ARG) % IDX_MOD) + CUR_COORD);
+		coord = (((ARG_FIRST + ARG_SECOND) % IDX_MOD) + CUR_COORD);
 	}
 	else if (I_COMMAND == CW_LLDI)
 	{
-		coord = CAR_FIRST_ARG + CAR_SECOND_ARG + CUR_COORD;
+		coord = ARG_FIRST + ARG_SECOND + CUR_COORD;
 	}
 	coord = correction_coordinates(coord);
-	REG[CAR_THIRD_ARG] = (unsigned)write_from_field(field, (int)(coord), FOUR_BYTES);
+	REG[ARG_THIRD] = (unsigned)write_from_field(field, (int)(coord), FOUR_BYTES);
 	if (I_COMMAND == CW_LLDI)
-		change_carry_if_need((unsigned char)CAR_THIRD_ARG, carriage);
+		change_carry_if_need((unsigned char)ARG_THIRD, carriage);
 }
