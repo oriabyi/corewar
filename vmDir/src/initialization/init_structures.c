@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_structures.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:20:12 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 19:20:14 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_header.h"
 
-t_carriage 				*create_carriage(int id)
+t_carriage				*create_carriage(int id)
 {
 	t_carriage			*carriage;
 
@@ -11,7 +23,7 @@ t_carriage 				*create_carriage(int id)
 	return (carriage);
 }
 
-void 			init_core(t_corewar *core)
+void					init_core(t_corewar *core)
 {
 	core->field = NULL;
 	core->champs = NULL;

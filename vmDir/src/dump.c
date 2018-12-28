@@ -1,25 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dump.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:09:26 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 19:09:27 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/corewar_header.h"
 
-char			*pull_out_champs_info(t_corewar *core)
+char				*pull_out_champs_info(t_corewar *core)
 {
-	char 		*temp;
-	int 		counter;
+	char			*temp;
+	int				counter;
 
 	counter = 0;
 	temp = ft_strdup("Introducing contestants...\n");
 	while (counter < core->qua_champs)
 	{
 		temp = ft_multjoinfr(13, NULL, temp, "* Player ", NULL,
-							 ft_itoa(counter + 1), ", weighing ", NULL,
-							 ft_itoa(core->champs[counter].size), " bytes, \"",
-							 core->champs[counter].name, "\" (\"",
-							 core->champs[counter].comment, "\") !\n");
+				ft_itoa(counter + 1), ", weighing ", NULL,
+				ft_itoa(core->champs[counter].size), " bytes, \"",
+				core->champs[counter].name, "\" (\"",
+				core->champs[counter].comment, "\") !\n");
 		counter++;
 	}
 	return (temp);
 }
 
-char			*get_field_line(t_corewar *core, size_t *i)
+char				*get_field_line(t_corewar *core, size_t *i)
 {
 	char			temp_memory_line[LINE_SIZE];
 	unsigned		j;
@@ -36,10 +48,10 @@ char			*get_field_line(t_corewar *core, size_t *i)
 	return (ft_strdup(temp_memory_line));
 }
 
-void 			print_memory(t_corewar *core)
+void				print_memory(t_corewar *core)
 {
 	char			*temp;
-	size_t		i;
+	size_t			i;
 
 	i = 0;
 	temp = NULL;
