@@ -56,7 +56,6 @@
 # define GET_FIRST_ARG(x)		(x >> 6)
 # define GET_SECOND_ARG(x)		((x >> 4) & 3)
 # define GET_THIRD_ARG(x)		((x >> 2) & 3)
-# define IS_LIVE(x, y) (x == '0' && y == '1')
 # define GET_T_IND_ARG(x) (x ^ 7)
 
 
@@ -166,16 +165,10 @@
 # define BAD_CHAMP_SIZE				55
 # define BAD_COMMENT_LENGTH			56
 
-
-
 # define BAD_EXEC_CODE_LENGTH			57
 
 # define PRINT_USAGE				60
 # define NEED_ARGUMENTS				61
-
-
-# define NO_INSTRUCTION				0
-# define COMMAND_BAD_ARGS			0
 
 # define NOONE						0
 # define FIRST_BOT					1
@@ -312,65 +305,88 @@ typedef struct			s_corewar
 
 
 /*
-** Treatment arguments
-*/
-
-int 	check_availability_flags(t_flags *flags, int ac, char **av);
-
-/*
 ** Parse
 */
 
-int 	parse(t_corewar *core, char **av);
-void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs); // refactor me;
+int						check_availability_flags(t_flags *flags, int ac, char **av);
 
+int						parse(t_corewar *core, char **av);
+void					fill_champs(t_corewar *core, t_champ **champ, int qua_champs); // refactor me;
+char					*get_name(int fd);
+void					get_exec_code(int fd, unsigned len, unsigned char **exec_code);
+char					*get_comment(int fd);
+unsigned 				get_size(int fd);
+unsigned				get_num_by_octet_bytes(int fd, int size);
+int						get_old_young_numbers(unsigned char num, int base, int *power);
+int 					get_champ_by_id(t_champ *champ, unsigned id);
+unsigned 				find_free_space(t_champ *champs);
+int 					create_champs(t_champ **champs);
+void 					sort_champs(t_champ **champ, int qua_champs);
+void					fill_first_positions(t_field *field, unsigned  quant_carriages, t_carriage *carriage);
+void					reverse_list(t_carriage **begin_list);
+void					add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
+unsigned char			*ft_strncpy_without_boundes(const unsigned char *src, size_t len, size_t max);
+unsigned 				interlayer(int fd);
+void					init_core(t_corewar *core);
+
+void 					init_instructions(t_instructions *instructions);
+t_carriage 				*create_carriage(int id);
+t_instructions			*get_instruction_by_id(t_instructions *instructions, unsigned id);
 
 /*
-** Getters
+** War
 */
 
-char 	*get_name(int fd);
-
-void	get_exec_code(int fd, unsigned len, unsigned char **exec_code);
-char 	*get_comment(int fd);
-unsigned 	get_size(int fd);
+void					war_loop(t_corewar *core);
+char					*pull_out_champs_info(t_corewar *core);
+int 					check_cycle_to_die(t_corewar *core);
+int 					get_indent_size(int argument, int bytes);
+int 					check_instruction_arg(int argument, int byte);
+void 					do_process(t_corewar *core);
+int 					check_reg(int reg);
+int 					write_in_field(t_field *field, int position, unsigned t_reg);
+int 					get_indent(int argument, int count_arguments, int bytes);
 
 /*
-** Math help for getters
+ *	Get arguments for structure
+ */
+int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
+ssize_t					get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
+ssize_t 				get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);
+unsigned char 			get_argument(t_field *field, int coord);
+int 					check_type_arguments(t_args *args, int type, int num, ...);
+int 					get_part_argument(int argument, int position);
+int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...);
+
+/*
+** Auxiliary control work
 */
 
-unsigned 	get_num_by_octet_bytes(int fd, int size);
-int 	get_old_young_numbers(unsigned char num, int base, int *power);
+int						notification_message(t_corewar *core, int error_code, char *error_message);
+int						check_correctness(t_corewar *core, int check_code);
 
 /*
 ** Clean functions
 */
 
-void	clean_carriages(t_carriage *carriage);
-void 	clean_all(t_corewar *core);
-
-/*
-** Control work
-*/
-
-int 	notification_message(t_corewar *core, int error_code, char *error_message);
-int 	check_correctness(t_corewar *core, int check_code);
+void					clean_carriages(t_carriage *carriage);
+void					clean_all(t_corewar *core);
 
 /*
 ** Visualization
 */
 
-void 			reset_game(t_corewar *core);
-void			fill_input_field_with_zeros(char *field);
-int 			uppend_input_field(char *field, char n);
-int 			delete_last_letter_from_iput_field(char *field);
-void 			set_next_field(t_corewar *core);
-void 			set_prev_field(t_corewar *core);
-int 			get_button(t_corewar *core, int cycle);
-void 			draw_score_window(t_corewar *core, int cycle);
-void 			draw_memory_window(t_corewar *core, int cycle);
-void 			init_time(t_corewar *core);
-void 			init_colors(void);
+void					reset_game(t_corewar *core);
+void					fill_input_field_with_zeros(char *field);
+int					uppend_input_field(char *field, char n);
+int					delete_last_letter_from_iput_field(char *field);
+void					set_next_field(t_corewar *core);
+void					set_prev_field(t_corewar *core);
+int					get_button(t_corewar *core, int cycle);
+void					draw_score_window(t_corewar *core, int cycle);
+void					draw_memory_window(t_corewar *core, int cycle);
+void					init_time(t_corewar *core);
+void					init_colors(void);
 int 			visual_init(t_corewar *core);
 void 			visual_start(t_corewar *core);
 int 			visual_end(t_corewar *core);
@@ -380,19 +396,15 @@ int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 int 			draw_menu(t_corewar *core, int pos_y);
 
-/*
-** War
-*/
+void			simple_print(WINDOW *win, int id);
+void 			carriage_print(WINDOW *win, int id);
+void 			alive_view(WINDOW *win, int id);
+void 			altered_view(WINDOW *win, int id);
+void			follow_view(WINDOW *win, t_ncurses ncur, int i);
 
-void			war_loop(t_corewar *core);
-char			*pull_out_champs_info(t_corewar *core);
 
 //operations
 
-unsigned 			find_free_space(t_champ *champs);
-int 				get_champ_by_id(t_champ *champ, unsigned id);
-int 				create_champs(t_champ **champs);
-void 				sort_champs(t_champ **champ, int qua_champs);
 
 /*
 ** Check Champ
@@ -400,6 +412,7 @@ void 				sort_champs(t_champ **champ, int qua_champs);
 
 int 				check_champ_file(char *champfilename);
 int 				check_champ_info(t_champ *champ);
+
 /*
 ** Instructions
 */
@@ -408,125 +421,35 @@ void 	alive_instruct(t_field *field, t_carriage *carriage, t_corewar *core, t_ar
 void 	load_instruct(t_carriage *carriage, t_args *arguments);
 void 	store_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
 					   unsigned cycles);
-
-// add and sub operations here
 void 	add_sub_instructs(t_carriage *carriage, t_args *arguments);
-
-// all logical operations here
 void 	logical_operations(t_carriage *carriage, t_args *arguments);
-
 int 	jump_if_carry_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
-
-//	LLDI in LDI
 void 	load_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments);
-
 void 	store_index_instruct(t_field *field, t_carriage *carriage, t_args *arguments,
 							 unsigned cycles);
-
-//  long fork in fork
 void					fork_instruct(t_field *field, t_carriage *carriage,
 									  t_corewar *core, t_args *arguments);
-
 void 	aff_instruct(t_carriage *carriage, t_args *arguments);
 
-/*
-** Check carry
-*/
-
-void 	change_carry_if_need(unsigned char coord, t_carriage *carriage);
-
-/*
-**	Move Carriage
-*/
 
 void 	move_carriage(t_field *field, int step, t_carriage *carriage);
-
-
-/*
-** Check args of instruction
-*/
-
-  int 	get_indent_size(int argument, int bytes);
-int 	check_instruction_arg(int argument, int byte);
-
-// some trash
-void 			do_process(t_corewar *core);
-int 			check_reg(int reg);
-
+void 	change_carry_if_need(unsigned char coord, t_carriage *carriage);
+void			denote_field(t_field *field, int coord);
+unsigned			which_operation_needs(ssize_t a, ssize_t b, unsigned command);
 ssize_t 		correction_coordinates(ssize_t coordinate);
-
-unsigned char 	get_argument(t_field *field, int coord);
-
-// carriage
-t_carriage 				*create_carriage(int id);
-
-
-//cycles
-int 			check_cycle_to_die(t_corewar *core);
-int 			get_cycles(t_carriage *carriage);
-
-//print
-void		simple_print(WINDOW *win, int id);
-void 		carriage_print(WINDOW *win, int id);
-void 		alive_view(WINDOW *win, int id);
-void 		altered_view(WINDOW *win, int id);
-void		follow_view(WINDOW *win, t_ncurses ncur, int i);
-
-//
-ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);
-
-//getters args
-
-
-//write in field
-int 	write_in_field(t_field *field, int position, unsigned t_reg);
-int  write_in_field1(t_field *field, int coord, unsigned t_reg, t_carriage *carriage);//delete
-
-//add sub
-unsigned				which_operation_needs(ssize_t a, ssize_t b, unsigned command);
-
-int 	get_indent(int argument, int count_arguments, int bytes);
-
-//dump
-void 			print_memory(t_corewar *core);
-
-//check cycle_to_die
-int 			check_cycle_to_die(t_corewar *core);
-
-//
-int 					check_type_arguments(t_args *args, int type, int num, ...);
-int 					get_part_argument(int argument, int position);
-// new way
-ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
 
 
 void 			desired(t_instructions *instructions, unsigned command);
 
-void 					 denote_field(t_field *field, int coord);
-
-
-int 					get_regs_value(int argument, t_carriage *carriage, int type, int num, ...);
-
-
-int 					get_t_args(t_field *field, t_carriage *carriage, t_args *arguments);
-
-
-void 			init_instructions(t_instructions *instructions);
-t_instructions	*get_instruction_by_id(t_instructions *instructions, unsigned id);
-
-void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carriage *carriage);
-
-void 				reverse_list(t_carriage **begin_list);
-
-void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
-
+//start end game
 void				get_game_type(t_corewar *core);
 void				print_winner(t_corewar *core);
 int					game_over(t_corewar *core, unsigned *cycles_limit);
+void				print_memory(t_corewar *core);
 
-unsigned char				*ft_strncpy_without_boundes(const unsigned char *src, size_t len, size_t max);
-unsigned 					interlayer(int fd);
-void 			init_core(t_corewar *core);
+
+
+
 
 #endif
 
