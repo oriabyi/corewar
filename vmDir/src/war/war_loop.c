@@ -40,8 +40,6 @@ int					war_step(t_corewar *core, unsigned *cycles_limit)
 	return (CONTINUE_GAME);
 }
 
-
-
 void				war_loop(t_corewar *core)
 {
 	unsigned		cycles_limit;
@@ -56,7 +54,6 @@ void				war_loop(t_corewar *core)
 		if (status == STOP_GAME)
 			break ;
 	}
-
 	if (F_VISUAL)
 		visual_end(core);
 	if (core->cycle_to_die <= 0 || core->carriage == NULL)

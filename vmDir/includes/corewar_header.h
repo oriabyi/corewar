@@ -520,6 +520,11 @@ void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cyc
 void				get_game_type(t_corewar *core);
 void				print_winner(t_corewar *core);
 int					game_over(t_corewar *core, unsigned *cycles_limit);
+
+unsigned char				*ft_strncpy_without_boundes(const unsigned char *src, size_t len, size_t max);
+unsigned 					interlayer(int fd);
+void 			init_core(t_corewar *core);
+
 #endif
 
 // 4 magic value

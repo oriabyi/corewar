@@ -1,22 +1,5 @@
 #include "../includes/corewar_header.h"
 
-void 			init_core(t_corewar *core)
-{
-	core->field = NULL;
-	core->champs = NULL;
-	core->flags = (t_flags){0, 0};
-	core->cycle_to_die = CYCLE_TO_DIE;
-	core->max_checks = 0;
-	core->qua_champs = 0;
-	core->qua_lives = 0;
-	core->quant_carriages = 0;
-	core->last_live = 0;
-	core->carriage = NULL;
-	core->cycles = 0;
-	core->arguments = (t_args){0, 0, 0, 0};
-}
-
-
 int				submain(int ac, char **av)
 {
 	int 		check_code;

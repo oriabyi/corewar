@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   getters.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 17:58:35 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 17:58:37 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/corewar_header.h"
 
 char						*get_name(int fd)
@@ -8,24 +20,6 @@ char						*get_name(int fd)
 	read(fd, &buf, PROG_NAME_LENGTH);
 	return (ft_strdup(buf));
 }
-
-unsigned char				*ft_strncpy_without_boundes
-							(const unsigned char *src, size_t len, size_t max)
-{
-	unsigned char			*result;
-	unsigned				i;
-
-	i = 0;
-	if (!(result = (unsigned char *)malloc(sizeof(unsigned char) * (len + 1))))
-		return (NULL);
-	while (i < len && i < max)
-	{
-		result[i] = src[i];
-		i++;
-	}
-	return (result);
-}
-
 
 void						get_exec_code(int fd, unsigned len,
 										unsigned char **exec_code)
@@ -46,43 +40,10 @@ char						*get_comment(int fd)
 	return (ft_strdup(buf));
 }
 
-unsigned 					count_char_no_bound(const char *string, char letter,
-												unsigned len)
-{
-	unsigned 				counter;
-	unsigned 				counter_char;
-
-	counter = 0;
-	counter_char = 0;
-	if (string == NULL)
-		return (0);
-	while (counter < len)
-	{
-		if (string[counter] == letter)
-			counter_char++;
-		counter++;
-	}
-	return (counter_char);
-}
-
-unsigned 					interlayer(int fd)
-{
-	unsigned char			buf[4];
-	unsigned 				len;
-
-	read(fd, buf, 4);
-	len = count_char_no_bound((char *)buf, '\0', 4);
-	if (len == 4)
-		return (0);
-	else
-		return (ERROR); // TOO BIG
-
-}
-
 unsigned					get_size(int fd)
 {
 	unsigned char			buf[4];
-	unsigned 				counter;
+	unsigned				counter;
 	int						power;
 	ssize_t					y;
 

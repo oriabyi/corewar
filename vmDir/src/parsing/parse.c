@@ -1,11 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 18:15:04 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 18:15:05 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/corewar_header.h"
 
-unsigned 					interlayer(int fd);
-
-
-int 				get_all_other_info(t_champ *champ, int fd)
+int					get_all_other_info(t_champ *champ, int fd)
 {
-	char 			buf;
+	char			buf;
 
 	champ->name = get_name(fd);
 	if (interlayer(fd) == 0)
@@ -32,7 +41,7 @@ int 				get_all_other_info(t_champ *champ, int fd)
 int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 {
 	int				fd;
-	int 			check_num;
+	int				check_num;
 
 	champ->id = id;
 	check_num = check_champ_file(champfilename);
@@ -50,72 +59,8 @@ int					get_champ(t_champ *champ, char *champfilename, unsigned id)
 	return (check_num);
 }
 
-t_carriage 				*create_carriage(int id)
-{
-	t_carriage			*carriage;
-
-	if ((carriage = (t_carriage *)malloc(sizeof(t_carriage))) == NULL)
-		return (NULL);
-	*carriage = (t_carriage){0, 0, 0, 0, 0, {(unsigned)(-id), 0, 0, 0, 0, 0, 0, 0,
-									0, 0, 0, 0, 0, 0, 0, 0}, 0, NULL, NULL};
-	return (carriage);
-}
-
-void 				reverse_list(t_carriage **begin_list)
-{
-	t_carriage		*curr;
-	t_carriage		*next;
-	t_carriage		*prev;
-
-	prev = NULL;
-	curr = *begin_list;
-	while (curr)
-	{
-		next = curr->next;
-		curr->next = prev;
-		prev = curr;
-		curr = next;
-	}
-	*begin_list = prev;
-
-}
-
-
-void 				fill_champs(t_corewar *core, t_champ **champ, int qua_champs) // refactor me
-{
-	t_carriage		*head;
-	unsigned		counter;
-
-	counter = 0;
-	head = NULL;
-	while (counter < qua_champs)
-	{
-		if (core->carriage == NULL)
-		{
-			head = create_carriage((*champ)[counter].id);
-			core->carriage = head;
-		}
-		else
-		{
-			head->next = create_carriage((*champ)[counter].id);
-			head = head->next;
-		}
-		head->next = NULL;
-		head->id = core->quant_carriages++;
-		counter++;
-	}
-	head = core->carriage;
-	counter = 0;
-	while (counter < qua_champs)
-	{
-		head->cur_coord = (MEM_SIZE / qua_champs) * counter;
-		head = head->next;
-		counter++;
-	}
-}
-
-int 				get_flag_n(t_corewar *core, char **av, int *counter,
-															unsigned *champ_id)
+int					get_flag_n(t_corewar *core, char **av, int *counter,
+														unsigned *champ_id)
 {
 	if (*(av[(*counter)]) == '-' && av[(*counter) + 1])
 	{
@@ -130,11 +75,11 @@ int 				get_flag_n(t_corewar *core, char **av, int *counter,
 	return (1);
 }
 
-int 				get_champs_info(t_corewar *core, char **av, int *counter)
+int					get_champs_info(t_corewar *core, char **av, int *counter)
 {
-	unsigned 		champ_id;
-	int 			check_code;
-	int 			champs;
+	unsigned		champ_id;
+	int				check_code;
+	int				champs;
 
 	champs = 0;
 	check_code = 0;
@@ -145,9 +90,10 @@ int 				get_champs_info(t_corewar *core, char **av, int *counter)
 			;
 		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
 			return (NO_ID_AFTER_FLAG);
-		champ_id = (champ_id <= O_BOTS) ? champ_id : find_free_space(core->champs);
+		champ_id = (champ_id <= O_BOTS) ?
+				champ_id : find_free_space(core->champs);
 		check_code = get_champ(&(core->champs[core->qua_champs]),
-							   av[(*counter)++], champ_id);
+							av[(*counter)++], champ_id);
 		core->qua_champs++;
 	}
 	return (check_code);
@@ -180,4 +126,3 @@ int					parse(t_corewar *core, char **av)
 		return (REDUNDANT_ARGUMENTS);
 	return (check_code);
 }
-
