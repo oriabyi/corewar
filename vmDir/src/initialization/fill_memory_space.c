@@ -1,10 +1,23 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_memory_space.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 18:20:09 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 18:20:16 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void				fill_memory_space(t_champ *champs, t_field *field, int qua_champs)
+#include "../../includes/corewar_header.h"
+
+void				fill_memory_space(t_champ *champs, t_field *field,
+																int qua_champs)
 {
-	unsigned 		count;
-	unsigned 		ch_count;
-	unsigned 		ch_num;
+	unsigned		count;
+	unsigned		ch_count;
+	unsigned		ch_num;
 	unsigned char	*seq;
 
 	count = 0;

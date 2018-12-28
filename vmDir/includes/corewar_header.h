@@ -513,6 +513,9 @@ int 					get_part_argument(int argument, int position);
 // new way
 ssize_t			get_arguments(t_field *field, int argument, int number, t_carriage *carriage);
 
+
+void 			desired(t_instructions *instructions, unsigned command);
+
 void 					 denote_field(t_field *field, int coord);
 
 

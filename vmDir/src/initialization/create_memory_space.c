@@ -1,6 +1,18 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_memory_space.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 18:19:44 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 18:19:46 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void 			fill_rank(t_field *field, int cur_qua, int qua_inrank)
+#include "../../includes/corewar_header.h"
+
+void				fill_rank(t_field *field, int cur_qua, int qua_inrank)
 {
 	if (cur_qua == qua_inrank)
 		return ;
@@ -16,7 +28,7 @@ void 			fill_rank(t_field *field, int cur_qua, int qua_inrank)
 	field[cur_qua].hex[2] = '\0';
 }
 
-int 			create_memory_space(t_corewar *core)
+int					create_memory_space(t_corewar *core)
 {
 	if (!(core->field = (t_field *)malloc(sizeof(t_field) * MEM_SIZE)))
 		return (MEMORY_ERROR);
