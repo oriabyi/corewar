@@ -452,7 +452,7 @@ void					denote_field(t_field *field, int coord);
 unsigned				which_operation_needs(ssize_t a, ssize_t b,
 							unsigned command);
 ssize_t					correction_coordinates(ssize_t coordinate);
-
+void 					desired(t_instructions *instructions, unsigned command);
 void					get_game_type(t_corewar *core);
 void					print_winner(t_corewar *core);
 int						game_over(t_corewar *core, unsigned *cycles_limit);

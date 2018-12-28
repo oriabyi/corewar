@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 14:39:08 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/28 18:14:45 by ariabyi          ###   ########.fr        #
+#    Updated: 2018/12/28 18:50:37 by obaranni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,12 @@ PARSE		:=  check_champ getters math_help_for_gets				\
 				fill_sort_champ
 
 INITIALIZ	:=  create_memory_space fill_memory_space				\
-				init_instructions init_structures
+				init_instructions init_structures                   \
+				desired_function
 
 WAR			:=  carriages_move check_cycle_to_die getters_args		\
-				execute_the_instruction get_list_arguments squire	\
-				check_instruction_args war_loop
+				execute_the_instruction get_list_arguments			\
+				check_instruction_args war_loop squire
 
 AUX			:=  check_correctness clean_all control_work
 

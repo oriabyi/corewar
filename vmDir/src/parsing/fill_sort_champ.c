@@ -45,7 +45,7 @@ void				fill_first_carriages(t_corewar *core, int qua_champs)
 	}
 }
 
-void 				fill_champs(t_corewar *core,
+void				fill_champs(t_corewar *core,
 							t_champ **champ, int qua_champs)
 {
 	t_carriage		*head;
