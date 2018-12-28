@@ -5,51 +5,54 @@ set(CMAKE_C_STANDARD 11)
 set(LIBFT ${CMAKE_SOURCE_DIR}/libft/libft.a)
 
 include_directories(op)
-include_directories(virtual/includes)
+include_directories(vmDir/includes)
 
 add_executable(Corewar
         op/op.h
-        virtual/includes/corewar_header.h
-        virtual/includes/ncurses.h
-        virtual/src/add_sub_instructions.c
-        virtual/src/aff_instruct.c
-        virtual/src/alive_instruct.c
-        virtual/src/carriages_move.c
-        virtual/src/check_cycle_to_die.c
-        virtual/src/check_instruction_args.c
-        virtual/src/clean_all.c
-        virtual/src/control_work.c
-        virtual/src/create_memory_space.c
-        virtual/src/dump.c
-        virtual/src/execute_the_instruction.c
-        virtual/src/fill_memory_space.c
-        virtual/src/fork_instruct.c
-        virtual/src/getters.c
-        virtual/src/getters_args.c
-        virtual/src/jump_if_carry_instruct.c
-        virtual/src/load_index_instruct.c
-        virtual/src/load_instruct.c
-        virtual/src/logical_operations.c
-        virtual/src/main.c
-        virtual/src/math_help_for_gets.c
-        virtual/src/parse.c
-        virtual/src/store_index_instruct.c
-        virtual/src/store_instruct.c
-        virtual/src/trash.c
-        virtual/src/treatment_arguments.c
-        virtual/src/visual_draw_main_function.c
-        virtual/src/visual_draw_memory_window.c
-        virtual/src/visual_draw_score_window.c
-        virtual/src/visual_event_handler.c
-        virtual/src/visual_init.c
-        virtual/src/visual_init_colors.c
-        virtual/src/visual_init_time.c
-        virtual/src/visual_input_field_functions.c
-        virtual/src/visual_reset_event.c
-        virtual/src/visual_set_memory_print_attr.c
-        virtual/src/visual_start_end_functions.c
-        virtual/src/check_correctness.c
-        virtual/src/check_champ.c
-        virtual/src/operations_with_champs.c virtual/src/get_list_arguments.c virtual/src/init_instructions.c virtual/src/visual_draw_menu.c)
+        vmDir/includes/corewar_header.h
+        vmDir/includes/ncurses.h
+        vmDir/src/add_sub_instructions.c
+        vmDir/src/aff_instruct.c
+        vmDir/src/alive_instruct.c
+        vmDir/src/carriages_move.c
+        vmDir/src/check_cycle_to_die.c
+        vmDir/src/check_instruction_args.c
+        vmDir/src/clean_all.c
+        vmDir/src/control_work.c
+        vmDir/src/create_memory_space.c
+        vmDir/src/dump.c
+        vmDir/src/execute_the_instruction.c
+        vmDir/src/fill_memory_space.c
+        vmDir/src/fork_instruct.c
+        vmDir/src/getters.c
+        vmDir/src/getters_args.c
+        vmDir/src/jump_if_carry_instruct.c
+        vmDir/src/load_index_instruct.c
+        vmDir/src/load_instruct.c
+        vmDir/src/logical_operations.c
+        vmDir/src/main.c
+        vmDir/src/math_help_for_gets.c
+        vmDir/src/parse.c
+        vmDir/src/store_index_instruct.c
+        vmDir/src/store_instruct.c
+        vmDir/src/trash.c
+        vmDir/src/treatment_arguments.c
+        vmDir/src/visual_draw_main_function.c
+        vmDir/src/visual_draw_memory_window.c
+        vmDir/src/visual_draw_score_window.c
+        vmDir/src/visual_event_handler.c
+        vmDir/src/visual_init.c
+        vmDir/src/visual_init_colors.c
+        vmDir/src/visual_init_time.c
+        vmDir/src/visual_input_field_functions.c
+        vmDir/src/visual_reset_event.c
+        vmDir/src/visual_set_memory_print_attr.c
+        vmDir/src/visual_start_end_functions.c
+        vmDir/src/check_correctness.c
+        vmDir/src/check_champ.c
+        vmDir/src/operations_with_champs.c
+        vmDir/src/get_list_arguments.c
+        vmDir/src/init_instructions.c
+        vmDir/src/visual_draw_menu.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(Corewar ${LIBFT})
