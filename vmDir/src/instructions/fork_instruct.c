@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 t_carriage				*copy_carriage(t_carriage *src, int id)
 {

@@ -1,4 +1,4 @@
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void 	check_whose_id(t_corewar *core, unsigned id)
 {
@@ -20,7 +20,6 @@ void 	alive_instruct(t_field *field, t_carriage *carriage,
 								t_corewar *core, t_args *arguments)
 {
 	check_whose_id(core, (unsigned)ARG_FIRST);
-	field[CUR_COORD].old_owner = field[CUR_COORD].champ_id;
 	field[CUR_COORD].champ_id =
 			field[CUR_COORD].champ_id;
 	field[CUR_COORD].altered_cycles = SHOW_CHANGED_CYCLES;

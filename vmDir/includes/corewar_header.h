@@ -56,7 +56,7 @@
 # define GET_FIRST_ARG(x)		(x >> 6)
 # define GET_SECOND_ARG(x)		((x >> 4) & 3)
 # define GET_THIRD_ARG(x)		((x >> 2) & 3)
-
+# define IS_LIVE(x, y) (x == '0' && y == '1')
 # define GET_T_IND_ARG(x) (x ^ 7)
 
 
@@ -212,19 +212,6 @@
 # define CW_LFORK					15
 # define CW_AFF						16
 
-/*
-**	Define cycles
-*/
-
-# define CW_ZJMP_CYCLES				20
-# define CW_FORK_CYCLES				800
-# define CW_LLDI_CYCLES				50
-# define CW_LFORK_CYCLES			1000
-# define CW_AFF_CYCLES				2
-
-
-int 				bigmother;
-
 typedef	struct			s_flags
 {
 	unsigned			visual:1;
@@ -302,7 +289,6 @@ typedef struct			s_battlefield
 	unsigned			is_alive:1;
 	unsigned			carriages_on;
 	int					altered_cycles;
-	unsigned			old_owner;
 }						t_field;
 
 typedef struct			s_corewar
@@ -533,6 +519,14 @@ void 			fill_first_positions(t_field *field, unsigned  quant_carriages, t_carria
 void 				reverse_list(t_carriage **begin_list);
 
 void 	add_champ_id(int coord, t_field *field, t_carriage *carriage, unsigned cycles);
+
+void				get_game_type(t_corewar *core);
+void				print_winner(t_corewar *core);
+int					game_over(t_corewar *core, unsigned *cycles_limit);
+
+unsigned char				*ft_strncpy_without_boundes(const unsigned char *src, size_t len, size_t max);
+unsigned 					interlayer(int fd);
+void 			init_core(t_corewar *core);
 
 #endif
 

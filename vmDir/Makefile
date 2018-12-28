@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 14:39:08 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/28 18:27:24 by obaranni         ###   ########.fr        #
+#    Updated: 2018/12/28 18:41:05 by obaranni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,14 +47,16 @@ VISUALIZER	:=	visual_draw_main_function visual_draw_memory_window	\
 				visual_start_end_functions
 
 PARSE		:=  check_champ getters math_help_for_gets				\
-				operations_with_champs parse treatment_arguments
+				operations_with_champs parse treatment_arguments	\
+				fill_sort_champ
 
-INITIALIZ	:=  create_memory_space desired_function 				\
-				fill_memory_space init_instructions 
+INITIALIZ	:=  create_memory_space fill_memory_space				\
+				init_instructions init_structures                   \
+				desired_function
 
 WAR			:=  carriages_move check_cycle_to_die getters_args		\
-				execute_the_instruction get_list_arguments trash	\
-				check_instruction_args war_loop
+				execute_the_instruction get_list_arguments squire	\
+				check_instruction_args war_loop squire
 
 AUX			:=  check_correctness clean_all control_work
 

@@ -1,7 +1,18 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   treatment_arguments.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 18:17:19 by ariabyi           #+#    #+#             */
+/*   Updated: 2018/12/28 18:17:27 by ariabyi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../includes/corewar_header.h"
 
-int				get_flags_help(t_flags *flags, char *av)
+int					get_flags_help(t_flags *flags, char *av)
 {
 	while (*av)
 	{
@@ -18,16 +29,17 @@ int				get_flags_help(t_flags *flags, char *av)
 	return (0);
 }
 
-int				get_flags(t_flags *flags, char **av)
+int					get_flags(t_flags *flags, char **av)
 {
-	int			counter;
+	int				counter;
 
 	counter = 0;
 	while (av[counter] && *(av[counter]) == '-')
 	{
 		if (ft_strcmp(av[counter], "-v") == 0)
 			flags->visual = 1;
-		else if (ft_strcmp(av[counter], "-d") == 0 || ft_strcmp(av[counter], "-dump") == 0)
+		else if (ft_strcmp(av[counter], "-d") == 0 ||
+					ft_strcmp(av[counter], "-dump") == 0)
 		{
 			flags->dump = (unsigned)ft_atoi(av[++counter]);
 			if (check_got_num(av[counter], flags->dump, 1))
@@ -38,15 +50,14 @@ int				get_flags(t_flags *flags, char **av)
 		else if (*(av[counter]) == '-' &&
 			get_flags_help(flags, (av[counter] + 1)) == 1)
 		{
-				return (BAD_FLAGS);
+			return (BAD_FLAGS);
 		}
 		counter++;
 	}
 	return (0);
 }
 
-
-int				check_availability_flags(t_flags *flags, int ac, char **av)
+int					check_availability_flags(t_flags *flags, int ac, char **av)
 {
 	if (ac < 2)
 	{
