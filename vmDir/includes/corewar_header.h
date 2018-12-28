@@ -61,7 +61,8 @@
 
 
 # define ERROR	1
-
+# define STOP_GAME 1
+# define CONTINUE_GAME 0
 
 # define LINE_SIZE 188
 
@@ -75,10 +76,10 @@
 
 # define SCORE_WIN_HEIGHT			66
 # define SCORE_WIN_WIDTH			70
-# define MEM_WIN_HEIGHT				68 // 66
+# define MEM_WIN_HEIGHT				66
 # define MEM_WIN_WIDTH				195
 
-
+# define COLOR_PINK					122
 # define COLOR_ORANGE				123
 # define COLOR_WWHITE				124
 # define COLOR_GREY					125
@@ -103,7 +104,12 @@
 # define CR_CL_ORANGE_BLACK			16
 # define CR_CL_WWHITE_BLACK			17
 # define CR_CL_GREY_BLACK			18
-# define CR_CL_YELLOW_BLACK			19
+# define CR_CL_BLACK_YELLOW			19
+# define CR_CL_BLACK_PINK			20
+# define CR_CL_PINK_YELLOW			21
+# define CR_CL_WWHITE_GREY			22
+# define CR_CL_YELLOW_GREY			23
+# define CR_CL_PINK_GREY			24
 
 # define EXIT						-1
 # define MAX_SPEED					100
@@ -177,6 +183,7 @@
 # define THIRD_BOT					3
 # define FOURTH_BOT					4
 # define FOLLOW_CARRIAGE			5
+# define FOLLOW_FIELD				6
 
 # define NUMBER_OF_REGISTERS		16
 
@@ -266,6 +273,8 @@ typedef struct			s_ncurses
 	int 				pressed_button;
 	char				cycle_to_go[7];
 	char				carriage_id[7];
+	char				highlight_pos[7];
+	int 				highlight_coord;
 	int					carriage_pos;
 	char 				*current_field;
 
@@ -346,6 +355,7 @@ void 	clean_all(t_corewar *core);
 
 int 	notification_message(t_corewar *core, int error_code, char *error_message);
 int 	check_correctness(t_corewar *core, int check_code);
+
 /*
 ** Visualization
 */
@@ -370,6 +380,12 @@ int 			create_memory_space(t_corewar *core);
 void			fill_memory_space(t_champ *champs, t_field *field, int qua_champs);
 int 			draw_menu(t_corewar *core, int pos_y);
 
+/*
+** War
+*/
+
+void			war_loop(t_corewar *core);
+char			*pull_out_champs_info(t_corewar *core);
 
 //operations
 
@@ -454,7 +470,7 @@ void		simple_print(WINDOW *win, int id);
 void 		carriage_print(WINDOW *win, int id);
 void 		alive_view(WINDOW *win, int id);
 void 		altered_view(WINDOW *win, int id);
-void 		follow_view(WINDOW *win);
+void		follow_view(WINDOW *win, t_ncurses ncur, int i);
 
 //
 ssize_t 		get_dir(t_field *field, int handicap, int bytes, t_carriage *carriage);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 int				print_state(t_corewar *core, int pos_y)
 {
@@ -68,8 +68,8 @@ int				print_players(t_corewar *core, int pos_y)
 		simple_print(NCUR.score_window, i + 1);
 		wprintw(NCUR.score_window, "%s\n", core->champs[i].name);
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
-		wprintw(NCUR.score_window, "   Last live : 0\n");
-		wprintw(NCUR.score_window, "   Lives in current period : 0\n");
+		wprintw(NCUR.score_window, "   Last live : %d\n", 0);
+		wprintw(NCUR.score_window, "   Lives in current period : %d\n", 0);
 		pos_y += 6;
 		i++;
 	}
@@ -100,7 +100,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 			core->quant_carriages);
 	pos_y = print_players(core, pos_y);
 	pos_y = print_game_info(core, pos_y);
-	pos_y = draw_menu(core, pos_y);
+	draw_menu(core, pos_y);
 	if (!NCUR.pause)
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 	else

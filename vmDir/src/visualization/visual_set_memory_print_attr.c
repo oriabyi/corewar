@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void		simple_print(WINDOW *win, int id)
 {
@@ -39,7 +39,9 @@ void		carriage_print(WINDOW *win, int id)
 	else if (id == FOURTH_BOT)
 		wattron(win, COLOR_PAIR(CR_CL_BLACK_CYAN));
 	else if (id == FOLLOW_CARRIAGE)
-		wattron(win, COLOR_PAIR(CR_CL_YELLOW_BLACK));
+		wattron(win, COLOR_PAIR(CR_CL_BLACK_YELLOW));
+	else if (id == FOLLOW_FIELD)
+		wattron(win, COLOR_PAIR(CR_CL_BLACK_PINK));
 }
 
 void		altered_view(WINDOW *win, int id)
@@ -61,8 +63,15 @@ void		alive_view(WINDOW *win, int id)
 		wattron(win, COLOR_PAIR(CR_CL_WHITE_CYAN));
 }
 
-void		follow_view(WINDOW *win)
+void		follow_view(WINDOW *win, t_ncurses ncur, int i)
 {
-	wattron(win, COLOR_PAIR(CR_CL_BLACK_CYAN));
-	carriage_print(win, FOLLOW_CARRIAGE);
+	if (ncur.carriage_pos == ncur.highlight_coord)
+	{
+		wattron(win, A_BOLD);
+		wattron(win, COLOR_PAIR(CR_CL_PINK_YELLOW));
+	}
+	else if (ncur.carriage_pos == i)
+		carriage_print(win, FOLLOW_CARRIAGE);
+	else if (ncur.highlight_coord == i)
+		carriage_print(win, FOLLOW_FIELD);
 }
