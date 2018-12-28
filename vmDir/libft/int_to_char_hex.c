@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   int_to_char_hex.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 19:26:38 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 19:26:39 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-char 	**int_to_char_hex(size_t num, size_t len)
+char			**int_to_char_hex(size_t num, size_t len)
 {
-	char 		**split;
-	char 		*byte;
-	unsigned		i;
+	char		**split;
+	char		*byte;
+	unsigned	i;
 
 	i = 0;
 	if (!(split = (char **)malloc(sizeof(char *) * (len + 1))))

@@ -25,4 +25,3 @@ int					raise_to_power(int num, int power)
 		result *= num;
 	return (result);
 }
-

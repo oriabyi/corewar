@@ -12,13 +12,14 @@
 
 #include "libft.h"
 
-char 	*get_hex_by_int_byte(size_t num, size_t len) // 9
+char		*get_hex_by_int_byte(size_t num, size_t len)
 {
-	char 	*result;
-	ssize_t large_num;
-	int 	power;
-	int 	counter = 0;
+	char	*result;
+	ssize_t	large_num;
+	int		power;
+	int		counter;
 
+	counter = 0;
 	power = (int)len - 1;
 	large_num = num;
 	if (!(result = (char *)malloc(sizeof(char) * (len + 1))))
@@ -33,9 +34,9 @@ char 	*get_hex_by_int_byte(size_t num, size_t len) // 9
 			large_num -= raise_to_power(16, power);
 			counter++;
 		}
-		result[(len - 1) - power] = (counter <= 9) ? (char)(counter + '0') : get_num_in_hex(counter);
+		result[(len - 1) - power] = (counter <= 9)
+				? (char)(counter + '0') : get_num_in_hex(counter);
 		power--;
 	}
 	return (result);
 }
-

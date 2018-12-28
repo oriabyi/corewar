@@ -15,8 +15,8 @@
 int					lgnl(int fd, char **line, size_t length)
 {
 	char			buf;
-	ssize_t 		len;
-	int 			temp_len;
+	ssize_t			len;
+	int				temp_len;
 
 	len = 0;
 	if (fd < 0 || !line)
@@ -27,7 +27,6 @@ int					lgnl(int fd, char **line, size_t length)
 		if (temp_len <= 0 || buf == '\0')
 			break ;
 		len += temp_len;
-
 		*line = append_char(line, buf);
 	}
 	return ((int)ft_strlen(*line));

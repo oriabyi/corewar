@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char 	get_num_in_hex(int num)
+char	get_num_in_hex(int num)
 {
 	if (num < 9 || num > 15)
 		return ('\0');

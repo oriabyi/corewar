@@ -133,7 +133,8 @@ char				*get_hex_by_int_byte(size_t num, size_t len);
 char				**int_to_char_hex(size_t num, size_t len);
 void				free_char_matrix(char **str);
 char				*ft_multcat(int field, char *dest, ...);
-int					count_chars(const char *string, char letter, int in_row, int position);
+int					count_chars(const char *string, char letter,
+												int in_row, int position);
 int					check_got_num(char *string, ssize_t num, int precision);
 int					are_nums(char *s);
 

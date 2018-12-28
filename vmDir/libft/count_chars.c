@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-int 			count_chars(const char *string, char letter,
-												int in_row, int position)
+int			count_chars(const char *string, char letter,
+								int in_row, int position)
 {
-	int 		count_letters;
+	int		count_letters;
 
 	count_letters = 0;
 	if (string == NULL || *string == '\0')
