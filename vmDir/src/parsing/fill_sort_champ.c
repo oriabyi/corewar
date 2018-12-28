@@ -37,7 +37,7 @@ void				fill_first_carriages(t_corewar *core, int qua_champs)
 
 	head = core->carriage;
 	counter = 0;
-	while (counter < qua_champs)
+	while (counter < (unsigned)qua_champs)
 	{
 		head->cur_coord = (MEM_SIZE / qua_champs) * counter;
 		head = head->next;
@@ -53,7 +53,7 @@ void				fill_champs(t_corewar *core,
 
 	counter = 0;
 	head = NULL;
-	while (counter < qua_champs)
+	while (counter < (unsigned)qua_champs)
 	{
 		if (core->carriage == NULL)
 		{

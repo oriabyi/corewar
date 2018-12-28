@@ -24,10 +24,10 @@ void				fill_memory_space(t_champ *champs, t_field *field,
 	ch_num = 0;
 	ch_count = 0;
 	seq = (unsigned char *)"0123456789abcdef";
-	while (ch_num < qua_champs)
+	while (ch_num < (unsigned)qua_champs)
 	{
 		if (count && count % (MEM_SIZE / qua_champs) == 0)
-			if (++ch_num == qua_champs || (ch_count = 0))
+			if (++ch_num == (unsigned)qua_champs || (ch_count = 0))
 				break ;
 		if (count < champs[ch_num].size + (MEM_SIZE / qua_champs) * ch_num)
 		{

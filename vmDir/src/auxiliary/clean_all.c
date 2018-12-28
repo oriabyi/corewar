@@ -21,7 +21,7 @@ void				clean_carriages(t_carriage *carriage)
 
 void				clean_champs(t_champ *champs, unsigned quantity)
 {
-	int				counter;
+	unsigned		counter;
 
 	counter = 0;
 	while (counter != quantity)

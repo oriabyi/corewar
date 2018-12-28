@@ -38,7 +38,7 @@ void				print_winner(t_corewar *core)
 
 int					game_over(t_corewar *core, unsigned *cycles_limit)
 {
-	int				old_cycles;
+	unsigned		old_cycles;
 
 	if (F_VISUAL)
 	{

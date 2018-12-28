@@ -58,7 +58,7 @@ int				print_speed_bar(t_corewar *core, int pos_y)
 
 int				print_players(t_corewar *core, int pos_y)
 {
-	int			i;
+	unsigned	i;
 
 	pos_y += 2;
 	i = 0;

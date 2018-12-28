@@ -24,7 +24,7 @@ int					war_step(t_corewar *core, unsigned *cycles_limit)
 		core->cycles = (unsigned)draw(core, core->cycles, cycles_limit);
 		if (!core->cycles)
 			return (CONTINUE_GAME);
-		else if (core->cycles == -1)
+		else if ((int)core->cycles == -1)
 			return (STOP_GAME);
 	}
 	else

@@ -15,7 +15,7 @@
 char				*pull_out_champs_info(t_corewar *core)
 {
 	char			*temp;
-	int				counter;
+	unsigned		counter;
 
 	counter = 0;
 	temp = ft_strdup("Introducing contestants...\n");

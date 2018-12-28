@@ -6,7 +6,7 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 14:39:08 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/28 18:50:37 by obaranni         ###   ########.fr        #
+#    Updated: 2018/12/28 19:37:18 by ariabyi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIB_PATH := ./libft/
 OBJ_PATH := .obj/
 
 CC := clang
-CFLAGS := -g #-Wall -Werror -Wextra
+CFLAGS := -g -Wall -Werror -Wextra
 IFLAGS := -I $(INC_PATH) -I $(LIB_PATH)
 LFLAGS := -lncurses
 
@@ -58,7 +58,8 @@ WAR			:=  carriages_move check_cycle_to_die getters_args		\
 				execute_the_instruction get_list_arguments			\
 				check_instruction_args war_loop squire
 
-AUX			:=  check_correctness clean_all control_work
+AUX			:=  check_correctness clean_all control_work help_war   \
+                help_reg
 
 LIB			:=	$(LIB_PATH)libft.a
 

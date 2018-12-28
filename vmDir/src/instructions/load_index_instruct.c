@@ -42,6 +42,7 @@ void				load_index_instruct(t_field *field, t_carriage *carriage,
 {
 	ssize_t			coord;
 
+	coord = 0;
 	if (get_regs_value(LIST_ARGUMENTS, carriage, T_REG, 2,
 						FIRST_ARG, &ARG_FIRST,
 						SECOND_ARG, &ARG_SECOND) == 1)

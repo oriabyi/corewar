@@ -69,7 +69,7 @@ int				print_carriage(t_corewar *core, int pos_y, int carriage_id)
 	t_carriage *tmp_carr;
 
 	tmp_carr = core->carriage;
-	while (tmp_carr && tmp_carr->id != carriage_id)
+	while (tmp_carr && tmp_carr->id != (unsigned)carriage_id)
 		tmp_carr = tmp_carr->next;
 	if (tmp_carr)
 	{

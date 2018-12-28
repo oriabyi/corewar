@@ -25,7 +25,7 @@ int				change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 	{
 		F_DUMP = (unsigned)ft_atoi(NCUR.cycle_to_go);
 		fill_input_field_with_zeros(NCUR.cycle_to_go);
-		if (F_DUMP <= cycle)
+		if (F_DUMP <= (unsigned)cycle)
 		{
 			reset_game(core);
 			*cycles_limit = (unsigned)core->cycle_to_die;

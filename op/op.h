@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OP_H
-# define OP_H
+#ifndef OP_H_OLD
+# define OP_H_OLD
 
 # define IND_SIZE				2
 # define REG_SIZE				4
@@ -63,4 +63,4 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
-#endif OP_H
+#endif
