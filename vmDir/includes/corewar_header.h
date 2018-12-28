@@ -14,7 +14,7 @@
 # define COREWAR_COREWAR_HEADER_H
 
 # include "../libft/libft.h"
-# include "../../op/op.h"
+# include "op.h"
 # include "ncurses.h"
 # include "stdio.h"
 # include <time.h>
