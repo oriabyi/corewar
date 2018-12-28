@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void			reset_game(t_corewar *core)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
 void				fill_input_field_with_zeros(char *field)
 {
@@ -57,13 +57,17 @@ void				set_next_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
 		NCUR.current_field = NCUR.carriage_id;
-	else if (NCUR.current_field == NCUR.carriage_id)
+	else if (NCUR.current_field == NCUR.highlight_pos)
 		NCUR.current_field = NCUR.cycle_to_go;
+	else if (NCUR.current_field == NCUR.carriage_id)
+		NCUR.current_field = NCUR.highlight_pos;
 }
 
 void				set_prev_field(t_corewar *core)
 {
 	if (NCUR.current_field == NCUR.cycle_to_go)
+		NCUR.current_field = NCUR.highlight_pos;
+	else if (NCUR.current_field == NCUR.highlight_pos)
 		NCUR.current_field = NCUR.carriage_id;
 	else if (NCUR.current_field == NCUR.carriage_id)
 		NCUR.current_field = NCUR.cycle_to_go;

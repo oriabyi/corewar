@@ -1,85 +1,5 @@
 # include "../includes/corewar_header.h"
 
-char			*pull_out_champs_info(t_corewar *core);
-
-void 			get_game_type(t_corewar *core)
-{
-	if (F_VISUAL)
-	{
-		visual_start(core);
-		display_windows(core, 1);
-	}
-	else
-	{
-		ft_putstr(pull_out_champs_info(core));
-	}
-}
-
-void 			print_winner(t_corewar *core)
-{
-	char *temp;
-
-	temp = ft_multjoinfr(6, "Contestant " , NULL, ft_itoa(core->champs[core->last_live].id) ,", \"", core->champs[core->last_live].name, "\", has won !\n");
-	ft_putstr(temp);
-	free(temp);
-}
-
-void			war(t_corewar *core)
-{
-	unsigned 	cycles_limit;
-
-	cycles_limit = (unsigned)core->cycle_to_die;
-	core->cycles = 0;
-	get_game_type(core);
-	while (1)
-	{
-		if (F_VISUAL == false && core->cycles && core->cycles == F_DUMP)
-		{
-			print_memory(core);
-			break ;
-		}
-		if (core->cycles >= F_DUMP && F_VISUAL)
-		{
-			core->cycles = (unsigned)draw(core, core->cycles, &cycles_limit);
-			if (!core->cycles)
-				continue;
-			else if (core->cycles == -1)
-				break ;
-		}
-		else
-			core->cycles++;
-		bigmother = core->cycles;
-		do_process(core);
-		if (core->cycles == cycles_limit)
-		{
-			core->cycle_to_die = check_cycle_to_die(core);
-			cycles_limit = core->cycles + core->cycle_to_die;
-		}
-		if (core->cycle_to_die <= 0 || core->carriage == NULL)
-		{
-			if (F_VISUAL)
-			{
-				int old_cycles = core->cycles;
-				NCUR.pause = 1;
-				core->cycles = (unsigned) draw(core, core->cycles, &cycles_limit);
-				if (core->cycles >= old_cycles)
-					break;
-				continue;
-			}
-			break ;
-		}
-	}
-
-
-
-	if (F_VISUAL)
-		visual_end(core);
-	else if (core->cycle_to_die == 0) // swap with flag dump
-	{
-		print_winner(core);
-	}
-}
-
 void 			init_core(t_corewar *core)
 {
 	core->field = NULL;
@@ -111,14 +31,15 @@ int				submain(int ac, char **av)
 		return (check_correctness(&core, check_code));
 	}
 	init_instructions((t_instructions *)&core.instructions);
-	war(&core);
+	war_loop(&core);
 	reset_game(&core);
 	clean_all(&core);
-//	printf("bigmother = %d\n", bigmother);
 	return (0);
 }
 
 int main(int ac, char **av)
 {
-	return (submain(ac, av));
+	submain(ac, av);
+	system("leaks corewar");
+	return (0);
 }

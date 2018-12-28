@@ -54,6 +54,6 @@ add_executable(Corewar
         vmDir/src/parsing/operations_with_champs.c
         vmDir/src/war/get_list_arguments.c
         vmDir/src/initialization/init_instructions.c
-        vmDir/src/visualization/visual_draw_menu.c)
+        vmDir/src/visualization/visual_draw_menu.c vmDir/src/war/war_loop.c)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lncurses")
 target_link_libraries(Corewar ${LIBFT})

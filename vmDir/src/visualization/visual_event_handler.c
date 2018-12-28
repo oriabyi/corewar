@@ -1,4 +1,16 @@
-# include "../../includes/corewar_header.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visual_event_handler.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obaranni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 16:38:03 by obaranni          #+#    #+#             */
+/*   Updated: 2018/12/28 16:38:06 by obaranni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/corewar_header.h"
 
 int				get_button(t_corewar *core, int cycle)
 {

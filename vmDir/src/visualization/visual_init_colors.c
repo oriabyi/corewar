@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/corewar_header.h"
+#include "../../includes/corewar_header.h"
 
-void			init_color_pairs(void)
+void			init_color_pairs1(void)
 {
-	init_pair(CR_CL_YELLOW_BLACK, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(CR_CL_BLACK_PINK, COLOR_BLACK, COLOR_PINK);
+	init_pair(CR_CL_PINK_YELLOW, COLOR_PINK, COLOR_YELLOW);
+	init_pair(CR_CL_BLACK_YELLOW, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(CR_CL_WWHITE_BLACK, COLOR_WWHITE, COLOR_BLACK);
 	init_pair(CR_CL_ORANGE_BLACK, COLOR_ORANGE, COLOR_BLACK);
 	init_pair(CR_CL_GREY_BLACK, COLOR_GREY, COLOR_BLACK);
@@ -38,11 +40,20 @@ void			init_color_pairs(void)
 	init_pair(CR_CL_WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
 }
 
+void			init_color_pairs2(void)
+{
+	init_pair(CR_CL_WWHITE_GREY, COLOR_WWHITE, COLOR_GREY);
+	init_pair(CR_CL_YELLOW_GREY, COLOR_YELLOW, COLOR_GREY);
+	init_pair(CR_CL_PINK_GREY, COLOR_PINK, COLOR_GREY);
+}
+
 void			init_colors(void)
 {
 	init_color(COLOR_GREY, 400, 400, 400);
+	init_color(COLOR_PINK, 800, 200, 600);
 	init_color(COLOR_ORANGE, 1000, 700, 0);
 	init_color(COLOR_YELLOW, 1000, 1000, 0);
 	init_color(COLOR_WWHITE, 1000, 1000, 1000);
-	init_color_pairs();
+	init_color_pairs1();
+	init_color_pairs2();
 }
