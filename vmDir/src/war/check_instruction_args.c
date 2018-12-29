@@ -20,7 +20,7 @@ int				check_instruction_arg(int argument, int byte)
 		return (T_REG);
 	if (argument == T_DIR && (byte & 2) == false)
 		return (T_DIR);
-	if (argument == GET_T_IND_ARG(T_IND) && (byte & 4) == false)
+	if (argument == GET_IND(T_IND) && (byte & 4) == false)
 		return (T_IND);
 	return (0);
 }

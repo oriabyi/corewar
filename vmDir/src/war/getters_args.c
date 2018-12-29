@@ -54,7 +54,7 @@ ssize_t				get_arguments(t_field *field, int argument,
 		return ((unsigned char)(get_argument(field, CUR_COORD + 1 + I_CODAGE +
 			get_indent(main_arg, number, I_LABEL_SIZE)) - 1));
 	}
-	else if (argument == GET_T_IND_ARG(T_IND))
+	else if (argument == GET_IND(T_IND))
 	{
 		return (get_t_ind(field, carriage, number, main_arg));
 	}

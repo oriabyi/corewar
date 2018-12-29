@@ -67,7 +67,7 @@
 # define GET_FIRST_ARG(x)			(x >> 6)
 # define GET_SECOND_ARG(x)			((x >> 4) & 3)
 # define GET_THIRD_ARG(x)			((x >> 2) & 3)
-# define GET_T_IND_ARG(x)			(x ^ 7)
+# define GET_IND(x)					(x ^ 7)
 
 # define ERROR						1
 # define STOP_GAME					1
