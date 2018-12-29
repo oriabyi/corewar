@@ -18,7 +18,7 @@
 # define NCUR						core->ncur
 
 # define SHOW_CHANGED_CYCLES		50
-# define SHOW_LIVE_CYCLES			10
+# define SHOW_LIVE_CYCLES			50
 
 # define SCORE_WIN_HEIGHT			66
 # define SCORE_WIN_WIDTH			70

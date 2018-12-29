@@ -16,8 +16,15 @@ void			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 {
 	if (NCUR.carriage_pos == i || NCUR.highlight_coord == i)
 		follow_view(NCUR.memory_window, NCUR, i);
-	else if (core->field[i].is_alive)
+	else if (core->field[i].is_alive == 2)
+	{
 		alive_view(NCUR.memory_window, id);
+		if (core->field[i].live_cycles <= cycles)
+		{
+			core->field[i].live_cycles = -1;
+			core->field[i].is_alive = 0;
+		}
+	}
 	else if (core->field[i].carriages_on)
 		carriage_print(NCUR.memory_window, id);
 	else if (core->field[i].altered_cycles)
@@ -31,6 +38,10 @@ void			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 	}
 	else
 		simple_print(NCUR.memory_window, id);
+
+
+
+
 }
 
 void			draw_memory_window(t_corewar *core, int cycles)
