@@ -30,7 +30,7 @@ void				print_winner(t_corewar *core)
 	char *temp;
 
 	temp = ft_multjoinfr(6, "Contestant ", NULL,
-						ft_itoa(core->champs[core->last_live].id), ", \"",
+						ft_itoa(core->last_live), ", \"",
 						core->champs[core->last_live].name, "\", has won !\n");
 	ft_putstr(temp);
 	free(temp);

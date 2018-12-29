@@ -1,1 +1,0 @@
-make && ./corewar -v -d 1010 ./def_vm_champs/champs/Octobre_Rouge_V4.2.cor  ./def_vm_champs/champs/Octobre_Rouge_V4.2.cor ./def_vm_champs/champs/Octobre_Rouge_V4.2.cor ./def_vm_champs/champs/Octobre_Rouge_V4.2.cor

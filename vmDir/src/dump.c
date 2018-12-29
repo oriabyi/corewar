@@ -22,7 +22,7 @@ char				*pull_out_champs_info(t_corewar *core)
 	while (counter < core->qua_champs)
 	{
 		temp = ft_multjoinfr(13, NULL, temp, "* Player ", NULL,
-				ft_itoa(counter + 1), ", weighing ", NULL,
+				ft_itoa(core->champs[counter].id), ", weighing ", NULL,
 				ft_itoa(core->champs[counter].size), " bytes, \"",
 				core->champs[counter].name, "\" (\"",
 				core->champs[counter].comment, "\") !\n");
