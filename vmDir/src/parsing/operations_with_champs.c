@@ -54,29 +54,3 @@ int					get_champ_by_id(t_champ *champ, unsigned id)
 	}
 	return (false);
 }
-
-void				swap_champs(t_champ *first, t_champ *second)
-{
-	t_champ			temp;
-
-	temp = *first;
-	*first = *second;
-	*second = temp;
-}
-
-void				sort_champs(t_champ **champ, int qua_champs)
-{
-	int				counter;
-
-	counter = 0;
-	while (counter + 1 < qua_champs)
-	{
-		if ((*champ)[counter].id > (*champ)[counter + 1].id)
-		{
-			swap_champs(&((*champ)[counter]), &((*champ)[counter + 1]));
-			counter = 0;
-		}
-		else
-			counter++;
-	}
-}

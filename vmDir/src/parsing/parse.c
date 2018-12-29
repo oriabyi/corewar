@@ -70,13 +70,14 @@ int					get_flag_n(t_corewar *core, char **av, int *counter,
 		if (check_got_num(av[*counter + 1], *champ_id, 1) &&
 			av[*counter + 1][ft_strlen(av[*counter + 1]) - 1] != '0')
 			return (BAD_VALUE_FOR_FLAG_N);
+		(void)core;
 		if (get_champ_by_id(core->champs, *champ_id) &&
 				*champ_id != O_CHAMPS + 1)
 			return (SAME_NUM_FOR_CHAMPS);
 		(*counter) += 2;
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int					get_champs_info(t_corewar *core, char **av, int *counter)
@@ -94,11 +95,11 @@ int					get_champs_info(t_corewar *core, char **av, int *counter)
 			;
 		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
 			return (NO_ID_AFTER_FLAG);
+		else
+			champ_id = find_free_space(core->champs);
 		if (check_code == BAD_VALUE_FOR_FLAG_N ||
 				check_code == SAME_NUM_FOR_CHAMPS)
 			return (check_code);
-		champ_id = (champ_id <= O_CHAMPS) ?
-				champ_id : find_free_space(core->champs);
 		check_code = get_champ(&(core->champs[core->qua_champs]),
 							av[(*counter)++], champ_id);
 		core->qua_champs++;
@@ -126,7 +127,6 @@ int					parse(t_corewar *core, char **av)
 		return (check_code);
 	if ((check_code = get_champs_info(core, av, &counter)))
 		return (check_code);
-	sort_champs(&core->champs, core->qua_champs);
 	fill_champs(core, &core->champs, core->qua_champs);
 	reverse_list(&core->carriage);
 	if (av[counter])

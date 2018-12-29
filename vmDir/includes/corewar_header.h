@@ -257,7 +257,6 @@ int						get_exec_code(int fd, unsigned len,
 int						create_champs(t_champ **champs);
 unsigned				find_free_space(t_champ *champs);
 void					reverse_list(t_carriage **begin_list);
-void					sort_champs(t_champ **champ, int qua_champs);
 int						get_champ_by_id(t_champ *champ, unsigned id);
 void					fill_first_positions(t_field *field,
 							unsigned quant_carriages, t_carriage *carriage);
