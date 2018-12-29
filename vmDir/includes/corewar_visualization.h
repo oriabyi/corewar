@@ -19,7 +19,7 @@
 
 # define SCORE_WIN_HEIGHT			66
 # define SCORE_WIN_WIDTH			70
-# define MEM_WIN_HEIGHT				66
+# define MEM_WIN_HEIGHT				68
 # define MEM_WIN_WIDTH				195
 
 # define COLOR_PINK					122

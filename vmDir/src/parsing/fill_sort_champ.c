@@ -45,12 +45,12 @@ void				fill_first_carriages(t_corewar *core, unsigned qua_champs)
 	}
 }
 
-void				fill_last_live(t_corewar *core)
+void				fill_last_live(t_corewar *core, unsigned qua_champs)
 {
 	unsigned		counter;
 
 	counter = 0;
-	while (core->champs[counter].name)
+	while (counter < qua_champs)
 	{
 		core->last_live = counter;
 		counter++;
@@ -82,5 +82,5 @@ void				fill_champs(t_corewar *core,
 		counter++;
 	}
 	fill_first_carriages(core, qua_champs);
-	fill_last_live(core);
+	fill_last_live(core, qua_champs);
 }

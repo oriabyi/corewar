@@ -14,6 +14,8 @@
 
 void				get_game_type(t_corewar *core)
 {
+	char 			*temp;
+
 	if (F_VISUAL)
 	{
 		visual_start(core);
@@ -21,7 +23,9 @@ void				get_game_type(t_corewar *core)
 	}
 	else
 	{
-		ft_putstr(pull_out_champs_info(core));
+		temp = pull_out_champs_info(core);
+		write(1, temp, ft_strlen(temp));
+		free(temp);
 	}
 }
 

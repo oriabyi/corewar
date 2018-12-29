@@ -15,6 +15,7 @@
 void			insert(t_instructions *instructions, unsigned first,
 												unsigned second, unsigned third)
 {
+	instructions->qua_args = 0;
 	if ((instructions->desired[0] = first))
 	{
 		instructions->qua_args++;
