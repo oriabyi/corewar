@@ -16,6 +16,8 @@ void			remove_carriage(t_field *field)
 {
 	if (field->carriages_on)
 		field->carriages_on--;
+	if (field->is_alive == 1)
+		field->is_alive = 2;
 }
 
 void			place_carriage(t_field *field)
