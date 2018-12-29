@@ -89,7 +89,6 @@ void					add_champ_id(int coord, t_field *field,
 	{
 		coord = (int)correction_coordinates(coord);
 		field[coord].champ_id = field[CUR_COORD].champ_id;
-		field[coord].is_alive = 0;
 		field[coord].altered_cycles = cycles + SHOW_CHANGED_CYCLES;
 		coord++;
 		counter++;

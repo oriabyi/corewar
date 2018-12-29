@@ -14,17 +14,14 @@
 
 void			remove_carriage(t_field *field)
 {
+	field[]
 	if (field->carriages_on)
 		field->carriages_on--;
-	if (!field->carriages_on && field->hex[0] == '0' && field->hex[1] == '1')
-		field->is_alive = 0;
 }
 
 void			place_carriage(t_field *field)
 {
 	field->carriages_on++;
-	if (field->hex[0] == '0' && field->hex[1] == '1')
-		field->is_alive = 1;
 }
 
 void			move_carriage(t_field *field, int step, t_carriage *carriage)
@@ -45,6 +42,4 @@ void			change_carry_if_need(unsigned char coord, t_carriage *carriage)
 
 void			denote_field(t_field *field, int coord)
 {
-	if (field[coord].hex[0] == '0' && field[coord].hex[1] == '1')
-		field[coord].is_alive = 1;
 }

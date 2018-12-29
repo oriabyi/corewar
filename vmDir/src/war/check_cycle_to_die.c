@@ -29,7 +29,6 @@ void				delete_carriage(t_carriage **begin_list, t_carriage **head,
 		(*prev)->next = *head;
 	}
 	field[to_free->cur_coord].carriages_on--;
-	field[to_free->cur_coord].is_alive = 0;
 	free(to_free);
 }
 

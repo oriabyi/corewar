@@ -52,7 +52,6 @@
 
 # define O_CHAMPS					4
 # define NONE_ARG					0
-# define SHOW_CHANGED_CYCLES		50
 
 # define ONE_BYTE					1
 # define TWO_BYTES					2
@@ -215,7 +214,8 @@ typedef struct			s_battlefield
 {
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
-	unsigned			is_alive:1;
+	int					live_cycles;
+	unsigned 			is_alive:1;
 	unsigned			carriages_on;
 	int					altered_cycles;
 }						t_field;

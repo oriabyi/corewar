@@ -28,6 +28,6 @@ int				main(int ac, char **av)
 	war_loop(&core);
 	reset_game(&core);
 	clean_all(&core);
-	system("leaks -q corewar");
+//	system("leaks -q corewar");
 	return (0);
 }

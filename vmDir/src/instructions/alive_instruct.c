@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/corewar_header.h"
+#include "../../includes/corewar_visualization.h"
 
-void					check_whose_id(t_corewar *core, unsigned id)
+void					check_whose_id(t_corewar *core, unsigned id,
+														t_carriage *carriage)
 {
 	unsigned			counter;
 
@@ -25,6 +26,9 @@ void					check_whose_id(t_corewar *core, unsigned id)
 			core->champs[counter].qua_lives++;
 			core->champs[counter].last_live_cycle = core->cycles;
 			core->last_live = counter;
+			core->field[CUR_COORD].is_alive = 1;
+			core->field[CUR_COORD].live_cycles = core->cycles
+														+ SHOW_LIVE_CYCLES;
 			break ;
 		}
 		counter++;
@@ -34,7 +38,7 @@ void					check_whose_id(t_corewar *core, unsigned id)
 void					alive_instruct(t_field *field, t_carriage *carriage,
 								t_corewar *core, t_args *arguments)
 {
-	check_whose_id(core, (unsigned)ARG_FIRST);
+	check_whose_id(core, (unsigned)ARG_FIRST, carriage);
 	field[CUR_COORD].champ_id =
 			field[CUR_COORD].champ_id;
 	field[CUR_COORD].altered_cycles = SHOW_CHANGED_CYCLES;

@@ -19,9 +19,10 @@ void				fill_rank(t_field *field, int cur_qua, int qua_inrank)
 	else
 		fill_rank(field, (++cur_qua), qua_inrank);
 	field[cur_qua].champ_id = 0;
+	field[cur_qua].is_alive = 0;
+	field[cur_qua].live_cycles = -1;
 	field[cur_qua].carriages_on = 0;
 	field[cur_qua].altered_cycles = 0;
-	field[cur_qua].is_alive = 0;
 	field[cur_qua].hex[0] = '0';
 	field[cur_qua].hex[1] = '0';
 	field[cur_qua].hex[2] = '\0';
