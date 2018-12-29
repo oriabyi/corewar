@@ -21,14 +21,16 @@ char						*get_name(int fd)
 	return (ft_strdup(buf));
 }
 
-void						get_exec_code(int fd, unsigned len,
+int							get_exec_code(int fd, unsigned len,
 										unsigned char **exec_code)
 {
 	unsigned char			buf[1024];
+	ssize_t					read_length;
 
 	ft_bzero(buf, 1024);
-	read(fd, &buf, len);
+	read_length = read(fd, &buf, len);
 	*exec_code = ft_strncpy_without_boundes(buf, len, 1024);
+	return (read_length == len);
 }
 
 char						*get_comment(int fd)

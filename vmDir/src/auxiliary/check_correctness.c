@@ -64,6 +64,7 @@ char				*check_corewar_arguments(int check_code)
 {
 	char			*message;
 
+	message = "ERROR";
 	if (check_code == BAD_ARGUMENTS)
 		message = "BAD ARGUMENTS!";
 	else if (check_code == BAD_FLAGS)
@@ -83,9 +84,8 @@ char				*check_corewar_arguments(int check_code)
 	else if (check_code == REDUNDANT_ARGUMENTS)
 		message = "THERE ARE REDUNDANT ARGUMENTS!";
 	else if (check_code == NEED_ARGUMENTS)
-		message = "Short Usage:\n\t./corewar [champ1 .. champ4]";
-	else
-		message = "ERROR!";
+		message = "Short Usage:\n\t./corewar [champ1 .. champ4]"
+			"\n\t\"--help\" for detailed documentation";
 	return (message);
 }
 
@@ -94,7 +94,7 @@ char				*get_message(void)
 	return (ft_multjoinfr(4,
 		"Usage:"
 		" \tExample: ./corewar -v -n -1 filename.cor\n"
-		" \tGUI: ./corewar -visual [Players]\n"
+		" \tGUI: ./corewar -v [Players]\n"
 		" \tDefault Player Numbers: 1, 2, 3, 4...\n"
 		" \tChange Player Number: -n -1 filename.cor\n"
 		" \tDump: ./corewar -d 300 [Players](prints the memory"

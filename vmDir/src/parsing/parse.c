@@ -23,8 +23,8 @@ int					get_all_other_info(t_champ *champ, int fd)
 		champ->comment = get_comment(fd);
 		if (interlayer(fd) == 0)
 		{
-			get_exec_code(fd, champ->size, &champ->exec_code);
-			if (read(fd, &buf, 1) == 0)
+			if (get_exec_code(fd, champ->size, &champ->exec_code) == 1 &&
+				read(fd, &buf, 1) == 0)
 			{
 				return (check_champ_info(champ));
 			}

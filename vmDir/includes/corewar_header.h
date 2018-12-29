@@ -50,10 +50,10 @@
 # define TWO_BYTES					2
 # define FOUR_BYTES					4
 
-# define CHECK_REG(x) (x >= 0 && x <= 15)
+# define CHECK_REG(x)				(x >= 0 && x <= 15)
 
 /*
-** Get arguments // check defines
+** Get arguments
 */
 
 # define GET_FIRST_ARG(x)			(x >> 6)
@@ -157,12 +157,11 @@
 
 # define FILE_IS_REG				0
 
-# define CHAMP_DATA_ERROR(arg)		(arg >= 53 && arg <= 56)
+# define CHAMP_DATA_ERROR(arg)		(arg >= 53 && arg <= 57)
 # define WRONG_MAGIC_VALUE			53
 # define BAD_NAME_LENGTH			54
 # define BAD_CHAMP_SIZE				55
 # define BAD_COMMENT_LENGTH			56
-
 # define BAD_EXEC_CODE_LENGTH		57
 
 # define PRINT_USAGE				60
@@ -308,9 +307,9 @@ int						check_availability_flags(t_flags *flags, int ac,
 
 int						parse(t_corewar *core, char **av);
 void					fill_champs(t_corewar *core, t_champ **champ,
-															int qua_champs);
+														unsigned qua_champs);
 char					*get_name(int fd);
-void					get_exec_code(int fd, unsigned len,
+int						get_exec_code(int fd, unsigned len,
 													unsigned char **exec_code);
 char					*get_comment(int fd);
 unsigned				get_size(int fd);

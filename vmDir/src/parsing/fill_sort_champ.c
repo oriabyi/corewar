@@ -30,14 +30,14 @@ void				reverse_list(t_carriage **begin_list)
 	*begin_list = prev;
 }
 
-void				fill_first_carriages(t_corewar *core, int qua_champs)
+void				fill_first_carriages(t_corewar *core, unsigned qua_champs)
 {
 	t_carriage		*head;
 	unsigned		counter;
 
 	head = core->carriage;
 	counter = 0;
-	while (counter < (unsigned)qua_champs)
+	while (counter < qua_champs)
 	{
 		head->cur_coord = (MEM_SIZE / qua_champs) * counter;
 		head = head->next;
@@ -45,15 +45,27 @@ void				fill_first_carriages(t_corewar *core, int qua_champs)
 	}
 }
 
+void				fill_last_live(t_corewar *core)
+{
+	unsigned		counter;
+
+	counter = 0;
+	while (core->champs[counter].name)
+	{
+		core->last_live = counter;
+		counter++;
+	}
+}
+
 void				fill_champs(t_corewar *core,
-							t_champ **champ, int qua_champs)
+							t_champ **champ, unsigned qua_champs)
 {
 	t_carriage		*head;
 	unsigned		counter;
 
 	counter = 0;
 	head = NULL;
-	while (counter < (unsigned)qua_champs)
+	while (counter < qua_champs)
 	{
 		if (core->carriage == NULL)
 		{
@@ -70,4 +82,5 @@ void				fill_champs(t_corewar *core,
 		counter++;
 	}
 	fill_first_carriages(core, qua_champs);
+	fill_last_live(core);
 }
