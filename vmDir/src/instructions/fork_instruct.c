@@ -22,7 +22,7 @@ t_carriage				*copy_carriage(t_carriage *src, int id)
 		return (NULL);
 	dst->carry = src->carry;
 	dst->flag = src->flag;
-	dst->alive = false;
+	dst->alive = true;
 	dst->cycles = 0;
 	while (counter < NUMBER_OF_REGISTERS)
 	{
