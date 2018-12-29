@@ -101,6 +101,6 @@ int					check_cycle_to_die(t_corewar *core)
 	}
 	core->qua_lives = 0;
 	core->quant_carriages = reset_carriages_id(&core->carriage);
-	reset_lives_champ(&core->champs, core->qua_lives);
+	reset_lives_champ(&core->champs, core->qua_champs);
 	return ((core->cycle_to_die > 0) ? core->cycle_to_die : 0);
 }
