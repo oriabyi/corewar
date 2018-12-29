@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/corewar_header.h"
+#include "../../includes/corewar_visualization.h"
 
 int				get_button(t_corewar *core, int cycle)
 {
 	int			c;
 
 	if ((c = getch()) != -1)
-		NCUR.pressed_button = c;
+		;
 	else
 		return (0);
 	if (c == PAUSE_BUTTON && NCUR.pause)
@@ -25,7 +25,7 @@ int				get_button(t_corewar *core, int cycle)
 	else if (ft_isdigit(c))
 		uppend_input_field(NCUR.current_field, (char)c);
 	else if (c == DELETE_BUTTON)
-		delete_last_letter_from_iput_field(NCUR.current_field);
+		del_last_letter_input_field(NCUR.current_field);
 	else if ((cycle == NCUR.where_pause || c == PAUSE_BUTTON) && !NCUR.pause)
 		NCUR.pause = true;
 	else if (SPEED_PLUS_BUTTONS(c) && NCUR.draw_speed < MAX_SPEED)

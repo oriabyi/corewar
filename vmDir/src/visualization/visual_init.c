@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/corewar_header.h"
+#include "../../includes/corewar_visualization.h"
 
 void			fill_first_positions(t_field *field, unsigned quant_carriages,
 		t_carriage *carriage)
@@ -33,7 +33,6 @@ int				visual_init(t_corewar *core)
 	int			check_code;
 
 	NCUR.pause = 1;
-	NCUR.pressed_button = 0;
 	NCUR.draw_speed = 100;
 	NCUR.where_pause = 0;
 	NCUR.highlight_coord = -1;

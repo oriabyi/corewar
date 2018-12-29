@@ -1,4 +1,4 @@
-# **************************************************************************** #
+	# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,49 +6,148 @@
 #    By: ariabyi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 11:21:10 by ariabyi           #+#    #+#              #
-#    Updated: 2018/12/23 20:16:55 by ariabyi          ###   ########.fr        #
+#    Updated: 2018/12/29 10:12:42 by ariabyi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-C = clang
+CC			:=	clang
 
-NAME = libft.a
+NAME		:=	libft.a
 
-FLAGS = -Wall -Wextra -Werror -O2
+CFLAGS		:=	-Wall -Wextra -Werror
+SRC_PATH	:=	./src/
+HEADER		:=	libft.h
+OBJ_PATH	:= .obj/
 
-HEADER = libft.h
+FILES		:=		ft_atoi					\
+					ft_bzero				\
+					ft_isalnum				\
+					ft_isalpha				\
+					ft_isascii				\
+					ft_isdigit				\
+        			ft_isprint				\
+        			ft_itoa					\
+        			ft_lstadd				\
+        			ft_lstdel				\
+        			ft_lstdelone			\
+        			ft_lstiter				\
+        			ft_lstmap				\
+        			ft_lstnew				\
+        			ft_memalloc				\
+        			ft_memccpy				\
+        			ft_memchr				\
+        			ft_memcmp				\
+        			ft_memcpy				\
+        			ft_memdel				\
+        			ft_memmove				\
+        			ft_memset				\
+        			ft_putchar				\
+        			ft_putchar_fd			\
+        			ft_putendl				\
+        			ft_putendl_fd			\
+        			ft_putnbr				\
+        			ft_putnbr_fd			\
+        			ft_putstr				\
+        			ft_putstr_fd			\
+        			ft_strcat				\
+        			ft_strchr				\
+        			ft_strclr				\
+        			ft_strcmp				\
+        			ft_strcpy				\
+        			ft_strdel				\
+        			ft_strdup				\
+        			ft_strequ				\
+        			ft_striter				\
+        			ft_striteri				\
+        			ft_strjoin				\
+        			ft_strlcat				\
+        			ft_strlen				\
+        			ft_strmap				\
+        			ft_strmapi				\
+        			ft_strncat				\
+        			ft_strncmp				\
+        			ft_strncpy				\
+        			ft_strnequ				\
+        			ft_strnew				\
+        			ft_strnstr				\
+        			ft_strrchr				\
+        			ft_strsplit				\
+        			ft_strstr				\
+        			ft_strsub				\
+        			ft_strtrim				\
+        			ft_tolower				\
+        			ft_toupper				\
+        			ft_strrev				\
+        			ft_numodgt				\
+        			ft_numows				\
+        			ft_printbits			\
+        			ft_printhex				\
+        			ft_strpos				\
+        			ft_swap					\
+        			ft_wcase				\
+        			ft_strcapitalize		\
+        			ft_sqrt					\
+        			ft_margin				\
+        			ft_pwrbase				\
+        			ft_csymb				\
+        			ft_multjoin				\
+        			ft_mstrcmp				\
+        			ft_strprint				\
+        			ft_rfstr				\
+        			gnl						\
+        			ft_split_wsps			\
+					ft_iswsps				\
+					ft_pmult_fd				\
+					ft_setnum				\
+					ft_check_iarr			\
+					ft_are_nums				\
+					free_str_return_int		\
+					ft_multjoinfr			\
+					lgnl					\
+					ft_ahtoi				\
+					raise_to_power			\
+					get_num_in_hex			\
+					get_hex_by_int_byte		\
+					int_to_char_hex			\
+					free_char_matrix		\
+					append_char				\
+					ft_multcat				\
+					count_chars				\
+					check_got_num			\
+					are_nums
+	
+SRCS	:= $(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
+OBJ		:= $(addprefix $(OBJ_PATH), $(SRCS:%.c=%.o))
 
-LIBFILES = $(SRC:.c=.o)
+SKIP	:= \033[A
+COLOR	:=				
+MESSAGE	:= $(COLOR)[$(NAME)]----->\033[0m
 
-SRC= ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c\
-        ft_isprint.c ft_itoa.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c\
-        ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c\
-        ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_putchar.c ft_putchar_fd.c\
-        ft_putendl.c ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putstr.c\
-        ft_putstr_fd.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c ft_strcpy.c\
-        ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c ft_striteri.c ft_strjoin.c\
-        ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c\
-        ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c\
-        ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_strrev.c\
-        ft_numodgt.c ft_numows.c ft_printbits.c ft_printhex.c ft_strpos.c ft_swap.c\
-        ft_wcase.c ft_strcapitalize.c ft_sqrt.c ft_margin.c ft_pwrbase.c ft_csymb.c\
-        ft_multjoin.c ft_mstrcmp.c ft_strprint.c ft_rfstr.c gnl.c ft_split_wsps.c\
-		ft_iswsps.c ft_pmult_fd.c ft_setnum.c ft_check_iarr.c ft_are_nums.c\
-		free_str_return_int.c ft_multjoinfr.c lgnl.c ft_ahtoi.c raise_to_power.c\
-		get_num_in_hex.c get_hex_by_int_byte.c int_to_char_hex.c free_char_matrix.c \
-		append_char.c ft_multcat.c count_chars.c check_got_num.c are_nums.c
 all: $(NAME)
 
-$(NAME):
-	@gcc $(FLAGS) -c $(SRC) -I $(HEADER)
-	@ar rc $(NAME) $(LIBFILES)
-	@ranlib $(NAME)
+$(NAME): $(OBJ)
+	@ ar rc $(NAME) $(OBJ)
+	@ ranlib $(NAME)
+	@echo "$(MESSAGE)$(COLOR)[BUILD : DONE$(COLOR)]"
+
+$(OBJ): | $(OBJ_PATH)
+
+$(OBJ_PATH):
+	@ mkdir -p $(OBJ_PATH)$(SRC_PATH)
+
+$(OBJ_PATH)%.o: %.c
+	@echo "$(MESSAGE)$(COLOR)[COMPILE: $<$(SKIP)"
+	@echo ""
+	@ $(CC) $(CFLAGS) -o $@ -c $<
+	@echo ""
+	@echo "$(SKIP)\033[A\033[2K$(SKIP)"
 
 clean:
-	@rm -f $(LIBFILES)
+	@ rm -f $(OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
+	@ rm -f $(NAME)
+	@ rm -rf $(OBJ_PATH)
 
 re: fclean all
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/corewar_header.h"
+#include "../../includes/corewar_visualization.h"
 
 int				draw_fields(t_corewar *core, int pos_y)
 {

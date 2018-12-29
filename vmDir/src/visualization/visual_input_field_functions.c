@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/corewar_header.h"
+#include "../../includes/corewar_visualization.h"
 
 void				fill_input_field_with_zeros(char *field)
 {
@@ -35,7 +35,7 @@ int					uppend_input_field(char *field, char n)
 	return (1);
 }
 
-int					delete_last_letter_from_iput_field(char *field)
+int					del_last_letter_input_field(char *field)
 {
 	int				i;
 

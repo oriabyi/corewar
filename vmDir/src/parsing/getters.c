@@ -55,7 +55,7 @@ unsigned					get_size(int fd)
 	read(fd, buf, 4);
 	while (counter < 4)
 	{
-		y += get_old_young_numbers(buf[counter++], 16, &power);
+		y += get_old_young_bits(buf[counter++], 16, &power);
 	}
 	return ((unsigned)y);
 }

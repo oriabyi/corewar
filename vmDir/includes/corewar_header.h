@@ -13,7 +13,7 @@
 #ifndef COREWAR_COREWAR_HEADER_H
 # define COREWAR_COREWAR_HEADER_H
 
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 # include "op.h"
 # include "ncurses.h"
 # include "stdio.h"
@@ -21,7 +21,16 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NCUR						core->ncur
+/*
+** Defines for war
+*/
+
+# define FIRST_ARG					0
+# define SECOND_ARG					1
+# define THIRD_ARG					2
+
+# define NUMBER_OF_REGISTERS		16
+
 # define F_VISUAL					core->flags.visual
 # define F_DUMP						core->flags.dump
 # define CUR_COORD					carriage->cur_coord
@@ -29,22 +38,21 @@
 # define CARRY						carriage->carry
 # define ALIVE						carriage->alive
 
-# define I_COMMAND					carriage->instruction->command
+# define I_DESIRED					instruction->desired
+# define I_INSTRUCT					carriage->instruction
 # define I_CODAGE					carriage->instruction->codage
+# define I_COMMAND					carriage->instruction->command
 # define I_QUA_ARGS					carriage->instruction->qua_args
 # define I_LABEL_SIZE				carriage->instruction->label_size
-# define I_INSTRUCT					carriage->instruction
-# define I_DESIRED					instruction->desired
 
-# define LIST_ARGUMENTS				arguments->list_arguments
 # define ARG_FIRST					arguments->first_arg
 # define ARG_SECOND					arguments->second_arg
 # define ARG_THIRD					arguments->third_arg
+# define LIST_ARGUMENTS				arguments->list_arguments
 
-# define O_BOTS						4
+# define O_CHAMPS					4
 # define NONE_ARG					0
 # define SHOW_CHANGED_CYCLES		50
-# define NOT_EXPOSED 				0
 
 # define ONE_BYTE					1
 # define TWO_BYTES					2
@@ -70,63 +78,7 @@
 # define QUA_INSTRUCTIONS 			16
 
 /*
-**	Visual colors
-*/
-
-# define SCORE_WIN_HEIGHT			66
-# define SCORE_WIN_WIDTH			70
-# define MEM_WIN_HEIGHT				66
-# define MEM_WIN_WIDTH				195
-
-# define COLOR_PINK					122
-# define COLOR_ORANGE				123
-# define COLOR_WWHITE				124
-# define COLOR_GREY					125
-
-# define CR_CL_GREEN_BLACK			2
-# define CR_CL_BLUE_BLACK			3
-# define CR_CL_RED_BLACK			4
-# define CR_CL_CYAN_BLACK			5
-
-# define CR_CL_BLACK_WHITE			6
-# define CR_CL_BLACK_GREEN			7
-# define CR_CL_BLACK_BLUE			8
-# define CR_CL_BLACK_RED			9
-# define CR_CL_BLACK_CYAN			10
-
-# define CR_CL_WHITE_GREEN			12
-# define CR_CL_WHITE_BLUE			13
-# define CR_CL_WHITE_RED			14
-# define CR_CL_WHITE_CYAN			15
-
-# define CR_CL_ORANGE_BLACK			16
-# define CR_CL_WWHITE_BLACK			17
-# define CR_CL_GREY_BLACK			18
-# define CR_CL_BLACK_YELLOW			19
-# define CR_CL_BLACK_PINK			20
-# define CR_CL_PINK_YELLOW			21
-# define CR_CL_WWHITE_GREY			22
-# define CR_CL_YELLOW_GREY			23
-# define CR_CL_PINK_GREY			24
-
-# define EXIT						-1
-# define MAX_SPEED					100
-# define MIN_SPEED					0
-# define SPEED_STEP					5
-# define PAUSE_BUTTON				' '
-# define NEXT_CYCLE_BUTTON			's'
-# define DELETE_BUTTON				127
-# define ENTER_BUTTON				10
-# define SPEED_PLUS_BUTTONS(x)		(x == 'e' || x == 261)
-# define SPEED_MINUS_BUTTONS(x)		(x == 'q' || x == 260)
-# define MENU_DOWN_BUTTON			259
-# define MENU_UP_BUTTON				258
-# define VISUAL_OFF					27
-
-# define ALIEN						"\xF0\x9F\x91\xBD"
-
-/*
-**	Define errors
+**	Define code
 */
 
 # define MEMORY_ERROR				33
@@ -167,20 +119,6 @@
 # define PRINT_USAGE				60
 # define NEED_ARGUMENTS				61
 
-# define NOONE						0
-# define FIRST_BOT					1
-# define SECOND_BOT					2
-# define THIRD_BOT					3
-# define FOURTH_BOT					4
-# define FOLLOW_CARRIAGE			5
-# define FOLLOW_FIELD				6
-
-# define NUMBER_OF_REGISTERS		16
-
-# define FIRST_ARG					0
-# define SECOND_ARG					1
-# define THIRD_ARG					2
-
 /*
 **	Instructions
 */
@@ -201,6 +139,8 @@
 # define CW_LLDI					14
 # define CW_LFORK					15
 # define CW_AFF						16
+
+# define ALIEN						"\xF0\x9F\x91\xBD"
 
 typedef	struct			s_flags
 {
@@ -258,7 +198,6 @@ typedef struct			s_ncurses
 	int					draw_speed;
 	int					where_pause;
 	unsigned			pause:1;
-	int					pressed_button;
 	char				cycle_to_go[7];
 	char				carriage_id[7];
 	char				highlight_pos[7];
@@ -304,48 +243,47 @@ typedef struct			s_corewar
 
 int						check_availability_flags(t_flags *flags, int ac,
 																	char **av);
-
 int						parse(t_corewar *core, char **av);
 void					fill_champs(t_corewar *core, t_champ **champ,
 														unsigned qua_champs);
+unsigned				get_size(int fd);
 char					*get_name(int fd);
+char					*get_comment(int fd);
+unsigned				get_num_by_octet_bytes(int fd, int size);
+int						get_old_young_bits(unsigned char num, int base,
+																	int *power);
 int						get_exec_code(int fd, unsigned len,
 													unsigned char **exec_code);
-char					*get_comment(int fd);
-unsigned				get_size(int fd);
-unsigned				get_num_by_octet_bytes(int fd, int size);
-int						get_old_young_numbers(unsigned char num,
-														int base, int *power);
-int						get_champ_by_id(t_champ *champ, unsigned id);
-unsigned				find_free_space(t_champ *champs);
 int						create_champs(t_champ **champs);
+unsigned				find_free_space(t_champ *champs);
+void					reverse_list(t_carriage **begin_list);
 void					sort_champs(t_champ **champ, int qua_champs);
+int						get_champ_by_id(t_champ *champ, unsigned id);
 void					fill_first_positions(t_field *field,
 							unsigned quant_carriages, t_carriage *carriage);
-void					reverse_list(t_carriage **begin_list);
 void					add_champ_id(int coord, t_field *field,
 										t_carriage *carriage, unsigned cycles);
 unsigned char			*ft_strncpy_without_boundes(const unsigned char *src,
-												size_t len, size_t max);
-unsigned				interlayer(int fd);
-void					init_core(t_corewar *core);
+														size_t len, size_t max);
 
-void					init_instructions(t_instructions *instructions);
+unsigned				interlayer(int fd);
 t_carriage				*create_carriage(int id);
+void					init_core(t_corewar *core);
+void					init_instructions(t_instructions *instructions);
 t_instructions			*get_instruction_by_id(t_instructions *instructions,
-							unsigned id);
+																unsigned id);
 
 /*
 ** War
 */
 
+int						check_reg(int reg);
 void					war_loop(t_corewar *core);
-char					*pull_out_champs_info(t_corewar *core);
+void					do_process(t_corewar *core);
 int						check_cycle_to_die(t_corewar *core);
+char					*pull_out_champs_info(t_corewar *core);
 int						get_indent_size(int argument, int bytes);
 int						check_instruction_arg(int argument, int byte);
-void					do_process(t_corewar *core);
-int						check_reg(int reg);
 int						write_in_field(t_field *field, int position,
 																unsigned t_reg);
 int						get_indent(int argument, int count_arguments,
@@ -372,65 +310,48 @@ int						get_regs_value(int argument, t_carriage *carriage,
 ** Auxiliary control work
 */
 
+int						check_correctness(t_corewar *core, int check_code);
 int						notification_message(t_corewar *core, int error_code,
 														char *error_message);
-int						check_correctness(t_corewar *core, int check_code);
 
 /*
 ** Clean functions
 */
 
-void					clean_carriages(t_carriage *carriage);
 void					clean_all(t_corewar *core);
+void					clean_carriages(t_carriage *carriage);
 
 /*
 ** Visualization
 */
 
+int						visual_end(t_corewar *core);
 void					reset_game(t_corewar *core);
-void					fill_input_field_with_zeros(char *field);
-int						uppend_input_field(char *field, char n);
-int						delete_last_letter_from_iput_field(char *field);
-void					set_next_field(t_corewar *core);
-void					set_prev_field(t_corewar *core);
-int						get_button(t_corewar *core, int cycle);
-void					draw_score_window(t_corewar *core, int cycle);
-void					draw_memory_window(t_corewar *core, int cycle);
-void					init_time(t_corewar *core);
-void					init_colors(void);
 int						visual_init(t_corewar *core);
 void					visual_start(t_corewar *core);
-int						visual_end(t_corewar *core);
-int						display_windows(t_corewar *core, int cycle);
-int						draw(t_corewar *core, int cycle,
-													unsigned *cycles_limit);
 int						create_memory_space(t_corewar *core);
+int						display_windows(t_corewar *core, int cycle);
 void					fill_memory_space(t_champ *champs, t_field *field,
 																int qua_champs);
-int						draw_menu(t_corewar *core, int pos_y);
-
-void					simple_print(WINDOW *win, int id);
-void					carriage_print(WINDOW *win, int id);
-void					alive_view(WINDOW *win, int id);
-void					altered_view(WINDOW *win, int id);
-void					follow_view(WINDOW *win, t_ncurses ncur, int i);
+int						draw(t_corewar *core, int cycle,
+														unsigned *cycles_limit);
 
 /*
 ** Check Champ
 */
 
-int						check_champ_file(char *champfilename);
 int						check_champ_info(t_champ *champ);
+int						check_champ_file(char *champfilename);
 
 /*
 ** Instructions
 */
 
 void					alive_instruct(t_field *field, t_carriage *carriage,
-										t_corewar *core, t_args *args);
+												t_corewar *core, t_args *args);
 void					load_instruct(t_carriage *carriage, t_args *args);
 void					store_instruct(t_field *field, t_carriage *carriage,
-										t_args *args, unsigned cycles);
+												t_args *args, unsigned cycles);
 void					add_sub_instructs(t_carriage *carriage, t_args *args);
 void					logical_operations(t_carriage *carriage, t_args *args);
 int						jump_if_carry_instruct(t_field *field,
@@ -440,21 +361,24 @@ void					load_index_instruct(t_field *field,
 void					store_index_instruct(t_field *field,
 						t_carriage *carriage, t_args *args, unsigned cycles);
 void					fork_instruct(t_field *field, t_carriage *carriage,
-										t_corewar *core, t_args *args);
+												t_corewar *core, t_args *args);
 void					aff_instruct(t_carriage *carriage, t_args *args);
 
+/*
+** Auxiliary
+*/
+void					print_winner(t_corewar *core);
+void					print_memory(t_corewar *core);
+void					get_game_type(t_corewar *core);
+void					denote_field(t_field *field, int coord);
+ssize_t					correction_coordinates(ssize_t coordinate);
+int						game_over(t_corewar *core, unsigned *cycles_limit);
 void					move_carriage(t_field *field, int step,
 														t_carriage *carriage);
 void					change_carry_if_need(unsigned char coord,
 														t_carriage *carriage);
-void					denote_field(t_field *field, int coord);
 unsigned				which_operation_needs(ssize_t a, ssize_t b,
-							unsigned command);
-ssize_t					correction_coordinates(ssize_t coordinate);
+															unsigned command);
 void					desired(t_instructions *instructions, unsigned command);
-void					get_game_type(t_corewar *core);
-void					print_winner(t_corewar *core);
-int						game_over(t_corewar *core, unsigned *cycles_limit);
-void					print_memory(t_corewar *core);
 
 #endif

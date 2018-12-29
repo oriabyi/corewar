@@ -12,7 +12,7 @@
 
 #include "../../includes/corewar_header.h"
 
-int							get_old_young_numbers(unsigned char num,
+int							get_old_young_bits(unsigned char num,
 														int base, int *power)
 {
 	int						younger;
@@ -40,7 +40,7 @@ unsigned					get_num_by_octet_bytes(int fd, int size)
 	while (power >= 0)
 	{
 		read(fd, &buf, 1);
-		result += get_old_young_numbers(buf, 16, &power);
+		result += get_old_young_bits(buf, 16, &power);
 	}
 	return (result);
 }

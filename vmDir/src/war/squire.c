@@ -45,7 +45,7 @@ int					game_over(t_corewar *core, unsigned *cycles_limit)
 	if (F_VISUAL)
 	{
 		old_cycles = core->cycles;
-		NCUR.pause = 1;
+		core->ncur.pause = 1;
 		core->cycles = (unsigned)draw(core, core->cycles, cycles_limit);
 		if (core->cycles >= old_cycles)
 			return (STOP_GAME);

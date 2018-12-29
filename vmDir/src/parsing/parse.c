@@ -67,7 +67,11 @@ int					get_flag_n(t_corewar *core, char **av, int *counter,
 		*champ_id = (unsigned)ft_atoi(av[(*counter) + 1]);
 		if (are_nums(av[(*counter) + 1]) == 1)
 			return (BAD_VALUE_FOR_FLAG_N);
-		if (get_champ_by_id(core->champs, *champ_id) && *champ_id != O_BOTS + 1)
+		if (check_got_num(av[*counter + 1], *champ_id, 1) &&
+			av[*counter + 1][ft_strlen(av[*counter + 1]) - 1] != '0')
+			return (BAD_VALUE_FOR_FLAG_N);
+		if (get_champ_by_id(core->champs, *champ_id) &&
+				*champ_id != O_CHAMPS + 1)
 			return (SAME_NUM_FOR_CHAMPS);
 		(*counter) += 2;
 		return (0);
@@ -83,14 +87,17 @@ int					get_champs_info(t_corewar *core, char **av, int *counter)
 
 	champs = 0;
 	check_code = 0;
-	while (av[(*counter)] && check_code == 0 && ++champs <= O_BOTS)
+	while (av[(*counter)] && check_code == 0 && ++champs <= O_CHAMPS)
 	{
-		champ_id = O_BOTS + 1;
-		if (get_flag_n(core, av, counter, &champ_id))
+		champ_id = O_CHAMPS + 1;
+		if ((check_code = get_flag_n(core, av, counter, &champ_id)))
 			;
 		else if (*(av[(*counter)]) == '-' && av[(*counter) + 1] == NULL)
 			return (NO_ID_AFTER_FLAG);
-		champ_id = (champ_id <= O_BOTS) ?
+		if (check_code == BAD_VALUE_FOR_FLAG_N ||
+				check_code == SAME_NUM_FOR_CHAMPS)
+			return (check_code);
+		champ_id = (champ_id <= O_CHAMPS) ?
 				champ_id : find_free_space(core->champs);
 		check_code = get_champ(&(core->champs[core->qua_champs]),
 							av[(*counter)++], champ_id);
