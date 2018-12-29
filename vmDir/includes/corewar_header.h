@@ -190,6 +190,7 @@ typedef struct			s_champion
 	unsigned			size;
 	unsigned			alive:2;
 	unsigned			qua_lives;
+	unsigned			last_live_cycle;
 }						t_champ;
 
 typedef struct			s_ncurses

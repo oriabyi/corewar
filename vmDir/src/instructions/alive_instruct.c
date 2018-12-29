@@ -23,7 +23,9 @@ void					check_whose_id(t_corewar *core, unsigned id)
 		{
 			core->champs[counter].alive = true;
 			core->champs[counter].qua_lives++;
+			core->champs[counter].last_live_cycle = core->cycles;
 			core->last_live = counter;
+			break ;
 		}
 		counter++;
 	}
