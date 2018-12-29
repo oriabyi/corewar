@@ -371,7 +371,6 @@ void					aff_instruct(t_carriage *carriage, t_args *args);
 void					print_winner(t_corewar *core);
 void					print_memory(t_corewar *core);
 void					get_game_type(t_corewar *core);
-void					denote_field(t_field *field, int coord);
 ssize_t					correction_coordinates(ssize_t coordinate);
 int						game_over(t_corewar *core, unsigned *cycles_limit);
 void					move_carriage(t_field *field, int step,

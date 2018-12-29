@@ -14,7 +14,6 @@
 
 void			remove_carriage(t_field *field)
 {
-	field[]
 	if (field->carriages_on)
 		field->carriages_on--;
 }
@@ -38,8 +37,4 @@ void			change_carry_if_need(unsigned char coord, t_carriage *carriage)
 		CARRY = true;
 	else
 		CARRY = false;
-}
-
-void			denote_field(t_field *field, int coord)
-{
 }

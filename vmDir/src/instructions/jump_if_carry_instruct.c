@@ -20,6 +20,5 @@ int			jump_if_carry_instruct(t_field *field, t_carriage *carriage,
 		return (1);
 	}
 	move_carriage(field, (int)(ARG_FIRST % IDX_MOD), carriage);
-	denote_field(field, CUR_COORD);
 	return (0);
 }
