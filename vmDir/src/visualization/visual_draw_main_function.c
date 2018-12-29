@@ -32,7 +32,7 @@ int				change_cycle(t_corewar *core, int cycle, unsigned *cycles_limit)
 			return (0);
 		}
 	}
-	return (cycle);
+	return (cycle + 1);
 }
 
 int				draw(t_corewar *core, int cycle, unsigned *cycles_limit)

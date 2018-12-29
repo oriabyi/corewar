@@ -205,7 +205,6 @@ typedef struct			s_ncurses
 	int					highlight_coord;
 	int					carriage_pos;
 	char				*current_field;
-
 	WINDOW				*memory_window;
 	WINDOW				*score_window;
 }						t_ncurses;
@@ -215,7 +214,7 @@ typedef struct			s_battlefield
 	unsigned char		hex[3];
 	unsigned			champ_id:5;
 	int					live_cycles;
-	unsigned 			is_alive:2;
+	unsigned			is_alive:2;
 	unsigned			carriages_on;
 	int					altered_cycles;
 }						t_field;

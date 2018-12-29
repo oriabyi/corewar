@@ -38,10 +38,6 @@ void			print_cell(t_corewar *core, unsigned id, int i, int cycles)
 	}
 	else
 		simple_print(NCUR.memory_window, id);
-
-
-
-
 }
 
 void			draw_memory_window(t_corewar *core, int cycles)

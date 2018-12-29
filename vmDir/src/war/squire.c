@@ -14,7 +14,7 @@
 
 void				get_game_type(t_corewar *core)
 {
-	char 			*temp;
+	char			*temp;
 
 	if (F_VISUAL)
 	{

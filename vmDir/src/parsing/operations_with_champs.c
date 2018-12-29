@@ -22,7 +22,7 @@ int					create_champs(t_champ **champs)
 	while (counter < O_CHAMPS)
 	{
 		(*champs)[counter] = (t_champ){NULL, NULL, NULL, (O_CHAMPS + 1),
-								 								0, 0, 0, 0};
+																0, 0, 0, 0};
 		counter++;
 	}
 	return (0);

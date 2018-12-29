@@ -71,9 +71,9 @@ unsigned			reset_carriages_id(t_carriage **cariage)
 	return (counter);
 }
 
-void 				reset_lives_champ(t_champ **champ, unsigned qua_champs)
+void				reset_lives_champ(t_champ **champ, unsigned qua_champs)
 {
-	unsigned 		counter;
+	unsigned		counter;
 
 	counter = 0;
 	while (counter < qua_champs)

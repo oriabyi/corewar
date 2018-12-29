@@ -65,11 +65,13 @@ int				print_players(t_corewar *core, int pos_y)
 	while (i < core->qua_champs)
 	{
 		mvwprintw(NCUR.score_window, pos_y, 3, "Player %d: ", i + 1);
-		simple_print(NCUR.score_window, i + 1);
+		altered_view(NCUR.score_window, i + 1);
 		mvwprintw(NCUR.score_window, pos_y++, 15, "%s\n", core->champs[i].name);
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
-		mvwprintw(NCUR.score_window, ++pos_y, 10, "Last live: %d\n", core->champs[i].last_live_cycle);
-		mvwprintw(NCUR.score_window, ++pos_y, 10, "Lives in current period: %d\n", core->champs[i].qua_lives);
+		mvwprintw(NCUR.score_window, ++pos_y, 10, "Last live: %d\n",
+				core->champs[i].last_live_cycle);
+		mvwprintw(NCUR.score_window, ++pos_y, 10,
+				"Lives in current period: %d\n", core->champs[i].qua_lives);
 		pos_y += 4;
 		i++;
 	}
@@ -83,7 +85,7 @@ int				print_game_info(t_corewar *core, int pos_y)
 	mvwprintw(NCUR.score_window, ++pos_y, 3, "CYCLE_DELTA : %d", CYCLE_DELTA);
 	mvwprintw(NCUR.score_window, ++pos_y, 3, "MAX_CHECKS : %d", MAX_CHECKS);
 	mvwprintw(NCUR.score_window, ++pos_y, 3, "CURRENT_WINNER : ");
-	simple_print(NCUR.score_window, core->champs[core->last_live].id);
+	altered_view(NCUR.score_window, core->champs[core->last_live].id);
 	wprintw(NCUR.score_window, "%s", core->champs[core->last_live].name);
 	wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
 	pos_y += 3;
@@ -104,6 +106,7 @@ void			draw_score_window(t_corewar *core, int cycle)
 			core->quant_carriages);
 	pos_y = print_players(core, pos_y);
 	pos_y = print_game_info(core, pos_y);
+	wattroff(NCUR.score_window, A_BOLD);
 	draw_menu(core, pos_y);
 	if (!NCUR.pause)
 		wattron(NCUR.score_window, COLOR_PAIR(CR_CL_WWHITE_BLACK));
