@@ -72,6 +72,18 @@ unsigned			reset_carriages_id(t_carriage **cariage)
 	return (counter);
 }
 
+void 				reset_lives_champ(t_champ **champ, unsigned qua_champs)
+{
+	unsigned 		counter;
+
+	counter = 0;
+	while (counter < qua_champs)
+	{
+		(*champ)[counter].qua_lives = 0;
+		counter++;
+	}
+}
+
 int					check_cycle_to_die(t_corewar *core)
 {
 	remove_dead_processes(&core->carriage, &core->quant_carriages, core->field);
@@ -90,5 +102,6 @@ int					check_cycle_to_die(t_corewar *core)
 	}
 	core->qua_lives = 0;
 	core->quant_carriages = reset_carriages_id(&core->carriage);
+	reset_lives_champ(&core->champs, core->qua_lives);
 	return ((core->cycle_to_die > 0) ? core->cycle_to_die : 0);
 }

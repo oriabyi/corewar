@@ -189,6 +189,7 @@ typedef struct			s_champion
 	unsigned			id;
 	unsigned			size;
 	unsigned			alive:2;
+	unsigned			qua_lives;
 }						t_champ;
 
 typedef struct			s_ncurses
